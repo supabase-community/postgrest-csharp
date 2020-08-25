@@ -14,30 +14,23 @@ The bulk of this library is a translation and c-sharp-ification of the [supabase
 
 ## Status
 
-[x] Connects to PostgREST Server
-
-[x] Authentication
-
-[x] Basic Query Features
-
-- [x] CRUD
-- [x] Single
-- [x] Range (to & from)
-- [x] Limit
-- [x] Limit w/ Foreign Key
-- [x] Offset
-- [x] Offset w/ Foreign Key
-
-[] Advanced Query Features
-
-- [] Filters
-- [] Ordering
-
-[x] Coercion Models (using Generics)
-
-[] ORM Features
-
-[] **(In Progress)** Unit/Integration Testing
+- [x] Connects to PostgREST Server
+- [x] Authentication
+- [x] Basic Query Features
+  - [x] CRUD
+  - [x] Single
+  - [x] Range (to & from)
+  - [x] Limit
+  - [x] Limit w/ Foreign Key
+  - [x] Offset
+  - [x] Offset w/ Foreign Key
+- [] Advanced Query Features [**In progress**]
+  - [] Filters
+  - [] Ordering
+- [] Coercion Models (using Generics) [**In Progress**]
+- [] ORM Features
+- [] **(In Progress)** Unit/Integration Testing
+- [] Nuget Package and Release
 
 ## Contributing
 
