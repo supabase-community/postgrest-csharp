@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Postgrest.Attributes;
 
 namespace Postgrest.Responses
 {
     public class ModeledResponse<T> : BaseResponse
     {
+        public List<T> Models { get; private set; } = new List<T>();
+
         public ModeledResponse(BaseResponse baseResponse, bool shouldParse = true)
         {
             Content = baseResponse.Content;
@@ -13,10 +17,20 @@ namespace Postgrest.Responses
 
             if (shouldParse)
             {
-                Models = JsonConvert.DeserializeObject<List<T>>(Content);
+                var token = JToken.Parse(Content);
+
+                if (token is JArray)
+                {
+                    Models = JsonConvert.DeserializeObject<List<T>>(Content, Client.Instance.SerializerSettings);
+                }
+                else if (token is JObject)
+                {
+                    Models.Clear();
+                    T obj = JsonConvert.DeserializeObject<T>(Content, Client.Instance.SerializerSettings);
+                    Models.Add(obj);
+                }
             }
         }
 
-        public List<T> Models { get; set; } = new List<T>();
     }
 }

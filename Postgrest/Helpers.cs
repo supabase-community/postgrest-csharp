@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Postgrest.Attributes;
 using Postgrest.Responses;
 
 namespace Postgrest
@@ -30,7 +32,6 @@ namespace Postgrest
             {
                 var builder = new UriBuilder(url);
                 var query = HttpUtility.ParseQueryString(builder.Query);
-                builder.Port = -1;
 
                 if (reqParams != null && method == HttpMethod.Get)
                 {
@@ -44,7 +45,7 @@ namespace Postgrest
 
                 if (reqParams != null && method != HttpMethod.Get)
                 {
-                    requestMessage.Content = new StringContent(JsonConvert.SerializeObject(reqParams), Encoding.UTF8, "application/json");
+                    requestMessage.Content = new StringContent(JsonConvert.SerializeObject(reqParams, Client.Instance.SerializerSettings), Encoding.UTF8, "application/json");
                 }
 
                 if (headers != null)
