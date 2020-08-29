@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -165,23 +166,41 @@ namespace Postgrest
         public Task Delete(T model)
         {
             method = HttpMethod.Delete;
-            Filter("id", Operator.Equals, model.Id.ToString());
+            Filter(model.PrimaryKeyColumn, Operator.Equals, Helpers.GetPropertyValue<string>(model, model.PrimaryKeyColumn));
             var request = Send(method, null, null);
             Clear();
             return request;
         }
 
-        public Task Single()
+        public Task<T> Single()
         {
-            method = HttpMethod.Get;
-            var headers = new Dictionary<string, string>
-            {
-                { "Accept", "application/vnd.pgrst.object+json" },
-                { "Prefer", "return=representation"}
-            };
+            var tsc = new TaskCompletionSource<T>();
 
-            Clear();
-            return null;
+            Task.Run(async () =>
+            {
+                method = HttpMethod.Get;
+                var headers = new Dictionary<string, string>
+                {
+                    { "Accept", "application/vnd.pgrst.object+json" },
+                    { "Prefer", "return=representation"}
+                };
+
+                var request = Send<T>(method, null, headers);
+
+                Clear();
+
+                try
+                {
+                    var result = await request;
+                    tsc.SetResult(result.Models.FirstOrDefault());
+                }
+                catch (Exception e)
+                {
+                    tsc.SetException(e);
+                }
+            });
+
+            return tsc.Task;
         }
 
         public Task<ModeledResponse<T>> Get()

@@ -8,17 +8,14 @@ namespace Postgrest.Models
 {
     public abstract class BaseModel
     {
-        [JsonProperty("id")]
-        public int Id { get; set; }
-
-        [JsonProperty("status")]
+        [Column("status")]
         public string Status { get; set; }
 
-        [JsonProperty("inserted_at")]
-        public DateTime InsertedAt { get; set; } = new DateTime();
+        [Column("inserted_at")]
+        public DateTime InsertedAt { get; set; }
 
-        [JsonProperty("updated_at")]
-        public DateTime UpdatedAt { get; set; } = new DateTime();
+        [Column("updated_at")]
+        public DateTime UpdatedAt { get; set; }
 
         public virtual Task<ModeledResponse<T>> Update<T>() where T : BaseModel, new() => Client.Instance.Builder<T>().Update((T)this);
         public virtual Task Delete<T>() where T : BaseModel, new() => Client.Instance.Builder<T>().Delete((T)this);
@@ -29,9 +26,9 @@ namespace Postgrest.Models
             {
                 var attrs = Helpers.GetCustomAttribute<PrimaryKeyAttribute>(this);
                 if (attrs != null)
-                    return attrs.PropertyName;
+                    return attrs.ColumnName;
 
-                return nameof(Id);
+                throw new Exception("Models must specify their Primary Key via the [PrimaryKey] Attribute");
             }
         }
     }
