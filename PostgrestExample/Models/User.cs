@@ -1,28 +1,19 @@
 ﻿using System;
 using Postgrest.Attributes;
+using Postgrest.Models;
 
-namespace PostgrestExample
+namespace PostgrestExample.Models
 {
-    [Table("public.users")]
-    public class UserModel
+    [Table("users")]
+    public class User : BaseModel
     {
-        [PrimaryKey]
-        [String]
+        [PrimaryKey("username")]
         public string Username { get; set; }
 
-        [Timestamp]
-        public DateTime InsertedAt { get; set; }
-
-        [Timestamp]
-        public DateTime UpdatedAt { get; set; }
-
-        [String]
+        [Column("data")]
         public string Data { get; set; }
 
-        [String]
-        public string Status { get; set; }
-
-        [String]
+        [Column("catchphrase")]
         public string Catchphrase { get; set; }
     }
 }
