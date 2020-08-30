@@ -26,8 +26,13 @@ The bulk of this library is a translation and c-sharp-ification of the [supabase
   - [x] Offset w/ Foreign Key
 - [ ] Advanced Query Features [**In progress**]
   - [ ] Filters
-  - [ ] Ordering
-- [ ] Coercion Models (using Generics) [**In Progress**]
+  - [x] Ordering
+- [ ] Custom Serializers
+  - [ ] [Postgres Range](https://www.postgresql.org/docs/9.3/rangetypes.html)
+    - [x] `int4range`, `int8range`
+    - [ ] `numrange`
+    - [ ] `tsrange`, `tstzrange`, `daterange`
+- [x] Coercion Models (using Generics)
 - [ ] ORM Features
 - [ ] **(In Progress)** Unit/Integration Testing
 - [ ] Nuget Package and Release

@@ -3,15 +3,23 @@ using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Postgrest.Converters;
 
 namespace Postgrest.Attributes
 {
-    public class AttributeContractResolver : DefaultContractResolver
+    public class CustomContractResolver : DefaultContractResolver
     {
         protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
         {
             JsonProperty prop = base.CreateProperty(member, memberSerialization);
 
+            // Handle non-primitive conversions from a Postgres type to C#
+            if (prop.PropertyType == typeof(Range))
+            {
+                prop.Converter = new RangeConverter();
+            }
+
+            // Dynamically set the name of the key we are serializing/deserializing from the model.
             if (member.CustomAttributes.Count() > 0)
             {
                 ColumnAttribute columnAtt = member.GetCustomAttribute<ColumnAttribute>();

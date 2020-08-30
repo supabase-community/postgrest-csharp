@@ -13,6 +13,9 @@ namespace PostgrestExample.Models
         [Column("data")]
         public string Data { get; set; }
 
+        [Column("age_range")]
+        public Range AgeRange { get; set; }
+
         [Column("catchphrase")]
         public string Catchphrase { get; set; }
     }

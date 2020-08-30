@@ -7,7 +7,7 @@ using static Postgrest.ClientAuthorization;
 namespace PostgrestTests
 {
     [TestClass]
-    public class Postgrest
+    public class Api
     {
         private static string baseUrl = "http://localhost:3000";
 
