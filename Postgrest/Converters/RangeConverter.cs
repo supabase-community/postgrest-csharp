@@ -19,8 +19,7 @@ namespace Postgrest.Converters
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            JObject jo = new JObject();
-            jo.WriteTo(writer);
+            throw new NotImplementedException();
         }
 
         public static Range ParseIntRange(string value)
