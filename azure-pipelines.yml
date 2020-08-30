@@ -48,6 +48,8 @@ steps:
 # This will push any .nupkg files to the 'TestFeed' artifact feed
 # allowPackageConflicts allows us to build the same version and not throw an error when trying to push
 # instead it just ingores the latest package unless the version changes
+- task: NuGetAuthenticate@0
+  displayName: 'Nuget Authenticate'
 - task: NuGetCommand@2
   displayName: 'nuget push'
   inputs:
@@ -55,6 +57,6 @@ steps:
     feedsToUse: 'select'
     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
     nuGetFeedType: 'internal'
-    publishVstsFeed: 'TestFeed'
+    publishVstsFeed: 'postgrest-csharp/TestFeed'
     versioningScheme: 'off'
     allowPackageConflicts: true
