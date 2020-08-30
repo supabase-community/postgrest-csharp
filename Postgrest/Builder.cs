@@ -66,6 +66,48 @@ namespace Postgrest
             return this;
         }
 
+        public Builder<T> Filter(string columnName, Operator op, List<object> criteria)
+        {
+            filters.Add(new QueryFilter(columnName, op, criteria));
+            return this;
+        }
+
+        public Builder<T> Filter(string columnName, Operator op, Dictionary<string, object> criteria)
+        {
+            filters.Add(new QueryFilter(columnName, op, criteria));
+            return this;
+        }
+
+        public Builder<T> Filter(string columnName, Operator op, Range criteria)
+        {
+            filters.Add(new QueryFilter(columnName, op, criteria));
+            return this;
+        }
+
+        public Builder<T> Filter(string columnName, Operator op, FullTextSearchConfig criteria)
+        {
+            filters.Add(new QueryFilter(columnName, op, criteria));
+            return this;
+        }
+
+        public Builder<T> Not(QueryFilter filter)
+        {
+            filters.Add(new QueryFilter(Operator.Not, filter));
+            return this;
+        }
+
+        public Builder<T> And(List<QueryFilter> filters)
+        {
+            filters.Add(new QueryFilter(Operator.And, filters));
+            return this;
+        }
+
+        public Builder<T> Or(List<QueryFilter> filters)
+        {
+            filters.Add(new QueryFilter(Operator.Or, filters));
+            return this;
+        }
+
         public Builder<T> Match(Dictionary<string, string> query)
         {
             return this;
@@ -218,25 +260,13 @@ namespace Postgrest
 
             foreach (var param in options.QueryParams)
             {
-                query[param.Key] = param.Value;
+                query.Add(param.Key, param.Value);
             }
 
             foreach (var filter in filters)
             {
-                var attr = filter.Op.GetAttribute<MapToAttribute>();
-                if (attr is MapToAttribute asAttribute)
-                {
-                    switch (filter.Op)
-                    {
-                        case Operator.Like:
-                        case Operator.ILike:
-                            query[filter.Property] = $"{asAttribute.Mapping}.{filter.Criteria.Replace(" % ", " * ")}";
-                            break;
-                        default:
-                            query[filter.Property] = $"{asAttribute.Mapping}.{filter.Criteria}";
-                            break;
-                    }
-                }
+                var parsedFilter = PrepareFilter(filter);
+                query.Add(parsedFilter.Key, parsedFilter.Value);
             }
 
             foreach (var orderer in orderers)
@@ -245,7 +275,7 @@ namespace Postgrest
                 if (attr is MapToAttribute asAttribute)
                 {
                     var key = !string.IsNullOrEmpty(orderer.ForeignTable) ? $"{orderer.ForeignTable}.order" : "order";
-                    query[key] = $"{orderer.Column}.{orderer.Ordering}.{asAttribute.Mapping}";
+                    query.Add(key, $"{orderer.Column}.{orderer.Ordering}.{asAttribute.Mapping}");
                 }
             }
 
@@ -317,6 +347,84 @@ namespace Postgrest
             return headers;
         }
 
+        public KeyValuePair<string, string> PrepareFilter(QueryFilter filter)
+        {
+            var attr = filter.Op.GetAttribute<MapToAttribute>();
+            if (attr is MapToAttribute asAttribute)
+            {
+                var str = "";
+                switch (filter.Op)
+                {
+                    case Operator.Or:
+                    case Operator.And:
+                        if (filter.Criteria is List<QueryFilter> subFilters)
+                        {
+                            var list = new List<KeyValuePair<string, string>>();
+                            foreach (var subFilter in subFilters)
+                                list.Add(PrepareFilter(subFilter));
+
+                            foreach (var preppedFilter in list)
+                                str += $"{preppedFilter.Key}.{preppedFilter.Value},";
+
+                            return new KeyValuePair<string, string>(asAttribute.Mapping, $"({str.Trim(',')})");
+                        }
+                        break;
+                    case Operator.Not:
+                        if (filter.Criteria is QueryFilter notFilter)
+                        {
+                            var prepped = PrepareFilter(notFilter);
+                            return new KeyValuePair<string, string>(prepped.Key, $"not.{prepped.Value}");
+                        }
+                        break;
+                    case Operator.Like:
+                    case Operator.ILike:
+                        if (filter.Criteria is string likeCriteria)
+                        {
+                            return new KeyValuePair<string, string>(filter.Property, $"{asAttribute.Mapping}.{likeCriteria.Replace("%", "*")}");
+                        }
+                        break;
+                    case Operator.In:
+                    case Operator.Contains:
+                    case Operator.ContainedIn:
+                    case Operator.Overlap:
+                        if (filter.Criteria is List<object> listCriteria)
+                        {
+                            foreach (var item in listCriteria)
+                                str += $"\"{item}\",";
+
+                            return new KeyValuePair<string, string>(filter.Property, $"{asAttribute.Mapping}.{{{str.Trim(',')}}}");
+                        }
+                        else if (filter.Criteria is Dictionary<string, object> dictCriteria)
+                        {
+                            return new KeyValuePair<string, string>(filter.Property, $"{asAttribute.Mapping}.{JsonConvert.SerializeObject(dictCriteria)}");
+                        }
+                        break;
+                    case Operator.StrictlyLeft:
+                    case Operator.StrictlyRight:
+                    case Operator.NotRightOf:
+                    case Operator.NotLeftOf:
+                    case Operator.Adjacent:
+                        if (filter.Criteria is Range rangeCritera)
+                        {
+                            return new KeyValuePair<string, string>(filter.Property, $"{asAttribute.Mapping}.{rangeCritera.ToPostgresString()}");
+                        }
+                        break;
+                    case Operator.FTS:
+                    case Operator.PHFTS:
+                    case Operator.PLFTS:
+                    case Operator.WFTS:
+                        if (filter.Criteria is FullTextSearchConfig searchConfig)
+                        {
+                            return new KeyValuePair<string, string>(filter.Property, $"{asAttribute.Mapping}({searchConfig.Config}).{searchConfig.QueryText}");
+                        }
+                        break;
+                    default:
+                        return new KeyValuePair<string, string>(filter.Property, $"{asAttribute.Mapping}.{filter.Criteria}");
+                }
+            }
+            return new KeyValuePair<string, string>();
+        }
+
         public void Clear()
         {
             columnQuery = null;
@@ -339,9 +447,9 @@ namespace Postgrest
             return Helpers.MakeRequest(method, GenerateUrl(), PrepareRequestData(data), PrepareRequestHeaders(headers));
         }
 
-        private Task<ModeledResponse<T>> Send<T>(HttpMethod method, object data, Dictionary<string, string> headers = null)
+        private Task<ModeledResponse<U>> Send<U>(HttpMethod method, object data, Dictionary<string, string> headers = null) where U : BaseModel, new()
         {
-            return Helpers.MakeRequest<T>(method, GenerateUrl(), PrepareRequestData(data), PrepareRequestHeaders(headers));
+            return Helpers.MakeRequest<U>(method, GenerateUrl(), PrepareRequestData(data), PrepareRequestHeaders(headers));
         }
     }
 }

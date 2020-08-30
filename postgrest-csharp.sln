@@ -32,4 +32,12 @@ Global
 		{BD58973C-AB1D-4C60-B498-AA9A9DC83F4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD58973C-AB1D-4C60-B498-AA9A9DC83F4D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = PrefixedHierarchical
+		$0.StandardHeader = $2
+		$0.VersionControlPolicy = $3
+		version = 0.16.1-beta
+	EndGlobalSection
 EndGlobal

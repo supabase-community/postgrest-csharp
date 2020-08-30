@@ -13,23 +13,23 @@ namespace PostgrestTests
             // Test cases from 8.17.5 https://www.postgresql.org/docs/9.3/rangetypes.html
             var test1 = "[3,7)";
             var result1 = Postgrest.Converters.RangeConverter.ParseIntRange(test1);
-            Assert.AreEqual(result1.Start, 3);
-            Assert.AreEqual(result1.End, 6);
+            Assert.AreEqual(3, result1.Start);
+            Assert.AreEqual(6, result1.End);
 
             var test2 = "(3,7)";
             var result2 = Postgrest.Converters.RangeConverter.ParseIntRange(test2);
-            Assert.AreEqual(result2.Start, 4);
-            Assert.AreEqual(result2.End, 6);
+            Assert.AreEqual(4, result2.Start);
+            Assert.AreEqual(6, result2.End);
 
             var test3 = "[4,4]";
             var result3 = Postgrest.Converters.RangeConverter.ParseIntRange(test3);
-            Assert.AreEqual(result3.Start, 4);
-            Assert.AreEqual(result3.End, 4);
+            Assert.AreEqual(4, result3.Start);
+            Assert.AreEqual(4, result3.End);
 
             var test4 = "[4,4)";
             var result4 = Postgrest.Converters.RangeConverter.ParseIntRange(test4);
-            Assert.AreEqual(result4.Start, 0);
-            Assert.AreEqual(result4.End, 0);
+            Assert.AreEqual(0, result4.Start);
+            Assert.AreEqual(0, result4.End);
 
         }
 
@@ -42,15 +42,13 @@ namespace PostgrestTests
         }
 
         [TestMethod("`Range` should serialize into a string postgres understands")]
-        [ExpectedException(typeof(Exception))]
         public void TestRangeToPostgresString()
         {
             var test1 = new Range(1, 7).ToPostgresString();
-            Assert.AreEqual(test1, "[1,7]");
+            Assert.AreEqual("[1,7]", test1);
 
             var test2 = new Range(4, 6).ToPostgresString();
-            Assert.AreEqual(test2, "[4,6]");
-
+            Assert.AreEqual("[4,6]", test2);
         }
     }
 }

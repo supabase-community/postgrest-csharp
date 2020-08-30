@@ -4,7 +4,7 @@
 
 ---
 
-# postgrest-csharp (**VERY MUCH A WIP**)
+# postgrest-csharp (currently WIP)
 
 ## This repo is currently public for the sake of contributions - it should NOT be used in anything remotely resembling production
 
@@ -24,17 +24,18 @@ The bulk of this library is a translation and c-sharp-ification of the [supabase
   - [x] Limit w/ Foreign Key
   - [x] Offset
   - [x] Offset w/ Foreign Key
-- [ ] Advanced Query Features [**In progress**]
-  - [ ] Filters
+- [x] Advanced Query Features
+  - [x] Filters
   - [x] Ordering
 - [ ] Custom Serializers
   - [ ] [Postgres Range](https://www.postgresql.org/docs/9.3/rangetypes.html)
     - [x] `int4range`, `int8range`
     - [ ] `numrange`
     - [ ] `tsrange`, `tstzrange`, `daterange`
-- [x] Coercion Models (using Generics)
-- [ ] ORM Features
-- [ ] **(In Progress)** Unit/Integration Testing
+- [x] Models
+  - [x] `BaseModel` to derive from
+  - [x] Coercion of data into Models
+- [x] Unit Testing
 - [ ] Nuget Package and Release
 
 ## Contributing
