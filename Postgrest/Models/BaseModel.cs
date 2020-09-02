@@ -20,6 +20,7 @@ namespace Postgrest.Models
         public virtual Task<ModeledResponse<T>> Update<T>() where T : BaseModel, new() => Client.Instance.Builder<T>().Update((T)this);
         public virtual Task Delete<T>() where T : BaseModel, new() => Client.Instance.Builder<T>().Delete((T)this);
 
+        [JsonIgnore]
         public string PrimaryKeyColumn
         {
             get
