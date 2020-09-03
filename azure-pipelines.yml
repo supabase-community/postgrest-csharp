@@ -57,6 +57,6 @@ steps:
     feedsToUse: 'select'
     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
     nuGetFeedType: 'internal'
-    publishVstsFeed: 'postgrest-csharp/Build'
+    publishVstsFeed: 'Build'
     versioningScheme: 'off'
     allowPackageConflicts: true
