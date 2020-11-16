@@ -44,7 +44,24 @@ namespace PostgrestExample
                 }
             }
 
+            var newUser = new User
+            {
+                Username = "Ash Ketchum",
+                AgeRange = new Range(20, 25),
+                Catchphrase = "Gotta catch them all",
+                Status = "ONLINE"
+            };
 
+            var exists = await client.Builder<User>().Filter("username", Postgrest.Constants.Operator.Equals, "Ash Ketchum").Single();
+
+            if (exists == null)
+            {
+                await client.Builder<User>().Insert(newUser);
+            }
+            else
+            {
+                await exists.Delete<User>();
+            }
 
             return 0;
         }

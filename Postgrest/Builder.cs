@@ -208,7 +208,7 @@ namespace Postgrest
         public Task Delete(T model)
         {
             method = HttpMethod.Delete;
-            Filter(model.PrimaryKeyColumn, Operator.Equals, Helpers.GetPropertyValue<string>(model, model.PrimaryKeyColumn));
+            Filter(model.PrimaryKeyColumn, Operator.Equals, model.PrimaryKeyValue.ToString());
             var request = Send(method, null, null);
             Clear();
             return request;
@@ -235,6 +235,14 @@ namespace Postgrest
                 {
                     var result = await request;
                     tsc.SetResult(result.Models.FirstOrDefault());
+                }
+                catch (RequestException e)
+                {
+                    // No rows returned
+                    if (e.Response.StatusCode == System.Net.HttpStatusCode.NotAcceptable)
+                        tsc.SetResult(null);
+                    else
+                        tsc.SetException(e);
                 }
                 catch (Exception e)
                 {
@@ -305,7 +313,7 @@ namespace Postgrest
             return builder.Uri.ToString();
         }
 
-        public Dictionary<string, string> PrepareRequestData(object data) => JsonConvert.DeserializeObject<Dictionary<string, string>>(JsonConvert.SerializeObject(data));
+        public Dictionary<string, string> PrepareRequestData(object data) => JsonConvert.DeserializeObject<Dictionary<string, string>>(JsonConvert.SerializeObject(data, Client.Instance.SerializerSettings));
 
         public Dictionary<string, string> PrepareRequestHeaders(Dictionary<string, string> headers = null)
         {

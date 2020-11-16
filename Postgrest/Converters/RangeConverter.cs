@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Postgrest.Extensions;
 
 namespace Postgrest.Converters
 {
@@ -19,7 +20,8 @@ namespace Postgrest.Converters
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            throw new NotImplementedException();
+            Range val = (Range)value;
+            writer.WriteValue(val.ToPostgresString());
         }
 
         public static Range ParseIntRange(string value)
