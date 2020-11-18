@@ -62,7 +62,17 @@ namespace Postgrest
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    var obj = JsonConvert.DeserializeObject<ErrorResponse>(content);
+                    ErrorResponse obj = null;
+
+                    try
+                    {
+                        obj = JsonConvert.DeserializeObject<ErrorResponse>(content);
+                    }
+                    catch (JsonSerializationException)
+                    {
+                        obj = new ErrorResponse { Message = "Invalid or Empty response received. Are you trying to update or delete a record that does not exist?" };
+                    }
+
                     obj.Content = content;
                     throw new RequestException(response, obj);
                 }

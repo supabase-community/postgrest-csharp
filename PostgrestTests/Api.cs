@@ -259,7 +259,7 @@ namespace PostgrestTests
             }
         }
 
-        [TestMethod("update : basic")]
+        [TestMethod("update: basic")]
         public async Task TestBasicUpdate()
         {
             var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
@@ -279,6 +279,23 @@ namespace PostgrestTests
                 Assert.AreEqual(user.Status, updatedUser.Status);
                     
             }
+        }
+
+        [TestMethod("Exceptions: Throws when attempting to update a non-existent record")]
+        public async Task TestThrowsRequestExceptionOnNonExistantUpdate()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            await Assert.ThrowsExceptionAsync<RequestException>(async () =>
+            {
+                var nonExistentRecord = new User
+                {
+                    Username = "Foo",
+                    Status = "Bar"
+                };
+                await nonExistentRecord.Update<User>();
+
+            });
         }
     }
 }
