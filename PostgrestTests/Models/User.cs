@@ -1,5 +1,4 @@
 ﻿using System;
-using Newtonsoft.Json;
 using Postgrest.Attributes;
 using Postgrest.Models;
 
@@ -8,7 +7,16 @@ namespace PostgrestTests.Models
     [Table("users")]
     public class User : BaseModel
     {
-        [JsonProperty("username")]
+        [PrimaryKey("username")]
         public string Username { get; set; }
+
+        [Column("data")]
+        public string Data { get; set; }
+
+        [Column("age_range")]
+        public Range AgeRange { get; set; }
+
+        [Column("catchphrase")]
+        public string Catchphrase { get; set; }
     }
 }

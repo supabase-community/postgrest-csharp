@@ -6,6 +6,8 @@ using Postgrest.Extensions;
 using Postgrest.Attributes;
 using PostgrestTests.Models;
 using static Postgrest.ClientAuthorization;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace PostgrestTests
 {
@@ -254,6 +256,28 @@ namespace PostgrestTests
                 var filter = new QueryFilter(pair.Key, subfilters);
                 var result = client.Builder<User>().PrepareFilter(filter);
                 Assert.AreEqual(pair.Value, $"{result.Key}={result.Value}");
+            }
+        }
+
+        [TestMethod("update : basic")]
+        public async Task TestBasicUpdate()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            var user = await client.Builder<User>().Filter("username", Postgrest.Constants.Operator.Equals, "supabot").Single();
+
+            if(user != null)
+            {
+                // Update user status
+                user.Status = "OFFLINE";
+                var response = await user.Update<User>();
+
+                var updatedUser = response.Models.FirstOrDefault();
+
+                Assert.AreEqual(1, response.Models.Count);
+                Assert.AreEqual(user.Username, updatedUser.Username);
+                Assert.AreEqual(user.Status, updatedUser.Status);
+                    
             }
         }
     }
