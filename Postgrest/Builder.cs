@@ -180,7 +180,7 @@ namespace Postgrest
         public Task<ModeledResponse<T>> Update(T model)
         {
             method = HttpMethod.Patch;
-            filters.Add(new QueryFilter(model.PrimaryKeyColumn, Operator.Equals, Helpers.GetPropertyValue<string>(model, model.PrimaryKeyColumn)));
+            filters.Add(new QueryFilter(model.PrimaryKeyColumn, Operator.Equals, model.PrimaryKeyValue.ToString()));
 
             var headers = new Dictionary<string, string>
             {
