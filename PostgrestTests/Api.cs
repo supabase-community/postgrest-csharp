@@ -297,5 +297,71 @@ namespace PostgrestTests
 
             });
         }
+
+        [TestMethod("insert: basic")]
+        public async Task TestBasicInsert()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            var newUser = new User
+            {
+                Username = "skikra",
+                AgeRange = new Range(18, 22),
+                Catchphrase = "what a shot",
+                Status = "ONLINE"
+            };
+
+            var response = await client.Builder<User>().Insert(newUser);
+            var insertedUser = response.Models.First();
+
+            Assert.AreEqual(1, response.Models.Count);
+            Assert.AreEqual(newUser.Username, insertedUser.Username);
+            Assert.AreEqual(newUser.AgeRange, insertedUser.AgeRange);
+            Assert.AreEqual(newUser.Status, insertedUser.Status);
+
+            await client.Builder<User>().Delete(newUser);
+        }
+
+        [TestMethod("Exceptions: Throws when inserting a user with same primary key value as an existing one without upsert option")]
+        public async Task TestThrowsRequestExceptionInsertPkConflict()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            await Assert.ThrowsExceptionAsync<RequestException>(async () =>
+            {
+                var newUser = new User
+                {
+                    Username = "supabot"
+                };
+                await client.Builder<User>().Insert(newUser);
+            });
+        }
+
+        [TestMethod("insert: upsert")]
+        public async Task TestInsertWithUpsert()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            var supaUpdated = new User
+            {
+                Username = "supabot",
+                AgeRange = new Range(3, 8),
+                Status = "OFFLINE",
+                Catchphrase = "fat cat"
+            };
+
+            var insertOptions = new InsertOptions
+            {
+                Upsert = true
+            };
+
+            var response = await client.Builder<User>().Insert(supaUpdated,insertOptions);
+            var updatedUser = response.Models.First();
+
+            Assert.AreEqual(1, response.Models.Count);
+            Assert.AreEqual(supaUpdated.Username, updatedUser.Username);
+            Assert.AreEqual(supaUpdated.AgeRange, updatedUser.AgeRange);
+            Assert.AreEqual(supaUpdated.Status, updatedUser.Status);
+        }
     }
 }
