@@ -363,5 +363,19 @@ namespace PostgrestTests
             Assert.AreEqual(supaUpdated.AgeRange, updatedUser.AgeRange);
             Assert.AreEqual(supaUpdated.Status, updatedUser.Status);
         }
+
+        [TestMethod("order: basic")]
+        public async Task TestOrderBy()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            var orderedResponse = await client.Builder<User>().Order("catchphrase", Constants.Ordering.Descending).Get();
+            var unorderedResponse = await client.Builder<User>().Get();
+
+            var supaOrderedUsers = orderedResponse.Models;
+            var linqOrderedUsers = unorderedResponse.Models.OrderByDescending(u => u.Catchphrase).ToList();
+
+            CollectionAssert.AreEqual(linqOrderedUsers, supaOrderedUsers);
+        }
     }
 }

@@ -280,11 +280,12 @@ namespace Postgrest
 
             foreach (var orderer in orderers)
             {
-                var attr = orderer.NullPosition.GetAttribute<MapToAttribute>();
-                if (attr is MapToAttribute asAttribute)
+                var nullPosAttr = orderer.NullPosition.GetAttribute<MapToAttribute>();
+                var orderingAttr = orderer.Ordering.GetAttribute<MapToAttribute>();
+                if (nullPosAttr is MapToAttribute nullPosAsAttribute && orderingAttr is MapToAttribute orderingAsAttribute)
                 {
                     var key = !string.IsNullOrEmpty(orderer.ForeignTable) ? $"{orderer.ForeignTable}.order" : "order";
-                    query.Add(key, $"{orderer.Column}.{orderer.Ordering}.{asAttribute.Mapping}");
+                    query.Add(key, $"{orderer.Column}.{orderingAsAttribute.Mapping}.{nullPosAsAttribute.Mapping}");
                 }
             }
 
