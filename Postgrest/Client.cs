@@ -15,14 +15,23 @@ using static Postgrest.Helpers;
 
 namespace Postgrest
 {
+    /// <summary>
+    /// A Singleton that represents a single, reusable connection to a Postgrest endpoint. Should be first called with the `Initialize()` method.
+    /// </summary>
     public class Client
     {
+        /// <summary>
+        /// API Base Url for subsequent calls.
+        /// </summary>
         public string BaseUrl { get; private set; }
 
         private ClientAuthorization authorization;
         private ClientOptions options;
 
         private static Client instance;
+        /// <summary>
+        /// Returns the Singleton Instance of this Class.
+        /// </summary>
         public static Client Instance
         {
             get
@@ -36,6 +45,13 @@ namespace Postgrest
 
         private Client() { }
 
+        /// <summary>
+        /// Should be the first call to this class to initialize a connection with a Postgrest API Server
+        /// </summary>
+        /// <param name="baseUrl">Api Endpoint (ex: "http://localhost:8000"), no trailing slash required.</param>
+        /// <param name="authorization">Authorization Information.</param>
+        /// <param name="options">Optional client configuration.</param>
+        /// <returns></returns>
         public Client Initialize(string baseUrl, ClientAuthorization authorization, ClientOptions options = null)
         {
             BaseUrl = baseUrl;
@@ -52,6 +68,12 @@ namespace Postgrest
             return this;
         }
 
+        /// <summary>
+        /// Custom Serializer resolvers and converters that will be used for encoding and decoding Postgrest JSON responses.
+        ///
+        /// By default, Postgrest seems to use a date format that C# and Newtonsoft do not like, so this initial
+        /// configuration handles that.
+        /// </summary>
         public JsonSerializerSettings SerializerSettings
         {
             get
@@ -72,6 +94,11 @@ namespace Postgrest
             }
         }
 
+        /// <summary>
+        /// Returns a Query Builder instance for a defined model - representative of `USE $TABLE`
+        /// </summary>
+        /// <typeparam name="T">Custom Model derived from `BaseModel`</typeparam>
+        /// <returns></returns>
         public Builder<T> Builder<T>() where T : BaseModel, new() => new Builder<T>(BaseUrl, authorization, options);
     }
 }

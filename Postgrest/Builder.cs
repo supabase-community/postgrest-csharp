@@ -15,6 +15,12 @@ using static Postgrest.Constants;
 
 namespace Postgrest
 {
+    /// <summary>
+    /// Class created from a model derived from `BaseModel` that can generate query requests to a Postgrest Endpoint.
+    /// 
+    /// Representative of a `USE $TABLE` command.
+    /// </summary>
+    /// <typeparam name="T">Model derived from `BaseModel`.</typeparam>
     public class Builder<T> where T : BaseModel, new()
     {
         public string BaseUrl { get; private set; }
@@ -39,6 +45,12 @@ namespace Postgrest
         private int offset = int.MinValue;
         private string offsetForeignKey;
 
+        /// <summary>
+        /// Typically called from the Client Singleton using `Client.Instance.Builder<T>`
+        /// </summary>
+        /// <param name="baseUrl">Api Endpoint (ex: "http://localhost:8000"), no trailing slash required.</param>
+        /// <param name="authorization">Authorization Information.</param>
+        /// <param name="options">Optional client configuration.</param>
         public Builder(string baseUrl, ClientAuthorization authorization, ClientOptions options = null)
         {
             BaseUrl = baseUrl;
@@ -60,48 +72,98 @@ namespace Postgrest
             }
         }
 
+        /// <summary>
+        /// Adds a single value Filter to the current query args.
+        /// </summary>
+        /// <param name="columnName">Column Name in Table.</param>
+        /// <param name="op">Operation to perform.</param>
+        /// <param name="criteria">Value to filter with.</param>
+        /// <returns></returns>
         public Builder<T> Filter(string columnName, Operator op, string criteria)
         {
             filters.Add(new QueryFilter(columnName, op, criteria));
             return this;
         }
 
+        /// <summary>
+        /// Adds a multiple value Filter to the current query args.
+        /// </summary>
+        /// <param name="columnName">Column Name in Table.</param>
+        /// <param name="op">Operation to perform.</param>
+        /// <param name="criteria">List of values to filter with.</param>
+        /// <returns></returns>
         public Builder<T> Filter(string columnName, Operator op, List<object> criteria)
         {
             filters.Add(new QueryFilter(columnName, op, criteria));
             return this;
         }
 
+        /// <summary>
+        /// Adds a mapped value Filter to the current query args.
+        /// </summary>
+        /// <param name="columnName">Column Name in Table.</param>
+        /// <param name="op">Operation to perform.</param>
+        /// <param name="criteria"></param>
+        /// <returns></returns>
         public Builder<T> Filter(string columnName, Operator op, Dictionary<string, object> criteria)
         {
             filters.Add(new QueryFilter(columnName, op, criteria));
             return this;
         }
 
+        /// <summary>
+        /// Adds a range value Filter to the current query args.
+        /// </summary>
+        /// <param name="columnName">Column Name in Table.</param>
+        /// <param name="op">Operation to perform.</param>
+        /// <param name="criteria"></param>
+        /// <returns></returns>
         public Builder<T> Filter(string columnName, Operator op, Range criteria)
         {
             filters.Add(new QueryFilter(columnName, op, criteria));
             return this;
         }
 
+        /// <summary>
+        /// Adds a full-text search filter to the current query args.
+        /// </summary>
+        /// <param name="columnName">Column Name in Table.</param>
+        /// <param name="op">Operation to perform.</param>
+        /// <param name="criteria"></param>
+        /// <returns></returns>
         public Builder<T> Filter(string columnName, Operator op, FullTextSearchConfig criteria)
         {
             filters.Add(new QueryFilter(columnName, op, criteria));
             return this;
         }
 
+        /// <summary>
+        /// Adds a NOT filter to the current query args.
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
         public Builder<T> Not(QueryFilter filter)
         {
             filters.Add(new QueryFilter(Operator.Not, filter));
             return this;
         }
 
+        /// <summary>
+        /// Adds an AND Filter to the current query args.
+        /// </summary>
+        /// <param name="filters"></param>
+        /// <returns></returns>
         public Builder<T> And(List<QueryFilter> filters)
         {
             filters.Add(new QueryFilter(Operator.And, filters));
             return this;
         }
 
+        /// <summary>
+        /// Adds a NOT Filter to the current query args.
+        /// </summary>
+        /// <param name="filters"></param>
+        /// <returns></returns>
         public Builder<T> Or(List<QueryFilter> filters)
         {
             filters.Add(new QueryFilter(Operator.Or, filters));
@@ -110,27 +172,54 @@ namespace Postgrest
 
         public Builder<T> Match(Dictionary<string, string> query)
         {
-            return this;
+            throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Adds an ordering to the current query args.
+        /// </summary>
+        /// <param name="column">Column Name</param>
+        /// <param name="ordering"></param>
+        /// <param name="nullPosition"></param>
+        /// <returns></returns>
         public Builder<T> Order(string column, Ordering ordering, NullPosition nullPosition = NullPosition.First)
         {
             orderers.Add(new QueryOrderer(null, column, ordering, nullPosition));
             return this;
         }
 
+        /// <summary>
+        /// Adds an ordering to the current query args.
+        /// </summary>
+        /// <param name="foreignTable"></param>
+        /// <param name="column"></param>
+        /// <param name="ordering"></param>
+        /// <param name="nullPosition"></param>
+        /// <returns></returns>
         public Builder<T> Order(string foreignTable, string column, Ordering ordering, NullPosition nullPosition = NullPosition.First)
         {
             orderers.Add(new QueryOrderer(foreignTable, column, ordering, nullPosition));
             return this;
         }
 
+
+        /// <summary>
+        /// Sets a FROM range, similar to a `StartAt` query.
+        /// </summary>
+        /// <param name="from"></param>
+        /// <returns></returns>
         public Builder<T> Range(int from)
         {
             rangeFrom = from;
             return this;
         }
 
+        /// <summary>
+        /// Sets a bounded range to the current query.
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns></returns>
         public Builder<T> Range(int from, int to)
         {
             rangeFrom = from;
@@ -138,6 +227,11 @@ namespace Postgrest
             return this;
         }
 
+        /// <summary>
+        /// Select columns for query. 
+        /// </summary>
+        /// <param name="columnQuery"></param>
+        /// <returns></returns>
         public Builder<T> Select(string columnQuery)
         {
             method = HttpMethod.Get;
@@ -145,6 +239,13 @@ namespace Postgrest
             return this;
         }
 
+
+        /// <summary>
+        /// Sets a limit with an optional foreign table reference. 
+        /// </summary>
+        /// <param name="limit"></param>
+        /// <param name="foreignTableName"></param>
+        /// <returns></returns>
         public Builder<T> Limit(int limit, string foreignTableName = null)
         {
             this.limit = limit;
@@ -152,6 +253,13 @@ namespace Postgrest
             return this;
         }
 
+
+        /// <summary>
+        /// Sets an offset with an optional foreign table reference.
+        /// </summary>
+        /// <param name="offset"></param>
+        /// <param name="foreignTableName"></param>
+        /// <returns></returns>
         public Builder<T> Offset(int offset, string foreignTableName = null)
         {
             this.offset = offset;
@@ -159,6 +267,12 @@ namespace Postgrest
             return this;
         }
 
+        /// <summary>
+        /// Executes an INSERT query using the defined query params on the current instance.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="options"></param>
+        /// <returns>A typed model response from the database.</returns>
         public Task<ModeledResponse<T>> Insert(T model, InsertOptions options = null)
         {
             method = HttpMethod.Post;
@@ -177,6 +291,11 @@ namespace Postgrest
             return request;
         }
 
+        /// <summary>
+        /// Executes an UPDATE query using the defined query params on the current instance.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>A typed response from the database.</returns>
         public Task<ModeledResponse<T>> Update(T model)
         {
             method = HttpMethod.Patch;
@@ -195,6 +314,10 @@ namespace Postgrest
             return request;
         }
 
+        /// <summary>
+        /// Executes a delete request using the defined query params on the current instance.
+        /// </summary>
+        /// <returns></returns>
         public Task Delete()
         {
             method = HttpMethod.Delete;
@@ -206,6 +329,11 @@ namespace Postgrest
             return request;
         }
 
+        /// <summary>
+        /// Executes a delete request using the model's primary key as the filter for the request.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public Task Delete(T model)
         {
             method = HttpMethod.Delete;
@@ -215,6 +343,11 @@ namespace Postgrest
             return request;
         }
 
+        /// <summary>
+        /// Executes a query that expects to have a single object returned, rather than returning list of models
+        /// it will return a single model.
+        /// </summary>
+        /// <returns></returns>
         public Task<T> Single()
         {
             var tsc = new TaskCompletionSource<T>();
@@ -254,6 +387,10 @@ namespace Postgrest
             return tsc.Task;
         }
 
+        /// <summary>
+        /// Executes the query using the defined filters on the current instance.
+        /// </summary>
+        /// <returns></returns>
         public Task<ModeledResponse<T>> Get()
         {
             var request = Send<T>(method, null, null);
@@ -261,7 +398,10 @@ namespace Postgrest
             return request;
         }
 
-
+        /// <summary>
+        /// Generates the encoded URL with defined query parameters that will be sent to the Postgrest API.
+        /// </summary>
+        /// <returns></returns>
         public string GenerateUrl()
         {
             var builder = new UriBuilder($"{BaseUrl}/{tableName}");
@@ -315,8 +455,18 @@ namespace Postgrest
             return builder.Uri.ToString();
         }
 
+        /// <summary>
+        /// Transforms an object into a string mapped dictionary using `Client.Instance.SerializerSettings`.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         public Dictionary<string, string> PrepareRequestData(object data) => JsonConvert.DeserializeObject<Dictionary<string, string>>(JsonConvert.SerializeObject(data, Client.Instance.SerializerSettings));
 
+        /// <summary>
+        /// Prepares the request with appropriate HTTP headers expected by Postgrest.
+        /// </summary>
+        /// <param name="headers"></param>
+        /// <returns></returns>
         public Dictionary<string, string> PrepareRequestHeaders(Dictionary<string, string> headers = null)
         {
             if (headers == null)
@@ -329,7 +479,6 @@ namespace Postgrest
                 else
                     headers.Add("Content-Profile", options.Schema);
             }
-
 
             if (authorization != null)
             {
@@ -357,6 +506,11 @@ namespace Postgrest
             return headers;
         }
 
+        /// <summary>
+        /// Transforms the defined filters into the expected Postgrest format.
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
         public KeyValuePair<string, string> PrepareFilter(QueryFilter filter)
         {
             var attr = filter.Op.GetAttribute<MapToAttribute>();
@@ -435,6 +589,9 @@ namespace Postgrest
             return new KeyValuePair<string, string>();
         }
 
+        /// <summary>
+        /// Clears currently defined query values.
+        /// </summary>
         public void Clear()
         {
             columnQuery = null;

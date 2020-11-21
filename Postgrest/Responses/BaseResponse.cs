@@ -4,6 +4,9 @@ using Newtonsoft.Json;
 
 namespace Postgrest.Responses
 {
+    /// <summary>
+    /// A wrapper class from which all Responses derive.
+    /// </summary>
     public class BaseResponse
     {
         [JsonIgnore]

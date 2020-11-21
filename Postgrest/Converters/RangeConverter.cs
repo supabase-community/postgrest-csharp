@@ -6,6 +6,9 @@ using Postgrest.Extensions;
 
 namespace Postgrest.Converters
 {
+    /// <summary>
+    /// Used by Newtonsoft.Json to convert a C# range into a Postgrest range.
+    /// </summary>
     public class RangeConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)

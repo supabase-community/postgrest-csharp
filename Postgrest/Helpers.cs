@@ -15,18 +15,34 @@ namespace Postgrest
     public static class Helpers
     {
         public static T GetPropertyValue<T>(object obj, string propName) => (T)obj.GetType().GetProperty(propName).GetValue(obj, null);
-
         public static T GetCustomAttribute<T>(object obj) where T : Attribute => (T)Attribute.GetCustomAttribute(obj.GetType(), typeof(T));
         public static T GetCustomAttribute<T>(Type type) where T : Attribute => (T)Attribute.GetCustomAttribute(type, typeof(T));
 
         private static readonly HttpClient client = new HttpClient();
 
+        /// <summary>
+        /// Helper to make a request using the defined parameters to an API Endpoint and coerce into a model. 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="method"></param>
+        /// <param name="url"></param>
+        /// <param name="reqParams"></param>
+        /// <param name="headers"></param>
+        /// <returns></returns>
         public static async Task<ModeledResponse<T>> MakeRequest<T>(HttpMethod method, string url, Dictionary<string, string> reqParams = null, Dictionary<string, string> headers = null)
         {
             var baseResponse = await MakeRequest(method, url, reqParams, headers);
             return new ModeledResponse<T>(baseResponse);
         }
 
+        /// <summary>
+        /// Helper to make a request using the defined parameters to an API Endpoint.
+        /// </summary>
+        /// <param name="method"></param>
+        /// <param name="url"></param>
+        /// <param name="reqParams"></param>
+        /// <param name="headers"></param>
+        /// <returns></returns>
         public static async Task<BaseResponse> MakeRequest(HttpMethod method, string url, Dictionary<string, string> reqParams = null, Dictionary<string, string> headers = null)
         {
             try

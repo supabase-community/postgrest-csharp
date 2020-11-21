@@ -5,6 +5,12 @@ namespace Postgrest.Extensions
 {
     public static class EnumExtensions
     {
+        /// <summary>
+        /// Gets a typed Attribute attached to an enum value.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static T GetAttribute<T>(this Enum value) where T : Attribute
         {
             Type type = value.GetType();

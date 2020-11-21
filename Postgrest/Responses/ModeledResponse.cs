@@ -6,6 +6,10 @@ using Postgrest.Attributes;
 
 namespace Postgrest.Responses
 {
+    /// <summary>
+    /// A representation of a successful Postgrest response that transforms the string response into a C# Modelled response.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class ModeledResponse<T> : BaseResponse
     {
         public List<T> Models { get; private set; } = new List<T>();

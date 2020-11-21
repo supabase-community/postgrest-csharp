@@ -1,6 +1,9 @@
 ﻿using System;
 namespace Postgrest
 {
+    /// <summary>
+    /// Represents the Authorization information required for a Postgrest Client Instance.
+    /// </summary>
     public class ClientAuthorization
     {
         public string ApiKey { get; set; }

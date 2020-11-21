@@ -6,6 +6,9 @@ using Postgrest.Responses;
 
 namespace Postgrest.Models
 {
+    /// <summary>
+    /// Abstract class that must be implemented by C# Postgrest Models.
+    /// </summary>
     public abstract class BaseModel
     {
         [Column("status")]
@@ -20,6 +23,9 @@ namespace Postgrest.Models
         public virtual Task<ModeledResponse<T>> Update<T>() where T : BaseModel, new() => Client.Instance.Builder<T>().Update((T)this);
         public virtual Task Delete<T>() where T : BaseModel, new() => Client.Instance.Builder<T>().Delete((T)this);
 
+        /// <summary>
+        /// Gets the value of the PrimaryKey from a model's instance as defined by the [PrimaryKey] attribute on a property on the model.
+        /// </summary>
         [JsonIgnore]
         public object PrimaryKeyValue
         {
@@ -39,6 +45,9 @@ namespace Postgrest.Models
             }
         }
 
+        /// <summary>
+        /// Gets the name of the PrimaryKey column on a model's instance as defined by the [PrimaryKey] attribute on a property on the model.
+        /// </summary>
         [JsonIgnore]
         public string PrimaryKeyColumn
         {
