@@ -35,28 +35,28 @@ namespace PostgrestTests
                 }
             });
 
-            Assert.AreEqual($"{baseUrl}/users?some-param=foo&other-param=bar", client.Builder<User>().GenerateUrl());
+            Assert.AreEqual($"{baseUrl}/users?some-param=foo&other-param=bar", client.Table<User>().GenerateUrl());
         }
 
         [TestMethod("will use TableAttribute")]
         public void TestTableAttribute()
         {
             var client = Client.Instance.Initialize(baseUrl, null);
-            Assert.AreEqual($"{baseUrl}/users", client.Builder<User>().GenerateUrl());
+            Assert.AreEqual($"{baseUrl}/users", client.Table<User>().GenerateUrl());
         }
 
         [TestMethod("will default to Class.name in absence of TableAttribute")]
         public void TestTableAttributeDefault()
         {
             var client = Client.Instance.Initialize(baseUrl, null);
-            Assert.AreEqual($"{baseUrl}/Stub", client.Builder<Stub>().GenerateUrl());
+            Assert.AreEqual($"{baseUrl}/Stub", client.Table<Stub>().GenerateUrl());
         }
 
         [TestMethod("will set Authorization header from token")]
         public void TestHeadersToken()
         {
             var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Token, "token"), null);
-            var headers = client.Builder<User>().PrepareRequestHeaders();
+            var headers = client.Table<User>().PrepareRequestHeaders();
 
             Assert.AreEqual("Bearer token", headers["Authorization"]);
         }
@@ -65,7 +65,7 @@ namespace PostgrestTests
         public void TestQueryApiKey()
         {
             var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.ApiKey, "some-key"));
-            Assert.AreEqual($"{baseUrl}/users?apikey=some-key", client.Builder<User>().GenerateUrl());
+            Assert.AreEqual($"{baseUrl}/users?apikey=some-key", client.Table<User>().GenerateUrl());
         }
 
         [TestMethod("will set Basic Authorization")]
@@ -74,7 +74,7 @@ namespace PostgrestTests
             var user = "user";
             var pass = "pass";
             var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(user, pass), null);
-            var headers = client.Builder<User>().PrepareRequestHeaders();
+            var headers = client.Table<User>().PrepareRequestHeaders();
             var expected = System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes($"{user}:{pass}"));
 
             Assert.AreEqual($"Basic {expected}", headers["Authorization"]);
@@ -98,7 +98,7 @@ namespace PostgrestTests
             foreach (var pair in dict)
             {
                 var filter = new QueryFilter("foo", pair.Key, "bar");
-                var result = client.Builder<User>().PrepareFilter(filter);
+                var result = client.Table<User>().PrepareFilter(filter);
                 Assert.AreEqual("foo", result.Key);
                 Assert.AreEqual(pair.Value, result.Value);
             }
@@ -117,7 +117,7 @@ namespace PostgrestTests
             foreach (var pair in dict)
             {
                 var filter = new QueryFilter("foo", pair.Key, "%bar%");
-                var result = client.Builder<User>().PrepareFilter(filter);
+                var result = client.Table<User>().PrepareFilter(filter);
                 Assert.AreEqual("foo", result.Key);
                 Assert.AreEqual(pair.Value, result.Value);
             }
@@ -142,7 +142,7 @@ namespace PostgrestTests
             {
                 var list = new List<object> { "bar", "buzz" };
                 var filter = new QueryFilter("foo", pair.Key, list);
-                var result = client.Builder<User>().PrepareFilter(filter);
+                var result = client.Table<User>().PrepareFilter(filter);
                 Assert.AreEqual("foo", result.Key);
                 Assert.AreEqual(pair.Value, result.Value);
             }
@@ -166,7 +166,7 @@ namespace PostgrestTests
             {
                 var value = new Dictionary<string, object> { { "bar", 100 }, { "buzz", "zap" } };
                 var filter = new QueryFilter("foo", pair.Key, value);
-                var result = client.Builder<User>().PrepareFilter(filter);
+                var result = client.Table<User>().PrepareFilter(filter);
                 Assert.AreEqual("foo", result.Key);
                 Assert.AreEqual(pair.Value, result.Value);
             }
@@ -191,7 +191,7 @@ namespace PostgrestTests
             {
                 var config = new FullTextSearchConfig("bar", "english");
                 var filter = new QueryFilter("foo", pair.Key, config);
-                var result = client.Builder<User>().PrepareFilter(filter);
+                var result = client.Table<User>().PrepareFilter(filter);
                 Assert.AreEqual("foo", result.Key);
                 Assert.AreEqual(pair.Value, result.Value);
             }
@@ -216,7 +216,7 @@ namespace PostgrestTests
             {
                 var config = new Range(2, 3);
                 var filter = new QueryFilter("foo", pair.Key, config);
-                var result = client.Builder<User>().PrepareFilter(filter);
+                var result = client.Table<User>().PrepareFilter(filter);
                 Assert.AreEqual("foo", result.Key);
                 Assert.AreEqual(pair.Value, result.Value);
             }
@@ -228,7 +228,7 @@ namespace PostgrestTests
             var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
             var filter = new QueryFilter("foo", Constants.Operator.Equals, "bar");
             var notFilter = new QueryFilter(Constants.Operator.Not, filter);
-            var result = client.Builder<User>().PrepareFilter(notFilter);
+            var result = client.Table<User>().PrepareFilter(notFilter);
 
             Assert.AreEqual("foo", result.Key);
             Assert.AreEqual("not.eq.bar", result.Value);
@@ -254,7 +254,7 @@ namespace PostgrestTests
             foreach (var pair in dict)
             {
                 var filter = new QueryFilter(pair.Key, subfilters);
-                var result = client.Builder<User>().PrepareFilter(filter);
+                var result = client.Table<User>().PrepareFilter(filter);
                 Assert.AreEqual(pair.Value, $"{result.Key}={result.Value}");
             }
         }
@@ -264,7 +264,7 @@ namespace PostgrestTests
         {
             var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
-            var user = await client.Builder<User>().Filter("username", Postgrest.Constants.Operator.Equals, "supabot").Single();
+            var user = await client.Table<User>().Filter("username", Postgrest.Constants.Operator.Equals, "supabot").Single();
 
             if(user != null)
             {
@@ -311,7 +311,7 @@ namespace PostgrestTests
                 Status = "ONLINE"
             };
 
-            var response = await client.Builder<User>().Insert(newUser);
+            var response = await client.Table<User>().Insert(newUser);
             var insertedUser = response.Models.First();
 
             Assert.AreEqual(1, response.Models.Count);
@@ -319,7 +319,7 @@ namespace PostgrestTests
             Assert.AreEqual(newUser.AgeRange, insertedUser.AgeRange);
             Assert.AreEqual(newUser.Status, insertedUser.Status);
 
-            await client.Builder<User>().Delete(newUser);
+            await client.Table<User>().Delete(newUser);
         }
 
         [TestMethod("Exceptions: Throws when inserting a user with same primary key value as an existing one without upsert option")]
@@ -333,7 +333,7 @@ namespace PostgrestTests
                 {
                     Username = "supabot"
                 };
-                await client.Builder<User>().Insert(newUser);
+                await client.Table<User>().Insert(newUser);
             });
         }
 
@@ -355,7 +355,7 @@ namespace PostgrestTests
                 Upsert = true
             };
 
-            var response = await client.Builder<User>().Insert(supaUpdated,insertOptions);
+            var response = await client.Table<User>().Insert(supaUpdated,insertOptions);
             var updatedUser = response.Models.First();
 
             Assert.AreEqual(1, response.Models.Count);
@@ -369,8 +369,8 @@ namespace PostgrestTests
         {
             var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
-            var orderedResponse = await client.Builder<User>().Order("catchphrase", Constants.Ordering.Descending).Get();
-            var unorderedResponse = await client.Builder<User>().Get();
+            var orderedResponse = await client.Table<User>().Order("catchphrase", Constants.Ordering.Descending).Get();
+            var unorderedResponse = await client.Table<User>().Get();
 
             var supaOrderedUsers = orderedResponse.Models;
             var linqOrderedUsers = unorderedResponse.Models.OrderByDescending(u => u.Catchphrase).ToList();
@@ -383,8 +383,8 @@ namespace PostgrestTests
         {
             var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
-            var limitedUsersResponse = await client.Builder<User>().Limit(2).Get();
-            var usersResponse = await client.Builder<User>().Get();
+            var limitedUsersResponse = await client.Table<User>().Limit(2).Get();
+            var usersResponse = await client.Table<User>().Get();
 
             var supaLimitUsers = limitedUsersResponse.Models;
             var linqLimitUsers = usersResponse.Models.Take(2).ToList() ;
@@ -397,8 +397,8 @@ namespace PostgrestTests
         {
             var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
-            var offsetUsersResponse = await client.Builder<User>().Offset(2).Get();
-            var usersResponse = await client.Builder<User>().Get();
+            var offsetUsersResponse = await client.Table<User>().Offset(2).Get();
+            var usersResponse = await client.Table<User>().Get();
 
             var supaOffsetUsers = offsetUsersResponse.Models;
             var linqSkipUsers = usersResponse.Models.Skip(2).ToList();
@@ -411,8 +411,8 @@ namespace PostgrestTests
         {
             var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
-            var rangeUsersResponse = await client.Builder<User>().Range(2).Get();
-            var usersResponse = await client.Builder<User>().Get();
+            var rangeUsersResponse = await client.Table<User>().Range(2).Get();
+            var usersResponse = await client.Table<User>().Get();
 
             var supaRangeUsers = rangeUsersResponse.Models;
             var linqSkipUsers = usersResponse.Models.Skip(2).ToList();
@@ -425,8 +425,8 @@ namespace PostgrestTests
         {
             var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
-            var rangeUsersResponse = await client.Builder<User>().Range(1,3).Get();
-            var usersResponse = await client.Builder<User>().Get();
+            var rangeUsersResponse = await client.Table<User>().Range(1,3).Get();
+            var usersResponse = await client.Table<User>().Get();
 
             var supaRangeUsers = rangeUsersResponse.Models;
             var linqRangeUsers = usersResponse.Models.Skip(1).Take(3).ToList();
@@ -439,8 +439,8 @@ namespace PostgrestTests
         {
             var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
-            var rangeUsersResponse = await client.Builder<User>().Limit(1).Offset(3).Get();
-            var usersResponse = await client.Builder<User>().Get();
+            var rangeUsersResponse = await client.Table<User>().Limit(1).Offset(3).Get();
+            var usersResponse = await client.Table<User>().Get();
 
             var supaRangeUsers = rangeUsersResponse.Models;
             var linqRangeUsers = usersResponse.Models.Skip(3).Take(1).ToList();

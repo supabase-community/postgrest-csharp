@@ -16,7 +16,7 @@ namespace PostgrestExample
             var client = Postgrest.Client.Instance.Initialize(url, auth);
 
             // Get all Users
-            var users = await client.Builder<User>().Get();
+            var users = await client.Table<User>().Get();
 
             foreach (var user in users.Models)
             {
@@ -24,14 +24,14 @@ namespace PostgrestExample
             }
 
             // Get a single User
-            var supabotUser = await client.Builder<User>().Filter("username", Postgrest.Constants.Operator.Equals, "supabot").Single();
+            var supabotUser = await client.Table<User>().Filter("username", Postgrest.Constants.Operator.Equals, "supabot").Single();
 
             if (supabotUser != null)
             {
                 Debug.WriteLine($"{supabotUser.Username} was born on: {supabotUser.InsertedAt}");
 
                 // Use username to Query another table
-                var supabotMessages = await client.Builder<Message>().Filter("username", Postgrest.Constants.Operator.Equals, supabotUser.Username).Get();
+                var supabotMessages = await client.Table<Message>().Filter("username", Postgrest.Constants.Operator.Equals, supabotUser.Username).Get();
 
                 if (supabotMessages != null)
                 {
@@ -52,11 +52,11 @@ namespace PostgrestExample
                 Status = "ONLINE"
             };
 
-            var exists = await client.Builder<User>().Filter("username", Postgrest.Constants.Operator.Equals, "Ash Ketchum").Single();
+            var exists = await client.Table<User>().Filter("username", Postgrest.Constants.Operator.Equals, "Ash Ketchum").Single();
 
             if (exists == null)
             {
-                await client.Builder<User>().Insert(newUser);
+                await client.Table<User>().Insert(newUser);
             }
             else
             {

@@ -21,7 +21,7 @@ namespace Postgrest
     /// Representative of a `USE $TABLE` command.
     /// </summary>
     /// <typeparam name="T">Model derived from `BaseModel`.</typeparam>
-    public class Builder<T> where T : BaseModel, new()
+    public class Table<T> where T : BaseModel, new()
     {
         public string BaseUrl { get; private set; }
 
@@ -51,7 +51,7 @@ namespace Postgrest
         /// <param name="baseUrl">Api Endpoint (ex: "http://localhost:8000"), no trailing slash required.</param>
         /// <param name="authorization">Authorization Information.</param>
         /// <param name="options">Optional client configuration.</param>
-        public Builder(string baseUrl, ClientAuthorization authorization, ClientOptions options = null)
+        public Table(string baseUrl, ClientAuthorization authorization, ClientOptions options = null)
         {
             BaseUrl = baseUrl;
 
@@ -79,7 +79,7 @@ namespace Postgrest
         /// <param name="op">Operation to perform.</param>
         /// <param name="criteria">Value to filter with.</param>
         /// <returns></returns>
-        public Builder<T> Filter(string columnName, Operator op, string criteria)
+        public Table<T> Filter(string columnName, Operator op, string criteria)
         {
             filters.Add(new QueryFilter(columnName, op, criteria));
             return this;
@@ -92,7 +92,7 @@ namespace Postgrest
         /// <param name="op">Operation to perform.</param>
         /// <param name="criteria">List of values to filter with.</param>
         /// <returns></returns>
-        public Builder<T> Filter(string columnName, Operator op, List<object> criteria)
+        public Table<T> Filter(string columnName, Operator op, List<object> criteria)
         {
             filters.Add(new QueryFilter(columnName, op, criteria));
             return this;
@@ -105,7 +105,7 @@ namespace Postgrest
         /// <param name="op">Operation to perform.</param>
         /// <param name="criteria"></param>
         /// <returns></returns>
-        public Builder<T> Filter(string columnName, Operator op, Dictionary<string, object> criteria)
+        public Table<T> Filter(string columnName, Operator op, Dictionary<string, object> criteria)
         {
             filters.Add(new QueryFilter(columnName, op, criteria));
             return this;
@@ -118,7 +118,7 @@ namespace Postgrest
         /// <param name="op">Operation to perform.</param>
         /// <param name="criteria"></param>
         /// <returns></returns>
-        public Builder<T> Filter(string columnName, Operator op, Range criteria)
+        public Table<T> Filter(string columnName, Operator op, Range criteria)
         {
             filters.Add(new QueryFilter(columnName, op, criteria));
             return this;
@@ -131,7 +131,7 @@ namespace Postgrest
         /// <param name="op">Operation to perform.</param>
         /// <param name="criteria"></param>
         /// <returns></returns>
-        public Builder<T> Filter(string columnName, Operator op, FullTextSearchConfig criteria)
+        public Table<T> Filter(string columnName, Operator op, FullTextSearchConfig criteria)
         {
             filters.Add(new QueryFilter(columnName, op, criteria));
             return this;
@@ -142,7 +142,7 @@ namespace Postgrest
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public Builder<T> Not(QueryFilter filter)
+        public Table<T> Not(QueryFilter filter)
         {
             filters.Add(new QueryFilter(Operator.Not, filter));
             return this;
@@ -153,7 +153,7 @@ namespace Postgrest
         /// </summary>
         /// <param name="filters"></param>
         /// <returns></returns>
-        public Builder<T> And(List<QueryFilter> filters)
+        public Table<T> And(List<QueryFilter> filters)
         {
             filters.Add(new QueryFilter(Operator.And, filters));
             return this;
@@ -164,13 +164,13 @@ namespace Postgrest
         /// </summary>
         /// <param name="filters"></param>
         /// <returns></returns>
-        public Builder<T> Or(List<QueryFilter> filters)
+        public Table<T> Or(List<QueryFilter> filters)
         {
             filters.Add(new QueryFilter(Operator.Or, filters));
             return this;
         }
 
-        public Builder<T> Match(Dictionary<string, string> query)
+        public Table<T> Match(Dictionary<string, string> query)
         {
             throw new NotImplementedException();
         }
@@ -182,7 +182,7 @@ namespace Postgrest
         /// <param name="ordering"></param>
         /// <param name="nullPosition"></param>
         /// <returns></returns>
-        public Builder<T> Order(string column, Ordering ordering, NullPosition nullPosition = NullPosition.First)
+        public Table<T> Order(string column, Ordering ordering, NullPosition nullPosition = NullPosition.First)
         {
             orderers.Add(new QueryOrderer(null, column, ordering, nullPosition));
             return this;
@@ -196,7 +196,7 @@ namespace Postgrest
         /// <param name="ordering"></param>
         /// <param name="nullPosition"></param>
         /// <returns></returns>
-        public Builder<T> Order(string foreignTable, string column, Ordering ordering, NullPosition nullPosition = NullPosition.First)
+        public Table<T> Order(string foreignTable, string column, Ordering ordering, NullPosition nullPosition = NullPosition.First)
         {
             orderers.Add(new QueryOrderer(foreignTable, column, ordering, nullPosition));
             return this;
@@ -208,7 +208,7 @@ namespace Postgrest
         /// </summary>
         /// <param name="from"></param>
         /// <returns></returns>
-        public Builder<T> Range(int from)
+        public Table<T> Range(int from)
         {
             rangeFrom = from;
             return this;
@@ -220,7 +220,7 @@ namespace Postgrest
         /// <param name="from"></param>
         /// <param name="to"></param>
         /// <returns></returns>
-        public Builder<T> Range(int from, int to)
+        public Table<T> Range(int from, int to)
         {
             rangeFrom = from;
             rangeTo = to;
@@ -232,7 +232,7 @@ namespace Postgrest
         /// </summary>
         /// <param name="columnQuery"></param>
         /// <returns></returns>
-        public Builder<T> Select(string columnQuery)
+        public Table<T> Select(string columnQuery)
         {
             method = HttpMethod.Get;
             this.columnQuery = columnQuery;
@@ -246,7 +246,7 @@ namespace Postgrest
         /// <param name="limit"></param>
         /// <param name="foreignTableName"></param>
         /// <returns></returns>
-        public Builder<T> Limit(int limit, string foreignTableName = null)
+        public Table<T> Limit(int limit, string foreignTableName = null)
         {
             this.limit = limit;
             this.limitForeignKey = foreignTableName;
@@ -260,7 +260,7 @@ namespace Postgrest
         /// <param name="offset"></param>
         /// <param name="foreignTableName"></param>
         /// <returns></returns>
-        public Builder<T> Offset(int offset, string foreignTableName = null)
+        public Table<T> Offset(int offset, string foreignTableName = null)
         {
             this.offset = offset;
             this.offsetForeignKey = foreignTableName;

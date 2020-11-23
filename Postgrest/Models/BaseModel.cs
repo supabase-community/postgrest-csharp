@@ -20,8 +20,8 @@ namespace Postgrest.Models
         [Column("updated_at")]
         public DateTime UpdatedAt { get; set; }
 
-        public virtual Task<ModeledResponse<T>> Update<T>() where T : BaseModel, new() => Client.Instance.Builder<T>().Update((T)this);
-        public virtual Task Delete<T>() where T : BaseModel, new() => Client.Instance.Builder<T>().Delete((T)this);
+        public virtual Task<ModeledResponse<T>> Update<T>() where T : BaseModel, new() => Client.Instance.Table<T>().Update((T)this);
+        public virtual Task Delete<T>() where T : BaseModel, new() => Client.Instance.Table<T>().Delete((T)this);
 
         /// <summary>
         /// Gets the value of the PrimaryKey from a model's instance as defined by the [PrimaryKey] attribute on a property on the model.

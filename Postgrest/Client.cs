@@ -95,10 +95,10 @@ namespace Postgrest
         }
 
         /// <summary>
-        /// Returns a Query Builder instance for a defined model - representative of `USE $TABLE`
+        /// Returns a Table Query Builder instance for a defined model - representative of `USE $TABLE`
         /// </summary>
         /// <typeparam name="T">Custom Model derived from `BaseModel`</typeparam>
         /// <returns></returns>
-        public Builder<T> Builder<T>() where T : BaseModel, new() => new Builder<T>(BaseUrl, authorization, options);
+        public Table<T> Table<T>() where T : BaseModel, new() => new Table<T>(BaseUrl, authorization, options);
     }
 }
