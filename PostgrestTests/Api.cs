@@ -377,5 +377,75 @@ namespace PostgrestTests
 
             CollectionAssert.AreEqual(linqOrderedUsers, supaOrderedUsers);
         }
+
+        [TestMethod("limit: basic")]
+        public async Task TestLimit()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            var limitedUsersResponse = await client.Builder<User>().Limit(2).Get();
+            var usersResponse = await client.Builder<User>().Get();
+
+            var supaLimitUsers = limitedUsersResponse.Models;
+            var linqLimitUsers = usersResponse.Models.Take(2).ToList() ;
+
+            CollectionAssert.AreEqual(linqLimitUsers, supaLimitUsers);
+        }
+
+        [TestMethod("offset: basic")]
+        public async Task TestOffset()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            var offsetUsersResponse = await client.Builder<User>().Offset(2).Get();
+            var usersResponse = await client.Builder<User>().Get();
+
+            var supaOffsetUsers = offsetUsersResponse.Models;
+            var linqSkipUsers = usersResponse.Models.Skip(2).ToList();
+
+            CollectionAssert.AreEqual(linqSkipUsers, supaOffsetUsers);
+        }
+
+        [TestMethod("range: from")]
+        public async Task TestRangeFrom()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            var rangeUsersResponse = await client.Builder<User>().Range(2).Get();
+            var usersResponse = await client.Builder<User>().Get();
+
+            var supaRangeUsers = rangeUsersResponse.Models;
+            var linqSkipUsers = usersResponse.Models.Skip(2).ToList();
+
+            CollectionAssert.AreEqual(linqSkipUsers, supaRangeUsers);
+        }
+
+        [TestMethod("range: from and to")]
+        public async Task TestRangeFromAndTo()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            var rangeUsersResponse = await client.Builder<User>().Range(1,3).Get();
+            var usersResponse = await client.Builder<User>().Get();
+
+            var supaRangeUsers = rangeUsersResponse.Models;
+            var linqRangeUsers = usersResponse.Models.Skip(1).Take(3).ToList();
+
+            CollectionAssert.AreEqual(linqRangeUsers, supaRangeUsers);
+        }
+
+        [TestMethod("range: limit and offset")]
+        public async Task TestRangeWithLimitAndOffset()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            var rangeUsersResponse = await client.Builder<User>().Limit(1).Offset(3).Get();
+            var usersResponse = await client.Builder<User>().Get();
+
+            var supaRangeUsers = rangeUsersResponse.Models;
+            var linqRangeUsers = usersResponse.Models.Skip(3).Take(1).ToList();
+
+            CollectionAssert.AreEqual(linqRangeUsers, supaRangeUsers);
+        }
     }
 }

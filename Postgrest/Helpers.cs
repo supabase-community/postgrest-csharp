@@ -69,7 +69,7 @@ namespace Postgrest
                 {
                     foreach (var kvp in headers)
                     {
-                        requestMessage.Headers.Add(kvp.Key, kvp.Value);
+                        requestMessage.Headers.TryAddWithoutValidation(kvp.Key, kvp.Value);
                     }
                 }
 
