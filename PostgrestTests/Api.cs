@@ -447,5 +447,48 @@ namespace PostgrestTests
 
             CollectionAssert.AreEqual(linqRangeUsers, supaRangeUsers);
         }
+
+        [TestMethod("filters: not")]
+        public async Task TestNotFilter()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var filter = new QueryFilter("username", Constants.Operator.Equals, "supabot");
+
+            var filtredResponse = await client.Table<User>().Not(filter).Get();
+            var usersResponse = await client.Table<User>().Get();
+
+            var supaFiltredUsers = filtredResponse.Models;
+            var linqFiltredUsers = usersResponse.Models.Where(u => u.Username != "supabot").ToList();
+
+            CollectionAssert.AreEqual(linqFiltredUsers, supaFiltredUsers);
+        }
+
+        [TestMethod("select: basic")]
+        public async Task TestSelect()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            var response = await client.Table<User>().Select("username").Get();
+            foreach (var user in response.Models)
+            {
+                Assert.IsNotNull(user.Username);
+                Assert.IsNull(user.Catchphrase);
+                Assert.IsNull(user.Status);
+            }
+        }
+
+        [TestMethod("select: multiple columns")]
+        public async Task TestSelectWithMultipleColumns()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            var response = await client.Table<User>().Select("username, status").Get();
+            foreach (var user in response.Models)
+            {
+                Assert.IsNotNull(user.Username);
+                Assert.IsNotNull(user.Status);
+                Assert.IsNull(user.Catchphrase);              
+            }
+        }
     }
 }
