@@ -490,5 +490,39 @@ namespace PostgrestTests
                 Assert.IsNull(user.Catchphrase);              
             }
         }
+
+        [TestMethod("insert: bulk")]
+        public async Task TestInsertBulk()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var rocketUser = new User
+            {
+                Username = "rocket",
+                AgeRange = new Range(35, 40),
+                Status = "ONLINE"
+            };
+
+            var aceUser = new User
+            {
+                Username = "ace",
+                AgeRange = new Range(21, 28),
+                Status = "OFFLINE"
+            };
+            var users = new List<User>
+            {
+               rocketUser,
+               aceUser
+            };
+
+
+            var response = await client.Table<User>().Insert(users);
+            var insertedUsers = response.Models;
+
+
+            CollectionAssert.AreEqual(users, insertedUsers);
+
+            await client.Table<User>().Delete(rocketUser);
+            await client.Table<User>().Delete(aceUser);
+        }
     }
 }

@@ -29,9 +29,9 @@ namespace Postgrest
         /// <param name="reqParams"></param>
         /// <param name="headers"></param>
         /// <returns></returns>
-        public static async Task<ModeledResponse<T>> MakeRequest<T>(HttpMethod method, string url, Dictionary<string, string> reqParams = null, Dictionary<string, string> headers = null)
+        public static async Task<ModeledResponse<T>> MakeRequest<T>(HttpMethod method, string url, object data = null, Dictionary<string, string> headers = null)
         {
-            var baseResponse = await MakeRequest(method, url, reqParams, headers);
+            var baseResponse = await MakeRequest(method, url, data, headers);
             return new ModeledResponse<T>(baseResponse);
         }
 
@@ -43,26 +43,31 @@ namespace Postgrest
         /// <param name="reqParams"></param>
         /// <param name="headers"></param>
         /// <returns></returns>
-        public static async Task<BaseResponse> MakeRequest(HttpMethod method, string url, Dictionary<string, string> reqParams = null, Dictionary<string, string> headers = null)
+        public static async Task<BaseResponse> MakeRequest(HttpMethod method, string url, object data = null, Dictionary<string, string> headers = null)
         {
             try
             {
                 var builder = new UriBuilder(url);
                 var query = HttpUtility.ParseQueryString(builder.Query);
 
-                if (reqParams != null && method == HttpMethod.Get)
+                if (data != null && method == HttpMethod.Get)
                 {
-                    foreach (var param in reqParams)
-                        query[param.Key] = param.Value;
+                    // Case if it's a Get request the data object is a dictionary<string,string>
+                    if(data is Dictionary<string,string> reqParams)
+                    {
+                        foreach (var param in reqParams)
+                            query[param.Key] = param.Value;
+                    }
+                    
                 }
 
                 builder.Query = query.ToString();
 
                 var requestMessage = new HttpRequestMessage(method, builder.Uri);
 
-                if (reqParams != null && method != HttpMethod.Get)
+                if (data != null && method != HttpMethod.Get)
                 {
-                    requestMessage.Content = new StringContent(JsonConvert.SerializeObject(reqParams, Client.Instance.SerializerSettings), Encoding.UTF8, "application/json");
+                    requestMessage.Content = new StringContent(JsonConvert.SerializeObject(data, Client.Instance.SerializerSettings), Encoding.UTF8, "application/json");
                 }
 
                 if (headers != null)
