@@ -22,15 +22,13 @@ namespace PostgrestTests.Models
         public override bool Equals(object obj)
         {
             return obj is User user &&
-                   Status == user.Status &&
                    Username == user.Username &&
-                   AgeRange.Equals(user.AgeRange) &&
                    Catchphrase == user.Catchphrase;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Status, Username, AgeRange, Catchphrase);
+            return HashCode.Combine(Username, Catchphrase);
         }
     }
 }

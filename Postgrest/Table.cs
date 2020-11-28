@@ -273,23 +273,15 @@ namespace Postgrest
         /// <param name="model"></param>
         /// <param name="options"></param>
         /// <returns>A typed model response from the database.</returns>
-        public Task<ModeledResponse<T>> Insert(T model, InsertOptions options = null)
-        {
-            method = HttpMethod.Post;
-            if (options == null)
-                options = new InsertOptions();
+        public Task<ModeledResponse<T>> Insert(T model, InsertOptions options = null) => PerformInsert(model, options);
 
-            var headers = new Dictionary<string, string>
-            {
-                { "Prefer", options.Upsert ? "return=representation,resolution=merge-duplicates" : "return=representation"}
-            };
-
-            var request = Send<T>(method, model, headers);
-
-            Clear();
-
-            return request;
-        }
+        /// <summary>
+        /// Executes a BULK INSERT query using the defined query params on the current instance.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="options"></param>
+        /// <returns>A typed model response from the database.</returns>
+        public Task<ModeledResponse<T>> Insert(ICollection<T> models, InsertOptions options = null) => PerformInsert(models, options);
 
         /// <summary>
         /// Executes an UPDATE query using the defined query params on the current instance.
@@ -460,7 +452,14 @@ namespace Postgrest
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public Dictionary<string, string> PrepareRequestData(object data) => JsonConvert.DeserializeObject<Dictionary<string, string>>(JsonConvert.SerializeObject(data, Client.Instance.SerializerSettings));
+        public object PrepareRequestData(object data) 
+        { 
+            // Check if data is a Collection for the Insert Bulk case
+            if(data is ICollection<T>)
+                return JsonConvert.DeserializeObject<ICollection<T>>(JsonConvert.SerializeObject(data, Client.Instance.SerializerSettings));
+
+            return JsonConvert.DeserializeObject<Dictionary<string,string>>(JsonConvert.SerializeObject(data, Client.Instance.SerializerSettings));
+        } 
 
         /// <summary>
         /// Prepares the request with appropriate HTTP headers expected by Postgrest.
@@ -607,6 +606,30 @@ namespace Postgrest
 
             offset = int.MinValue;
             offsetForeignKey = null;
+        }
+
+        /// <summary>
+        /// Performs an INSERT Request.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        private Task<ModeledResponse<T>> PerformInsert(object data, InsertOptions options = null)
+        {
+            method = HttpMethod.Post;
+            if (options == null)
+                options = new InsertOptions();
+
+            var headers = new Dictionary<string, string>
+            {
+                { "Prefer", options.Upsert ? "return=representation,resolution=merge-duplicates" : "return=representation"}
+            };
+
+            var request = Send<T>(method, data, headers);
+
+            Clear();
+
+            return request;
         }
 
         private Task<BaseResponse> Send(HttpMethod method, object data, Dictionary<string, string> headers = null)
