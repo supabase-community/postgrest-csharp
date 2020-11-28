@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -77,11 +78,11 @@ namespace Postgrest
         /// </summary>
         /// <param name="columnName">Column Name in Table.</param>
         /// <param name="op">Operation to perform.</param>
-        /// <param name="criteria">Value to filter with.</param>
+        /// <param name="criterion">Value to filter with.</param>
         /// <returns></returns>
-        public Table<T> Filter(string columnName, Operator op, string criteria)
+        public Table<T> Filter(string columnName, Operator op, string criterion)
         {
-            filters.Add(new QueryFilter(columnName, op, criteria));
+            filters.Add(new QueryFilter(columnName, op, criterion));
             return this;
         }
 
@@ -116,11 +117,11 @@ namespace Postgrest
         /// </summary>
         /// <param name="columnName">Column Name in Table.</param>
         /// <param name="op">Operation to perform.</param>
-        /// <param name="criteria"></param>
+        /// <param name="criterion"></param>
         /// <returns></returns>
-        public Table<T> Filter(string columnName, Operator op, Range criteria)
+        public Table<T> Filter(string columnName, Operator op, Range criterion)
         {
-            filters.Add(new QueryFilter(columnName, op, criteria));
+            filters.Add(new QueryFilter(columnName, op, criterion));
             return this;
         }
 
@@ -147,6 +148,42 @@ namespace Postgrest
             filters.Add(new QueryFilter(Operator.Not, filter));
             return this;
         }
+
+        /// <summary>
+        /// Adds a NOT filter to the current query args.
+        ///
+        /// Allows queries like:
+        /// <code>
+        /// await client.Table<User>().Not("status", Operators.Equal, "OFFLINE").Get();
+        /// </code>
+        /// </summary>
+        /// <param name="columnName"></param>
+        /// <param name="op"></param>
+        /// <param name="criterion"></param>
+        /// <returns></returns>
+        public Table<T> Not(string columnName, Operator op, string criterion) => Not(new QueryFilter(columnName, op, criterion));
+
+        /// <summary>
+        /// Adds a NOT filter to the current query args.
+        /// Allows queries like:
+        /// <code>
+        /// await client.Table<User>().Not("status", Operators.In, new List<string> {"AWAY", "OFFLINE"}).Get();
+        /// </code>
+        /// </summary>
+        /// <param name="columnName"></param>
+        /// <param name="op"></param>
+        /// <param name="criteria"></param>
+        /// <returns></returns>
+        public Table<T> Not(string columnName, Operator op, List<object> criteria) => Not(new QueryFilter(columnName, op, criteria));
+
+        /// <summary>
+        /// Adds a NOT filter to the current query args.
+        /// </summary>
+        /// <param name="columnName"></param>
+        /// <param name="op"></param>
+        /// <param name="criteria"></param>
+        /// <returns></returns>
+        public Table<T> Not(string columnName, Operator op, Dictionary<string, object> criteria) => Not(new QueryFilter(columnName, op, criteria));
 
         /// <summary>
         /// Adds an AND Filter to the current query args.
