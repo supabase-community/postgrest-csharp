@@ -8,6 +8,7 @@ using PostgrestTests.Models;
 using static Postgrest.ClientAuthorization;
 using System.Threading.Tasks;
 using System.Linq;
+using static Postgrest.Constants;
 
 namespace PostgrestTests
 {
@@ -123,16 +124,43 @@ namespace PostgrestTests
             }
         }
 
-        [TestMethod("filters: arrays with List<object> arguments")]
+        /// <summary>
+        /// See: http://postgrest.org/en/v7.0.0/api.html#operators
+        /// </summary>
+        [TestMethod("filters: `In` with List<object> arguments")]
         public void TestFiltersArraysWithLists()
         {
             var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             // UrlEncoded {"bar","buzz"}
-            string exp = "{\"bar\",\"buzz\"}";
+            string exp = "(\"bar\",\"buzz\")";
             var dict = new Dictionary<Constants.Operator, string>
             {
                 { Constants.Operator.In, $"in.{exp}" },
+            };
+
+            foreach (var pair in dict)
+            {
+                var list = new List<object> { "bar", "buzz" };
+                var filter = new QueryFilter("foo", pair.Key, list);
+                var result = client.Table<User>().PrepareFilter(filter);
+                Assert.AreEqual("foo", result.Key);
+                Assert.AreEqual(pair.Value, result.Value);
+            }
+        }
+
+        /// <summary>
+        /// See: http://postgrest.org/en/v7.0.0/api.html#operators
+        /// </summary>
+        [TestMethod("filters: `Contains`, `ContainedIn`, `Overlap` with List<object> arguments")]
+        public void TestFiltersContainsArraysWithLists()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            // UrlEncoded {bar,buzz} - according to documentation, does not accept quoted strings
+            string exp = "{bar,buzz}";
+            var dict = new Dictionary<Constants.Operator, string>
+            {
                 { Constants.Operator.Contains, $"cs.{exp}" },
                 { Constants.Operator.ContainedIn, $"cd.{exp}" },
                 { Constants.Operator.Overlap, $"ov.{exp}" },
@@ -266,7 +294,7 @@ namespace PostgrestTests
 
             var user = await client.Table<User>().Filter("username", Postgrest.Constants.Operator.Equals, "supabot").Single();
 
-            if(user != null)
+            if (user != null)
             {
                 // Update user status
                 user.Status = "OFFLINE";
@@ -277,7 +305,7 @@ namespace PostgrestTests
                 Assert.AreEqual(1, response.Models.Count);
                 Assert.AreEqual(user.Username, updatedUser.Username);
                 Assert.AreEqual(user.Status, updatedUser.Status);
-                    
+
             }
         }
 
@@ -305,7 +333,7 @@ namespace PostgrestTests
 
             var newUser = new User
             {
-                Username = "skikra",
+                Username = Guid.NewGuid().ToString(),
                 AgeRange = new Range(18, 22),
                 Catchphrase = "what a shot",
                 Status = "ONLINE"
@@ -355,7 +383,7 @@ namespace PostgrestTests
                 Upsert = true
             };
 
-            var response = await client.Table<User>().Insert(supaUpdated,insertOptions);
+            var response = await client.Table<User>().Insert(supaUpdated, insertOptions);
             var updatedUser = response.Models.First();
 
             Assert.AreEqual(1, response.Models.Count);
@@ -387,7 +415,7 @@ namespace PostgrestTests
             var usersResponse = await client.Table<User>().Get();
 
             var supaLimitUsers = limitedUsersResponse.Models;
-            var linqLimitUsers = usersResponse.Models.Take(2).ToList() ;
+            var linqLimitUsers = usersResponse.Models.Take(2).ToList();
 
             CollectionAssert.AreEqual(linqLimitUsers, supaLimitUsers);
         }
@@ -425,7 +453,7 @@ namespace PostgrestTests
         {
             var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
-            var rangeUsersResponse = await client.Table<User>().Range(1,3).Get();
+            var rangeUsersResponse = await client.Table<User>().Range(1, 3).Get();
             var usersResponse = await client.Table<User>().Get();
 
             var supaRangeUsers = rangeUsersResponse.Models;
@@ -454,13 +482,51 @@ namespace PostgrestTests
             var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
             var filter = new QueryFilter("username", Constants.Operator.Equals, "supabot");
 
-            var filtredResponse = await client.Table<User>().Not(filter).Get();
+            var filteredResponse = await client.Table<User>().Not(filter).Get();
             var usersResponse = await client.Table<User>().Get();
 
-            var supaFiltredUsers = filtredResponse.Models;
-            var linqFiltredUsers = usersResponse.Models.Where(u => u.Username != "supabot").ToList();
+            var supaFilteredUsers = filteredResponse.Models;
+            var linqFilteredUsers = usersResponse.Models.Where(u => u.Username != "supabot").ToList();
 
-            CollectionAssert.AreEqual(linqFiltredUsers, supaFiltredUsers);
+            CollectionAssert.AreEqual(linqFilteredUsers, supaFilteredUsers);
+        }
+
+        [TestMethod("filters: `not` shorthand")]
+        public async Task TestNotShorthandFilter()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            // Standard NOT Equal Op.
+            var filteredResponse = await client.Table<User>().Not("username", Operator.Equals, "supabot").Get();
+            var usersResponse = await client.Table<User>().Get();
+
+            var supaFilteredUsers = filteredResponse.Models;
+            var linqFilteredUsers = usersResponse.Models.Where(u => u.Username != "supabot").ToList();
+
+            CollectionAssert.AreEqual(linqFilteredUsers, supaFilteredUsers);
+
+            // NOT `In` Shorthand Op.
+            var notInFilterResponse = await client.Table<User>().Not("username", Operator.In, new List<object> { "supabot", "kiwicopple" }).Get();
+            var supaNotInList = notInFilterResponse.Models;
+            var linqNotInList = usersResponse.Models.Where(u => u.Username != "supabot").Where(u => u.Username != "kiwicopple").ToList();
+
+            CollectionAssert.AreEqual(supaNotInList, linqNotInList);
+        }
+
+        [TestMethod("filters: in")]
+        public async Task TestInFilter()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            var criteria = new List<object> { "supabot", "kiwicopple" };
+
+            var filteredResponse = await client.Table<User>().Filter("username", Operator.In, criteria).Get();
+            var usersResponse = await client.Table<User>().Get();
+
+            var supaFilteredUsers = filteredResponse.Models;
+            var linqFilteredUsers = usersResponse.Models.Where(u => u.Username == "supabot" || u.Username == "kiwicopple").OrderByDescending(u => u.Username).ToList();
+
+            CollectionAssert.AreEqual(linqFilteredUsers, supaFilteredUsers);
         }
 
         [TestMethod("select: basic")]
@@ -487,7 +553,7 @@ namespace PostgrestTests
             {
                 Assert.IsNotNull(user.Username);
                 Assert.IsNotNull(user.Status);
-                Assert.IsNull(user.Catchphrase);              
+                Assert.IsNull(user.Catchphrase);
             }
         }
 

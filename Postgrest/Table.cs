@@ -544,6 +544,8 @@ namespace Postgrest
 
         /// <summary>
         /// Transforms the defined filters into the expected Postgrest format.
+        ///
+        /// See: http://postgrest.org/en/v7.0.0/api.html#operators
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
@@ -584,15 +586,29 @@ namespace Postgrest
                         }
                         break;
                     case Operator.In:
+                        if (filter.Criteria is List<object> inCriteria)
+                        {
+                            foreach (var item in inCriteria)
+                                str += $"\"{item}\",";
+
+                            str = str.Trim(',');
+                            return new KeyValuePair<string, string>(filter.Property, $"{asAttribute.Mapping}.({str})");
+                        }
+                        else if (filter.Criteria is Dictionary<string, object> dictCriteria)
+                        {
+                            return new KeyValuePair<string, string>(filter.Property, $"{asAttribute.Mapping}.{JsonConvert.SerializeObject(dictCriteria)}");
+                        }
+                        break;
                     case Operator.Contains:
                     case Operator.ContainedIn:
                     case Operator.Overlap:
                         if (filter.Criteria is List<object> listCriteria)
                         {
                             foreach (var item in listCriteria)
-                                str += $"\"{item}\",";
+                                str += $"{item},";
+                            str = str.Trim(',');
 
-                            return new KeyValuePair<string, string>(filter.Property, $"{asAttribute.Mapping}.{{{str.Trim(',')}}}");
+                            return new KeyValuePair<string, string>(filter.Property, $"{asAttribute.Mapping}.{{{str}}}");
                         }
                         else if (filter.Criteria is Dictionary<string, object> dictCriteria)
                         {
