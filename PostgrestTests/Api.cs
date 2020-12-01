@@ -524,9 +524,123 @@ namespace PostgrestTests
             var usersResponse = await client.Table<User>().Get();
 
             var supaFilteredUsers = filteredResponse.Models;
-            var linqFilteredUsers = usersResponse.Models.Where(u => u.Username == "supabot" || u.Username == "kiwicopple").OrderByDescending(u => u.Username).ToList();
+            var linqFilteredUsers = usersResponse.Models.Where(u => u.Username == "supabot" || u.Username == "kiwicopple").ToList();
 
             CollectionAssert.AreEqual(linqFilteredUsers, supaFilteredUsers);
+        }
+
+        [TestMethod("filters: eq")]
+        public async Task TestEqualsFilter()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            var filteredResponse = await client.Table<User>().Filter("username", Operator.Equals, "supabot").Get();
+            var usersResponse = await client.Table<User>().Get();
+
+            var supaFilteredUsers = filteredResponse.Models;
+            var linqFilteredUsers = usersResponse.Models.Where(u => u.Username == "supabot").ToList();
+
+            Assert.AreEqual(1, supaFilteredUsers.Count);
+            CollectionAssert.AreEqual(linqFilteredUsers, supaFilteredUsers);
+        }
+
+        [TestMethod("filters: gt")]
+        public async Task TestGreaterThanFilter()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            var filteredResponse = await client.Table<Message>().Filter("id", Operator.GreaterThan, "1").Get();
+            var messagesResponse = await client.Table<Message>().Get();
+
+            var supaFilteredMessages = filteredResponse.Models;
+            var linqFilteredMessages = messagesResponse.Models.Where(m => m.Id > 1).ToList();
+
+            Assert.AreEqual(1, supaFilteredMessages.Count);
+            CollectionAssert.AreEqual(linqFilteredMessages, supaFilteredMessages);
+        }
+
+        [TestMethod("filters: gte")]
+        public async Task TestGreaterThanOrEqualFilter()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            var filteredResponse = await client.Table<Message>().Filter("id", Operator.GreaterThanOrEqual, "1").Get();
+            var messagesResponse = await client.Table<Message>().Get();
+
+            var supaFilteredMessages = filteredResponse.Models;
+            var linqFilteredMessages = messagesResponse.Models.Where(m => m.Id >= 1).ToList();
+
+            CollectionAssert.AreEqual(linqFilteredMessages, supaFilteredMessages);
+        }
+
+        [TestMethod("filters: lt")]
+        public async Task TestlessThanFilter()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            var filteredResponse = await client.Table<Message>().Filter("id", Operator.LessThan, "2").Get();
+            var messagesResponse = await client.Table<Message>().Get();
+
+            var supaFilteredMessages = filteredResponse.Models;
+            var linqFilteredMessages = messagesResponse.Models.Where(m => m.Id < 2).ToList();
+
+            CollectionAssert.AreEqual(linqFilteredMessages, supaFilteredMessages);
+        }
+
+        [TestMethod("filters: lte")]
+        public async Task TestLessThanOrEqualFilter()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            var filteredResponse = await client.Table<Message>().Filter("id", Operator.LessThanOrEqual, "2").Get();
+            var messagesResponse = await client.Table<Message>().Get();
+
+            var supaFilteredMessages = filteredResponse.Models;
+            var linqFilteredMessages = messagesResponse.Models.Where(m => m.Id <= 2).ToList();
+
+            CollectionAssert.AreEqual(linqFilteredMessages, supaFilteredMessages);
+        }
+
+        [TestMethod("filters: nqe")]
+        public async Task TestNotEqualFilter()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            var filteredResponse = await client.Table<Message>().Filter("id", Operator.NotEqual, "2").Get();
+            var messagesResponse = await client.Table<Message>().Get();
+
+            var supaFilteredMessages = filteredResponse.Models;
+            var linqFilteredMessages = messagesResponse.Models.Where(m => m.Id != 2).ToList();
+
+            CollectionAssert.AreEqual(linqFilteredMessages, supaFilteredMessages);
+        }
+
+        [TestMethod("filters: like")]
+        public async Task TestLikeFilter()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            var filteredResponse = await client.Table<Message>().Filter("username", Operator.Like, "s%").Get();
+            var messagesResponse = await client.Table<Message>().Get();
+
+            var supaFilteredMessages = filteredResponse.Models;
+            var linqFilteredMessages = messagesResponse.Models.Where(m => m.UserName.StartsWith('s')).ToList();
+
+            CollectionAssert.AreEqual(linqFilteredMessages, supaFilteredMessages);
+        }
+
+        [TestMethod("filters: ilike")]
+        public async Task TestILikeFilter()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            var filteredResponse = await client.Table<Message>().Filter("username", Operator.ILike, "%SUPA%").Get();
+            var messagesResponse = await client.Table<Message>().Get();
+
+            var supaFilteredMessages = filteredResponse.Models;
+            var linqFilteredMessages = messagesResponse.Models.Where(m => m.UserName.Contains("SUPA",StringComparison.OrdinalIgnoreCase)).ToList();
+
+            CollectionAssert.AreEqual(linqFilteredMessages, supaFilteredMessages);
         }
 
         [TestMethod("select: basic")]
