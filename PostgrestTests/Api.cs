@@ -397,11 +397,11 @@ namespace PostgrestTests
         {
             var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
-            var orderedResponse = await client.Table<User>().Order("catchphrase", Constants.Ordering.Descending).Get();
+            var orderedResponse = await client.Table<User>().Order("username", Constants.Ordering.Descending).Get();
             var unorderedResponse = await client.Table<User>().Get();
 
             var supaOrderedUsers = orderedResponse.Models;
-            var linqOrderedUsers = unorderedResponse.Models.OrderByDescending(u => u.Catchphrase).ToList();
+            var linqOrderedUsers = unorderedResponse.Models.OrderByDescending(u => u.Username).ToList();
 
             CollectionAssert.AreEqual(linqOrderedUsers, supaOrderedUsers);
         }
@@ -513,6 +513,70 @@ namespace PostgrestTests
             CollectionAssert.AreEqual(supaNotInList, linqNotInList);
         }
 
+        [TestMethod("filters: null operation `Equals`")]
+        public async Task TestEqualsNullFilterEquals()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            await client.Table<User>().Insert(new User { Username = "acupofjose", Status = "ONLINE", Catchphrase = null }, new InsertOptions { Upsert = true });
+
+            var filteredResponse = await client.Table<User>().Filter("catchphrase", Operator.Equals, null).Get();
+            var usersResponse = await client.Table<User>().Get();
+
+            var supaFilteredUsers = filteredResponse.Models;
+            var linqFilteredUsers = usersResponse.Models.Where(u => u.Catchphrase == null).ToList();
+
+            CollectionAssert.AreEqual(linqFilteredUsers, supaFilteredUsers);
+        }
+
+        [TestMethod("filters: null operation `Is`")]
+        public async Task TestEqualsNullFilterIs()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            await client.Table<User>().Insert(new User { Username = "acupofjose", Status = "ONLINE", Catchphrase = null }, new InsertOptions { Upsert = true });
+
+            var filteredResponse = await client.Table<User>().Filter("catchphrase", Operator.Is, null).Get();
+            var usersResponse = await client.Table<User>().Get();
+
+            var supaFilteredUsers = filteredResponse.Models;
+            var linqFilteredUsers = usersResponse.Models.Where(u => u.Catchphrase == null).ToList();
+
+            CollectionAssert.AreEqual(linqFilteredUsers, supaFilteredUsers);
+        }
+
+        [TestMethod("filters: null operation `NotEquals`")]
+        public async Task TestEqualsNullFilterNotEquals()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            await client.Table<User>().Insert(new User { Username = "acupofjose", Status = "ONLINE", Catchphrase = null }, new InsertOptions { Upsert = true });
+
+            var filteredResponse = await client.Table<User>().Filter("catchphrase", Operator.NotEqual, null).Get();
+            var usersResponse = await client.Table<User>().Get();
+
+            var supaFilteredUsers = filteredResponse.Models;
+            var linqFilteredUsers = usersResponse.Models.Where(u => u.Catchphrase != null).ToList();
+
+            CollectionAssert.AreEqual(linqFilteredUsers, supaFilteredUsers);
+        }
+
+        [TestMethod("filters: null operation `Not`")]
+        public async Task TestEqualsNullNot()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            await client.Table<User>().Insert(new User { Username = "acupofjose", Status = "ONLINE", Catchphrase = null }, new InsertOptions { Upsert = true });
+
+            var filteredResponse = await client.Table<User>().Filter("catchphrase", Operator.Not, null).Get();
+            var usersResponse = await client.Table<User>().Get();
+
+            var supaFilteredUsers = filteredResponse.Models;
+            var linqFilteredUsers = usersResponse.Models.Where(u => u.Catchphrase != null).ToList();
+
+            CollectionAssert.AreEqual(linqFilteredUsers, supaFilteredUsers);
+        }
+
         [TestMethod("filters: in")]
         public async Task TestInFilter()
         {
@@ -520,11 +584,11 @@ namespace PostgrestTests
 
             var criteria = new List<object> { "supabot", "kiwicopple" };
 
-            var filteredResponse = await client.Table<User>().Filter("username", Operator.In, criteria).Get();
+            var filteredResponse = await client.Table<User>().Filter("username", Operator.In, criteria).Order("username", Ordering.Descending).Get();
             var usersResponse = await client.Table<User>().Get();
 
             var supaFilteredUsers = filteredResponse.Models;
-            var linqFilteredUsers = usersResponse.Models.Where(u => u.Username == "supabot" || u.Username == "kiwicopple").ToList();
+            var linqFilteredUsers = usersResponse.Models.OrderByDescending(u => u.Username).Where(u => u.Username == "supabot" || u.Username == "kiwicopple").ToList();
 
             CollectionAssert.AreEqual(linqFilteredUsers, supaFilteredUsers);
         }
@@ -638,7 +702,7 @@ namespace PostgrestTests
             var messagesResponse = await client.Table<Message>().Get();
 
             var supaFilteredMessages = filteredResponse.Models;
-            var linqFilteredMessages = messagesResponse.Models.Where(m => m.UserName.Contains("SUPA",StringComparison.OrdinalIgnoreCase)).ToList();
+            var linqFilteredMessages = messagesResponse.Models.Where(m => m.UserName.Contains("SUPA", StringComparison.OrdinalIgnoreCase)).ToList();
 
             CollectionAssert.AreEqual(linqFilteredMessages, supaFilteredMessages);
         }

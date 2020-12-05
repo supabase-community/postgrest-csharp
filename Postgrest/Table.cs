@@ -74,68 +74,53 @@ namespace Postgrest
         }
 
         /// <summary>
-        /// Adds a single value Filter to the current query args.
+        /// Add a Filter to a query request
         /// </summary>
         /// <param name="columnName">Column Name in Table.</param>
         /// <param name="op">Operation to perform.</param>
-        /// <param name="criterion">Value to filter with.</param>
+        /// <param name="criterion">Value to filter with, must be a `string`, `List<object>`, `Dictionary<string, object>`, or `Range`</string></object></param>
         /// <returns></returns>
-        public Table<T> Filter(string columnName, Operator op, string criterion)
+        public Table<T> Filter(string columnName, Operator op, object criterion)
         {
-            filters.Add(new QueryFilter(columnName, op, criterion));
-            return this;
-        }
+            if (criterion == null)
+            {
+                switch (op)
+                {
+                    case Operator.Equals:
+                    case Operator.Is:
+                        filters.Add(new QueryFilter(columnName, Operator.Is, QueryFilter.NULL_VAL));
+                        break;
+                    case Operator.Not:
+                    case Operator.NotEqual:
+                        filters.Add(new QueryFilter(columnName, Operator.Not, new QueryFilter(columnName, Operator.Is, QueryFilter.NULL_VAL)));
+                        break;
+                    default:
+                        throw new Exception("NOT filters must use the `Equals`, `Is`, `Not` or `NotEqual` operators");
+                }
+                return this;
+            }
+            else if (criterion is string stringCriterion)
+            {
+                filters.Add(new QueryFilter(columnName, op, stringCriterion));
+                return this;
+            }
+            else if (criterion is List<object> listCriteria)
+            {
+                filters.Add(new QueryFilter(columnName, op, listCriteria));
+                return this;
+            }
+            else if (criterion is Dictionary<string, object> dictCriteria)
+            {
+                filters.Add(new QueryFilter(columnName, op, dictCriteria));
+                return this;
+            }
+            else if (criterion is Range rangeCriteria)
+            {
+                filters.Add(new QueryFilter(columnName, op, rangeCriteria));
+                return this;
+            }
 
-        /// <summary>
-        /// Adds a multiple value Filter to the current query args.
-        /// </summary>
-        /// <param name="columnName">Column Name in Table.</param>
-        /// <param name="op">Operation to perform.</param>
-        /// <param name="criteria">List of values to filter with.</param>
-        /// <returns></returns>
-        public Table<T> Filter(string columnName, Operator op, List<object> criteria)
-        {
-            filters.Add(new QueryFilter(columnName, op, criteria));
-            return this;
-        }
-
-        /// <summary>
-        /// Adds a mapped value Filter to the current query args.
-        /// </summary>
-        /// <param name="columnName">Column Name in Table.</param>
-        /// <param name="op">Operation to perform.</param>
-        /// <param name="criteria"></param>
-        /// <returns></returns>
-        public Table<T> Filter(string columnName, Operator op, Dictionary<string, object> criteria)
-        {
-            filters.Add(new QueryFilter(columnName, op, criteria));
-            return this;
-        }
-
-        /// <summary>
-        /// Adds a range value Filter to the current query args.
-        /// </summary>
-        /// <param name="columnName">Column Name in Table.</param>
-        /// <param name="op">Operation to perform.</param>
-        /// <param name="criterion"></param>
-        /// <returns></returns>
-        public Table<T> Filter(string columnName, Operator op, Range criterion)
-        {
-            filters.Add(new QueryFilter(columnName, op, criterion));
-            return this;
-        }
-
-        /// <summary>
-        /// Adds a full-text search filter to the current query args.
-        /// </summary>
-        /// <param name="columnName">Column Name in Table.</param>
-        /// <param name="op">Operation to perform.</param>
-        /// <param name="criteria"></param>
-        /// <returns></returns>
-        public Table<T> Filter(string columnName, Operator op, FullTextSearchConfig criteria)
-        {
-            filters.Add(new QueryFilter(columnName, op, criteria));
-            return this;
+            throw new Exception("Unknown criterion type, is it of type `string`, `List`, `Dictionary<string, object>`, or `Range`?");
         }
 
         /// <summary>
@@ -489,14 +474,14 @@ namespace Postgrest
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public object PrepareRequestData(object data) 
-        { 
+        public object PrepareRequestData(object data)
+        {
             // Check if data is a Collection for the Insert Bulk case
-            if(data is ICollection<T>)
+            if (data is ICollection<T>)
                 return JsonConvert.DeserializeObject<ICollection<T>>(JsonConvert.SerializeObject(data, Client.Instance.SerializerSettings));
 
-            return JsonConvert.DeserializeObject<Dictionary<string,string>>(JsonConvert.SerializeObject(data, Client.Instance.SerializerSettings));
-        } 
+            return JsonConvert.DeserializeObject<Dictionary<string, string>>(JsonConvert.SerializeObject(data, Client.Instance.SerializerSettings));
+        }
 
         /// <summary>
         /// Prepares the request with appropriate HTTP headers expected by Postgrest.

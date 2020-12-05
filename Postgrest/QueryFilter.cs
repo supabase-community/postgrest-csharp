@@ -5,9 +5,13 @@ using static Postgrest.Constants;
 
 namespace Postgrest
 {
-
     public class QueryFilter
     {
+        /// <summary>
+        /// String value to be subsituted for a null criterion
+        /// </summary>
+        public static string NULL_VAL = "null";
+
         public string Property { get; private set; }
         public Operator Op { get; private set; }
         public object Criteria { get; private set; }
