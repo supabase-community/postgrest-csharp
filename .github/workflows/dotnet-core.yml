@@ -12,7 +12,9 @@ jobs:
     steps:
       - name: Init Testing Env
         uses: isbang/compose-action@v0.1.1
-      
+        with:
+          compose-file: ../../docker-compose.yml
+        
       - uses: actions/checkout@v2
       
       - name: Setup .NET Core
