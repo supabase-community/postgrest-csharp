@@ -6,6 +6,8 @@
 
 # postgrest-csharp (currently WIP)
 
+![Build And Test](https://github.com/supabase/postgrest-csharp/workflows/Build%20And%20Test/badge.svg)
+
 ## This repo is currently public for the sake of contributions - it should NOT be used in anything remotely resembling production
 
 Postgrest-csharp is written primarily as a helper library for [supabase/supabase-csharp](https://github.com/supabase/supabase-csharp), however, it should be easy enough to use outside of the supabase ecosystem.
