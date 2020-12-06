@@ -693,6 +693,17 @@ namespace PostgrestTests
             CollectionAssert.AreEqual(linqFilteredMessages, supaFilteredMessages);
         }
 
+        [TestMethod("filters: cs")]
+        public async Task TestContainsFilter()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            await client.Table<User>().Insert(new User { Username = "skikra", Status = "ONLINE", AgeRange = new Range(1,3) }, new InsertOptions { Upsert = true });
+            var filteredResponse = await client.Table<User>().Filter("age_range", Operator.Contains, new Range(1,2)).Get();
+
+            Assert.AreEqual(1, filteredResponse.Models.Count);
+        }
+
         [TestMethod("filters: ilike")]
         public async Task TestILikeFilter()
         {
