@@ -599,6 +599,10 @@ namespace Postgrest
                         {
                             return new KeyValuePair<string, string>(filter.Property, $"{asAttribute.Mapping}.{JsonConvert.SerializeObject(dictCriteria)}");
                         }
+                        else if (filter.Criteria is Range rangeCriteria)
+                        {
+                            return new KeyValuePair<string, string>(filter.Property, $"{asAttribute.Mapping}.{rangeCriteria.ToPostgresString()}");
+                        }
                         break;
                     case Operator.StrictlyLeft:
                     case Operator.StrictlyRight:

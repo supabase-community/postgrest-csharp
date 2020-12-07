@@ -128,6 +128,7 @@ namespace Postgrest
             switch (op)
             {
                 case Operator.Overlap:
+                case Operator.Contains:
                 case Operator.StrictlyLeft:
                 case Operator.StrictlyRight:
                 case Operator.NotRightOf:
