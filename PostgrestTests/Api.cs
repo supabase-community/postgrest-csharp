@@ -714,6 +714,66 @@ namespace PostgrestTests
             Assert.AreEqual(2, filteredResponse.Models.Count);
         }
 
+        [TestMethod("filters: sr")]
+        public async Task TestStrictlyLeftFilter()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            var filteredResponse = await client.Table<User>().Filter("age_range", Operator.StrictlyLeft, new Range(2, 26)).Get();
+
+            Assert.AreEqual(1, filteredResponse.Models.Count);
+        }
+
+        [TestMethod("filters: sl")]
+        public async Task TestStrictlyRightFilter()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            var filteredResponse = await client.Table<User>().Filter("age_range", Operator.StrictlyRight, new Range(1, 2)).Get();
+
+            Assert.AreEqual(5, filteredResponse.Models.Count);
+        }
+
+        [TestMethod("filters: nxl")]
+        public async Task TestNotExtendToLeftFilter()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            var filteredResponse = await client.Table<User>().Filter("age_range", Operator.NotLeftOf, new Range(2, 4)).Get();
+
+            Assert.AreEqual(5, filteredResponse.Models.Count);
+        }
+
+        [TestMethod("filters: nxr")]
+        public async Task TestNotExtendToRightFilter()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            var filteredResponse = await client.Table<User>().Filter("age_range", Operator.NotRightOf, new Range(2, 4)).Get();
+
+            Assert.AreEqual(2, filteredResponse.Models.Count);
+        }
+
+        [TestMethod("filters: adj")]
+        public async Task TestAdjacentFilter()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            var filteredResponse = await client.Table<User>().Filter("age_range", Operator.Adjacent, new Range(1, 2)).Get();
+
+            Assert.AreEqual(2, filteredResponse.Models.Count);
+        }
+
+        [TestMethod("filters: ov")]
+        public async Task TestOverlapFilter()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            var filteredResponse = await client.Table<User>().Filter("age_range", Operator.Overlap, new Range(2, 4)).Get();
+
+            Assert.AreEqual(2, filteredResponse.Models.Count);
+        }
+
         [TestMethod("filters: ilike")]
         public async Task TestILikeFilter()
         {
