@@ -129,6 +129,7 @@ namespace Postgrest
             {
                 case Operator.Overlap:
                 case Operator.Contains:
+                case Operator.ContainedIn:
                 case Operator.StrictlyLeft:
                 case Operator.StrictlyRight:
                 case Operator.NotRightOf:

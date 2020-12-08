@@ -704,6 +704,16 @@ namespace PostgrestTests
             Assert.AreEqual(1, filteredResponse.Models.Count);
         }
 
+        [TestMethod("filters: cd")]
+        public async Task TestContainedFilter()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            var filteredResponse = await client.Table<User>().Filter("age_range", Operator.ContainedIn, new Range(25, 35)).Get();
+
+            Assert.AreEqual(2, filteredResponse.Models.Count);
+        }
+
         [TestMethod("filters: ilike")]
         public async Task TestILikeFilter()
         {
