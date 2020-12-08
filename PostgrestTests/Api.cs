@@ -698,10 +698,13 @@ namespace PostgrestTests
         {
             var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
-            await client.Table<User>().Insert(new User { Username = "skikra", Status = "ONLINE", AgeRange = new Range(1,3) }, new InsertOptions { Upsert = true });
-            var filteredResponse = await client.Table<User>().Filter("age_range", Operator.Contains, new Range(1,2)).Get();
+            await client.Table<User>().Insert(new User { Username = "skikra", Status = "ONLINE", AgeRange = new Range(1, 3) }, new InsertOptions { Upsert = true });
+            var filteredResponse = await client.Table<User>().Filter("age_range", Operator.Contains, new Range(1, 2)).Get();
+            var usersResponse = await client.Table<User>().Get();
 
-            Assert.AreEqual(1, filteredResponse.Models.Count);
+            var testAgainst = usersResponse.Models.Where(m => m.AgeRange.Start.Value <= 1 && m.AgeRange.End.Value >= 2).ToList();
+
+            CollectionAssert.AreEqual(testAgainst, filteredResponse.Models);
         }
 
         [TestMethod("filters: cd")]
@@ -710,8 +713,11 @@ namespace PostgrestTests
             var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var filteredResponse = await client.Table<User>().Filter("age_range", Operator.ContainedIn, new Range(25, 35)).Get();
+            var usersResponse = await client.Table<User>().Get();
 
-            Assert.AreEqual(2, filteredResponse.Models.Count);
+            var testAgainst = usersResponse.Models.Where(m => m.AgeRange.Start.Value >= 25 && m.AgeRange.End.Value <= 35).ToList();
+
+            CollectionAssert.AreEqual(testAgainst, filteredResponse.Models);
         }
 
         [TestMethod("filters: sr")]
@@ -719,9 +725,13 @@ namespace PostgrestTests
         {
             var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
-            var filteredResponse = await client.Table<User>().Filter("age_range", Operator.StrictlyLeft, new Range(2, 26)).Get();
+            await client.Table<User>().Insert(new User { Username = "minds3t", Status = "ONLINE", AgeRange = new Range(3, 6) }, new InsertOptions { Upsert = true });
+            var filteredResponse = await client.Table<User>().Filter("age_range", Operator.StrictlyLeft, new Range(7, 8)).Get();
+            var usersResponse = await client.Table<User>().Get();
 
-            Assert.AreEqual(1, filteredResponse.Models.Count);
+            var testAgainst = usersResponse.Models.Where(m => m.AgeRange.Start.Value < 7 && m.AgeRange.End.Value < 7).ToList();
+
+            CollectionAssert.AreEqual(testAgainst, filteredResponse.Models);
         }
 
         [TestMethod("filters: sl")]
@@ -730,8 +740,11 @@ namespace PostgrestTests
             var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var filteredResponse = await client.Table<User>().Filter("age_range", Operator.StrictlyRight, new Range(1, 2)).Get();
+            var usersResponse = await client.Table<User>().Get();
 
-            Assert.AreEqual(5, filteredResponse.Models.Count);
+            var testAgainst = usersResponse.Models.Where(m => m.AgeRange.Start.Value > 2 && m.AgeRange.End.Value > 2).ToList();
+
+            CollectionAssert.AreEqual(testAgainst, filteredResponse.Models);
         }
 
         [TestMethod("filters: nxl")]
@@ -740,8 +753,11 @@ namespace PostgrestTests
             var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var filteredResponse = await client.Table<User>().Filter("age_range", Operator.NotLeftOf, new Range(2, 4)).Get();
+            var usersResponse = await client.Table<User>().Get();
 
-            Assert.AreEqual(5, filteredResponse.Models.Count);
+            var testAgainst = usersResponse.Models.Where(m => m.AgeRange.Start.Value >= 2 && m.AgeRange.End.Value >= 2).ToList();
+
+            CollectionAssert.AreEqual(testAgainst, filteredResponse.Models);
         }
 
         [TestMethod("filters: nxr")]
@@ -750,8 +766,11 @@ namespace PostgrestTests
             var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var filteredResponse = await client.Table<User>().Filter("age_range", Operator.NotRightOf, new Range(2, 4)).Get();
+            var usersResponse = await client.Table<User>().Get();
 
-            Assert.AreEqual(2, filteredResponse.Models.Count);
+            var testAgainst = usersResponse.Models.Where(m => m.AgeRange.Start.Value <= 4 && m.AgeRange.End.Value <= 4).ToList();
+
+            CollectionAssert.AreEqual(testAgainst, filteredResponse.Models);
         }
 
         [TestMethod("filters: adj")]
@@ -760,8 +779,11 @@ namespace PostgrestTests
             var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var filteredResponse = await client.Table<User>().Filter("age_range", Operator.Adjacent, new Range(1, 2)).Get();
+            var usersResponse = await client.Table<User>().Get();
 
-            Assert.AreEqual(2, filteredResponse.Models.Count);
+            var testAgainst = usersResponse.Models.Where(m => (m.AgeRange.End.Value == 0) || m.AgeRange.Start.Value == 3).ToList();
+
+            CollectionAssert.AreEqual(testAgainst, filteredResponse.Models);
         }
 
         [TestMethod("filters: ov")]
@@ -770,8 +792,11 @@ namespace PostgrestTests
             var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var filteredResponse = await client.Table<User>().Filter("age_range", Operator.Overlap, new Range(2, 4)).Get();
+            var usersResponse = await client.Table<User>().Get();
 
-            Assert.AreEqual(2, filteredResponse.Models.Count);
+            var testAgainst = usersResponse.Models.Where(m => m.AgeRange.Start.Value <= 4 && m.AgeRange.End.Value >= 2).ToList();
+
+            CollectionAssert.AreEqual(testAgainst, filteredResponse.Models);
         }
 
         [TestMethod("filters: ilike")]
