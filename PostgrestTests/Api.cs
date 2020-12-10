@@ -813,6 +813,55 @@ namespace PostgrestTests
             CollectionAssert.AreEqual(linqFilteredMessages, supaFilteredMessages);
         }
 
+        [TestMethod("filters: fts")]
+        public async Task TestFullTextSearch()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var config = new FullTextSearchConfig("'fat' & 'cat'", "english");
+
+            var filteredResponse = await client.Table<User>().Filter("catchphrase", Operator.FTS, config).Get();
+
+            Assert.AreEqual(1, filteredResponse.Models.Count);
+            Assert.AreEqual("supabot", filteredResponse.Models.FirstOrDefault()?.Username);
+        }
+
+        [TestMethod("filters: plfts")]
+        public async Task TestPlaintoFullTextSearch()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var config = new FullTextSearchConfig("'fat' & 'cat'", "english");
+
+            var filteredResponse = await client.Table<User>().Filter("catchphrase", Operator.PLFTS, config).Get();
+
+            Assert.AreEqual(1, filteredResponse.Models.Count);
+            Assert.AreEqual("supabot", filteredResponse.Models.FirstOrDefault()?.Username);
+        }
+
+        [TestMethod("filters: phfts")]
+        public async Task TestPhrasetoFullTextSearch()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var config = new FullTextSearchConfig("'cat'", "english");
+
+            var filteredResponse = await client.Table<User>().Filter("catchphrase", Operator.PHFTS, config).Get();
+            var usersResponse = await client.Table<User>().Filter("catchphrase", Operator.NotEqual, null).Get();
+
+            var testAgainst = usersResponse.Models.Where(u => u.Catchphrase.Contains("'cat'")).ToList();
+            CollectionAssert.AreEqual(testAgainst, filteredResponse.Models);
+        }
+
+        [TestMethod("filters: wfts")]
+        public async Task TestWebFullTextSearch()
+        {
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var config = new FullTextSearchConfig("'fat' & 'cat'", "english");
+
+            var filteredResponse = await client.Table<User>().Filter("catchphrase", Operator.WFTS, config).Get();
+
+            Assert.AreEqual(1, filteredResponse.Models.Count);
+            Assert.AreEqual("supabot", filteredResponse.Models.FirstOrDefault()?.Username);
+        }
+
         [TestMethod("select: basic")]
         public async Task TestSelect()
         {
