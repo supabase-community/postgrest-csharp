@@ -119,6 +119,11 @@ namespace Postgrest
                 filters.Add(new QueryFilter(columnName, op, rangeCriteria));
                 return this;
             }
+            else if (criterion is FullTextSearchConfig fullTextSearchCriteria)
+            {
+                filters.Add(new QueryFilter(columnName, op, fullTextSearchCriteria));
+                return this;
+            }
 
             throw new Exception("Unknown criterion type, is it of type `string`, `List`, `Dictionary<string, object>`, or `Range`?");
         }
