@@ -199,7 +199,12 @@ namespace Postgrest
 
         public Table<T> Match(Dictionary<string, string> query)
         {
-            throw new NotImplementedException();
+            foreach (var param in query)
+            {
+                filters.Add(new QueryFilter(param.Key, Operator.Equals, param.Value));
+            }
+
+            return this;
         }
 
         /// <summary>

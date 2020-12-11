@@ -862,6 +862,26 @@ namespace PostgrestTests
             Assert.AreEqual("supabot", filteredResponse.Models.FirstOrDefault()?.Username);
         }
 
+        [TestMethod("filters: match")]
+        public async Task TestMatchFilter()
+        {
+            //Arrange
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var usersResponse = await client.Table<User>().Get();
+            var testAgaint = usersResponse.Models.Where(u => u.Username == "kiwicopple" && u.Status == "OFFLINE").ToList();
+
+            //Act
+            var filters = new Dictionary<string, string>()
+            {
+                { "username", "kiwicopple" },
+                { "status", "OFFLINE" }
+            };
+            var filteredResponse = await client.Table<User>().Match(filters).Get();
+            
+            //Assert
+            CollectionAssert.AreEqual(testAgaint, filteredResponse.Models);
+        }
+
         [TestMethod("select: basic")]
         public async Task TestSelect()
         {
