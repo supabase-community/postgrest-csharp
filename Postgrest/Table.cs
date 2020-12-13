@@ -125,7 +125,7 @@ namespace Postgrest
                 return this;
             }
 
-            throw new Exception("Unknown criterion type, is it of type `string`, `List`, `Dictionary<string, object>`, or `Range`?");
+            throw new Exception("Unknown criterion type, is it of type `string`, `List`, `Dictionary<string, object>`, `FullTextSearchConfig`, or `Range`?");
         }
 
         /// <summary>
