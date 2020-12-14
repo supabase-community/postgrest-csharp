@@ -125,7 +125,7 @@ namespace Postgrest
                 return this;
             }
 
-            throw new Exception("Unknown criterion type, is it of type `string`, `List`, `Dictionary<string, object>`, or `Range`?");
+            throw new Exception("Unknown criterion type, is it of type `string`, `List`, `Dictionary<string, object>`, `FullTextSearchConfig`, or `Range`?");
         }
 
         /// <summary>
@@ -197,6 +197,11 @@ namespace Postgrest
             return this;
         }
 
+        /// <summary>
+        /// Finds all rows whose columns match the specified `query` object.
+        /// </summary>
+        /// <param name="query">The object to filter with, with column names as keys mapped to their filter values.</param>
+        /// <returns></returns>
         public Table<T> Match(Dictionary<string, string> query)
         {
             foreach (var param in query)
