@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Postgrest;
-using Postgrest.Extensions;
-using Postgrest.Attributes;
 using PostgrestTests.Models;
 using static Postgrest.ClientAuthorization;
 using System.Threading.Tasks;
@@ -942,6 +940,24 @@ namespace PostgrestTests
 
             await client.Table<User>().Delete(rocketUser);
             await client.Table<User>().Delete(aceUser);
+        }
+
+        [TestMethod("stored procedure")]
+        public async Task TestStoredProcedure()
+        {
+            //Arrange 
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            //Act 
+            var parameters = new Dictionary<string, object>()
+            {
+                { "name_param", "supabot" }
+            };
+            var response = await client.Rpc("get_status", parameters);
+
+            //Assert 
+            Assert.AreEqual(true, response.ResponseMessage.IsSuccessStatusCode);
+            Assert.AreEqual(true, response.Content.Contains("OFFLINE"));
         }
     }
 }

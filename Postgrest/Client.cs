@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Postgrest.Attributes;
-using Postgrest.Extensions;
 using Postgrest.Models;
 using Postgrest.Responses;
-using static Postgrest.Helpers;
 
 namespace Postgrest
 {
@@ -100,5 +96,32 @@ namespace Postgrest
         /// <typeparam name="T">Custom Model derived from `BaseModel`</typeparam>
         /// <returns></returns>
         public Table<T> Table<T>() where T : BaseModel, new() => new Table<T>(BaseUrl, authorization, options);
+
+        /// <summary>
+        /// Perform a stored procedure call.
+        /// </summary>
+        /// <param name="procedureName">The function name to call</param>
+        /// <param name="parameters">The parameters to pass to the function call</param>
+        /// <returns></returns>
+        public Task<BaseResponse> Rpc(string procedureName, Dictionary<string, object> parameters)
+        {
+            // Build Uri
+            var builder = new UriBuilder($"{BaseUrl}/rpc/{procedureName}");
+            var query = HttpUtility.ParseQueryString(builder.Query);
+
+            if (authorization.Type == ClientAuthorization.AuthorizationType.ApiKey)
+            {
+                query["apikey"] = authorization.ApiKey;
+            }
+            builder.Query = query.ToString();
+            var canonicalUri = builder.Uri.ToString();
+
+            // Prepare parameters
+            var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(JsonConvert.SerializeObject(parameters, Client.Instance.SerializerSettings));
+
+            // Send request
+            var request = Helpers.MakeRequest(HttpMethod.Post, canonicalUri, data);
+            return request;
+        }
     }
 }
