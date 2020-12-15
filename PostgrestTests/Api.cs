@@ -7,6 +7,7 @@ using static Postgrest.ClientAuthorization;
 using System.Threading.Tasks;
 using System.Linq;
 using static Postgrest.Constants;
+using System.Net.Http;
 
 namespace PostgrestTests
 {
@@ -54,8 +55,8 @@ namespace PostgrestTests
         [TestMethod("will set Authorization header from token")]
         public void TestHeadersToken()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Token, "token"), null);
-            var headers = client.Table<User>().PrepareRequestHeaders();
+            var authorization = new ClientAuthorization(AuthorizationType.Token, "token");
+            var headers = Helpers.PrepareRequestHeaders(HttpMethod.Get, authorization: authorization);
 
             Assert.AreEqual("Bearer token", headers["Authorization"]);
         }
@@ -72,8 +73,8 @@ namespace PostgrestTests
         {
             var user = "user";
             var pass = "pass";
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(user, pass), null);
-            var headers = client.Table<User>().PrepareRequestHeaders();
+            var authorization = new ClientAuthorization(user, pass);
+            var headers = Helpers.PrepareRequestHeaders(HttpMethod.Post, authorization: authorization);
             var expected = System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes($"{user}:{pass}"));
 
             Assert.AreEqual($"Basic {expected}", headers["Authorization"]);

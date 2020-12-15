@@ -499,50 +499,6 @@ namespace Postgrest
         }
 
         /// <summary>
-        /// Prepares the request with appropriate HTTP headers expected by Postgrest.
-        /// </summary>
-        /// <param name="headers"></param>
-        /// <returns></returns>
-        public Dictionary<string, string> PrepareRequestHeaders(Dictionary<string, string> headers = null)
-        {
-            if (headers == null)
-                headers = new Dictionary<string, string>();
-
-            if (!string.IsNullOrEmpty(options.Schema))
-            {
-                if (method == HttpMethod.Get)
-                    headers.Add("Accept-Profile", options.Schema);
-                else
-                    headers.Add("Content-Profile", options.Schema);
-            }
-
-            if (authorization != null)
-            {
-                switch (authorization.Type)
-                {
-                    case ClientAuthorization.AuthorizationType.ApiKey:
-                        headers.Add("apikey", authorization.ApiKey);
-                        break;
-                    case ClientAuthorization.AuthorizationType.Token:
-                        headers.Add("Authorization", $"Bearer {authorization.Token}");
-                        break;
-                    case ClientAuthorization.AuthorizationType.Basic:
-                        var header = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{authorization.Username}:{authorization.Password}"));
-                        headers.Add("Authorization", $"Basic {header}");
-                        break;
-                }
-            }
-
-            if (rangeFrom != int.MinValue)
-            {
-                headers.Add("Range-Unit", "items");
-                headers.Add("Range", $"{rangeFrom}-{(rangeTo != int.MinValue ? rangeTo.ToString() : null)}");
-            }
-
-            return headers;
-        }
-
-        /// <summary>
         /// Transforms the defined filters into the expected Postgrest format.
         ///
         /// See: http://postgrest.org/en/v7.0.0/api.html#operators
@@ -691,12 +647,14 @@ namespace Postgrest
 
         private Task<BaseResponse> Send(HttpMethod method, object data, Dictionary<string, string> headers = null)
         {
-            return Helpers.MakeRequest(method, GenerateUrl(), PrepareRequestData(data), PrepareRequestHeaders(headers));
+            var requestHeaders = Helpers.PrepareRequestHeaders(method, headers, this.authorization, this.options, this.rangeFrom, this.rangeTo);
+            return Helpers.MakeRequest(method, GenerateUrl(), PrepareRequestData(data), requestHeaders);
         }
 
         private Task<ModeledResponse<U>> Send<U>(HttpMethod method, object data, Dictionary<string, string> headers = null) where U : BaseModel, new()
         {
-            return Helpers.MakeRequest<U>(method, GenerateUrl(), PrepareRequestData(data), PrepareRequestHeaders(headers));
+            var requestHeaders = Helpers.PrepareRequestHeaders(method, headers, this.authorization, this.options, this.rangeFrom, this.rangeTo);
+            return Helpers.MakeRequest<U>(method, GenerateUrl(), PrepareRequestData(data), requestHeaders);
         }
     }
 }

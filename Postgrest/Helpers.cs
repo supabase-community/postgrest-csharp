@@ -108,6 +108,50 @@ namespace Postgrest
                 throw e;
             }
         }
+
+        /// <summary>
+        /// Prepares the request with appropriate HTTP headers expected by Postgrest.
+        /// </summary>
+        /// <param name="headers"></param>
+        /// <returns></returns>
+        public static Dictionary<string, string> PrepareRequestHeaders(HttpMethod method, Dictionary<string, string> headers = null, ClientAuthorization authorization = null, ClientOptions options = null, int rangeFrom = int.MinValue, int rangeTo = int.MinValue)
+        {
+            if (headers == null)
+                headers = new Dictionary<string, string>();
+
+            if (!string.IsNullOrEmpty(options?.Schema))
+            {
+                if (method == HttpMethod.Get)
+                    headers.Add("Accept-Profile", options.Schema);
+                else
+                    headers.Add("Content-Profile", options.Schema);
+            }
+
+            if (authorization != null)
+            {
+                switch (authorization.Type)
+                {
+                    case ClientAuthorization.AuthorizationType.ApiKey:
+                        headers.Add("apikey", authorization.ApiKey);
+                        break;
+                    case ClientAuthorization.AuthorizationType.Token:
+                        headers.Add("Authorization", $"Bearer {authorization.Token}");
+                        break;
+                    case ClientAuthorization.AuthorizationType.Basic:
+                        var header = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{authorization.Username}:{authorization.Password}"));
+                        headers.Add("Authorization", $"Basic {header}");
+                        break;
+                }
+            }
+
+            if (rangeFrom != int.MinValue)
+            {
+                headers.Add("Range-Unit", "items");
+                headers.Add("Range", $"{rangeFrom}-{(rangeTo != int.MinValue ? rangeTo.ToString() : null)}");
+            }
+
+            return headers;
+        }
     }
 
     public class RequestException : Exception

@@ -118,9 +118,10 @@ namespace Postgrest
 
             // Prepare parameters
             var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(JsonConvert.SerializeObject(parameters, Client.Instance.SerializerSettings));
-
+            // Prepare headers
+            var headers = Helpers.PrepareRequestHeaders(HttpMethod.Post, authorization: this.authorization, options: this.options);
             // Send request
-            var request = Helpers.MakeRequest(HttpMethod.Post, canonicalUri, data);
+            var request = Helpers.MakeRequest(HttpMethod.Post, canonicalUri, data, headers);
             return request;
         }
     }
