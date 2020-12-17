@@ -2,13 +2,12 @@ using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Postgrest;
-using Postgrest.Extensions;
-using Postgrest.Attributes;
 using PostgrestTests.Models;
 using static Postgrest.ClientAuthorization;
 using System.Threading.Tasks;
 using System.Linq;
 using static Postgrest.Constants;
+using System.Net.Http;
 
 namespace PostgrestTests
 {
@@ -56,8 +55,8 @@ namespace PostgrestTests
         [TestMethod("will set Authorization header from token")]
         public void TestHeadersToken()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Token, "token"), null);
-            var headers = client.Table<User>().PrepareRequestHeaders();
+            var authorization = new ClientAuthorization(AuthorizationType.Token, "token");
+            var headers = Helpers.PrepareRequestHeaders(HttpMethod.Get, authorization: authorization);
 
             Assert.AreEqual("Bearer token", headers["Authorization"]);
         }
@@ -74,8 +73,8 @@ namespace PostgrestTests
         {
             var user = "user";
             var pass = "pass";
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(user, pass), null);
-            var headers = client.Table<User>().PrepareRequestHeaders();
+            var authorization = new ClientAuthorization(user, pass);
+            var headers = Helpers.PrepareRequestHeaders(HttpMethod.Post, authorization: authorization);
             var expected = System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes($"{user}:{pass}"));
 
             Assert.AreEqual($"Basic {expected}", headers["Authorization"]);
@@ -942,6 +941,24 @@ namespace PostgrestTests
 
             await client.Table<User>().Delete(rocketUser);
             await client.Table<User>().Delete(aceUser);
+        }
+
+        [TestMethod("stored procedure")]
+        public async Task TestStoredProcedure()
+        {
+            //Arrange 
+            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+
+            //Act 
+            var parameters = new Dictionary<string, object>()
+            {
+                { "name_param", "supabot" }
+            };
+            var response = await client.Rpc("get_status", parameters);
+
+            //Assert 
+            Assert.AreEqual(true, response.ResponseMessage.IsSuccessStatusCode);
+            Assert.AreEqual(true, response.Content.Contains("OFFLINE"));
         }
     }
 }
