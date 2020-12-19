@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
@@ -78,7 +76,7 @@ namespace Postgrest
         /// </summary>
         /// <param name="columnName">Column Name in Table.</param>
         /// <param name="op">Operation to perform.</param>
-        /// <param name="criterion">Value to filter with, must be a `string`, `List<object>`, `Dictionary<string, object>`, or `Range`</string></object></param>
+        /// <param name="criterion">Value to filter with, must be a `string`, `List<object>`, `Dictionary<string, object>`, `FullTextSearchConfig`, or `Range`</param>
         /// <returns></returns>
         public Table<T> Filter(string columnName, Operator op, object criterion)
         {
@@ -431,7 +429,7 @@ namespace Postgrest
         /// Generates the encoded URL with defined query parameters that will be sent to the Postgrest API.
         /// </summary>
         /// <returns></returns>
-        public string GenerateUrl()
+        internal string GenerateUrl()
         {
             var builder = new UriBuilder($"{BaseUrl}/{tableName}");
             var query = HttpUtility.ParseQueryString(builder.Query);
@@ -489,7 +487,7 @@ namespace Postgrest
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public object PrepareRequestData(object data)
+        internal object PrepareRequestData(object data)
         {
             // Check if data is a Collection for the Insert Bulk case
             if (data is ICollection<T>)
@@ -505,7 +503,7 @@ namespace Postgrest
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public KeyValuePair<string, string> PrepareFilter(QueryFilter filter)
+        internal KeyValuePair<string, string> PrepareFilter(QueryFilter filter)
         {
             var attr = filter.Op.GetAttribute<MapToAttribute>();
             if (attr is MapToAttribute asAttribute)
