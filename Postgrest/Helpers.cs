@@ -6,13 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Postgrest.Attributes;
 using Postgrest.Responses;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("PostgrestTests")]
 namespace Postgrest
 {
-    public static class Helpers
+    internal static class Helpers
     {
         public static T GetPropertyValue<T>(object obj, string propName) => (T)obj.GetType().GetProperty(propName).GetValue(obj, null);
         public static T GetCustomAttribute<T>(object obj) where T : Attribute => (T)Attribute.GetCustomAttribute(obj.GetType(), typeof(T));
