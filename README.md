@@ -40,6 +40,12 @@ The bulk of this library is a translation and c-sharp-ification of the [supabase
 - [x] Unit Testing
 - [ ] Nuget Package and Release
 
+## Package made possible through the efforts of:
+
+| ![acupofjose](https://github.com/acupofjose.png) | ![elrhomariyounes](https://github.com/elrhomariyounes.png) |
+| :----------------------------------------------: | :--------------------------------------------------------: |
+|   [acupofjose](https://github.com/acupofjose)    |   [elrhomariyounes](https://github.com/elrhomariyounes)    |
+
 ## Contributing
 
 We are more than happy to have contributions! Please submit a PR.
