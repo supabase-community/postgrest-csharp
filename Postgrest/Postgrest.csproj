@@ -16,7 +16,7 @@
     <Description>Postgrest-csharp is written primarily as a helper library for supabase/supabase-csharp, however, it should be easy enough to use outside of the supabase ecosystem.
 
 The bulk of this library is a translation and c-sharp-ification of the supabase/postgrest-js library.</Description>
-    <ReleaseVersion>0.16.1-beta</ReleaseVersion>
+    <ReleaseVersion>1.0.0</ReleaseVersion>
   </PropertyGroup>
 
   <ItemGroup>
