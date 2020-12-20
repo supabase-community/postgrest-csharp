@@ -960,5 +960,24 @@ namespace PostgrestTests
             Assert.AreEqual(true, response.ResponseMessage.IsSuccessStatusCode);
             Assert.AreEqual(true, response.Content.Contains("OFFLINE"));
         }
+
+        [TestMethod("switch schema")]
+        public async Task TestSwitchSchema()
+        {
+            //Arrange
+            var options = new ClientOptions
+            {
+                Schema = "personal"
+            };
+            var auth = new ClientAuthorization(AuthorizationType.Open, null);
+            var client = Client.Instance.Initialize(baseUrl, auth, options);
+
+            //Act 
+            var response = await client.Table<User>().Filter("username", Operator.Equals, "leroyjenkins").Get();
+
+            //Assert 
+            Assert.AreEqual(1, response.Models.Count);
+            Assert.AreEqual("leroyjenkins", response.Models.FirstOrDefault()?.Username);
+        }
     }
 }
