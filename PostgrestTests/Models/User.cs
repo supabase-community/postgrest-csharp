@@ -19,6 +19,15 @@ namespace PostgrestTests.Models
         [Column("catchphrase")]
         public string Catchphrase { get; set; }
 
+        [Column("status")]
+        public string Status { get; set; }
+
+        [Column("inserted_at")]
+        public DateTime InsertedAt { get; set; }
+
+        [Column("updated_at")]
+        public DateTime UpdatedAt { get; set; }
+
         public override bool Equals(object obj)
         {
             return obj is User user &&

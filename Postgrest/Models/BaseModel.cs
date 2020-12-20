@@ -11,15 +11,6 @@ namespace Postgrest.Models
     /// </summary>
     public abstract class BaseModel
     {
-        [Column("status")]
-        public string Status { get; set; }
-
-        [Column("inserted_at")]
-        public DateTime InsertedAt { get; set; }
-
-        [Column("updated_at")]
-        public DateTime UpdatedAt { get; set; }
-
         public virtual Task<ModeledResponse<T>> Update<T>() where T : BaseModel, new() => Client.Instance.Table<T>().Update((T)this);
         public virtual Task Delete<T>() where T : BaseModel, new() => Client.Instance.Table<T>().Delete((T)this);
 
