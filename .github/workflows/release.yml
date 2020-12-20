@@ -36,7 +36,7 @@ jobs:
           PROJECT_FILE_PATH: Postgrest/Postgrest.csproj
           
           # NuGet package id, used for version detection & defaults to project name
-          PACKAGE_NAME: Postgrest
+          PACKAGE_NAME: supabase/postgrest
           
           # Filepath with version info, relative to root of repository & defaults to PROJECT_FILE_PATH
           # VERSION_FILE_PATH: Directory.Build.props
