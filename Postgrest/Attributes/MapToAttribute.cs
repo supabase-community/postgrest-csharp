@@ -7,7 +7,7 @@ namespace Postgrest.Attributes
     /// Used internally to add a string value to a C# field.
     /// </summary>
     [AttributeUsage(AttributeTargets.Field)]
-    public class MapToAttribute : Attribute
+    internal class MapToAttribute : Attribute
     {
         public string Mapping { get; set; }
         public string Formatter { get; set; }

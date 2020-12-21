@@ -11,7 +11,7 @@ namespace Postgrest.Extensions
         /// <typeparam name="T"></typeparam>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static T GetAttribute<T>(this Enum value) where T : Attribute
+        internal static T GetAttribute<T>(this Enum value) where T : Attribute
         {
             Type type = value.GetType();
             string name = Enum.GetName(type, value);

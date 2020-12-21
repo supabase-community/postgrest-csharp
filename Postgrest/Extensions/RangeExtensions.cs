@@ -9,6 +9,6 @@ namespace Postgrest.Extensions
         /// </summary>
         /// <param name="range"></param>
         /// <returns></returns>
-        public static string ToPostgresString(this Range range) => $"[{range.Start},{range.End}]";
+        internal static string ToPostgresString(this Range range) => $"[{range.Start},{range.End}]";
     }
 }
