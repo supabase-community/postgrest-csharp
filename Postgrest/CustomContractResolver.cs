@@ -11,7 +11,7 @@ namespace Postgrest.Attributes
     /// A custom resolver that handles mapping column names and property names as well
     /// as handling the conversion of Postgrest Ranges to a C# `Range`.
     /// </summary>
-    public class CustomContractResolver : DefaultContractResolver
+    internal class CustomContractResolver : DefaultContractResolver
     {
         protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
         {
