@@ -1,0 +1,1084 @@
+### YamlMime:ManagedReference
+items:
+- uid: Postgrest.QueryFilter
+  commentId: T:Postgrest.QueryFilter
+  id: QueryFilter
+  parent: Postgrest
+  children:
+  - Postgrest.QueryFilter.#ctor(Postgrest.Constants.Operator,Postgrest.QueryFilter)
+  - Postgrest.QueryFilter.#ctor(Postgrest.Constants.Operator,System.Collections.Generic.List{Postgrest.QueryFilter})
+  - Postgrest.QueryFilter.#ctor(System.String,Postgrest.Constants.Operator,Postgrest.FullTextSearchConfig)
+  - Postgrest.QueryFilter.#ctor(System.String,Postgrest.Constants.Operator,System.Collections.Generic.Dictionary{System.String,System.Object})
+  - Postgrest.QueryFilter.#ctor(System.String,Postgrest.Constants.Operator,System.Collections.Generic.List{System.Object})
+  - Postgrest.QueryFilter.#ctor(System.String,Postgrest.Constants.Operator,System.Object)
+  - Postgrest.QueryFilter.#ctor(System.String,Postgrest.Constants.Operator,System.Range)
+  - Postgrest.QueryFilter.Criteria
+  - Postgrest.QueryFilter.NULL_VAL
+  - Postgrest.QueryFilter.Op
+  - Postgrest.QueryFilter.Property
+  langs:
+  - csharp
+  - vb
+  name: QueryFilter
+  nameWithType: QueryFilter
+  fullName: Postgrest.QueryFilter
+  type: Class
+  source:
+    remote:
+      path: Postgrest/QueryFilter.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: QueryFilter
+    path: Postgrest/QueryFilter.cs
+    startLine: 7
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: public class QueryFilter
+    content.vb: Public Class QueryFilter
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  modifiers.csharp:
+  - public
+  - class
+  modifiers.vb:
+  - Public
+  - Class
+- uid: Postgrest.QueryFilter.NULL_VAL
+  commentId: F:Postgrest.QueryFilter.NULL_VAL
+  id: NULL_VAL
+  parent: Postgrest.QueryFilter
+  langs:
+  - csharp
+  - vb
+  name: NULL_VAL
+  nameWithType: QueryFilter.NULL_VAL
+  fullName: Postgrest.QueryFilter.NULL_VAL
+  type: Field
+  source:
+    remote:
+      path: Postgrest/QueryFilter.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: NULL_VAL
+    path: Postgrest/QueryFilter.cs
+    startLine: 12
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  summary: "\nString value to be subsituted for a null criterion\n"
+  example: []
+  syntax:
+    content: public static string NULL_VAL
+    return:
+      type: System.String
+    content.vb: Public Shared NULL_VAL As String
+  modifiers.csharp:
+  - public
+  - static
+  modifiers.vb:
+  - Public
+  - Shared
+- uid: Postgrest.QueryFilter.Property
+  commentId: P:Postgrest.QueryFilter.Property
+  id: Property
+  parent: Postgrest.QueryFilter
+  langs:
+  - csharp
+  - vb
+  name: Property
+  nameWithType: QueryFilter.Property
+  fullName: Postgrest.QueryFilter.Property
+  type: Property
+  source:
+    remote:
+      path: Postgrest/QueryFilter.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: Property
+    path: Postgrest/QueryFilter.cs
+    startLine: 14
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: public string Property { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property Property As String
+  overload: Postgrest.QueryFilter.Property*
+  modifiers.csharp:
+  - public
+  - get
+  modifiers.vb:
+  - Public
+  - ReadOnly
+- uid: Postgrest.QueryFilter.Op
+  commentId: P:Postgrest.QueryFilter.Op
+  id: Op
+  parent: Postgrest.QueryFilter
+  langs:
+  - csharp
+  - vb
+  name: Op
+  nameWithType: QueryFilter.Op
+  fullName: Postgrest.QueryFilter.Op
+  type: Property
+  source:
+    remote:
+      path: Postgrest/QueryFilter.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: Op
+    path: Postgrest/QueryFilter.cs
+    startLine: 15
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: public Constants.Operator Op { get; }
+    parameters: []
+    return:
+      type: Postgrest.Constants.Operator
+    content.vb: Public ReadOnly Property Op As Constants.Operator
+  overload: Postgrest.QueryFilter.Op*
+  modifiers.csharp:
+  - public
+  - get
+  modifiers.vb:
+  - Public
+  - ReadOnly
+- uid: Postgrest.QueryFilter.Criteria
+  commentId: P:Postgrest.QueryFilter.Criteria
+  id: Criteria
+  parent: Postgrest.QueryFilter
+  langs:
+  - csharp
+  - vb
+  name: Criteria
+  nameWithType: QueryFilter.Criteria
+  fullName: Postgrest.QueryFilter.Criteria
+  type: Property
+  source:
+    remote:
+      path: Postgrest/QueryFilter.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: Criteria
+    path: Postgrest/QueryFilter.cs
+    startLine: 16
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: public object Criteria { get; }
+    parameters: []
+    return:
+      type: System.Object
+    content.vb: Public ReadOnly Property Criteria As Object
+  overload: Postgrest.QueryFilter.Criteria*
+  modifiers.csharp:
+  - public
+  - get
+  modifiers.vb:
+  - Public
+  - ReadOnly
+- uid: Postgrest.QueryFilter.#ctor(System.String,Postgrest.Constants.Operator,System.Object)
+  commentId: M:Postgrest.QueryFilter.#ctor(System.String,Postgrest.Constants.Operator,System.Object)
+  id: '#ctor(System.String,Postgrest.Constants.Operator,System.Object)'
+  parent: Postgrest.QueryFilter
+  langs:
+  - csharp
+  - vb
+  name: QueryFilter(String, Constants.Operator, Object)
+  nameWithType: QueryFilter.QueryFilter(String, Constants.Operator, Object)
+  fullName: Postgrest.QueryFilter.QueryFilter(System.String, Postgrest.Constants.Operator, System.Object)
+  type: Constructor
+  source:
+    remote:
+      path: Postgrest/QueryFilter.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: .ctor
+    path: Postgrest/QueryFilter.cs
+    startLine: 24
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  summary: "\nContructor to use single value filtering.\n"
+  example: []
+  syntax:
+    content: public QueryFilter(string property, Constants.Operator op, object criteria)
+    parameters:
+    - id: property
+      type: System.String
+      description: Column name
+    - id: op
+      type: Postgrest.Constants.Operator
+      description: 'Operation: And, Equals, GreaterThan, LessThan, GreaterThanOrEqual, LessThanOrEqual, NotEqual, Is, Adjacent, Not, Like, ILike'
+    - id: criteria
+      type: System.Object
+      description: ''
+    content.vb: Public Sub New(property As String, op As Constants.Operator, criteria As Object)
+  overload: Postgrest.QueryFilter.#ctor*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: Postgrest.QueryFilter.#ctor(System.String,Postgrest.Constants.Operator,System.Collections.Generic.List{System.Object})
+  commentId: M:Postgrest.QueryFilter.#ctor(System.String,Postgrest.Constants.Operator,System.Collections.Generic.List{System.Object})
+  id: '#ctor(System.String,Postgrest.Constants.Operator,System.Collections.Generic.List{System.Object})'
+  parent: Postgrest.QueryFilter
+  langs:
+  - csharp
+  - vb
+  name: QueryFilter(String, Constants.Operator, List<Object>)
+  nameWithType: QueryFilter.QueryFilter(String, Constants.Operator, List<Object>)
+  fullName: Postgrest.QueryFilter.QueryFilter(System.String, Postgrest.Constants.Operator, System.Collections.Generic.List<System.Object>)
+  type: Constructor
+  source:
+    remote:
+      path: Postgrest/QueryFilter.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: .ctor
+    path: Postgrest/QueryFilter.cs
+    startLine: 56
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  summary: "\nConstructor to use multiple values as for filtering.\n"
+  example: []
+  syntax:
+    content: public QueryFilter(string property, Constants.Operator op, List<object> criteria)
+    parameters:
+    - id: property
+      type: System.String
+      description: Column name
+    - id: op
+      type: Postgrest.Constants.Operator
+      description: 'Operation: In, Contains, ContainedIn, or Overlap'
+    - id: criteria
+      type: System.Collections.Generic.List{System.Object}
+      description: ''
+    content.vb: Public Sub New(property As String, op As Constants.Operator, criteria As List(Of Object))
+  overload: Postgrest.QueryFilter.#ctor*
+  nameWithType.vb: QueryFilter.QueryFilter(String, Constants.Operator, List(Of Object))
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+  fullName.vb: Postgrest.QueryFilter.QueryFilter(System.String, Postgrest.Constants.Operator, System.Collections.Generic.List(Of System.Object))
+  name.vb: QueryFilter(String, Constants.Operator, List(Of Object))
+- uid: Postgrest.QueryFilter.#ctor(System.String,Postgrest.Constants.Operator,System.Collections.Generic.Dictionary{System.String,System.Object})
+  commentId: M:Postgrest.QueryFilter.#ctor(System.String,Postgrest.Constants.Operator,System.Collections.Generic.Dictionary{System.String,System.Object})
+  id: '#ctor(System.String,Postgrest.Constants.Operator,System.Collections.Generic.Dictionary{System.String,System.Object})'
+  parent: Postgrest.QueryFilter
+  langs:
+  - csharp
+  - vb
+  name: QueryFilter(String, Constants.Operator, Dictionary<String, Object>)
+  nameWithType: QueryFilter.QueryFilter(String, Constants.Operator, Dictionary<String, Object>)
+  fullName: Postgrest.QueryFilter.QueryFilter(System.String, Postgrest.Constants.Operator, System.Collections.Generic.Dictionary<System.String, System.Object>)
+  type: Constructor
+  source:
+    remote:
+      path: Postgrest/QueryFilter.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: .ctor
+    path: Postgrest/QueryFilter.cs
+    startLine: 79
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  summary: "\nConstructor to use multiple values as for filtering (using a dictionary).\n"
+  example: []
+  syntax:
+    content: public QueryFilter(string property, Constants.Operator op, Dictionary<string, object> criteria)
+    parameters:
+    - id: property
+      type: System.String
+      description: Column name
+    - id: op
+      type: Postgrest.Constants.Operator
+      description: 'Operation: In, Contains, ContainedIn, or Overlap'
+    - id: criteria
+      type: System.Collections.Generic.Dictionary{System.String,System.Object}
+      description: ''
+    content.vb: Public Sub New(property As String, op As Constants.Operator, criteria As Dictionary(Of String, Object))
+  overload: Postgrest.QueryFilter.#ctor*
+  nameWithType.vb: QueryFilter.QueryFilter(String, Constants.Operator, Dictionary(Of String, Object))
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+  fullName.vb: Postgrest.QueryFilter.QueryFilter(System.String, Postgrest.Constants.Operator, System.Collections.Generic.Dictionary(Of System.String, System.Object))
+  name.vb: QueryFilter(String, Constants.Operator, Dictionary(Of String, Object))
+- uid: Postgrest.QueryFilter.#ctor(System.String,Postgrest.Constants.Operator,Postgrest.FullTextSearchConfig)
+  commentId: M:Postgrest.QueryFilter.#ctor(System.String,Postgrest.Constants.Operator,Postgrest.FullTextSearchConfig)
+  id: '#ctor(System.String,Postgrest.Constants.Operator,Postgrest.FullTextSearchConfig)'
+  parent: Postgrest.QueryFilter
+  langs:
+  - csharp
+  - vb
+  name: QueryFilter(String, Constants.Operator, FullTextSearchConfig)
+  nameWithType: QueryFilter.QueryFilter(String, Constants.Operator, FullTextSearchConfig)
+  fullName: Postgrest.QueryFilter.QueryFilter(System.String, Postgrest.Constants.Operator, Postgrest.FullTextSearchConfig)
+  type: Constructor
+  source:
+    remote:
+      path: Postgrest/QueryFilter.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: .ctor
+    path: Postgrest/QueryFilter.cs
+    startLine: 102
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  summary: "\nConstructor for Full Text Search.\n"
+  example: []
+  syntax:
+    content: public QueryFilter(string property, Constants.Operator op, FullTextSearchConfig fullTextSearchConfig)
+    parameters:
+    - id: property
+      type: System.String
+      description: Column Name
+    - id: op
+      type: Postgrest.Constants.Operator
+      description: 'Operation: FTS, PHFTS, PLFTS, WFTS'
+    - id: fullTextSearchConfig
+      type: Postgrest.FullTextSearchConfig
+      description: ''
+    content.vb: Public Sub New(property As String, op As Constants.Operator, fullTextSearchConfig As FullTextSearchConfig)
+  overload: Postgrest.QueryFilter.#ctor*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: Postgrest.QueryFilter.#ctor(System.String,Postgrest.Constants.Operator,System.Range)
+  commentId: M:Postgrest.QueryFilter.#ctor(System.String,Postgrest.Constants.Operator,System.Range)
+  id: '#ctor(System.String,Postgrest.Constants.Operator,System.Range)'
+  parent: Postgrest.QueryFilter
+  langs:
+  - csharp
+  - vb
+  name: QueryFilter(String, Constants.Operator, Range)
+  nameWithType: QueryFilter.QueryFilter(String, Constants.Operator, Range)
+  fullName: Postgrest.QueryFilter.QueryFilter(System.String, Postgrest.Constants.Operator, System.Range)
+  type: Constructor
+  source:
+    remote:
+      path: Postgrest/QueryFilter.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: .ctor
+    path: Postgrest/QueryFilter.cs
+    startLine: 125
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  summary: "\nConstructor for Range Queries.\n"
+  example: []
+  syntax:
+    content: public QueryFilter(string property, Constants.Operator op, Range range)
+    parameters:
+    - id: property
+      type: System.String
+      description: ''
+    - id: op
+      type: Postgrest.Constants.Operator
+      description: 'Operator: Overlap, StrictlyLeft, StrictlyRight, NotRightOf, NotLeftOf, Adjacent'
+    - id: range
+      type: System.Range
+      description: ''
+    content.vb: Public Sub New(property As String, op As Constants.Operator, range As Range)
+  overload: Postgrest.QueryFilter.#ctor*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: Postgrest.QueryFilter.#ctor(Postgrest.Constants.Operator,System.Collections.Generic.List{Postgrest.QueryFilter})
+  commentId: M:Postgrest.QueryFilter.#ctor(Postgrest.Constants.Operator,System.Collections.Generic.List{Postgrest.QueryFilter})
+  id: '#ctor(Postgrest.Constants.Operator,System.Collections.Generic.List{Postgrest.QueryFilter})'
+  parent: Postgrest.QueryFilter
+  langs:
+  - csharp
+  - vb
+  name: QueryFilter(Constants.Operator, List<QueryFilter>)
+  nameWithType: QueryFilter.QueryFilter(Constants.Operator, List<QueryFilter>)
+  fullName: Postgrest.QueryFilter.QueryFilter(Postgrest.Constants.Operator, System.Collections.Generic.List<Postgrest.QueryFilter>)
+  type: Constructor
+  source:
+    remote:
+      path: Postgrest/QueryFilter.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: .ctor
+    path: Postgrest/QueryFilter.cs
+    startLine: 151
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  summary: "\nConstructor to enable `AND` and `OR` Queries by allowing nested QueryFilters.\n"
+  example: []
+  syntax:
+    content: public QueryFilter(Constants.Operator op, List<QueryFilter> filters)
+    parameters:
+    - id: op
+      type: Postgrest.Constants.Operator
+      description: 'Operation: And, Or'
+    - id: filters
+      type: System.Collections.Generic.List{Postgrest.QueryFilter}
+      description: ''
+    content.vb: Public Sub New(op As Constants.Operator, filters As List(Of QueryFilter))
+  overload: Postgrest.QueryFilter.#ctor*
+  nameWithType.vb: QueryFilter.QueryFilter(Constants.Operator, List(Of QueryFilter))
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+  fullName.vb: Postgrest.QueryFilter.QueryFilter(Postgrest.Constants.Operator, System.Collections.Generic.List(Of Postgrest.QueryFilter))
+  name.vb: QueryFilter(Constants.Operator, List(Of QueryFilter))
+- uid: Postgrest.QueryFilter.#ctor(Postgrest.Constants.Operator,Postgrest.QueryFilter)
+  commentId: M:Postgrest.QueryFilter.#ctor(Postgrest.Constants.Operator,Postgrest.QueryFilter)
+  id: '#ctor(Postgrest.Constants.Operator,Postgrest.QueryFilter)'
+  parent: Postgrest.QueryFilter
+  langs:
+  - csharp
+  - vb
+  name: QueryFilter(Constants.Operator, QueryFilter)
+  nameWithType: QueryFilter.QueryFilter(Constants.Operator, QueryFilter)
+  fullName: Postgrest.QueryFilter.QueryFilter(Postgrest.Constants.Operator, Postgrest.QueryFilter)
+  type: Constructor
+  source:
+    remote:
+      path: Postgrest/QueryFilter.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: .ctor
+    path: Postgrest/QueryFilter.cs
+    startLine: 170
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  summary: "\nConstructor to enable `NOT` functionality\n"
+  example: []
+  syntax:
+    content: public QueryFilter(Constants.Operator op, QueryFilter filter)
+    parameters:
+    - id: op
+      type: Postgrest.Constants.Operator
+      description: 'Operation: Not.'
+    - id: filter
+      type: Postgrest.QueryFilter
+      description: ''
+    content.vb: Public Sub New(op As Constants.Operator, filter As QueryFilter)
+  overload: Postgrest.QueryFilter.#ctor*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+references:
+- uid: Postgrest
+  commentId: N:Postgrest
+  name: Postgrest
+  nameWithType: Postgrest
+  fullName: Postgrest
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: Postgrest.QueryFilter.Property*
+  commentId: Overload:Postgrest.QueryFilter.Property
+  name: Property
+  nameWithType: QueryFilter.Property
+  fullName: Postgrest.QueryFilter.Property
+- uid: Postgrest.QueryFilter.Op*
+  commentId: Overload:Postgrest.QueryFilter.Op
+  name: Op
+  nameWithType: QueryFilter.Op
+  fullName: Postgrest.QueryFilter.Op
+- uid: Postgrest.Constants.Operator
+  commentId: T:Postgrest.Constants.Operator
+  parent: Postgrest
+  name: Constants.Operator
+  nameWithType: Constants.Operator
+  fullName: Postgrest.Constants.Operator
+- uid: Postgrest.QueryFilter.Criteria*
+  commentId: Overload:Postgrest.QueryFilter.Criteria
+  name: Criteria
+  nameWithType: QueryFilter.Criteria
+  fullName: Postgrest.QueryFilter.Criteria
+- uid: Postgrest.QueryFilter.#ctor*
+  commentId: Overload:Postgrest.QueryFilter.#ctor
+  name: QueryFilter
+  nameWithType: QueryFilter.QueryFilter
+  fullName: Postgrest.QueryFilter.QueryFilter
+- uid: System.Collections.Generic.List{System.Object}
+  commentId: T:System.Collections.Generic.List{System.Object}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<Object>
+  nameWithType: List<Object>
+  fullName: System.Collections.Generic.List<System.Object>
+  nameWithType.vb: List(Of Object)
+  fullName.vb: System.Collections.Generic.List(Of System.Object)
+  name.vb: List(Of Object)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    nameWithType: List
+    fullName: System.Collections.Generic.List
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    nameWithType: List
+    fullName: System.Collections.Generic.List
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    nameWithType: List
+    fullName: System.Collections.Generic.List
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    nameWithType: List
+    fullName: System.Collections.Generic.List
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+- uid: System.Collections.Generic.Dictionary{System.String,System.Object}
+  commentId: T:System.Collections.Generic.Dictionary{System.String,System.Object}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  name: Dictionary<String, Object>
+  nameWithType: Dictionary<String, Object>
+  fullName: System.Collections.Generic.Dictionary<System.String, System.Object>
+  nameWithType.vb: Dictionary(Of String, Object)
+  fullName.vb: System.Collections.Generic.Dictionary(Of System.String, System.Object)
+  name.vb: Dictionary(Of String, Object)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    nameWithType: Dictionary
+    fullName: System.Collections.Generic.Dictionary
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    nameWithType: Dictionary
+    fullName: System.Collections.Generic.Dictionary
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: System.String
+    name: String
+    nameWithType: String
+    fullName: System.String
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    nameWithType: Dictionary
+    fullName: System.Collections.Generic.Dictionary
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: TKey
+    nameWithType: TKey
+    fullName: TKey
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    nameWithType: Dictionary
+    fullName: System.Collections.Generic.Dictionary
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: TKey
+    nameWithType: TKey
+    fullName: TKey
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - name: TValue
+    nameWithType: TValue
+    fullName: TValue
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Postgrest.FullTextSearchConfig
+  commentId: T:Postgrest.FullTextSearchConfig
+  parent: Postgrest
+  name: FullTextSearchConfig
+  nameWithType: FullTextSearchConfig
+  fullName: Postgrest.FullTextSearchConfig
+- uid: System.Range
+  commentId: T:System.Range
+  parent: System
+  isExternal: true
+  name: Range
+  nameWithType: Range
+  fullName: System.Range
+- uid: System.Collections.Generic.List{Postgrest.QueryFilter}
+  commentId: T:System.Collections.Generic.List{Postgrest.QueryFilter}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<QueryFilter>
+  nameWithType: List<QueryFilter>
+  fullName: System.Collections.Generic.List<Postgrest.QueryFilter>
+  nameWithType.vb: List(Of QueryFilter)
+  fullName.vb: System.Collections.Generic.List(Of Postgrest.QueryFilter)
+  name.vb: List(Of QueryFilter)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    nameWithType: List
+    fullName: System.Collections.Generic.List
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: Postgrest.QueryFilter
+    name: QueryFilter
+    nameWithType: QueryFilter
+    fullName: Postgrest.QueryFilter
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    nameWithType: List
+    fullName: System.Collections.Generic.List
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: Postgrest.QueryFilter
+    name: QueryFilter
+    nameWithType: QueryFilter
+    fullName: Postgrest.QueryFilter
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Postgrest.QueryFilter
+  commentId: T:Postgrest.QueryFilter
+  parent: Postgrest
+  name: QueryFilter
+  nameWithType: QueryFilter
+  fullName: Postgrest.QueryFilter

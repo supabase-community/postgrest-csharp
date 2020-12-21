@@ -1,4 +1,4 @@
-name: publish to nuget
+name: Publish Nuget Package
 on:
   push:
     branches:
@@ -9,24 +9,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      
+
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.301
-      
+
       - name: Install dependencies
         run: dotnet restore
-        
+
       - name: Initialize Testing Stack
         run: docker-compose up -d
-      
+
       - name: Build
         run: dotnet build --configuration Release --no-restore
-      
+
       - name: Test
         run: dotnet test --no-restore
-        
+
       # Publish
       - name: publish on version change
         id: publish_nuget
@@ -34,10 +34,10 @@ jobs:
         with:
           # Filepath of the project to be packaged, relative to root of repository
           PROJECT_FILE_PATH: Postgrest/Postgrest.csproj
-          
+
           # NuGet package id, used for version detection & defaults to project name
           PACKAGE_NAME: supabase/postgrest
-          
+
           # Filepath with version info, relative to root of repository & defaults to PROJECT_FILE_PATH
           # VERSION_FILE_PATH: Directory.Build.props
 

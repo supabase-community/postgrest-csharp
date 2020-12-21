@@ -1,0 +1,570 @@
+### YamlMime:ManagedReference
+items:
+- uid: Postgrest.QueryOrderer
+  commentId: T:Postgrest.QueryOrderer
+  id: QueryOrderer
+  parent: Postgrest
+  children:
+  - Postgrest.QueryOrderer.#ctor(System.String,System.String,Postgrest.Constants.Ordering,Postgrest.Constants.NullPosition)
+  - Postgrest.QueryOrderer.Column
+  - Postgrest.QueryOrderer.ForeignTable
+  - Postgrest.QueryOrderer.NullPosition
+  - Postgrest.QueryOrderer.Ordering
+  langs:
+  - csharp
+  - vb
+  name: QueryOrderer
+  nameWithType: QueryOrderer
+  fullName: Postgrest.QueryOrderer
+  type: Class
+  source:
+    remote:
+      path: Postgrest/QueryOrderer.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: QueryOrderer
+    path: Postgrest/QueryOrderer.cs
+    startLine: 5
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: public class QueryOrderer
+    content.vb: Public Class QueryOrderer
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  modifiers.csharp:
+  - public
+  - class
+  modifiers.vb:
+  - Public
+  - Class
+- uid: Postgrest.QueryOrderer.ForeignTable
+  commentId: P:Postgrest.QueryOrderer.ForeignTable
+  id: ForeignTable
+  parent: Postgrest.QueryOrderer
+  langs:
+  - csharp
+  - vb
+  name: ForeignTable
+  nameWithType: QueryOrderer.ForeignTable
+  fullName: Postgrest.QueryOrderer.ForeignTable
+  type: Property
+  source:
+    remote:
+      path: Postgrest/QueryOrderer.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: ForeignTable
+    path: Postgrest/QueryOrderer.cs
+    startLine: 7
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: public string ForeignTable { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property ForeignTable As String
+  overload: Postgrest.QueryOrderer.ForeignTable*
+  modifiers.csharp:
+  - public
+  - get
+  - set
+  modifiers.vb:
+  - Public
+- uid: Postgrest.QueryOrderer.Column
+  commentId: P:Postgrest.QueryOrderer.Column
+  id: Column
+  parent: Postgrest.QueryOrderer
+  langs:
+  - csharp
+  - vb
+  name: Column
+  nameWithType: QueryOrderer.Column
+  fullName: Postgrest.QueryOrderer.Column
+  type: Property
+  source:
+    remote:
+      path: Postgrest/QueryOrderer.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: Column
+    path: Postgrest/QueryOrderer.cs
+    startLine: 8
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: public string Column { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Column As String
+  overload: Postgrest.QueryOrderer.Column*
+  modifiers.csharp:
+  - public
+  - get
+  - set
+  modifiers.vb:
+  - Public
+- uid: Postgrest.QueryOrderer.Ordering
+  commentId: P:Postgrest.QueryOrderer.Ordering
+  id: Ordering
+  parent: Postgrest.QueryOrderer
+  langs:
+  - csharp
+  - vb
+  name: Ordering
+  nameWithType: QueryOrderer.Ordering
+  fullName: Postgrest.QueryOrderer.Ordering
+  type: Property
+  source:
+    remote:
+      path: Postgrest/QueryOrderer.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: Ordering
+    path: Postgrest/QueryOrderer.cs
+    startLine: 9
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: public Constants.Ordering Ordering { get; set; }
+    parameters: []
+    return:
+      type: Postgrest.Constants.Ordering
+    content.vb: Public Property Ordering As Constants.Ordering
+  overload: Postgrest.QueryOrderer.Ordering*
+  modifiers.csharp:
+  - public
+  - get
+  - set
+  modifiers.vb:
+  - Public
+- uid: Postgrest.QueryOrderer.NullPosition
+  commentId: P:Postgrest.QueryOrderer.NullPosition
+  id: NullPosition
+  parent: Postgrest.QueryOrderer
+  langs:
+  - csharp
+  - vb
+  name: NullPosition
+  nameWithType: QueryOrderer.NullPosition
+  fullName: Postgrest.QueryOrderer.NullPosition
+  type: Property
+  source:
+    remote:
+      path: Postgrest/QueryOrderer.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: NullPosition
+    path: Postgrest/QueryOrderer.cs
+    startLine: 10
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: public Constants.NullPosition NullPosition { get; set; }
+    parameters: []
+    return:
+      type: Postgrest.Constants.NullPosition
+    content.vb: Public Property NullPosition As Constants.NullPosition
+  overload: Postgrest.QueryOrderer.NullPosition*
+  modifiers.csharp:
+  - public
+  - get
+  - set
+  modifiers.vb:
+  - Public
+- uid: Postgrest.QueryOrderer.#ctor(System.String,System.String,Postgrest.Constants.Ordering,Postgrest.Constants.NullPosition)
+  commentId: M:Postgrest.QueryOrderer.#ctor(System.String,System.String,Postgrest.Constants.Ordering,Postgrest.Constants.NullPosition)
+  id: '#ctor(System.String,System.String,Postgrest.Constants.Ordering,Postgrest.Constants.NullPosition)'
+  parent: Postgrest.QueryOrderer
+  langs:
+  - csharp
+  - vb
+  name: QueryOrderer(String, String, Constants.Ordering, Constants.NullPosition)
+  nameWithType: QueryOrderer.QueryOrderer(String, String, Constants.Ordering, Constants.NullPosition)
+  fullName: Postgrest.QueryOrderer.QueryOrderer(System.String, System.String, Postgrest.Constants.Ordering, Postgrest.Constants.NullPosition)
+  type: Constructor
+  source:
+    remote:
+      path: Postgrest/QueryOrderer.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: .ctor
+    path: Postgrest/QueryOrderer.cs
+    startLine: 12
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: public QueryOrderer(string foreignTable, string column, Constants.Ordering ordering, Constants.NullPosition nullPosition)
+    parameters:
+    - id: foreignTable
+      type: System.String
+    - id: column
+      type: System.String
+    - id: ordering
+      type: Postgrest.Constants.Ordering
+    - id: nullPosition
+      type: Postgrest.Constants.NullPosition
+    content.vb: Public Sub New(foreignTable As String, column As String, ordering As Constants.Ordering, nullPosition As Constants.NullPosition)
+  overload: Postgrest.QueryOrderer.#ctor*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+references:
+- uid: Postgrest
+  commentId: N:Postgrest
+  name: Postgrest
+  nameWithType: Postgrest
+  fullName: Postgrest
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Postgrest.QueryOrderer.ForeignTable*
+  commentId: Overload:Postgrest.QueryOrderer.ForeignTable
+  name: ForeignTable
+  nameWithType: QueryOrderer.ForeignTable
+  fullName: Postgrest.QueryOrderer.ForeignTable
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: Postgrest.QueryOrderer.Column*
+  commentId: Overload:Postgrest.QueryOrderer.Column
+  name: Column
+  nameWithType: QueryOrderer.Column
+  fullName: Postgrest.QueryOrderer.Column
+- uid: Postgrest.QueryOrderer.Ordering*
+  commentId: Overload:Postgrest.QueryOrderer.Ordering
+  name: Ordering
+  nameWithType: QueryOrderer.Ordering
+  fullName: Postgrest.QueryOrderer.Ordering
+- uid: Postgrest.Constants.Ordering
+  commentId: T:Postgrest.Constants.Ordering
+  parent: Postgrest
+  name: Constants.Ordering
+  nameWithType: Constants.Ordering
+  fullName: Postgrest.Constants.Ordering
+- uid: Postgrest.QueryOrderer.NullPosition*
+  commentId: Overload:Postgrest.QueryOrderer.NullPosition
+  name: NullPosition
+  nameWithType: QueryOrderer.NullPosition
+  fullName: Postgrest.QueryOrderer.NullPosition
+- uid: Postgrest.Constants.NullPosition
+  commentId: T:Postgrest.Constants.NullPosition
+  parent: Postgrest
+  name: Constants.NullPosition
+  nameWithType: Constants.NullPosition
+  fullName: Postgrest.Constants.NullPosition
+- uid: Postgrest.QueryOrderer.#ctor*
+  commentId: Overload:Postgrest.QueryOrderer.#ctor
+  name: QueryOrderer
+  nameWithType: QueryOrderer.QueryOrderer
+  fullName: Postgrest.QueryOrderer.QueryOrderer

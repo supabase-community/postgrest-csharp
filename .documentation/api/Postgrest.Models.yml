@@ -1,0 +1,22 @@
+### YamlMime:ManagedReference
+items:
+- uid: Postgrest.Models
+  commentId: N:Postgrest.Models
+  id: Postgrest.Models
+  children:
+  - Postgrest.Models.BaseModel
+  langs:
+  - csharp
+  - vb
+  name: Postgrest.Models
+  nameWithType: Postgrest.Models
+  fullName: Postgrest.Models
+  type: Namespace
+  assemblies:
+  - Postgrest
+references:
+- uid: Postgrest.Models.BaseModel
+  commentId: T:Postgrest.Models.BaseModel
+  name: BaseModel
+  nameWithType: BaseModel
+  fullName: Postgrest.Models.BaseModel

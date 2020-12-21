@@ -1,0 +1,112 @@
+### YamlMime:ManagedReference
+items:
+- uid: Postgrest.Constants.NullPosition
+  commentId: T:Postgrest.Constants.NullPosition
+  id: Constants.NullPosition
+  parent: Postgrest
+  children:
+  - Postgrest.Constants.NullPosition.First
+  - Postgrest.Constants.NullPosition.Last
+  langs:
+  - csharp
+  - vb
+  name: Constants.NullPosition
+  nameWithType: Constants.NullPosition
+  fullName: Postgrest.Constants.NullPosition
+  type: Enum
+  source:
+    remote:
+      path: Postgrest/Constants.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: NullPosition
+    path: Postgrest/Constants.cs
+    startLine: 69
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: public enum NullPosition
+    content.vb: Public Enum NullPosition
+  modifiers.csharp:
+  - public
+  - enum
+  modifiers.vb:
+  - Public
+  - Enum
+- uid: Postgrest.Constants.NullPosition.First
+  commentId: F:Postgrest.Constants.NullPosition.First
+  id: First
+  parent: Postgrest.Constants.NullPosition
+  langs:
+  - csharp
+  - vb
+  name: First
+  nameWithType: Constants.NullPosition.First
+  fullName: Postgrest.Constants.NullPosition.First
+  type: Field
+  source:
+    remote:
+      path: Postgrest/Constants.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: First
+    path: Postgrest/Constants.cs
+    startLine: 71
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: First = 0
+    return:
+      type: Postgrest.Constants.NullPosition
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: Postgrest.Constants.NullPosition.Last
+  commentId: F:Postgrest.Constants.NullPosition.Last
+  id: Last
+  parent: Postgrest.Constants.NullPosition
+  langs:
+  - csharp
+  - vb
+  name: Last
+  nameWithType: Constants.NullPosition.Last
+  fullName: Postgrest.Constants.NullPosition.Last
+  type: Field
+  source:
+    remote:
+      path: Postgrest/Constants.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: Last
+    path: Postgrest/Constants.cs
+    startLine: 73
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: Last = 1
+    return:
+      type: Postgrest.Constants.NullPosition
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+references:
+- uid: Postgrest
+  commentId: N:Postgrest
+  name: Postgrest
+  nameWithType: Postgrest
+  fullName: Postgrest
+- uid: Postgrest.Constants.NullPosition
+  commentId: T:Postgrest.Constants.NullPosition
+  parent: Postgrest
+  name: Constants.NullPosition
+  nameWithType: Constants.NullPosition
+  fullName: Postgrest.Constants.NullPosition

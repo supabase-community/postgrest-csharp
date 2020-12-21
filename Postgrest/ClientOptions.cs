@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Postgrest
 {
+    /// <summary>
+    /// Options that can be passed to the Client configuration
+    /// </summary>
     public class ClientOptions
     {
         public string Schema { get; set; }

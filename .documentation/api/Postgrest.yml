@@ -1,0 +1,147 @@
+### YamlMime:ManagedReference
+items:
+- uid: Postgrest
+  commentId: N:Postgrest
+  id: Postgrest
+  children:
+  - Postgrest.Client
+  - Postgrest.ClientAuthorization
+  - Postgrest.ClientAuthorization.AuthorizationType
+  - Postgrest.ClientOptions
+  - Postgrest.Constants
+  - Postgrest.Constants.NullPosition
+  - Postgrest.Constants.Operator
+  - Postgrest.Constants.Ordering
+  - Postgrest.FullTextSearchConfig
+  - Postgrest.InsertOptions
+  - Postgrest.QueryFilter
+  - Postgrest.QueryOrderer
+  - Postgrest.RequestException
+  - Postgrest.Table`1
+  langs:
+  - csharp
+  - vb
+  name: Postgrest
+  nameWithType: Postgrest
+  fullName: Postgrest
+  type: Namespace
+  assemblies:
+  - Postgrest
+references:
+- uid: Postgrest.Client
+  commentId: T:Postgrest.Client
+  parent: Postgrest
+  name: Client
+  nameWithType: Client
+  fullName: Postgrest.Client
+- uid: Postgrest.ClientAuthorization
+  commentId: T:Postgrest.ClientAuthorization
+  parent: Postgrest
+  name: ClientAuthorization
+  nameWithType: ClientAuthorization
+  fullName: Postgrest.ClientAuthorization
+- uid: Postgrest.ClientAuthorization.AuthorizationType
+  commentId: T:Postgrest.ClientAuthorization.AuthorizationType
+  parent: Postgrest
+  name: ClientAuthorization.AuthorizationType
+  nameWithType: ClientAuthorization.AuthorizationType
+  fullName: Postgrest.ClientAuthorization.AuthorizationType
+- uid: Postgrest.ClientOptions
+  commentId: T:Postgrest.ClientOptions
+  parent: Postgrest
+  name: ClientOptions
+  nameWithType: ClientOptions
+  fullName: Postgrest.ClientOptions
+- uid: Postgrest.Constants
+  commentId: T:Postgrest.Constants
+  name: Constants
+  nameWithType: Constants
+  fullName: Postgrest.Constants
+- uid: Postgrest.Constants.Operator
+  commentId: T:Postgrest.Constants.Operator
+  parent: Postgrest
+  name: Constants.Operator
+  nameWithType: Constants.Operator
+  fullName: Postgrest.Constants.Operator
+- uid: Postgrest.Constants.Ordering
+  commentId: T:Postgrest.Constants.Ordering
+  parent: Postgrest
+  name: Constants.Ordering
+  nameWithType: Constants.Ordering
+  fullName: Postgrest.Constants.Ordering
+- uid: Postgrest.Constants.NullPosition
+  commentId: T:Postgrest.Constants.NullPosition
+  parent: Postgrest
+  name: Constants.NullPosition
+  nameWithType: Constants.NullPosition
+  fullName: Postgrest.Constants.NullPosition
+- uid: Postgrest.RequestException
+  commentId: T:Postgrest.RequestException
+  name: RequestException
+  nameWithType: RequestException
+  fullName: Postgrest.RequestException
+- uid: Postgrest.InsertOptions
+  commentId: T:Postgrest.InsertOptions
+  parent: Postgrest
+  name: InsertOptions
+  nameWithType: InsertOptions
+  fullName: Postgrest.InsertOptions
+- uid: Postgrest.QueryFilter
+  commentId: T:Postgrest.QueryFilter
+  parent: Postgrest
+  name: QueryFilter
+  nameWithType: QueryFilter
+  fullName: Postgrest.QueryFilter
+- uid: Postgrest.FullTextSearchConfig
+  commentId: T:Postgrest.FullTextSearchConfig
+  parent: Postgrest
+  name: FullTextSearchConfig
+  nameWithType: FullTextSearchConfig
+  fullName: Postgrest.FullTextSearchConfig
+- uid: Postgrest.QueryOrderer
+  commentId: T:Postgrest.QueryOrderer
+  name: QueryOrderer
+  nameWithType: QueryOrderer
+  fullName: Postgrest.QueryOrderer
+- uid: Postgrest.Table`1
+  commentId: T:Postgrest.Table`1
+  parent: Postgrest
+  name: Table<T>
+  nameWithType: Table<T>
+  fullName: Postgrest.Table<T>
+  nameWithType.vb: Table(Of T)
+  fullName.vb: Postgrest.Table(Of T)
+  name.vb: Table(Of T)
+  spec.csharp:
+  - uid: Postgrest.Table`1
+    name: Table
+    nameWithType: Table
+    fullName: Postgrest.Table
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: Postgrest.Table`1
+    name: Table
+    nameWithType: Table
+    fullName: Postgrest.Table
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Postgrest
+  commentId: N:Postgrest
+  name: Postgrest
+  nameWithType: Postgrest
+  fullName: Postgrest

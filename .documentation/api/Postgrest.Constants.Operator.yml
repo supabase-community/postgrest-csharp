@@ -1,0 +1,871 @@
+### YamlMime:ManagedReference
+items:
+- uid: Postgrest.Constants.Operator
+  commentId: T:Postgrest.Constants.Operator
+  id: Constants.Operator
+  parent: Postgrest
+  children:
+  - Postgrest.Constants.Operator.Adjacent
+  - Postgrest.Constants.Operator.And
+  - Postgrest.Constants.Operator.ContainedIn
+  - Postgrest.Constants.Operator.Contains
+  - Postgrest.Constants.Operator.Equals
+  - Postgrest.Constants.Operator.FTS
+  - Postgrest.Constants.Operator.GreaterThan
+  - Postgrest.Constants.Operator.GreaterThanOrEqual
+  - Postgrest.Constants.Operator.ILike
+  - Postgrest.Constants.Operator.In
+  - Postgrest.Constants.Operator.Is
+  - Postgrest.Constants.Operator.LessThan
+  - Postgrest.Constants.Operator.LessThanOrEqual
+  - Postgrest.Constants.Operator.Like
+  - Postgrest.Constants.Operator.Not
+  - Postgrest.Constants.Operator.NotEqual
+  - Postgrest.Constants.Operator.NotLeftOf
+  - Postgrest.Constants.Operator.NotRightOf
+  - Postgrest.Constants.Operator.Or
+  - Postgrest.Constants.Operator.Overlap
+  - Postgrest.Constants.Operator.PHFTS
+  - Postgrest.Constants.Operator.PLFTS
+  - Postgrest.Constants.Operator.StrictlyLeft
+  - Postgrest.Constants.Operator.StrictlyRight
+  - Postgrest.Constants.Operator.WFTS
+  langs:
+  - csharp
+  - vb
+  name: Constants.Operator
+  nameWithType: Constants.Operator
+  fullName: Postgrest.Constants.Operator
+  type: Enum
+  source:
+    remote:
+      path: Postgrest/Constants.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: Operator
+    path: Postgrest/Constants.cs
+    startLine: 7
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: public enum Operator
+    content.vb: Public Enum Operator
+  modifiers.csharp:
+  - public
+  - enum
+  modifiers.vb:
+  - Public
+  - Enum
+- uid: Postgrest.Constants.Operator.And
+  commentId: F:Postgrest.Constants.Operator.And
+  id: And
+  parent: Postgrest.Constants.Operator
+  langs:
+  - csharp
+  - vb
+  name: And
+  nameWithType: Constants.Operator.And
+  fullName: Postgrest.Constants.Operator.And
+  type: Field
+  source:
+    remote:
+      path: Postgrest/Constants.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: And
+    path: Postgrest/Constants.cs
+    startLine: 9
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: And = 0
+    return:
+      type: Postgrest.Constants.Operator
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: Postgrest.Constants.Operator.Or
+  commentId: F:Postgrest.Constants.Operator.Or
+  id: Or
+  parent: Postgrest.Constants.Operator
+  langs:
+  - csharp
+  - vb
+  name: Or
+  nameWithType: Constants.Operator.Or
+  fullName: Postgrest.Constants.Operator.Or
+  type: Field
+  source:
+    remote:
+      path: Postgrest/Constants.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: Or
+    path: Postgrest/Constants.cs
+    startLine: 11
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: Or = 1
+    return:
+      type: Postgrest.Constants.Operator
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: Postgrest.Constants.Operator.Equals
+  commentId: F:Postgrest.Constants.Operator.Equals
+  id: Equals
+  parent: Postgrest.Constants.Operator
+  langs:
+  - csharp
+  - vb
+  name: Equals
+  nameWithType: Constants.Operator.Equals
+  fullName: Postgrest.Constants.Operator.Equals
+  type: Field
+  source:
+    remote:
+      path: Postgrest/Constants.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: Equals
+    path: Postgrest/Constants.cs
+    startLine: 13
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: Equals = 2
+    return:
+      type: Postgrest.Constants.Operator
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: Postgrest.Constants.Operator.GreaterThan
+  commentId: F:Postgrest.Constants.Operator.GreaterThan
+  id: GreaterThan
+  parent: Postgrest.Constants.Operator
+  langs:
+  - csharp
+  - vb
+  name: GreaterThan
+  nameWithType: Constants.Operator.GreaterThan
+  fullName: Postgrest.Constants.Operator.GreaterThan
+  type: Field
+  source:
+    remote:
+      path: Postgrest/Constants.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: GreaterThan
+    path: Postgrest/Constants.cs
+    startLine: 15
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: GreaterThan = 3
+    return:
+      type: Postgrest.Constants.Operator
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: Postgrest.Constants.Operator.GreaterThanOrEqual
+  commentId: F:Postgrest.Constants.Operator.GreaterThanOrEqual
+  id: GreaterThanOrEqual
+  parent: Postgrest.Constants.Operator
+  langs:
+  - csharp
+  - vb
+  name: GreaterThanOrEqual
+  nameWithType: Constants.Operator.GreaterThanOrEqual
+  fullName: Postgrest.Constants.Operator.GreaterThanOrEqual
+  type: Field
+  source:
+    remote:
+      path: Postgrest/Constants.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: GreaterThanOrEqual
+    path: Postgrest/Constants.cs
+    startLine: 17
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: GreaterThanOrEqual = 4
+    return:
+      type: Postgrest.Constants.Operator
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: Postgrest.Constants.Operator.LessThan
+  commentId: F:Postgrest.Constants.Operator.LessThan
+  id: LessThan
+  parent: Postgrest.Constants.Operator
+  langs:
+  - csharp
+  - vb
+  name: LessThan
+  nameWithType: Constants.Operator.LessThan
+  fullName: Postgrest.Constants.Operator.LessThan
+  type: Field
+  source:
+    remote:
+      path: Postgrest/Constants.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: LessThan
+    path: Postgrest/Constants.cs
+    startLine: 19
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: LessThan = 5
+    return:
+      type: Postgrest.Constants.Operator
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: Postgrest.Constants.Operator.LessThanOrEqual
+  commentId: F:Postgrest.Constants.Operator.LessThanOrEqual
+  id: LessThanOrEqual
+  parent: Postgrest.Constants.Operator
+  langs:
+  - csharp
+  - vb
+  name: LessThanOrEqual
+  nameWithType: Constants.Operator.LessThanOrEqual
+  fullName: Postgrest.Constants.Operator.LessThanOrEqual
+  type: Field
+  source:
+    remote:
+      path: Postgrest/Constants.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: LessThanOrEqual
+    path: Postgrest/Constants.cs
+    startLine: 21
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: LessThanOrEqual = 6
+    return:
+      type: Postgrest.Constants.Operator
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: Postgrest.Constants.Operator.NotEqual
+  commentId: F:Postgrest.Constants.Operator.NotEqual
+  id: NotEqual
+  parent: Postgrest.Constants.Operator
+  langs:
+  - csharp
+  - vb
+  name: NotEqual
+  nameWithType: Constants.Operator.NotEqual
+  fullName: Postgrest.Constants.Operator.NotEqual
+  type: Field
+  source:
+    remote:
+      path: Postgrest/Constants.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: NotEqual
+    path: Postgrest/Constants.cs
+    startLine: 23
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: NotEqual = 7
+    return:
+      type: Postgrest.Constants.Operator
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: Postgrest.Constants.Operator.Like
+  commentId: F:Postgrest.Constants.Operator.Like
+  id: Like
+  parent: Postgrest.Constants.Operator
+  langs:
+  - csharp
+  - vb
+  name: Like
+  nameWithType: Constants.Operator.Like
+  fullName: Postgrest.Constants.Operator.Like
+  type: Field
+  source:
+    remote:
+      path: Postgrest/Constants.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: Like
+    path: Postgrest/Constants.cs
+    startLine: 25
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: Like = 8
+    return:
+      type: Postgrest.Constants.Operator
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: Postgrest.Constants.Operator.ILike
+  commentId: F:Postgrest.Constants.Operator.ILike
+  id: ILike
+  parent: Postgrest.Constants.Operator
+  langs:
+  - csharp
+  - vb
+  name: ILike
+  nameWithType: Constants.Operator.ILike
+  fullName: Postgrest.Constants.Operator.ILike
+  type: Field
+  source:
+    remote:
+      path: Postgrest/Constants.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: ILike
+    path: Postgrest/Constants.cs
+    startLine: 27
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: ILike = 9
+    return:
+      type: Postgrest.Constants.Operator
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: Postgrest.Constants.Operator.In
+  commentId: F:Postgrest.Constants.Operator.In
+  id: In
+  parent: Postgrest.Constants.Operator
+  langs:
+  - csharp
+  - vb
+  name: In
+  nameWithType: Constants.Operator.In
+  fullName: Postgrest.Constants.Operator.In
+  type: Field
+  source:
+    remote:
+      path: Postgrest/Constants.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: In
+    path: Postgrest/Constants.cs
+    startLine: 29
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: In = 10
+    return:
+      type: Postgrest.Constants.Operator
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: Postgrest.Constants.Operator.Is
+  commentId: F:Postgrest.Constants.Operator.Is
+  id: Is
+  parent: Postgrest.Constants.Operator
+  langs:
+  - csharp
+  - vb
+  name: Is
+  nameWithType: Constants.Operator.Is
+  fullName: Postgrest.Constants.Operator.Is
+  type: Field
+  source:
+    remote:
+      path: Postgrest/Constants.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: Is
+    path: Postgrest/Constants.cs
+    startLine: 31
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: Is = 11
+    return:
+      type: Postgrest.Constants.Operator
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: Postgrest.Constants.Operator.FTS
+  commentId: F:Postgrest.Constants.Operator.FTS
+  id: FTS
+  parent: Postgrest.Constants.Operator
+  langs:
+  - csharp
+  - vb
+  name: FTS
+  nameWithType: Constants.Operator.FTS
+  fullName: Postgrest.Constants.Operator.FTS
+  type: Field
+  source:
+    remote:
+      path: Postgrest/Constants.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: FTS
+    path: Postgrest/Constants.cs
+    startLine: 33
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: FTS = 12
+    return:
+      type: Postgrest.Constants.Operator
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: Postgrest.Constants.Operator.PLFTS
+  commentId: F:Postgrest.Constants.Operator.PLFTS
+  id: PLFTS
+  parent: Postgrest.Constants.Operator
+  langs:
+  - csharp
+  - vb
+  name: PLFTS
+  nameWithType: Constants.Operator.PLFTS
+  fullName: Postgrest.Constants.Operator.PLFTS
+  type: Field
+  source:
+    remote:
+      path: Postgrest/Constants.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: PLFTS
+    path: Postgrest/Constants.cs
+    startLine: 35
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: PLFTS = 13
+    return:
+      type: Postgrest.Constants.Operator
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: Postgrest.Constants.Operator.PHFTS
+  commentId: F:Postgrest.Constants.Operator.PHFTS
+  id: PHFTS
+  parent: Postgrest.Constants.Operator
+  langs:
+  - csharp
+  - vb
+  name: PHFTS
+  nameWithType: Constants.Operator.PHFTS
+  fullName: Postgrest.Constants.Operator.PHFTS
+  type: Field
+  source:
+    remote:
+      path: Postgrest/Constants.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: PHFTS
+    path: Postgrest/Constants.cs
+    startLine: 37
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: PHFTS = 14
+    return:
+      type: Postgrest.Constants.Operator
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: Postgrest.Constants.Operator.WFTS
+  commentId: F:Postgrest.Constants.Operator.WFTS
+  id: WFTS
+  parent: Postgrest.Constants.Operator
+  langs:
+  - csharp
+  - vb
+  name: WFTS
+  nameWithType: Constants.Operator.WFTS
+  fullName: Postgrest.Constants.Operator.WFTS
+  type: Field
+  source:
+    remote:
+      path: Postgrest/Constants.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: WFTS
+    path: Postgrest/Constants.cs
+    startLine: 39
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: WFTS = 15
+    return:
+      type: Postgrest.Constants.Operator
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: Postgrest.Constants.Operator.Contains
+  commentId: F:Postgrest.Constants.Operator.Contains
+  id: Contains
+  parent: Postgrest.Constants.Operator
+  langs:
+  - csharp
+  - vb
+  name: Contains
+  nameWithType: Constants.Operator.Contains
+  fullName: Postgrest.Constants.Operator.Contains
+  type: Field
+  source:
+    remote:
+      path: Postgrest/Constants.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: Contains
+    path: Postgrest/Constants.cs
+    startLine: 41
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: Contains = 16
+    return:
+      type: Postgrest.Constants.Operator
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: Postgrest.Constants.Operator.ContainedIn
+  commentId: F:Postgrest.Constants.Operator.ContainedIn
+  id: ContainedIn
+  parent: Postgrest.Constants.Operator
+  langs:
+  - csharp
+  - vb
+  name: ContainedIn
+  nameWithType: Constants.Operator.ContainedIn
+  fullName: Postgrest.Constants.Operator.ContainedIn
+  type: Field
+  source:
+    remote:
+      path: Postgrest/Constants.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: ContainedIn
+    path: Postgrest/Constants.cs
+    startLine: 43
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: ContainedIn = 17
+    return:
+      type: Postgrest.Constants.Operator
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: Postgrest.Constants.Operator.Overlap
+  commentId: F:Postgrest.Constants.Operator.Overlap
+  id: Overlap
+  parent: Postgrest.Constants.Operator
+  langs:
+  - csharp
+  - vb
+  name: Overlap
+  nameWithType: Constants.Operator.Overlap
+  fullName: Postgrest.Constants.Operator.Overlap
+  type: Field
+  source:
+    remote:
+      path: Postgrest/Constants.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: Overlap
+    path: Postgrest/Constants.cs
+    startLine: 45
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: Overlap = 18
+    return:
+      type: Postgrest.Constants.Operator
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: Postgrest.Constants.Operator.StrictlyLeft
+  commentId: F:Postgrest.Constants.Operator.StrictlyLeft
+  id: StrictlyLeft
+  parent: Postgrest.Constants.Operator
+  langs:
+  - csharp
+  - vb
+  name: StrictlyLeft
+  nameWithType: Constants.Operator.StrictlyLeft
+  fullName: Postgrest.Constants.Operator.StrictlyLeft
+  type: Field
+  source:
+    remote:
+      path: Postgrest/Constants.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: StrictlyLeft
+    path: Postgrest/Constants.cs
+    startLine: 47
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: StrictlyLeft = 19
+    return:
+      type: Postgrest.Constants.Operator
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: Postgrest.Constants.Operator.StrictlyRight
+  commentId: F:Postgrest.Constants.Operator.StrictlyRight
+  id: StrictlyRight
+  parent: Postgrest.Constants.Operator
+  langs:
+  - csharp
+  - vb
+  name: StrictlyRight
+  nameWithType: Constants.Operator.StrictlyRight
+  fullName: Postgrest.Constants.Operator.StrictlyRight
+  type: Field
+  source:
+    remote:
+      path: Postgrest/Constants.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: StrictlyRight
+    path: Postgrest/Constants.cs
+    startLine: 49
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: StrictlyRight = 20
+    return:
+      type: Postgrest.Constants.Operator
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: Postgrest.Constants.Operator.NotRightOf
+  commentId: F:Postgrest.Constants.Operator.NotRightOf
+  id: NotRightOf
+  parent: Postgrest.Constants.Operator
+  langs:
+  - csharp
+  - vb
+  name: NotRightOf
+  nameWithType: Constants.Operator.NotRightOf
+  fullName: Postgrest.Constants.Operator.NotRightOf
+  type: Field
+  source:
+    remote:
+      path: Postgrest/Constants.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: NotRightOf
+    path: Postgrest/Constants.cs
+    startLine: 51
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: NotRightOf = 21
+    return:
+      type: Postgrest.Constants.Operator
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: Postgrest.Constants.Operator.NotLeftOf
+  commentId: F:Postgrest.Constants.Operator.NotLeftOf
+  id: NotLeftOf
+  parent: Postgrest.Constants.Operator
+  langs:
+  - csharp
+  - vb
+  name: NotLeftOf
+  nameWithType: Constants.Operator.NotLeftOf
+  fullName: Postgrest.Constants.Operator.NotLeftOf
+  type: Field
+  source:
+    remote:
+      path: Postgrest/Constants.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: NotLeftOf
+    path: Postgrest/Constants.cs
+    startLine: 53
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: NotLeftOf = 22
+    return:
+      type: Postgrest.Constants.Operator
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: Postgrest.Constants.Operator.Adjacent
+  commentId: F:Postgrest.Constants.Operator.Adjacent
+  id: Adjacent
+  parent: Postgrest.Constants.Operator
+  langs:
+  - csharp
+  - vb
+  name: Adjacent
+  nameWithType: Constants.Operator.Adjacent
+  fullName: Postgrest.Constants.Operator.Adjacent
+  type: Field
+  source:
+    remote:
+      path: Postgrest/Constants.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: Adjacent
+    path: Postgrest/Constants.cs
+    startLine: 55
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: Adjacent = 23
+    return:
+      type: Postgrest.Constants.Operator
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+- uid: Postgrest.Constants.Operator.Not
+  commentId: F:Postgrest.Constants.Operator.Not
+  id: Not
+  parent: Postgrest.Constants.Operator
+  langs:
+  - csharp
+  - vb
+  name: Not
+  nameWithType: Constants.Operator.Not
+  fullName: Postgrest.Constants.Operator.Not
+  type: Field
+  source:
+    remote:
+      path: Postgrest/Constants.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: Not
+    path: Postgrest/Constants.cs
+    startLine: 57
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: Not = 24
+    return:
+      type: Postgrest.Constants.Operator
+  modifiers.csharp:
+  - public
+  - const
+  modifiers.vb:
+  - Public
+  - Const
+references:
+- uid: Postgrest
+  commentId: N:Postgrest
+  name: Postgrest
+  nameWithType: Postgrest
+  fullName: Postgrest
+- uid: Postgrest.Constants.Operator
+  commentId: T:Postgrest.Constants.Operator
+  parent: Postgrest
+  name: Constants.Operator
+  nameWithType: Constants.Operator
+  fullName: Postgrest.Constants.Operator

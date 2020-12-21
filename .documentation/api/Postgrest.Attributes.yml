@@ -1,0 +1,34 @@
+### YamlMime:ManagedReference
+items:
+- uid: Postgrest.Attributes
+  commentId: N:Postgrest.Attributes
+  id: Postgrest.Attributes
+  children:
+  - Postgrest.Attributes.ColumnAttribute
+  - Postgrest.Attributes.PrimaryKeyAttribute
+  - Postgrest.Attributes.TableAttribute
+  langs:
+  - csharp
+  - vb
+  name: Postgrest.Attributes
+  nameWithType: Postgrest.Attributes
+  fullName: Postgrest.Attributes
+  type: Namespace
+  assemblies:
+  - Postgrest
+references:
+- uid: Postgrest.Attributes.ColumnAttribute
+  commentId: T:Postgrest.Attributes.ColumnAttribute
+  name: ColumnAttribute
+  nameWithType: ColumnAttribute
+  fullName: Postgrest.Attributes.ColumnAttribute
+- uid: Postgrest.Attributes.PrimaryKeyAttribute
+  commentId: T:Postgrest.Attributes.PrimaryKeyAttribute
+  name: PrimaryKeyAttribute
+  nameWithType: PrimaryKeyAttribute
+  fullName: Postgrest.Attributes.PrimaryKeyAttribute
+- uid: Postgrest.Attributes.TableAttribute
+  commentId: T:Postgrest.Attributes.TableAttribute
+  name: TableAttribute
+  nameWithType: TableAttribute
+  fullName: Postgrest.Attributes.TableAttribute

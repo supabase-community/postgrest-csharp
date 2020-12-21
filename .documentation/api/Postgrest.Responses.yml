@@ -1,0 +1,72 @@
+### YamlMime:ManagedReference
+items:
+- uid: Postgrest.Responses
+  commentId: N:Postgrest.Responses
+  id: Postgrest.Responses
+  children:
+  - Postgrest.Responses.BaseResponse
+  - Postgrest.Responses.ErrorResponse
+  - Postgrest.Responses.ModeledResponse`1
+  langs:
+  - csharp
+  - vb
+  name: Postgrest.Responses
+  nameWithType: Postgrest.Responses
+  fullName: Postgrest.Responses
+  type: Namespace
+  assemblies:
+  - Postgrest
+references:
+- uid: Postgrest.Responses.BaseResponse
+  commentId: T:Postgrest.Responses.BaseResponse
+  parent: Postgrest.Responses
+  name: BaseResponse
+  nameWithType: BaseResponse
+  fullName: Postgrest.Responses.BaseResponse
+- uid: Postgrest.Responses.ErrorResponse
+  commentId: T:Postgrest.Responses.ErrorResponse
+  parent: Postgrest.Responses
+  name: ErrorResponse
+  nameWithType: ErrorResponse
+  fullName: Postgrest.Responses.ErrorResponse
+- uid: Postgrest.Responses.ModeledResponse`1
+  commentId: T:Postgrest.Responses.ModeledResponse`1
+  name: ModeledResponse<T>
+  nameWithType: ModeledResponse<T>
+  fullName: Postgrest.Responses.ModeledResponse<T>
+  nameWithType.vb: ModeledResponse(Of T)
+  fullName.vb: Postgrest.Responses.ModeledResponse(Of T)
+  name.vb: ModeledResponse(Of T)
+  spec.csharp:
+  - uid: Postgrest.Responses.ModeledResponse`1
+    name: ModeledResponse
+    nameWithType: ModeledResponse
+    fullName: Postgrest.Responses.ModeledResponse
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: Postgrest.Responses.ModeledResponse`1
+    name: ModeledResponse
+    nameWithType: ModeledResponse
+    fullName: Postgrest.Responses.ModeledResponse
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: T
+    nameWithType: T
+    fullName: T
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Postgrest.Responses
+  commentId: N:Postgrest.Responses
+  name: Postgrest.Responses
+  nameWithType: Postgrest.Responses
+  fullName: Postgrest.Responses

@@ -1,0 +1,539 @@
+### YamlMime:ManagedReference
+items:
+- uid: Postgrest.Responses.ErrorResponse
+  commentId: T:Postgrest.Responses.ErrorResponse
+  id: ErrorResponse
+  parent: Postgrest.Responses
+  children:
+  - Postgrest.Responses.ErrorResponse.Code
+  - Postgrest.Responses.ErrorResponse.Details
+  - Postgrest.Responses.ErrorResponse.Hint
+  - Postgrest.Responses.ErrorResponse.Message
+  langs:
+  - csharp
+  - vb
+  name: ErrorResponse
+  nameWithType: ErrorResponse
+  fullName: Postgrest.Responses.ErrorResponse
+  type: Class
+  source:
+    remote:
+      path: Postgrest/Responses/ErrorResponse.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: ErrorResponse
+    path: Postgrest/Responses/ErrorResponse.cs
+    startLine: 8
+  assemblies:
+  - Postgrest
+  namespace: Postgrest.Responses
+  summary: "\nA representation of Postgrest&apos;s API error response.\n"
+  example: []
+  syntax:
+    content: 'public class ErrorResponse : BaseResponse'
+    content.vb: >-
+      Public Class ErrorResponse
+
+          Inherits BaseResponse
+  inheritance:
+  - System.Object
+  - Postgrest.Responses.BaseResponse
+  inheritedMembers:
+  - Postgrest.Responses.BaseResponse.ResponseMessage
+  - Postgrest.Responses.BaseResponse.Content
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  modifiers.csharp:
+  - public
+  - class
+  modifiers.vb:
+  - Public
+  - Class
+- uid: Postgrest.Responses.ErrorResponse.Hint
+  commentId: P:Postgrest.Responses.ErrorResponse.Hint
+  id: Hint
+  parent: Postgrest.Responses.ErrorResponse
+  langs:
+  - csharp
+  - vb
+  name: Hint
+  nameWithType: ErrorResponse.Hint
+  fullName: Postgrest.Responses.ErrorResponse.Hint
+  type: Property
+  source:
+    remote:
+      path: Postgrest/Responses/ErrorResponse.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: Hint
+    path: Postgrest/Responses/ErrorResponse.cs
+    startLine: 10
+  assemblies:
+  - Postgrest
+  namespace: Postgrest.Responses
+  syntax:
+    content: public object Hint { get; set; }
+    parameters: []
+    return:
+      type: System.Object
+    content.vb: Public Property Hint As Object
+  overload: Postgrest.Responses.ErrorResponse.Hint*
+  modifiers.csharp:
+  - public
+  - get
+  - set
+  modifiers.vb:
+  - Public
+- uid: Postgrest.Responses.ErrorResponse.Details
+  commentId: P:Postgrest.Responses.ErrorResponse.Details
+  id: Details
+  parent: Postgrest.Responses.ErrorResponse
+  langs:
+  - csharp
+  - vb
+  name: Details
+  nameWithType: ErrorResponse.Details
+  fullName: Postgrest.Responses.ErrorResponse.Details
+  type: Property
+  source:
+    remote:
+      path: Postgrest/Responses/ErrorResponse.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: Details
+    path: Postgrest/Responses/ErrorResponse.cs
+    startLine: 13
+  assemblies:
+  - Postgrest
+  namespace: Postgrest.Responses
+  syntax:
+    content: public object Details { get; set; }
+    parameters: []
+    return:
+      type: System.Object
+    content.vb: Public Property Details As Object
+  overload: Postgrest.Responses.ErrorResponse.Details*
+  modifiers.csharp:
+  - public
+  - get
+  - set
+  modifiers.vb:
+  - Public
+- uid: Postgrest.Responses.ErrorResponse.Code
+  commentId: P:Postgrest.Responses.ErrorResponse.Code
+  id: Code
+  parent: Postgrest.Responses.ErrorResponse
+  langs:
+  - csharp
+  - vb
+  name: Code
+  nameWithType: ErrorResponse.Code
+  fullName: Postgrest.Responses.ErrorResponse.Code
+  type: Property
+  source:
+    remote:
+      path: Postgrest/Responses/ErrorResponse.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: Code
+    path: Postgrest/Responses/ErrorResponse.cs
+    startLine: 16
+  assemblies:
+  - Postgrest
+  namespace: Postgrest.Responses
+  syntax:
+    content: public string Code { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Code As String
+  overload: Postgrest.Responses.ErrorResponse.Code*
+  modifiers.csharp:
+  - public
+  - get
+  - set
+  modifiers.vb:
+  - Public
+- uid: Postgrest.Responses.ErrorResponse.Message
+  commentId: P:Postgrest.Responses.ErrorResponse.Message
+  id: Message
+  parent: Postgrest.Responses.ErrorResponse
+  langs:
+  - csharp
+  - vb
+  name: Message
+  nameWithType: ErrorResponse.Message
+  fullName: Postgrest.Responses.ErrorResponse.Message
+  type: Property
+  source:
+    remote:
+      path: Postgrest/Responses/ErrorResponse.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: Message
+    path: Postgrest/Responses/ErrorResponse.cs
+    startLine: 19
+  assemblies:
+  - Postgrest
+  namespace: Postgrest.Responses
+  syntax:
+    content: public string Message { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Message As String
+  overload: Postgrest.Responses.ErrorResponse.Message*
+  modifiers.csharp:
+  - public
+  - get
+  - set
+  modifiers.vb:
+  - Public
+references:
+- uid: Postgrest.Responses
+  commentId: N:Postgrest.Responses
+  name: Postgrest.Responses
+  nameWithType: Postgrest.Responses
+  fullName: Postgrest.Responses
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: Postgrest.Responses.BaseResponse
+  commentId: T:Postgrest.Responses.BaseResponse
+  parent: Postgrest.Responses
+  name: BaseResponse
+  nameWithType: BaseResponse
+  fullName: Postgrest.Responses.BaseResponse
+- uid: Postgrest.Responses.BaseResponse.ResponseMessage
+  commentId: P:Postgrest.Responses.BaseResponse.ResponseMessage
+  parent: Postgrest.Responses.BaseResponse
+  name: ResponseMessage
+  nameWithType: BaseResponse.ResponseMessage
+  fullName: Postgrest.Responses.BaseResponse.ResponseMessage
+- uid: Postgrest.Responses.BaseResponse.Content
+  commentId: P:Postgrest.Responses.BaseResponse.Content
+  parent: Postgrest.Responses.BaseResponse
+  name: Content
+  nameWithType: BaseResponse.Content
+  fullName: Postgrest.Responses.BaseResponse.Content
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Postgrest.Responses.ErrorResponse.Hint*
+  commentId: Overload:Postgrest.Responses.ErrorResponse.Hint
+  name: Hint
+  nameWithType: ErrorResponse.Hint
+  fullName: Postgrest.Responses.ErrorResponse.Hint
+- uid: Postgrest.Responses.ErrorResponse.Details*
+  commentId: Overload:Postgrest.Responses.ErrorResponse.Details
+  name: Details
+  nameWithType: ErrorResponse.Details
+  fullName: Postgrest.Responses.ErrorResponse.Details
+- uid: Postgrest.Responses.ErrorResponse.Code*
+  commentId: Overload:Postgrest.Responses.ErrorResponse.Code
+  name: Code
+  nameWithType: ErrorResponse.Code
+  fullName: Postgrest.Responses.ErrorResponse.Code
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: Postgrest.Responses.ErrorResponse.Message*
+  commentId: Overload:Postgrest.Responses.ErrorResponse.Message
+  name: Message
+  nameWithType: ErrorResponse.Message
+  fullName: Postgrest.Responses.ErrorResponse.Message

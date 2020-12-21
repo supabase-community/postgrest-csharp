@@ -1,0 +1,706 @@
+### YamlMime:ManagedReference
+items:
+- uid: Postgrest.ClientAuthorization
+  commentId: T:Postgrest.ClientAuthorization
+  id: ClientAuthorization
+  parent: Postgrest
+  children:
+  - Postgrest.ClientAuthorization.#ctor
+  - Postgrest.ClientAuthorization.#ctor(Postgrest.ClientAuthorization.AuthorizationType,System.String,System.String)
+  - Postgrest.ClientAuthorization.#ctor(System.String)
+  - Postgrest.ClientAuthorization.#ctor(System.String,System.String)
+  - Postgrest.ClientAuthorization.ApiKey
+  - Postgrest.ClientAuthorization.Password
+  - Postgrest.ClientAuthorization.Token
+  - Postgrest.ClientAuthorization.Type
+  - Postgrest.ClientAuthorization.Username
+  langs:
+  - csharp
+  - vb
+  name: ClientAuthorization
+  nameWithType: ClientAuthorization
+  fullName: Postgrest.ClientAuthorization
+  type: Class
+  source:
+    remote:
+      path: Postgrest/ClientAuthorization.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: ClientAuthorization
+    path: Postgrest/ClientAuthorization.cs
+    startLine: 6
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  summary: "\nRepresents the Authorization information required for a Postgrest Client Instance.\n"
+  example: []
+  syntax:
+    content: public class ClientAuthorization
+    content.vb: Public Class ClientAuthorization
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+  modifiers.csharp:
+  - public
+  - class
+  modifiers.vb:
+  - Public
+  - Class
+- uid: Postgrest.ClientAuthorization.ApiKey
+  commentId: P:Postgrest.ClientAuthorization.ApiKey
+  id: ApiKey
+  parent: Postgrest.ClientAuthorization
+  langs:
+  - csharp
+  - vb
+  name: ApiKey
+  nameWithType: ClientAuthorization.ApiKey
+  fullName: Postgrest.ClientAuthorization.ApiKey
+  type: Property
+  source:
+    remote:
+      path: Postgrest/ClientAuthorization.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: ApiKey
+    path: Postgrest/ClientAuthorization.cs
+    startLine: 8
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: public string ApiKey { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property ApiKey As String
+  overload: Postgrest.ClientAuthorization.ApiKey*
+  modifiers.csharp:
+  - public
+  - get
+  - set
+  modifiers.vb:
+  - Public
+- uid: Postgrest.ClientAuthorization.Token
+  commentId: P:Postgrest.ClientAuthorization.Token
+  id: Token
+  parent: Postgrest.ClientAuthorization
+  langs:
+  - csharp
+  - vb
+  name: Token
+  nameWithType: ClientAuthorization.Token
+  fullName: Postgrest.ClientAuthorization.Token
+  type: Property
+  source:
+    remote:
+      path: Postgrest/ClientAuthorization.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: Token
+    path: Postgrest/ClientAuthorization.cs
+    startLine: 9
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: public string Token { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Token As String
+  overload: Postgrest.ClientAuthorization.Token*
+  modifiers.csharp:
+  - public
+  - get
+  - set
+  modifiers.vb:
+  - Public
+- uid: Postgrest.ClientAuthorization.Username
+  commentId: P:Postgrest.ClientAuthorization.Username
+  id: Username
+  parent: Postgrest.ClientAuthorization
+  langs:
+  - csharp
+  - vb
+  name: Username
+  nameWithType: ClientAuthorization.Username
+  fullName: Postgrest.ClientAuthorization.Username
+  type: Property
+  source:
+    remote:
+      path: Postgrest/ClientAuthorization.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: Username
+    path: Postgrest/ClientAuthorization.cs
+    startLine: 10
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: public string Username { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Username As String
+  overload: Postgrest.ClientAuthorization.Username*
+  modifiers.csharp:
+  - public
+  - get
+  - set
+  modifiers.vb:
+  - Public
+- uid: Postgrest.ClientAuthorization.Password
+  commentId: P:Postgrest.ClientAuthorization.Password
+  id: Password
+  parent: Postgrest.ClientAuthorization
+  langs:
+  - csharp
+  - vb
+  name: Password
+  nameWithType: ClientAuthorization.Password
+  fullName: Postgrest.ClientAuthorization.Password
+  type: Property
+  source:
+    remote:
+      path: Postgrest/ClientAuthorization.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: Password
+    path: Postgrest/ClientAuthorization.cs
+    startLine: 11
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: public string Password { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Password As String
+  overload: Postgrest.ClientAuthorization.Password*
+  modifiers.csharp:
+  - public
+  - get
+  - set
+  modifiers.vb:
+  - Public
+- uid: Postgrest.ClientAuthorization.Type
+  commentId: P:Postgrest.ClientAuthorization.Type
+  id: Type
+  parent: Postgrest.ClientAuthorization
+  langs:
+  - csharp
+  - vb
+  name: Type
+  nameWithType: ClientAuthorization.Type
+  fullName: Postgrest.ClientAuthorization.Type
+  type: Property
+  source:
+    remote:
+      path: Postgrest/ClientAuthorization.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: Type
+    path: Postgrest/ClientAuthorization.cs
+    startLine: 12
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: public ClientAuthorization.AuthorizationType Type { get; set; }
+    parameters: []
+    return:
+      type: Postgrest.ClientAuthorization.AuthorizationType
+    content.vb: Public Property Type As ClientAuthorization.AuthorizationType
+  overload: Postgrest.ClientAuthorization.Type*
+  modifiers.csharp:
+  - public
+  - get
+  - set
+  modifiers.vb:
+  - Public
+- uid: Postgrest.ClientAuthorization.#ctor
+  commentId: M:Postgrest.ClientAuthorization.#ctor
+  id: '#ctor'
+  parent: Postgrest.ClientAuthorization
+  langs:
+  - csharp
+  - vb
+  name: ClientAuthorization()
+  nameWithType: ClientAuthorization.ClientAuthorization()
+  fullName: Postgrest.ClientAuthorization.ClientAuthorization()
+  type: Constructor
+  source:
+    remote:
+      path: Postgrest/ClientAuthorization.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: .ctor
+    path: Postgrest/ClientAuthorization.cs
+    startLine: 22
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: public ClientAuthorization()
+    content.vb: Public Sub New
+  overload: Postgrest.ClientAuthorization.#ctor*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: Postgrest.ClientAuthorization.#ctor(System.String)
+  commentId: M:Postgrest.ClientAuthorization.#ctor(System.String)
+  id: '#ctor(System.String)'
+  parent: Postgrest.ClientAuthorization
+  langs:
+  - csharp
+  - vb
+  name: ClientAuthorization(String)
+  nameWithType: ClientAuthorization.ClientAuthorization(String)
+  fullName: Postgrest.ClientAuthorization.ClientAuthorization(System.String)
+  type: Constructor
+  source:
+    remote:
+      path: Postgrest/ClientAuthorization.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: .ctor
+    path: Postgrest/ClientAuthorization.cs
+    startLine: 27
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: public ClientAuthorization(string apiKey)
+    parameters:
+    - id: apiKey
+      type: System.String
+    content.vb: Public Sub New(apiKey As String)
+  overload: Postgrest.ClientAuthorization.#ctor*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: Postgrest.ClientAuthorization.#ctor(System.String,System.String)
+  commentId: M:Postgrest.ClientAuthorization.#ctor(System.String,System.String)
+  id: '#ctor(System.String,System.String)'
+  parent: Postgrest.ClientAuthorization
+  langs:
+  - csharp
+  - vb
+  name: ClientAuthorization(String, String)
+  nameWithType: ClientAuthorization.ClientAuthorization(String, String)
+  fullName: Postgrest.ClientAuthorization.ClientAuthorization(System.String, System.String)
+  type: Constructor
+  source:
+    remote:
+      path: Postgrest/ClientAuthorization.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: .ctor
+    path: Postgrest/ClientAuthorization.cs
+    startLine: 33
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: public ClientAuthorization(string username, string password)
+    parameters:
+    - id: username
+      type: System.String
+    - id: password
+      type: System.String
+    content.vb: Public Sub New(username As String, password As String)
+  overload: Postgrest.ClientAuthorization.#ctor*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+- uid: Postgrest.ClientAuthorization.#ctor(Postgrest.ClientAuthorization.AuthorizationType,System.String,System.String)
+  commentId: M:Postgrest.ClientAuthorization.#ctor(Postgrest.ClientAuthorization.AuthorizationType,System.String,System.String)
+  id: '#ctor(Postgrest.ClientAuthorization.AuthorizationType,System.String,System.String)'
+  parent: Postgrest.ClientAuthorization
+  langs:
+  - csharp
+  - vb
+  name: ClientAuthorization(ClientAuthorization.AuthorizationType, String, String)
+  nameWithType: ClientAuthorization.ClientAuthorization(ClientAuthorization.AuthorizationType, String, String)
+  fullName: Postgrest.ClientAuthorization.ClientAuthorization(Postgrest.ClientAuthorization.AuthorizationType, System.String, System.String)
+  type: Constructor
+  source:
+    remote:
+      path: Postgrest/ClientAuthorization.cs
+      branch: master
+      repo: https://github.com/supabase/postgrest-csharp.git
+    id: .ctor
+    path: Postgrest/ClientAuthorization.cs
+    startLine: 40
+  assemblies:
+  - Postgrest
+  namespace: Postgrest
+  syntax:
+    content: public ClientAuthorization(ClientAuthorization.AuthorizationType type, string value1, string value2 = null)
+    parameters:
+    - id: type
+      type: Postgrest.ClientAuthorization.AuthorizationType
+    - id: value1
+      type: System.String
+    - id: value2
+      type: System.String
+    content.vb: Public Sub New(type As ClientAuthorization.AuthorizationType, value1 As String, value2 As String = Nothing)
+  overload: Postgrest.ClientAuthorization.#ctor*
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+references:
+- uid: Postgrest
+  commentId: N:Postgrest
+  name: Postgrest
+  nameWithType: Postgrest
+  fullName: Postgrest
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: System.Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object)
+  nameWithType: Object.Equals(Object)
+  fullName: System.Object.Equals(System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: Equals(Object, Object)
+  nameWithType: Object.Equals(Object, Object)
+  fullName: System.Object.Equals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    nameWithType: Object.Equals
+    fullName: System.Object.Equals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: Object.GetHashCode()
+  fullName: System.Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    nameWithType: Object.GetHashCode
+    fullName: System.Object.GetHashCode
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  name: GetType()
+  nameWithType: Object.GetType()
+  fullName: System.Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    nameWithType: Object.GetType
+    fullName: System.Object.GetType
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  name: MemberwiseClone()
+  nameWithType: Object.MemberwiseClone()
+  fullName: System.Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    nameWithType: Object.MemberwiseClone
+    fullName: System.Object.MemberwiseClone
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  name: ReferenceEquals(Object, Object)
+  nameWithType: Object.ReferenceEquals(Object, Object)
+  fullName: System.Object.ReferenceEquals(System.Object, System.Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    nameWithType: Object.ReferenceEquals
+    fullName: System.Object.ReferenceEquals
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: ', '
+    nameWithType: ', '
+    fullName: ', '
+  - uid: System.Object
+    name: Object
+    nameWithType: Object
+    fullName: System.Object
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: Object.ToString()
+  fullName: System.Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    nameWithType: Object.ToString
+    fullName: System.Object.ToString
+    isExternal: true
+  - name: (
+    nameWithType: (
+    fullName: (
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Postgrest.ClientAuthorization.ApiKey*
+  commentId: Overload:Postgrest.ClientAuthorization.ApiKey
+  name: ApiKey
+  nameWithType: ClientAuthorization.ApiKey
+  fullName: Postgrest.ClientAuthorization.ApiKey
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: String
+  nameWithType: String
+  fullName: System.String
+- uid: Postgrest.ClientAuthorization.Token*
+  commentId: Overload:Postgrest.ClientAuthorization.Token
+  name: Token
+  nameWithType: ClientAuthorization.Token
+  fullName: Postgrest.ClientAuthorization.Token
+- uid: Postgrest.ClientAuthorization.Username*
+  commentId: Overload:Postgrest.ClientAuthorization.Username
+  name: Username
+  nameWithType: ClientAuthorization.Username
+  fullName: Postgrest.ClientAuthorization.Username
+- uid: Postgrest.ClientAuthorization.Password*
+  commentId: Overload:Postgrest.ClientAuthorization.Password
+  name: Password
+  nameWithType: ClientAuthorization.Password
+  fullName: Postgrest.ClientAuthorization.Password
+- uid: Postgrest.ClientAuthorization.Type*
+  commentId: Overload:Postgrest.ClientAuthorization.Type
+  name: Type
+  nameWithType: ClientAuthorization.Type
+  fullName: Postgrest.ClientAuthorization.Type
+- uid: Postgrest.ClientAuthorization.AuthorizationType
+  commentId: T:Postgrest.ClientAuthorization.AuthorizationType
+  parent: Postgrest
+  name: ClientAuthorization.AuthorizationType
+  nameWithType: ClientAuthorization.AuthorizationType
+  fullName: Postgrest.ClientAuthorization.AuthorizationType
+- uid: Postgrest.ClientAuthorization.#ctor*
+  commentId: Overload:Postgrest.ClientAuthorization.#ctor
+  name: ClientAuthorization
+  nameWithType: ClientAuthorization.ClientAuthorization
+  fullName: Postgrest.ClientAuthorization.ClientAuthorization
