@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <PackOnBuild>true</PackOnBuild>
     <PackageId>postgrest-csharp</PackageId>
-    <PackageVersion>1.0.0</PackageVersion>
+    <PackageVersion>1.0.1</PackageVersion>
     <Authors>Joseph Schultz &lt;joseph@acupofjose.com&gt;</Authors>
     <Copyright>MIT</Copyright>
     <NeutralLanguage>en-US</NeutralLanguage>
@@ -16,7 +16,7 @@
     <Description>Postgrest-csharp is written primarily as a helper library for supabase/supabase-csharp, however, it should be easy enough to use outside of the supabase ecosystem.
 
 The bulk of this library is a translation and c-sharp-ification of the supabase/postgrest-js library.</Description>
-    <ReleaseVersion>1.0.0</ReleaseVersion>
+    <ReleaseVersion>1.0.1</ReleaseVersion>
   </PropertyGroup>
 
   <ItemGroup>
