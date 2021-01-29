@@ -1,5 +1,5 @@
 <p align="center">
-<img width="300" src=".github/postgrest-csharp.png"/>
+<img width="300" src=".github/logo.png"/>
 </p>
 
 ---
@@ -44,8 +44,8 @@ The bulk of this library is a translation and c-sharp-ification of the [supabase
 ## Package made possible through the efforts of:
 
 | <img src="https://github.com/acupofjose.png" width="150" height="150"> | <img src="https://github.com/elrhomariyounes.png" width="150" height="150"> |
-| :----------------------------------------------: | :--------------------------------------------------------: |
-|   [acupofjose](https://github.com/acupofjose)    |   [elrhomariyounes](https://github.com/elrhomariyounes)    |
+| :--------------------------------------------------------------------: | :-------------------------------------------------------------------------: |
+|              [acupofjose](https://github.com/acupofjose)               |            [elrhomariyounes](https://github.com/elrhomariyounes)            |
 
 ## Contributing
 
