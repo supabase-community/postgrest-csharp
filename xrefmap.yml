@@ -51,12 +51,12 @@ references:
   commentId: T:Postgrest.Attributes.PrimaryKeyAttribute
   fullName: Postgrest.Attributes.PrimaryKeyAttribute
   nameWithType: PrimaryKeyAttribute
-- uid: Postgrest.Attributes.PrimaryKeyAttribute.#ctor(System.String)
-  name: PrimaryKeyAttribute(String)
-  href: api/Postgrest.Attributes.PrimaryKeyAttribute.html#Postgrest_Attributes_PrimaryKeyAttribute__ctor_System_String_
-  commentId: M:Postgrest.Attributes.PrimaryKeyAttribute.#ctor(System.String)
-  fullName: Postgrest.Attributes.PrimaryKeyAttribute.PrimaryKeyAttribute(System.String)
-  nameWithType: PrimaryKeyAttribute.PrimaryKeyAttribute(String)
+- uid: Postgrest.Attributes.PrimaryKeyAttribute.#ctor(System.String,System.Boolean)
+  name: PrimaryKeyAttribute(String, Boolean)
+  href: api/Postgrest.Attributes.PrimaryKeyAttribute.html#Postgrest_Attributes_PrimaryKeyAttribute__ctor_System_String_System_Boolean_
+  commentId: M:Postgrest.Attributes.PrimaryKeyAttribute.#ctor(System.String,System.Boolean)
+  fullName: Postgrest.Attributes.PrimaryKeyAttribute.PrimaryKeyAttribute(System.String, System.Boolean)
+  nameWithType: PrimaryKeyAttribute.PrimaryKeyAttribute(String, Boolean)
 - uid: Postgrest.Attributes.PrimaryKeyAttribute.#ctor*
   name: PrimaryKeyAttribute
   href: api/Postgrest.Attributes.PrimaryKeyAttribute.html#Postgrest_Attributes_PrimaryKeyAttribute__ctor_
@@ -77,6 +77,19 @@ references:
   isSpec: "True"
   fullName: Postgrest.Attributes.PrimaryKeyAttribute.ColumnName
   nameWithType: PrimaryKeyAttribute.ColumnName
+- uid: Postgrest.Attributes.PrimaryKeyAttribute.ShouldInsert
+  name: ShouldInsert
+  href: api/Postgrest.Attributes.PrimaryKeyAttribute.html#Postgrest_Attributes_PrimaryKeyAttribute_ShouldInsert
+  commentId: P:Postgrest.Attributes.PrimaryKeyAttribute.ShouldInsert
+  fullName: Postgrest.Attributes.PrimaryKeyAttribute.ShouldInsert
+  nameWithType: PrimaryKeyAttribute.ShouldInsert
+- uid: Postgrest.Attributes.PrimaryKeyAttribute.ShouldInsert*
+  name: ShouldInsert
+  href: api/Postgrest.Attributes.PrimaryKeyAttribute.html#Postgrest_Attributes_PrimaryKeyAttribute_ShouldInsert_
+  commentId: Overload:Postgrest.Attributes.PrimaryKeyAttribute.ShouldInsert
+  isSpec: "True"
+  fullName: Postgrest.Attributes.PrimaryKeyAttribute.ShouldInsert
+  nameWithType: PrimaryKeyAttribute.ShouldInsert
 - uid: Postgrest.Attributes.TableAttribute
   name: TableAttribute
   href: api/Postgrest.Attributes.TableAttribute.html
