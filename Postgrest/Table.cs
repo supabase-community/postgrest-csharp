@@ -102,6 +102,16 @@ namespace Postgrest
                 filters.Add(new QueryFilter(columnName, op, stringCriterion));
                 return this;
             }
+            else if (criterion is int intCriterion)
+            {
+                filters.Add(new QueryFilter(columnName, op, intCriterion));
+                return this;
+            }
+            else if (criterion is float floatCriterion)
+            {
+                filters.Add(new QueryFilter(columnName, op, floatCriterion));
+                return this;
+            }
             else if (criterion is List<object> listCriteria)
             {
                 filters.Add(new QueryFilter(columnName, op, listCriteria));
@@ -123,7 +133,7 @@ namespace Postgrest
                 return this;
             }
 
-            throw new Exception("Unknown criterion type, is it of type `string`, `List`, `Dictionary<string, object>`, `FullTextSearchConfig`, or `Range`?");
+            throw new Exception("Unknown criterion type, is it of type `string`, `int`, `float`, `List`, `Dictionary<string, object>`, `FullTextSearchConfig`, or `Range`?");
         }
 
         /// <summary>
