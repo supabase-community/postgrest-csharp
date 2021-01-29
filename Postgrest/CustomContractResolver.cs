@@ -39,6 +39,7 @@ namespace Postgrest.Attributes
                 if (primaryKeyAtt != null)
                 {
                     prop.PropertyName = primaryKeyAtt.ColumnName;
+                    prop.ShouldSerialize = instance => primaryKeyAtt.ShouldInsert;
                     return prop;
                 }
             }

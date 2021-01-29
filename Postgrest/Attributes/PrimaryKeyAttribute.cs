@@ -19,9 +19,15 @@ namespace Postgrest.Attributes
     {
         public string ColumnName { get; set; }
 
-        public PrimaryKeyAttribute([CallerMemberName] string columnName = null)
+        /// <summary>
+        /// Would be set to false in the event that the database handles the generation of this property.
+        /// </summary>
+        public bool ShouldInsert { get; set; }
+
+        public PrimaryKeyAttribute([CallerMemberName] string columnName = null, bool shouldInsert = true)
         {
             ColumnName = columnName;
+            ShouldInsert = shouldInsert;
         }
     }
 }
