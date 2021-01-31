@@ -2,8 +2,12 @@
 <img width="300" src=".github/logo.png"/>
 </p>
 
-![Build And Test](https://github.com/supabase/postgrest-csharp/workflows/Build%20And%20Test/badge.svg)
-[![Nuget Release](https://img.shields.io/badge/dynamic/json?color=green&label=Nuget%20Release&query=data[0].version&url=https%3A%2F%2Fazuresearch-usnc.nuget.org%2Fquery%3Fq%3Dpackageid%3Apostgrest-csharp)](https://www.nuget.org/packages/postgrest-csharp/)
+<p align="center">
+  <img src="https://github.com/supabase/postgrest-csharp/workflows/Build%20And%20Test/badge.svg"/>
+<a href="https://www.nuget.org/packages/postgrest-csharp/">
+  <img src="https://img.shields.io/badge/dynamic/json?color=green&label=Nuget%20Release&query=data[0].version&url=https%3A%2F%2Fazuresearch-usnc.nuget.org%2Fquery%3Fq%3Dpackageid%3Apostgrest-csharp"/>
+</a>
+</p>
 
 Documentation can be found [here](https://supabase.github.io/postgrest-csharp/api/Postgrest.html).
 
