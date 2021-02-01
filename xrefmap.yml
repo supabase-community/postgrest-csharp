@@ -735,6 +735,19 @@ references:
   isSpec: "True"
   fullName: Postgrest.Models.BaseModel.PrimaryKeyValue
   nameWithType: BaseModel.PrimaryKeyValue
+- uid: Postgrest.Models.BaseModel.TableName
+  name: TableName
+  href: api/Postgrest.Models.BaseModel.html#Postgrest_Models_BaseModel_TableName
+  commentId: P:Postgrest.Models.BaseModel.TableName
+  fullName: Postgrest.Models.BaseModel.TableName
+  nameWithType: BaseModel.TableName
+- uid: Postgrest.Models.BaseModel.TableName*
+  name: TableName
+  href: api/Postgrest.Models.BaseModel.html#Postgrest_Models_BaseModel_TableName_
+  commentId: Overload:Postgrest.Models.BaseModel.TableName
+  isSpec: "True"
+  fullName: Postgrest.Models.BaseModel.TableName
+  nameWithType: BaseModel.TableName
 - uid: Postgrest.Models.BaseModel.Update*
   name: Update
   href: api/Postgrest.Models.BaseModel.html#Postgrest_Models_BaseModel_Update_
@@ -1475,6 +1488,23 @@ references:
   fullName.vb: Postgrest.Table(Of T).Single
   nameWithType: Table<T>.Single
   nameWithType.vb: Table(Of T).Single
+- uid: Postgrest.Table`1.TableName
+  name: TableName
+  href: api/Postgrest.Table-1.html#Postgrest_Table_1_TableName
+  commentId: P:Postgrest.Table`1.TableName
+  fullName: Postgrest.Table<T>.TableName
+  fullName.vb: Postgrest.Table(Of T).TableName
+  nameWithType: Table<T>.TableName
+  nameWithType.vb: Table(Of T).TableName
+- uid: Postgrest.Table`1.TableName*
+  name: TableName
+  href: api/Postgrest.Table-1.html#Postgrest_Table_1_TableName_
+  commentId: Overload:Postgrest.Table`1.TableName
+  isSpec: "True"
+  fullName: Postgrest.Table<T>.TableName
+  fullName.vb: Postgrest.Table(Of T).TableName
+  nameWithType: Table<T>.TableName
+  nameWithType.vb: Table(Of T).TableName
 - uid: Postgrest.Table`1.Update(`0)
   name: Update(T)
   href: api/Postgrest.Table-1.html#Postgrest_Table_1_Update__0_
