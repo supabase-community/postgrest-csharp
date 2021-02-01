@@ -24,12 +24,16 @@ namespace Postgrest
     {
         public string BaseUrl { get; private set; }
 
+        /// <summary>
+        /// Name of the Table parsed by the Model.
+        /// </summary>
+        public string TableName { get; private set; }
+
         private ClientAuthorization authorization;
         private ClientOptions options;
 
         private HttpMethod method = HttpMethod.Get;
 
-        private string tableName;
         private string columnQuery;
 
         private List<QueryFilter> filters = new List<QueryFilter>();
@@ -63,11 +67,11 @@ namespace Postgrest
             var attr = Attribute.GetCustomAttribute(typeof(T), typeof(TableAttribute));
             if (attr is TableAttribute tableAttr)
             {
-                tableName = tableAttr.Name;
+                TableName = tableAttr.Name;
             }
             else
             {
-                tableName = typeof(T).Name;
+                TableName = typeof(T).Name;
             }
         }
 
@@ -441,7 +445,7 @@ namespace Postgrest
         /// <returns></returns>
         internal string GenerateUrl()
         {
-            var builder = new UriBuilder($"{BaseUrl}/{tableName}");
+            var builder = new UriBuilder($"{BaseUrl}/{TableName}");
             var query = HttpUtility.ParseQueryString(builder.Query);
 
             foreach (var param in options.QueryParams)

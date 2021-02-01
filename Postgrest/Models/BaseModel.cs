@@ -36,6 +36,19 @@ namespace Postgrest.Models
             }
         }
 
+        [JsonIgnore]
+        public string TableName
+        {
+            get
+            {
+                var attr = Attribute.GetCustomAttribute(GetType(), typeof(TableAttribute));
+                if (attr is TableAttribute tableAttr)
+                    return tableAttr.Name;
+                else
+                    return GetType().Name;
+            }
+        }
+
         /// <summary>
         /// Gets the name of the PrimaryKey column on a model's instance as defined by the [PrimaryKey] attribute on a property on the model.
         /// </summary>
