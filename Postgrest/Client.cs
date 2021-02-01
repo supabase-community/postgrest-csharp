@@ -48,9 +48,10 @@ namespace Postgrest
         /// <param name="authorization">Authorization Information.</param>
         /// <param name="options">Optional client configuration.</param>
         /// <returns></returns>
-        public Client Initialize(string baseUrl, ClientAuthorization authorization, ClientOptions options = null)
+        public static Client Initialize(string baseUrl, ClientAuthorization authorization, ClientOptions options = null)
         {
-            BaseUrl = baseUrl;
+            instance = new Client();
+            instance.BaseUrl = baseUrl;
 
             if (options == null)
                 options = new ClientOptions();
@@ -58,10 +59,10 @@ namespace Postgrest
             if (authorization == null)
                 authorization = new ClientAuthorization(ClientAuthorization.AuthorizationType.Open, null);
 
-            this.options = options;
-            this.authorization = authorization;
+            instance.options = options;
+            instance.authorization = authorization;
 
-            return this;
+            return instance;
         }
 
         /// <summary>

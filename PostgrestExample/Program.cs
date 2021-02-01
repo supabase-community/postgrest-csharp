@@ -13,7 +13,7 @@ namespace PostgrestExample
             var url = "http://localhost:3000";
             var auth = new Postgrest.ClientAuthorization(AuthorizationType.Open, null);
 
-            var client = Postgrest.Client.Instance.Initialize(url, auth);
+            var client = Postgrest.Client.Initialize(url, auth);
 
             // Get all Users
             var users = await client.Table<User>().Get();

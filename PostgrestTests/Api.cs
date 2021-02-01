@@ -19,14 +19,14 @@ namespace PostgrestTests
         [TestMethod("Initilizes")]
         public void TestInitilization()
         {
-            var client = Client.Instance.Initialize(baseUrl, null, null);
+            var client = Client.Initialize(baseUrl, null, null);
             Assert.AreEqual(baseUrl, client.BaseUrl);
         }
 
         [TestMethod("with optional query params")]
         public void TestQueryParams()
         {
-            var client = Client.Instance.Initialize(baseUrl, null, options: new ClientOptions
+            var client = Client.Initialize(baseUrl, null, options: new ClientOptions
             {
                 QueryParams = new Dictionary<string, string>
                 {
@@ -41,14 +41,14 @@ namespace PostgrestTests
         [TestMethod("will use TableAttribute")]
         public void TestTableAttribute()
         {
-            var client = Client.Instance.Initialize(baseUrl, null);
+            var client = Client.Initialize(baseUrl, null);
             Assert.AreEqual($"{baseUrl}/users", client.Table<User>().GenerateUrl());
         }
 
         [TestMethod("will default to Class.name in absence of TableAttribute")]
         public void TestTableAttributeDefault()
         {
-            var client = Client.Instance.Initialize(baseUrl, null);
+            var client = Client.Initialize(baseUrl, null);
             Assert.AreEqual($"{baseUrl}/Stub", client.Table<Stub>().GenerateUrl());
         }
 
@@ -64,7 +64,7 @@ namespace PostgrestTests
         [TestMethod("will set apikey query string")]
         public void TestQueryApiKey()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.ApiKey, "some-key"));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.ApiKey, "some-key"));
             Assert.AreEqual($"{baseUrl}/users?apikey=some-key", client.Table<User>().GenerateUrl());
         }
 
@@ -83,7 +83,7 @@ namespace PostgrestTests
         [TestMethod("filters: simple")]
         public void TestFiltersSimple()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
             var dict = new Dictionary<Constants.Operator, string>
             {
                 { Constants.Operator.Equals, "eq.bar" },
@@ -107,7 +107,7 @@ namespace PostgrestTests
         [TestMethod("filters: like & ilike")]
         public void TestFiltersLike()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
             var dict = new Dictionary<Constants.Operator, string>
             {
                 { Constants.Operator.Like, "like.*bar*" },
@@ -129,7 +129,7 @@ namespace PostgrestTests
         [TestMethod("filters: `In` with List<object> arguments")]
         public void TestFiltersArraysWithLists()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             // UrlEncoded {"bar","buzz"}
             string exp = "(\"bar\",\"buzz\")";
@@ -154,7 +154,7 @@ namespace PostgrestTests
         [TestMethod("filters: `Contains`, `ContainedIn`, `Overlap` with List<object> arguments")]
         public void TestFiltersContainsArraysWithLists()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             // UrlEncoded {bar,buzz} - according to documentation, does not accept quoted strings
             string exp = "{bar,buzz}";
@@ -178,7 +178,7 @@ namespace PostgrestTests
         [TestMethod("filters: arrays with Dictionary<string,object> arguments")]
         public void TestFiltersArraysWithDictionaries()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             string exp = "{\"bar\":100,\"buzz\":\"zap\"}";
             var dict = new Dictionary<Constants.Operator, string>
@@ -202,7 +202,7 @@ namespace PostgrestTests
         [TestMethod("filters: full text search")]
         public void TestFiltersFullTextSearch()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             // UrlEncoded [2,3]
             var exp = "(english).bar";
@@ -227,7 +227,7 @@ namespace PostgrestTests
         [TestMethod("filters: ranges")]
         public void TestFiltersRanges()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var exp = "[2,3]";
             var dict = new Dictionary<Constants.Operator, string>
@@ -252,7 +252,7 @@ namespace PostgrestTests
         [TestMethod("filters: not")]
         public void TestFiltersNot()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
             var filter = new QueryFilter("foo", Constants.Operator.Equals, "bar");
             var notFilter = new QueryFilter(Constants.Operator.Not, filter);
             var result = client.Table<User>().PrepareFilter(notFilter);
@@ -264,7 +264,7 @@ namespace PostgrestTests
         [TestMethod("filters: and & or")]
         public void TestFiltersAndOr()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
             var exp = "(a.gte.0,a.lte.100)";
 
             var dict = new Dictionary<Constants.Operator, string>
@@ -289,7 +289,7 @@ namespace PostgrestTests
         [TestMethod("update: basic")]
         public async Task TestBasicUpdate()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var user = await client.Table<User>().Filter("username", Postgrest.Constants.Operator.Equals, "supabot").Single();
 
@@ -311,7 +311,7 @@ namespace PostgrestTests
         [TestMethod("Exceptions: Throws when attempting to update a non-existent record")]
         public async Task TestThrowsRequestExceptionOnNonExistantUpdate()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             await Assert.ThrowsExceptionAsync<RequestException>(async () =>
             {
@@ -328,7 +328,7 @@ namespace PostgrestTests
         [TestMethod("insert: basic")]
         public async Task TestBasicInsert()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var newUser = new User
             {
@@ -352,7 +352,7 @@ namespace PostgrestTests
         [TestMethod("Exceptions: Throws when inserting a user with same primary key value as an existing one without upsert option")]
         public async Task TestThrowsRequestExceptionInsertPkConflict()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             await Assert.ThrowsExceptionAsync<RequestException>(async () =>
             {
@@ -367,7 +367,7 @@ namespace PostgrestTests
         [TestMethod("insert: upsert")]
         public async Task TestInsertWithUpsert()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var supaUpdated = new User
             {
@@ -394,7 +394,7 @@ namespace PostgrestTests
         [TestMethod("order: basic")]
         public async Task TestOrderBy()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var orderedResponse = await client.Table<User>().Order("username", Constants.Ordering.Descending).Get();
             var unorderedResponse = await client.Table<User>().Get();
@@ -408,7 +408,7 @@ namespace PostgrestTests
         [TestMethod("limit: basic")]
         public async Task TestLimit()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var limitedUsersResponse = await client.Table<User>().Limit(2).Get();
             var usersResponse = await client.Table<User>().Get();
@@ -422,7 +422,7 @@ namespace PostgrestTests
         [TestMethod("offset: basic")]
         public async Task TestOffset()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var offsetUsersResponse = await client.Table<User>().Offset(2).Get();
             var usersResponse = await client.Table<User>().Get();
@@ -436,7 +436,7 @@ namespace PostgrestTests
         [TestMethod("range: from")]
         public async Task TestRangeFrom()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var rangeUsersResponse = await client.Table<User>().Range(2).Get();
             var usersResponse = await client.Table<User>().Get();
@@ -450,7 +450,7 @@ namespace PostgrestTests
         [TestMethod("range: from and to")]
         public async Task TestRangeFromAndTo()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var rangeUsersResponse = await client.Table<User>().Range(1, 3).Get();
             var usersResponse = await client.Table<User>().Get();
@@ -464,7 +464,7 @@ namespace PostgrestTests
         [TestMethod("range: limit and offset")]
         public async Task TestRangeWithLimitAndOffset()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var rangeUsersResponse = await client.Table<User>().Limit(1).Offset(3).Get();
             var usersResponse = await client.Table<User>().Get();
@@ -478,7 +478,7 @@ namespace PostgrestTests
         [TestMethod("filters: not")]
         public async Task TestNotFilter()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
             var filter = new QueryFilter("username", Constants.Operator.Equals, "supabot");
 
             var filteredResponse = await client.Table<User>().Not(filter).Get();
@@ -493,7 +493,7 @@ namespace PostgrestTests
         [TestMethod("filters: `not` shorthand")]
         public async Task TestNotShorthandFilter()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             // Standard NOT Equal Op.
             var filteredResponse = await client.Table<User>().Not("username", Operator.Equals, "supabot").Get();
@@ -515,7 +515,7 @@ namespace PostgrestTests
         [TestMethod("filters: null operation `Equals`")]
         public async Task TestEqualsNullFilterEquals()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             await client.Table<User>().Insert(new User { Username = "acupofjose", Status = "ONLINE", Catchphrase = null }, new InsertOptions { Upsert = true });
 
@@ -531,7 +531,7 @@ namespace PostgrestTests
         [TestMethod("filters: null operation `Is`")]
         public async Task TestEqualsNullFilterIs()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             await client.Table<User>().Insert(new User { Username = "acupofjose", Status = "ONLINE", Catchphrase = null }, new InsertOptions { Upsert = true });
 
@@ -547,7 +547,7 @@ namespace PostgrestTests
         [TestMethod("filters: null operation `NotEquals`")]
         public async Task TestEqualsNullFilterNotEquals()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             await client.Table<User>().Insert(new User { Username = "acupofjose", Status = "ONLINE", Catchphrase = null }, new InsertOptions { Upsert = true });
 
@@ -563,7 +563,7 @@ namespace PostgrestTests
         [TestMethod("filters: null operation `Not`")]
         public async Task TestEqualsNullNot()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             await client.Table<User>().Insert(new User { Username = "acupofjose", Status = "ONLINE", Catchphrase = null }, new InsertOptions { Upsert = true });
 
@@ -579,7 +579,7 @@ namespace PostgrestTests
         [TestMethod("filters: in")]
         public async Task TestInFilter()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var criteria = new List<object> { "supabot", "kiwicopple" };
 
@@ -595,7 +595,7 @@ namespace PostgrestTests
         [TestMethod("filters: eq")]
         public async Task TestEqualsFilter()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var filteredResponse = await client.Table<User>().Filter("username", Operator.Equals, "supabot").Get();
             var usersResponse = await client.Table<User>().Get();
@@ -610,7 +610,7 @@ namespace PostgrestTests
         [TestMethod("filters: gt")]
         public async Task TestGreaterThanFilter()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var filteredResponse = await client.Table<Message>().Filter("id", Operator.GreaterThan, "1").Get();
             var messagesResponse = await client.Table<Message>().Get();
@@ -625,7 +625,7 @@ namespace PostgrestTests
         [TestMethod("filters: gte")]
         public async Task TestGreaterThanOrEqualFilter()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var filteredResponse = await client.Table<Message>().Filter("id", Operator.GreaterThanOrEqual, "1").Get();
             var messagesResponse = await client.Table<Message>().Get();
@@ -639,7 +639,7 @@ namespace PostgrestTests
         [TestMethod("filters: lt")]
         public async Task TestlessThanFilter()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var filteredResponse = await client.Table<Message>().Filter("id", Operator.LessThan, "2").Get();
             var messagesResponse = await client.Table<Message>().Get();
@@ -653,7 +653,7 @@ namespace PostgrestTests
         [TestMethod("filters: lte")]
         public async Task TestLessThanOrEqualFilter()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var filteredResponse = await client.Table<Message>().Filter("id", Operator.LessThanOrEqual, "2").Get();
             var messagesResponse = await client.Table<Message>().Get();
@@ -667,7 +667,7 @@ namespace PostgrestTests
         [TestMethod("filters: nqe")]
         public async Task TestNotEqualFilter()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var filteredResponse = await client.Table<Message>().Filter("id", Operator.NotEqual, "2").Get();
             var messagesResponse = await client.Table<Message>().Get();
@@ -681,7 +681,7 @@ namespace PostgrestTests
         [TestMethod("filters: like")]
         public async Task TestLikeFilter()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var filteredResponse = await client.Table<Message>().Filter("username", Operator.Like, "s%").Get();
             var messagesResponse = await client.Table<Message>().Get();
@@ -695,7 +695,7 @@ namespace PostgrestTests
         [TestMethod("filters: cs")]
         public async Task TestContainsFilter()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             await client.Table<User>().Insert(new User { Username = "skikra", Status = "ONLINE", AgeRange = new Range(1, 3) }, new InsertOptions { Upsert = true });
             var filteredResponse = await client.Table<User>().Filter("age_range", Operator.Contains, new Range(1, 2)).Get();
@@ -709,7 +709,7 @@ namespace PostgrestTests
         [TestMethod("filters: cd")]
         public async Task TestContainedFilter()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var filteredResponse = await client.Table<User>().Filter("age_range", Operator.ContainedIn, new Range(25, 35)).Get();
             var usersResponse = await client.Table<User>().Get();
@@ -722,7 +722,7 @@ namespace PostgrestTests
         [TestMethod("filters: sr")]
         public async Task TestStrictlyLeftFilter()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             await client.Table<User>().Insert(new User { Username = "minds3t", Status = "ONLINE", AgeRange = new Range(3, 6) }, new InsertOptions { Upsert = true });
             var filteredResponse = await client.Table<User>().Filter("age_range", Operator.StrictlyLeft, new Range(7, 8)).Get();
@@ -736,7 +736,7 @@ namespace PostgrestTests
         [TestMethod("filters: sl")]
         public async Task TestStrictlyRightFilter()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var filteredResponse = await client.Table<User>().Filter("age_range", Operator.StrictlyRight, new Range(1, 2)).Get();
             var usersResponse = await client.Table<User>().Get();
@@ -749,7 +749,7 @@ namespace PostgrestTests
         [TestMethod("filters: nxl")]
         public async Task TestNotExtendToLeftFilter()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var filteredResponse = await client.Table<User>().Filter("age_range", Operator.NotLeftOf, new Range(2, 4)).Get();
             var usersResponse = await client.Table<User>().Get();
@@ -762,7 +762,7 @@ namespace PostgrestTests
         [TestMethod("filters: nxr")]
         public async Task TestNotExtendToRightFilter()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var filteredResponse = await client.Table<User>().Filter("age_range", Operator.NotRightOf, new Range(2, 4)).Get();
             var usersResponse = await client.Table<User>().Get();
@@ -775,7 +775,7 @@ namespace PostgrestTests
         [TestMethod("filters: adj")]
         public async Task TestAdjacentFilter()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var filteredResponse = await client.Table<User>().Filter("age_range", Operator.Adjacent, new Range(1, 2)).Get();
             var usersResponse = await client.Table<User>().Get();
@@ -788,7 +788,7 @@ namespace PostgrestTests
         [TestMethod("filters: ov")]
         public async Task TestOverlapFilter()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var filteredResponse = await client.Table<User>().Filter("age_range", Operator.Overlap, new Range(2, 4)).Get();
             var usersResponse = await client.Table<User>().Get();
@@ -801,7 +801,7 @@ namespace PostgrestTests
         [TestMethod("filters: ilike")]
         public async Task TestILikeFilter()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var filteredResponse = await client.Table<Message>().Filter("username", Operator.ILike, "%SUPA%").Get();
             var messagesResponse = await client.Table<Message>().Get();
@@ -815,7 +815,7 @@ namespace PostgrestTests
         [TestMethod("filters: fts")]
         public async Task TestFullTextSearch()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
             var config = new FullTextSearchConfig("'fat' & 'cat'", "english");
 
             var filteredResponse = await client.Table<User>().Filter("catchphrase", Operator.FTS, config).Get();
@@ -827,7 +827,7 @@ namespace PostgrestTests
         [TestMethod("filters: plfts")]
         public async Task TestPlaintoFullTextSearch()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
             var config = new FullTextSearchConfig("'fat' & 'cat'", "english");
 
             var filteredResponse = await client.Table<User>().Filter("catchphrase", Operator.PLFTS, config).Get();
@@ -839,7 +839,7 @@ namespace PostgrestTests
         [TestMethod("filters: phfts")]
         public async Task TestPhrasetoFullTextSearch()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
             var config = new FullTextSearchConfig("'cat'", "english");
 
             var filteredResponse = await client.Table<User>().Filter("catchphrase", Operator.PHFTS, config).Get();
@@ -852,7 +852,7 @@ namespace PostgrestTests
         [TestMethod("filters: wfts")]
         public async Task TestWebFullTextSearch()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
             var config = new FullTextSearchConfig("'fat' & 'cat'", "english");
 
             var filteredResponse = await client.Table<User>().Filter("catchphrase", Operator.WFTS, config).Get();
@@ -865,7 +865,7 @@ namespace PostgrestTests
         public async Task TestMatchFilter()
         {
             //Arrange
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
             var usersResponse = await client.Table<User>().Get();
             var testAgaint = usersResponse.Models.Where(u => u.Username == "kiwicopple" && u.Status == "OFFLINE").ToList();
 
@@ -876,7 +876,7 @@ namespace PostgrestTests
                 { "status", "OFFLINE" }
             };
             var filteredResponse = await client.Table<User>().Match(filters).Get();
-            
+
             //Assert
             CollectionAssert.AreEqual(testAgaint, filteredResponse.Models);
         }
@@ -884,7 +884,7 @@ namespace PostgrestTests
         [TestMethod("select: basic")]
         public async Task TestSelect()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var response = await client.Table<User>().Select("username").Get();
             foreach (var user in response.Models)
@@ -898,7 +898,7 @@ namespace PostgrestTests
         [TestMethod("select: multiple columns")]
         public async Task TestSelectWithMultipleColumns()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             var response = await client.Table<User>().Select("username, status").Get();
             foreach (var user in response.Models)
@@ -912,7 +912,7 @@ namespace PostgrestTests
         [TestMethod("insert: bulk")]
         public async Task TestInsertBulk()
         {
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
             var rocketUser = new User
             {
                 Username = "rocket",
@@ -947,7 +947,7 @@ namespace PostgrestTests
         public async Task TestStoredProcedure()
         {
             //Arrange 
-            var client = Client.Instance.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
+            var client = Client.Initialize(baseUrl, new ClientAuthorization(AuthorizationType.Open, null));
 
             //Act 
             var parameters = new Dictionary<string, object>()
@@ -970,7 +970,7 @@ namespace PostgrestTests
                 Schema = "personal"
             };
             var auth = new ClientAuthorization(AuthorizationType.Open, null);
-            var client = Client.Instance.Initialize(baseUrl, auth, options);
+            var client = Client.Initialize(baseUrl, auth, options);
 
             //Act 
             var response = await client.Table<User>().Filter("username", Operator.Equals, "leroyjenkins").Get();
