@@ -57,31 +57,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Client.html",
-          "hash": "dPVTdvtmmn+Rz+mcKYM7Hg=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Postgrest.ClientAuthorization.AuthorizationType.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Postgrest.ClientAuthorization.AuthorizationType.html",
-          "hash": "Ayv+y2TRoNrAz656cg5m7w=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/Postgrest.ClientAuthorization.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Postgrest.ClientAuthorization.html",
-          "hash": "CZaRje0RRrSp+Epla169qQ=="
+          "hash": "DH0OD/s/bn8i1PgeeaqvTg=="
         }
       },
       "is_incremental": false,
@@ -261,7 +237,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.RequestException.html",
-          "hash": "CFKGt0NLz7ozoZ4RJUZuOw=="
+          "hash": "37EfIpHoci/jgFV8d5p3ZQ=="
         }
       },
       "is_incremental": false,
@@ -321,7 +297,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Table-1.html",
-          "hash": "xEUSfkvexQ2bJCrkwOzFIA=="
+          "hash": "RFPD5cBHWb316njJUuUmIQ=="
         }
       },
       "is_incremental": false,
@@ -333,7 +309,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.html",
-          "hash": "IR1zHfIiAdtIcnEDyb2aoQ=="
+          "hash": "VwE6EpY/VkzmBhsAha5GBA=="
         }
       },
       "is_incremental": false,
@@ -357,7 +333,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "VsgbNVd+ZIrQyAnchdFv4A=="
+          "hash": "vh5lNn/sVpPxX4yOMLvb2Q=="
         }
       },
       "is_incremental": false,
@@ -408,7 +384,7 @@
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 28,
+          "total_file_count": 26,
           "skipped_file_count": 0
         },
         "TocDocumentProcessor": {

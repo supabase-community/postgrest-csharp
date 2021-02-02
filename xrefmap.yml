@@ -141,12 +141,12 @@ references:
   isSpec: "True"
   fullName: Postgrest.Client.BaseUrl
   nameWithType: Client.BaseUrl
-- uid: Postgrest.Client.Initialize(System.String,Postgrest.ClientAuthorization,Postgrest.ClientOptions)
-  name: Initialize(String, ClientAuthorization, ClientOptions)
-  href: api/Postgrest.Client.html#Postgrest_Client_Initialize_System_String_Postgrest_ClientAuthorization_Postgrest_ClientOptions_
-  commentId: M:Postgrest.Client.Initialize(System.String,Postgrest.ClientAuthorization,Postgrest.ClientOptions)
-  fullName: Postgrest.Client.Initialize(System.String, Postgrest.ClientAuthorization, Postgrest.ClientOptions)
-  nameWithType: Client.Initialize(String, ClientAuthorization, ClientOptions)
+- uid: Postgrest.Client.Initialize(System.String,Postgrest.ClientOptions)
+  name: Initialize(String, ClientOptions)
+  href: api/Postgrest.Client.html#Postgrest_Client_Initialize_System_String_Postgrest_ClientOptions_
+  commentId: M:Postgrest.Client.Initialize(System.String,Postgrest.ClientOptions)
+  fullName: Postgrest.Client.Initialize(System.String, Postgrest.ClientOptions)
+  nameWithType: Client.Initialize(String, ClientOptions)
 - uid: Postgrest.Client.Initialize*
   name: Initialize
   href: api/Postgrest.Client.html#Postgrest_Client_Initialize_
@@ -212,138 +212,6 @@ references:
   fullName.vb: Postgrest.Client.Table(Of T)()
   nameWithType: Client.Table<T>()
   nameWithType.vb: Client.Table(Of T)()
-- uid: Postgrest.ClientAuthorization
-  name: ClientAuthorization
-  href: api/Postgrest.ClientAuthorization.html
-  commentId: T:Postgrest.ClientAuthorization
-  fullName: Postgrest.ClientAuthorization
-  nameWithType: ClientAuthorization
-- uid: Postgrest.ClientAuthorization.#ctor
-  name: ClientAuthorization()
-  href: api/Postgrest.ClientAuthorization.html#Postgrest_ClientAuthorization__ctor
-  commentId: M:Postgrest.ClientAuthorization.#ctor
-  fullName: Postgrest.ClientAuthorization.ClientAuthorization()
-  nameWithType: ClientAuthorization.ClientAuthorization()
-- uid: Postgrest.ClientAuthorization.#ctor(Postgrest.ClientAuthorization.AuthorizationType,System.String,System.String)
-  name: ClientAuthorization(ClientAuthorization.AuthorizationType, String, String)
-  href: api/Postgrest.ClientAuthorization.html#Postgrest_ClientAuthorization__ctor_Postgrest_ClientAuthorization_AuthorizationType_System_String_System_String_
-  commentId: M:Postgrest.ClientAuthorization.#ctor(Postgrest.ClientAuthorization.AuthorizationType,System.String,System.String)
-  fullName: Postgrest.ClientAuthorization.ClientAuthorization(Postgrest.ClientAuthorization.AuthorizationType, System.String, System.String)
-  nameWithType: ClientAuthorization.ClientAuthorization(ClientAuthorization.AuthorizationType, String, String)
-- uid: Postgrest.ClientAuthorization.#ctor(System.String)
-  name: ClientAuthorization(String)
-  href: api/Postgrest.ClientAuthorization.html#Postgrest_ClientAuthorization__ctor_System_String_
-  commentId: M:Postgrest.ClientAuthorization.#ctor(System.String)
-  fullName: Postgrest.ClientAuthorization.ClientAuthorization(System.String)
-  nameWithType: ClientAuthorization.ClientAuthorization(String)
-- uid: Postgrest.ClientAuthorization.#ctor(System.String,System.String)
-  name: ClientAuthorization(String, String)
-  href: api/Postgrest.ClientAuthorization.html#Postgrest_ClientAuthorization__ctor_System_String_System_String_
-  commentId: M:Postgrest.ClientAuthorization.#ctor(System.String,System.String)
-  fullName: Postgrest.ClientAuthorization.ClientAuthorization(System.String, System.String)
-  nameWithType: ClientAuthorization.ClientAuthorization(String, String)
-- uid: Postgrest.ClientAuthorization.#ctor*
-  name: ClientAuthorization
-  href: api/Postgrest.ClientAuthorization.html#Postgrest_ClientAuthorization__ctor_
-  commentId: Overload:Postgrest.ClientAuthorization.#ctor
-  isSpec: "True"
-  fullName: Postgrest.ClientAuthorization.ClientAuthorization
-  nameWithType: ClientAuthorization.ClientAuthorization
-- uid: Postgrest.ClientAuthorization.ApiKey
-  name: ApiKey
-  href: api/Postgrest.ClientAuthorization.html#Postgrest_ClientAuthorization_ApiKey
-  commentId: P:Postgrest.ClientAuthorization.ApiKey
-  fullName: Postgrest.ClientAuthorization.ApiKey
-  nameWithType: ClientAuthorization.ApiKey
-- uid: Postgrest.ClientAuthorization.ApiKey*
-  name: ApiKey
-  href: api/Postgrest.ClientAuthorization.html#Postgrest_ClientAuthorization_ApiKey_
-  commentId: Overload:Postgrest.ClientAuthorization.ApiKey
-  isSpec: "True"
-  fullName: Postgrest.ClientAuthorization.ApiKey
-  nameWithType: ClientAuthorization.ApiKey
-- uid: Postgrest.ClientAuthorization.AuthorizationType
-  name: ClientAuthorization.AuthorizationType
-  href: api/Postgrest.ClientAuthorization.AuthorizationType.html
-  commentId: T:Postgrest.ClientAuthorization.AuthorizationType
-  fullName: Postgrest.ClientAuthorization.AuthorizationType
-  nameWithType: ClientAuthorization.AuthorizationType
-- uid: Postgrest.ClientAuthorization.AuthorizationType.ApiKey
-  name: ApiKey
-  href: api/Postgrest.ClientAuthorization.AuthorizationType.html#Postgrest_ClientAuthorization_AuthorizationType_ApiKey
-  commentId: F:Postgrest.ClientAuthorization.AuthorizationType.ApiKey
-  fullName: Postgrest.ClientAuthorization.AuthorizationType.ApiKey
-  nameWithType: ClientAuthorization.AuthorizationType.ApiKey
-- uid: Postgrest.ClientAuthorization.AuthorizationType.Basic
-  name: Basic
-  href: api/Postgrest.ClientAuthorization.AuthorizationType.html#Postgrest_ClientAuthorization_AuthorizationType_Basic
-  commentId: F:Postgrest.ClientAuthorization.AuthorizationType.Basic
-  fullName: Postgrest.ClientAuthorization.AuthorizationType.Basic
-  nameWithType: ClientAuthorization.AuthorizationType.Basic
-- uid: Postgrest.ClientAuthorization.AuthorizationType.Open
-  name: Open
-  href: api/Postgrest.ClientAuthorization.AuthorizationType.html#Postgrest_ClientAuthorization_AuthorizationType_Open
-  commentId: F:Postgrest.ClientAuthorization.AuthorizationType.Open
-  fullName: Postgrest.ClientAuthorization.AuthorizationType.Open
-  nameWithType: ClientAuthorization.AuthorizationType.Open
-- uid: Postgrest.ClientAuthorization.AuthorizationType.Token
-  name: Token
-  href: api/Postgrest.ClientAuthorization.AuthorizationType.html#Postgrest_ClientAuthorization_AuthorizationType_Token
-  commentId: F:Postgrest.ClientAuthorization.AuthorizationType.Token
-  fullName: Postgrest.ClientAuthorization.AuthorizationType.Token
-  nameWithType: ClientAuthorization.AuthorizationType.Token
-- uid: Postgrest.ClientAuthorization.Password
-  name: Password
-  href: api/Postgrest.ClientAuthorization.html#Postgrest_ClientAuthorization_Password
-  commentId: P:Postgrest.ClientAuthorization.Password
-  fullName: Postgrest.ClientAuthorization.Password
-  nameWithType: ClientAuthorization.Password
-- uid: Postgrest.ClientAuthorization.Password*
-  name: Password
-  href: api/Postgrest.ClientAuthorization.html#Postgrest_ClientAuthorization_Password_
-  commentId: Overload:Postgrest.ClientAuthorization.Password
-  isSpec: "True"
-  fullName: Postgrest.ClientAuthorization.Password
-  nameWithType: ClientAuthorization.Password
-- uid: Postgrest.ClientAuthorization.Token
-  name: Token
-  href: api/Postgrest.ClientAuthorization.html#Postgrest_ClientAuthorization_Token
-  commentId: P:Postgrest.ClientAuthorization.Token
-  fullName: Postgrest.ClientAuthorization.Token
-  nameWithType: ClientAuthorization.Token
-- uid: Postgrest.ClientAuthorization.Token*
-  name: Token
-  href: api/Postgrest.ClientAuthorization.html#Postgrest_ClientAuthorization_Token_
-  commentId: Overload:Postgrest.ClientAuthorization.Token
-  isSpec: "True"
-  fullName: Postgrest.ClientAuthorization.Token
-  nameWithType: ClientAuthorization.Token
-- uid: Postgrest.ClientAuthorization.Type
-  name: Type
-  href: api/Postgrest.ClientAuthorization.html#Postgrest_ClientAuthorization_Type
-  commentId: P:Postgrest.ClientAuthorization.Type
-  fullName: Postgrest.ClientAuthorization.Type
-  nameWithType: ClientAuthorization.Type
-- uid: Postgrest.ClientAuthorization.Type*
-  name: Type
-  href: api/Postgrest.ClientAuthorization.html#Postgrest_ClientAuthorization_Type_
-  commentId: Overload:Postgrest.ClientAuthorization.Type
-  isSpec: "True"
-  fullName: Postgrest.ClientAuthorization.Type
-  nameWithType: ClientAuthorization.Type
-- uid: Postgrest.ClientAuthorization.Username
-  name: Username
-  href: api/Postgrest.ClientAuthorization.html#Postgrest_ClientAuthorization_Username
-  commentId: P:Postgrest.ClientAuthorization.Username
-  fullName: Postgrest.ClientAuthorization.Username
-  nameWithType: ClientAuthorization.Username
-- uid: Postgrest.ClientAuthorization.Username*
-  name: Username
-  href: api/Postgrest.ClientAuthorization.html#Postgrest_ClientAuthorization_Username_
-  commentId: Overload:Postgrest.ClientAuthorization.Username
-  isSpec: "True"
-  fullName: Postgrest.ClientAuthorization.Username
-  nameWithType: ClientAuthorization.Username
 - uid: Postgrest.ClientOptions
   name: ClientOptions
   href: api/Postgrest.ClientOptions.html
@@ -1137,14 +1005,14 @@ references:
   fullName.vb: Postgrest.Table(Of T)
   nameWithType: Table<T>
   nameWithType.vb: Table(Of T)
-- uid: Postgrest.Table`1.#ctor(System.String,Postgrest.ClientAuthorization,Postgrest.ClientOptions)
-  name: Table(String, ClientAuthorization, ClientOptions)
-  href: api/Postgrest.Table-1.html#Postgrest_Table_1__ctor_System_String_Postgrest_ClientAuthorization_Postgrest_ClientOptions_
-  commentId: M:Postgrest.Table`1.#ctor(System.String,Postgrest.ClientAuthorization,Postgrest.ClientOptions)
-  fullName: Postgrest.Table<T>.Table(System.String, Postgrest.ClientAuthorization, Postgrest.ClientOptions)
-  fullName.vb: Postgrest.Table(Of T).Table(System.String, Postgrest.ClientAuthorization, Postgrest.ClientOptions)
-  nameWithType: Table<T>.Table(String, ClientAuthorization, ClientOptions)
-  nameWithType.vb: Table(Of T).Table(String, ClientAuthorization, ClientOptions)
+- uid: Postgrest.Table`1.#ctor(System.String,Postgrest.ClientOptions)
+  name: Table(String, ClientOptions)
+  href: api/Postgrest.Table-1.html#Postgrest_Table_1__ctor_System_String_Postgrest_ClientOptions_
+  commentId: M:Postgrest.Table`1.#ctor(System.String,Postgrest.ClientOptions)
+  fullName: Postgrest.Table<T>.Table(System.String, Postgrest.ClientOptions)
+  fullName.vb: Postgrest.Table(Of T).Table(System.String, Postgrest.ClientOptions)
+  nameWithType: Table<T>.Table(String, ClientOptions)
+  nameWithType.vb: Table(Of T).Table(String, ClientOptions)
 - uid: Postgrest.Table`1.#ctor*
   name: Table
   href: api/Postgrest.Table-1.html#Postgrest_Table_1__ctor_
