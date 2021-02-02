@@ -29,7 +29,6 @@ namespace Postgrest
         /// </summary>
         public string TableName { get; private set; }
 
-        private ClientAuthorization authorization;
         private ClientOptions options;
 
         private HttpMethod method = HttpMethod.Get;
@@ -54,7 +53,7 @@ namespace Postgrest
         /// <param name="baseUrl">Api Endpoint (ex: "http://localhost:8000"), no trailing slash required.</param>
         /// <param name="authorization">Authorization Information.</param>
         /// <param name="options">Optional client configuration.</param>
-        public Table(string baseUrl, ClientAuthorization authorization, ClientOptions options = null)
+        public Table(string baseUrl, ClientOptions options = null)
         {
             BaseUrl = baseUrl;
 
@@ -62,7 +61,6 @@ namespace Postgrest
                 options = new ClientOptions();
 
             this.options = options;
-            this.authorization = authorization;
 
             var attr = Attribute.GetCustomAttribute(typeof(T), typeof(TableAttribute));
             if (attr is TableAttribute tableAttr)
@@ -453,6 +451,11 @@ namespace Postgrest
                 query.Add(param.Key, param.Value);
             }
 
+            if (options.Headers.ContainsKey("apikey"))
+            {
+                query.Add("apikey", options.Headers["apikey"]);
+            }
+
             foreach (var filter in filters)
             {
                 var parsedFilter = PrepareFilter(filter);
@@ -468,11 +471,6 @@ namespace Postgrest
                     var key = !string.IsNullOrEmpty(orderer.ForeignTable) ? $"{orderer.ForeignTable}.order" : "order";
                     query.Add(key, $"{orderer.Column}.{orderingAsAttribute.Mapping}.{nullPosAsAttribute.Mapping}");
                 }
-            }
-
-            if (authorization.Type == ClientAuthorization.AuthorizationType.ApiKey)
-            {
-                query["apikey"] = authorization.ApiKey;
             }
 
             if (!string.IsNullOrEmpty(columnQuery))
@@ -659,13 +657,13 @@ namespace Postgrest
 
         private Task<BaseResponse> Send(HttpMethod method, object data, Dictionary<string, string> headers = null)
         {
-            var requestHeaders = Helpers.PrepareRequestHeaders(method, headers, this.authorization, this.options, this.rangeFrom, this.rangeTo);
+            var requestHeaders = Helpers.PrepareRequestHeaders(method, headers, options, rangeFrom, rangeTo);
             return Helpers.MakeRequest(method, GenerateUrl(), PrepareRequestData(data), requestHeaders);
         }
 
         private Task<ModeledResponse<U>> Send<U>(HttpMethod method, object data, Dictionary<string, string> headers = null) where U : BaseModel, new()
         {
-            var requestHeaders = Helpers.PrepareRequestHeaders(method, headers, this.authorization, this.options, this.rangeFrom, this.rangeTo);
+            var requestHeaders = Helpers.PrepareRequestHeaders(method, headers, options, rangeFrom, rangeTo);
             return Helpers.MakeRequest<U>(method, GenerateUrl(), PrepareRequestData(data), requestHeaders);
         }
     }

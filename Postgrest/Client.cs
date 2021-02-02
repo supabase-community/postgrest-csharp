@@ -21,7 +21,6 @@ namespace Postgrest
         /// </summary>
         public string BaseUrl { get; private set; }
 
-        private ClientAuthorization authorization;
         private ClientOptions options;
 
         private static Client instance;
@@ -48,7 +47,7 @@ namespace Postgrest
         /// <param name="authorization">Authorization Information.</param>
         /// <param name="options">Optional client configuration.</param>
         /// <returns></returns>
-        public static Client Initialize(string baseUrl, ClientAuthorization authorization, ClientOptions options = null)
+        public static Client Initialize(string baseUrl, ClientOptions options = null)
         {
             instance = new Client();
             instance.BaseUrl = baseUrl;
@@ -56,11 +55,7 @@ namespace Postgrest
             if (options == null)
                 options = new ClientOptions();
 
-            if (authorization == null)
-                authorization = new ClientAuthorization(ClientAuthorization.AuthorizationType.Open, null);
-
             instance.options = options;
-            instance.authorization = authorization;
 
             return instance;
         }
@@ -96,7 +91,7 @@ namespace Postgrest
         /// </summary>
         /// <typeparam name="T">Custom Model derived from `BaseModel`</typeparam>
         /// <returns></returns>
-        public Table<T> Table<T>() where T : BaseModel, new() => new Table<T>(BaseUrl, authorization, options);
+        public Table<T> Table<T>() where T : BaseModel, new() => new Table<T>(BaseUrl, options);
 
         /// <summary>
         /// Perform a stored procedure call.
@@ -108,19 +103,13 @@ namespace Postgrest
         {
             // Build Uri
             var builder = new UriBuilder($"{BaseUrl}/rpc/{procedureName}");
-            var query = HttpUtility.ParseQueryString(builder.Query);
 
-            if (authorization.Type == ClientAuthorization.AuthorizationType.ApiKey)
-            {
-                query["apikey"] = authorization.ApiKey;
-            }
-            builder.Query = query.ToString();
             var canonicalUri = builder.Uri.ToString();
 
             // Prepare parameters
             var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(JsonConvert.SerializeObject(parameters, Client.Instance.SerializerSettings));
             // Prepare headers
-            var headers = Helpers.PrepareRequestHeaders(HttpMethod.Post, authorization: this.authorization, options: this.options);
+            var headers = Helpers.PrepareRequestHeaders(HttpMethod.Post, new Dictionary<string, string>(options.Headers), options);
             // Send request
             var request = Helpers.MakeRequest(HttpMethod.Post, canonicalUri, data, headers);
             return request;

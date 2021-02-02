@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using PostgrestExample.Models;
-using static Postgrest.ClientAuthorization;
 
 namespace PostgrestExample
 {
@@ -11,9 +10,7 @@ namespace PostgrestExample
         static async Task<int> Main(string[] args)
         {
             var url = "http://localhost:3000";
-            var auth = new Postgrest.ClientAuthorization(AuthorizationType.Open, null);
-
-            var client = Postgrest.Client.Initialize(url, auth);
+            var client = Postgrest.Client.Initialize(url);
 
             // Get all Users
             var users = await client.Table<User>().Get();

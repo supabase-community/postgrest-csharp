@@ -53,12 +53,11 @@ namespace Postgrest
                 if (data != null && method == HttpMethod.Get)
                 {
                     // Case if it's a Get request the data object is a dictionary<string,string>
-                    if(data is Dictionary<string,string> reqParams)
+                    if (data is Dictionary<string, string> reqParams)
                     {
                         foreach (var param in reqParams)
                             query[param.Key] = param.Value;
                     }
-                    
                 }
 
                 builder.Query = query.ToString();
@@ -114,10 +113,10 @@ namespace Postgrest
         /// </summary>
         /// <param name="headers"></param>
         /// <returns></returns>
-        public static Dictionary<string, string> PrepareRequestHeaders(HttpMethod method, Dictionary<string, string> headers = null, ClientAuthorization authorization = null, ClientOptions options = null, int rangeFrom = int.MinValue, int rangeTo = int.MinValue)
+        public static Dictionary<string, string> PrepareRequestHeaders(HttpMethod method, Dictionary<string, string> headers = null, ClientOptions options = null, int rangeFrom = int.MinValue, int rangeTo = int.MinValue)
         {
             if (headers == null)
-                headers = new Dictionary<string, string>();
+                headers = new Dictionary<string, string>(options.Headers);
 
             if (!string.IsNullOrEmpty(options?.Schema))
             {
@@ -125,23 +124,6 @@ namespace Postgrest
                     headers.Add("Accept-Profile", options.Schema);
                 else
                     headers.Add("Content-Profile", options.Schema);
-            }
-
-            if (authorization != null)
-            {
-                switch (authorization.Type)
-                {
-                    case ClientAuthorization.AuthorizationType.ApiKey:
-                        headers.Add("apikey", authorization.ApiKey);
-                        break;
-                    case ClientAuthorization.AuthorizationType.Token:
-                        headers.Add("Authorization", $"Bearer {authorization.Token}");
-                        break;
-                    case ClientAuthorization.AuthorizationType.Basic:
-                        var header = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{authorization.Username}:{authorization.Password}"));
-                        headers.Add("Authorization", $"Basic {header}");
-                        break;
-                }
             }
 
             if (rangeFrom != int.MinValue)
