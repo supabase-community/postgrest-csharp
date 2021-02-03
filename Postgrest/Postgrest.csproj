@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <PackOnBuild>true</PackOnBuild>
     <PackageId>postgrest-csharp</PackageId>
-    <PackageVersion>1.0.4</PackageVersion>
+    <PackageVersion>1.0.5</PackageVersion>
     <Authors>Joseph Schultz &lt;joseph@acupofjose.com&gt;</Authors>
     <Copyright>MIT</Copyright>
     <NeutralLanguage>en-US</NeutralLanguage>
@@ -16,11 +16,9 @@
     <Description>Postgrest-csharp is written primarily as a helper library for supabase/supabase-csharp, however, it should be easy enough to use outside of the supabase ecosystem.
 
 The bulk of this library is a translation and c-sharp-ification of the supabase/postgrest-js library.</Description>
-    <ReleaseVersion>1.0.4</ReleaseVersion>
     <PackageIconUrl>https://avatars.githubusercontent.com/u/54469796?s=200&amp;v=4</PackageIconUrl>
     <PackageTags>supabase,postgrest</PackageTags>
-    <PackageReleaseNotes>- Breaking Change: Client.Initialize no longer expects `ClientAuthorization` as a parameter, it will expect users to provide a `Header` to `ClientOptions` instead.
-- The `TableName` attribute is exposed on `BaseModel` and `Table&lt;T&gt;`</PackageReleaseNotes>
+    <ReleaseVersion>1.0.5</ReleaseVersion>
   </PropertyGroup>
 
   <ItemGroup>
