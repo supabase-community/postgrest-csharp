@@ -70,6 +70,9 @@ namespace Postgrest
         {
             get
             {
+                if (options == null)
+                    options = new ClientOptions();
+
                 return new JsonSerializerSettings
                 {
                     ContractResolver = new CustomContractResolver(),

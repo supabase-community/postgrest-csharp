@@ -8,7 +8,7 @@ namespace Postgrest
     /// </summary>
     public class ClientOptions
     {
-        public string Schema { get; set; }
+        public string Schema { get; set; } = "public";
         public System.Globalization.DateTimeStyles DateTimeStyles = System.Globalization.DateTimeStyles.AdjustToUniversal;
         public string DateTimeFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFK";
         public Dictionary<string, string> Headers { get; set; } = new Dictionary<string, string>();
