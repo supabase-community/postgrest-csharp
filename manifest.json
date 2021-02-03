@@ -9,7 +9,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Attributes.ColumnAttribute.html",
-          "hash": "1kW2uID8DpMtH7cW6m0XCQ=="
+          "hash": "pj28OtxudsL99pf8HQVkMA=="
         }
       },
       "is_incremental": false,
@@ -21,7 +21,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Attributes.PrimaryKeyAttribute.html",
-          "hash": "NSN/k3Yv5J3E0xE3Bacgtw=="
+          "hash": "yNjeB8oTe7cY0ps7gna41w=="
         }
       },
       "is_incremental": false,
@@ -33,7 +33,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Attributes.TableAttribute.html",
-          "hash": "HSPWC+Td0AqYmv6r7AMAiw=="
+          "hash": "DSWVZnEJikacQQ8nlGusiA=="
         }
       },
       "is_incremental": false,
@@ -57,7 +57,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Client.html",
-          "hash": "LxufrO7SaaSK8WVtjuMvHg=="
+          "hash": "RD/N4yiJTJHMzLc2rb8cPQ=="
         }
       },
       "is_incremental": false,
@@ -69,7 +69,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.ClientOptions.html",
-          "hash": "xwJ6sn2Kw6pDsSHODJHHuA=="
+          "hash": "gW77ox5nLB91LXbqecQjtA=="
         }
       },
       "is_incremental": false,
@@ -81,7 +81,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Constants.NullPosition.html",
-          "hash": "t67KHOvIDqRC/XgEesx98g=="
+          "hash": "fWrov7gATQ4963c/399Pjw=="
         }
       },
       "is_incremental": false,
@@ -93,7 +93,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Constants.Operator.html",
-          "hash": "nhzTyuuaczk2ThuU6Gm7uQ=="
+          "hash": "MTsvGdy7LZWt9Mgb4386Wg=="
         }
       },
       "is_incremental": false,
@@ -105,7 +105,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Constants.Ordering.html",
-          "hash": "nE/ZQ1oDLYuW7o/uzXujDw=="
+          "hash": "gt5DxOYeEH6X1NQ7F/HVvQ=="
         }
       },
       "is_incremental": false,
@@ -117,7 +117,19 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Constants.html",
-          "hash": "bxJkvrcm1cpDmdbAkMZzJg=="
+          "hash": "omKKQRMBPEcq2djWJC5DUg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Postgrest.Extensions.DictionaryExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Postgrest.Extensions.DictionaryExtensions.html",
+          "hash": "u9pD47S6HASFtL+WDZHR3Q=="
         }
       },
       "is_incremental": false,
@@ -129,7 +141,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Extensions.EnumExtensions.html",
-          "hash": "7ZD7tsNMlCht1eXFHrSATg=="
+          "hash": "IObnPVWVjgV+vOxY/2Ejxg=="
         }
       },
       "is_incremental": false,
@@ -141,7 +153,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Extensions.RangeExtensions.html",
-          "hash": "iIKjVT3pnA92XDxhBTj/Pw=="
+          "hash": "hu0qmhjQgV5LFJUmbTUSng=="
         }
       },
       "is_incremental": false,
@@ -153,7 +165,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Extensions.html",
-          "hash": "gbcyWf9SIi30JSVuRRBWBQ=="
+          "hash": "U/u/z+D9GLimOsh85iMi6w=="
         }
       },
       "is_incremental": false,
@@ -165,7 +177,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.FullTextSearchConfig.html",
-          "hash": "V6lJN83xlBCpNrI7pgJP+A=="
+          "hash": "OdCsrvoS1jKr5C18t4+gZg=="
         }
       },
       "is_incremental": false,
@@ -177,7 +189,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.InsertOptions.html",
-          "hash": "hQfBOWk/WGnQHTAQWMTJcA=="
+          "hash": "51k0i4FWwkcJskGoM9Z1uw=="
         }
       },
       "is_incremental": false,
@@ -189,7 +201,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Models.BaseModel.html",
-          "hash": "dMAOVqgwUtazk0/tona6uw=="
+          "hash": "ueLFPFsGrgyHeIEyyEqkeg=="
         }
       },
       "is_incremental": false,
@@ -213,7 +225,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.QueryFilter.html",
-          "hash": "SBtAtL2x5c5GkOJvWThdsQ=="
+          "hash": "nuxeEx7mdtKkj5qhJpvDHQ=="
         }
       },
       "is_incremental": false,
@@ -225,7 +237,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.QueryOrderer.html",
-          "hash": "TYR6aPcWTQdrFTC0VM/jlA=="
+          "hash": "QB92KgtlZhSNpsh88ZAPLw=="
         }
       },
       "is_incremental": false,
@@ -237,7 +249,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.RequestException.html",
-          "hash": "oKkH8I4IZ6YdhGOUbRm8yg=="
+          "hash": "jBvFXlVgfQo6OPLBaEPYPg=="
         }
       },
       "is_incremental": false,
@@ -249,7 +261,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Responses.BaseResponse.html",
-          "hash": "ZT/n84y1WaSrCi9WqewzjA=="
+          "hash": "1xLLzBfcpc2XKvVdWiN5Lw=="
         }
       },
       "is_incremental": false,
@@ -261,7 +273,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Responses.ErrorResponse.html",
-          "hash": "W9nFZNu9mbubLGpNEL6zXA=="
+          "hash": "gCXnSCyvobDksHVDKuqvVQ=="
         }
       },
       "is_incremental": false,
@@ -273,7 +285,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Responses.ModeledResponse-1.html",
-          "hash": "VJM5I9BIyAgejMCjSMvUeg=="
+          "hash": "o6tyWSlg9eK54wSg67aTMg=="
         }
       },
       "is_incremental": false,
@@ -297,7 +309,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Table-1.html",
-          "hash": "WULCEqP9yfloGWd9KhuJcw=="
+          "hash": "So5BZhAq0idXNkf53BDXwQ=="
         }
       },
       "is_incremental": false,
@@ -321,7 +333,7 @@
       "output": {
         ".html": {
           "relative_path": "api/index.html",
-          "hash": "NXRZybqNr2slXCbSKS5VQA=="
+          "hash": "6WDja/bmPXC44DKpdnz6cQ=="
         }
       },
       "is_incremental": false,
@@ -333,7 +345,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "vh5lNn/sVpPxX4yOMLvb2Q=="
+          "hash": "vzitPLjm8UVz6h7dYD3Vng=="
         }
       },
       "is_incremental": false,
@@ -345,7 +357,7 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "dqxb5E185aPf4+vslkF/1Q=="
+          "hash": "XMosWl8mTzlas3uHBRxopQ=="
         }
       },
       "is_incremental": false,
@@ -384,7 +396,7 @@
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 26,
+          "total_file_count": 27,
           "skipped_file_count": 0
         },
         "TocDocumentProcessor": {

@@ -473,6 +473,28 @@ references:
   commentId: N:Postgrest.Extensions
   fullName: Postgrest.Extensions
   nameWithType: Postgrest.Extensions
+- uid: Postgrest.Extensions.DictionaryExtensions
+  name: DictionaryExtensions
+  href: api/Postgrest.Extensions.DictionaryExtensions.html
+  commentId: T:Postgrest.Extensions.DictionaryExtensions
+  fullName: Postgrest.Extensions.DictionaryExtensions
+  nameWithType: DictionaryExtensions
+- uid: Postgrest.Extensions.DictionaryExtensions.MergeLeft*
+  name: MergeLeft
+  href: api/Postgrest.Extensions.DictionaryExtensions.html#Postgrest_Extensions_DictionaryExtensions_MergeLeft_
+  commentId: Overload:Postgrest.Extensions.DictionaryExtensions.MergeLeft
+  isSpec: "True"
+  fullName: Postgrest.Extensions.DictionaryExtensions.MergeLeft
+  nameWithType: DictionaryExtensions.MergeLeft
+- uid: Postgrest.Extensions.DictionaryExtensions.MergeLeft``3(``0,IDictionary{``1,``2}[])
+  name: MergeLeft<T, K, V>(T, IDictionary<K, V>[])
+  href: api/Postgrest.Extensions.DictionaryExtensions.html#Postgrest_Extensions_DictionaryExtensions_MergeLeft__3___0_IDictionary___1___2____
+  commentId: M:Postgrest.Extensions.DictionaryExtensions.MergeLeft``3(``0,IDictionary{``1,``2}[])
+  name.vb: MergeLeft(Of T, K, V)(T, IDictionary(Of K, V)())
+  fullName: Postgrest.Extensions.DictionaryExtensions.MergeLeft<T, K, V>(T, IDictionary<K, V>[])
+  fullName.vb: Postgrest.Extensions.DictionaryExtensions.MergeLeft(Of T, K, V)(T, IDictionary(Of K, V)())
+  nameWithType: DictionaryExtensions.MergeLeft<T, K, V>(T, IDictionary<K, V>[])
+  nameWithType.vb: DictionaryExtensions.MergeLeft(Of T, K, V)(T, IDictionary(Of K, V)())
 - uid: Postgrest.Extensions.EnumExtensions
   name: EnumExtensions
   href: api/Postgrest.Extensions.EnumExtensions.html
