@@ -116,10 +116,13 @@ namespace Postgrest
         /// <returns></returns>
         public static Dictionary<string, string> PrepareRequestHeaders(HttpMethod method, Dictionary<string, string> headers = null, ClientOptions options = null, int rangeFrom = int.MinValue, int rangeTo = int.MinValue)
         {
+            if (options == null)
+                options = new ClientOptions();
+
             if (headers == null)
                 headers = new Dictionary<string, string>(options.Headers);
             else
-                headers = headers.MergeLeft(options.Headers);
+                headers = options.Headers.MergeLeft(headers);
 
             if (!string.IsNullOrEmpty(options?.Schema))
             {
