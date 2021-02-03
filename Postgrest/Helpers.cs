@@ -8,6 +8,7 @@ using System.Web;
 using Newtonsoft.Json;
 using Postgrest.Responses;
 using System.Runtime.CompilerServices;
+using Postgrest.Extensions;
 
 [assembly: InternalsVisibleTo("PostgrestTests")]
 namespace Postgrest
@@ -117,6 +118,8 @@ namespace Postgrest
         {
             if (headers == null)
                 headers = new Dictionary<string, string>(options.Headers);
+            else
+                headers = headers.MergeLeft(options.Headers);
 
             if (!string.IsNullOrEmpty(options?.Schema))
             {
