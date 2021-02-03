@@ -501,6 +501,8 @@ namespace Postgrest
         /// <returns></returns>
         internal object PrepareRequestData(object data)
         {
+            if (data == null) return new Dictionary<string, string>();
+
             // Check if data is a Collection for the Insert Bulk case
             if (data is ICollection<T>)
                 return JsonConvert.DeserializeObject<ICollection<T>>(JsonConvert.SerializeObject(data, Client.Instance.SerializerSettings));
