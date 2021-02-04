@@ -935,6 +935,26 @@ namespace PostgrestTests
             await client.Table<User>().Delete(aceUser);
         }
 
+        [TestMethod("count")]
+        public async Task TestCount()
+        {
+            var client = Client.Initialize(baseUrl);
+
+            var resp = await client.Table<User>().Count(CountType.Exact);
+            // Lame, I know. We should check an actual number. However, the tests are run asynchronously
+            // so we get inconsitent counts depending on the order that the tests are actually executed.
+            Assert.IsNotNull(resp);
+        }
+
+        [TestMethod("count: with filter")]
+        public async Task TestCountWithFilter()
+        {
+            var client = Client.Initialize(baseUrl);
+
+            var resp = await client.Table<User>().Filter("status", Operator.Equals, "ONLINE").Count(CountType.Exact);
+            Assert.IsNotNull(resp);
+        }
+
         [TestMethod("stored procedure")]
         public async Task TestStoredProcedure()
         {

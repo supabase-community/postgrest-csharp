@@ -5,6 +5,9 @@ namespace Postgrest
 {
     public static class Constants
     {
+        /// <summary>
+        /// See: https://postgrest.org/en/v7.0.0/api.html?highlight=operators#operators
+        /// </summary>
         public enum Operator
         {
             [MapTo("and")]
@@ -67,12 +70,28 @@ namespace Postgrest
             Descending,
         }
 
+        /// <summary>
+        /// See: https://postgrest.org/en/v7.0.0/api.html?highlight=nulls%20first#ordering
+        /// </summary>
         public enum NullPosition
         {
             [MapTo("nullsfirst")]
             First,
             [MapTo("nullslast")]
             Last
+        }
+
+        /// <summary>
+        /// See: https://postgrest.org/en/v7.0.0/api.html?highlight=count#estimated-count
+        /// </summary>
+        public enum CountType
+        {
+            [MapTo("exact")]
+            Exact,
+            [MapTo("planned")]
+            Planned,
+            [MapTo("estimated")]
+            Estimated
         }
     }
 }

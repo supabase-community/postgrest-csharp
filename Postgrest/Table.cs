@@ -249,7 +249,6 @@ namespace Postgrest
             return this;
         }
 
-
         /// <summary>
         /// Sets a FROM range, similar to a `StartAt` query.
         /// </summary>
@@ -380,6 +379,50 @@ namespace Postgrest
             var request = Send(method, null, null);
             Clear();
             return request;
+        }
+
+        /// <summary>
+        /// Returns ONLY a count from the specified query.
+        ///
+        /// See: https://postgrest.org/en/v7.0.0/api.html?highlight=count
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public Task<int> Count(CountType type)
+        {
+            var tsc = new TaskCompletionSource<int>();
+
+            Task.Run(async () =>
+            {
+                method = HttpMethod.Head;
+
+                var attr = type.GetAttribute<MapToAttribute>();
+
+                var headers = new Dictionary<string, string> {
+                    { "Prefer", $"count={attr.Mapping}" }
+                };
+
+                var request = Send(method, null, headers);
+                Clear();
+
+                try
+                {
+                    var response = await request;
+                    var countStr = response.ResponseMessage.Content.Headers.GetValues("Content-Range").FirstOrDefault();
+                    if (countStr.Contains("/"))
+                    {
+                        // Returns X-Y/COUNT [0-3/4]
+                        tsc.SetResult(int.Parse(countStr.Split('/')[1]));
+                    }
+                    tsc.SetException(new Exception("Failed to parse response."));
+                }
+                catch (Exception ex)
+                {
+                    tsc.SetException(ex);
+                }
+            });
+
+            return tsc.Task;
         }
 
         /// <summary>

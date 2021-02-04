@@ -77,7 +77,7 @@ namespace Postgrest
                         requestMessage.Headers.TryAddWithoutValidation(kvp.Key, kvp.Value);
                     }
                 }
-
+               
                 var response = await client.SendAsync(requestMessage);
                 var content = await response.Content.ReadAsStringAsync();
 
