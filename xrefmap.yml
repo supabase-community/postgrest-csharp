@@ -275,6 +275,30 @@ references:
   commentId: T:Postgrest.Constants
   fullName: Postgrest.Constants
   nameWithType: Constants
+- uid: Postgrest.Constants.CountType
+  name: Constants.CountType
+  href: api/Postgrest.Constants.CountType.html
+  commentId: T:Postgrest.Constants.CountType
+  fullName: Postgrest.Constants.CountType
+  nameWithType: Constants.CountType
+- uid: Postgrest.Constants.CountType.Estimated
+  name: Estimated
+  href: api/Postgrest.Constants.CountType.html#Postgrest_Constants_CountType_Estimated
+  commentId: F:Postgrest.Constants.CountType.Estimated
+  fullName: Postgrest.Constants.CountType.Estimated
+  nameWithType: Constants.CountType.Estimated
+- uid: Postgrest.Constants.CountType.Exact
+  name: Exact
+  href: api/Postgrest.Constants.CountType.html#Postgrest_Constants_CountType_Exact
+  commentId: F:Postgrest.Constants.CountType.Exact
+  fullName: Postgrest.Constants.CountType.Exact
+  nameWithType: Constants.CountType.Exact
+- uid: Postgrest.Constants.CountType.Planned
+  name: Planned
+  href: api/Postgrest.Constants.CountType.html#Postgrest_Constants_CountType_Planned
+  commentId: F:Postgrest.Constants.CountType.Planned
+  fullName: Postgrest.Constants.CountType.Planned
+  nameWithType: Constants.CountType.Planned
 - uid: Postgrest.Constants.NullPosition
   name: Constants.NullPosition
   href: api/Postgrest.Constants.NullPosition.html
@@ -1096,6 +1120,23 @@ references:
   fullName.vb: Postgrest.Table(Of T).Clear
   nameWithType: Table<T>.Clear
   nameWithType.vb: Table(Of T).Clear
+- uid: Postgrest.Table`1.Count(Postgrest.Constants.CountType)
+  name: Count(Constants.CountType)
+  href: api/Postgrest.Table-1.html#Postgrest_Table_1_Count_Postgrest_Constants_CountType_
+  commentId: M:Postgrest.Table`1.Count(Postgrest.Constants.CountType)
+  fullName: Postgrest.Table<T>.Count(Postgrest.Constants.CountType)
+  fullName.vb: Postgrest.Table(Of T).Count(Postgrest.Constants.CountType)
+  nameWithType: Table<T>.Count(Constants.CountType)
+  nameWithType.vb: Table(Of T).Count(Constants.CountType)
+- uid: Postgrest.Table`1.Count*
+  name: Count
+  href: api/Postgrest.Table-1.html#Postgrest_Table_1_Count_
+  commentId: Overload:Postgrest.Table`1.Count
+  isSpec: "True"
+  fullName: Postgrest.Table<T>.Count
+  fullName.vb: Postgrest.Table(Of T).Count
+  nameWithType: Table<T>.Count
+  nameWithType.vb: Table(Of T).Count
 - uid: Postgrest.Table`1.Delete
   name: Delete()
   href: api/Postgrest.Table-1.html#Postgrest_Table_1_Delete
