@@ -15,6 +15,64 @@ Postgrest-csharp is written primarily as a helper library for [supabase/supabase
 
 The bulk of this library is a translation and c-sharp-ification of the [supabase/postgrest-js](https://github.com/supabase/postgrest-js) library.
 
+## Getting Started
+
+Postgrest-csharp is _heavily_ dependent on Models deriving from `BaseModel`. To interact with the API, one must have the associated
+model specified.
+
+Leverage `Table`,`PrimaryKey`, and `Column` attributes to specify names of classes/properties that are different from their C# Versions.
+
+```c#
+[Table("messages")]
+public class Message : BaseModel
+{
+    [PrimaryKey("id")]
+    public int Id { get; set; }
+
+    [Column("username")]
+    public string UserName { get; set; }
+
+    [Column("channel_id")]
+    public int ChannelId { get; set; }
+
+    public override bool Equals(object obj)
+    {
+        return obj is Message message &&
+                Id == message.Id;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Id);
+    }
+}
+```
+
+Utitilizing the client is then just a matter of instantiating it and specifying the Model one is working with.
+
+```c#
+void Initialize()
+{
+    var client = Client.Initialize("http://localhost:3000");
+
+    // Get All Messages
+    var response = await Client.Table<Message>().Get();
+    List<Message> models = response.Models;
+
+    // Insert
+    var newMessage = new Message { UserName = "acupofjose", ChannelId = 1 };
+    await Client.Table<Message>().Insert();
+
+    // Update
+    var model = response.Models.First();
+    model.UserName = "elrhomariyounes";
+    await model.Update();
+
+    // Delete
+    await response.Models.Last().Delete();
+}
+```
+
 ## Status
 
 - [x] Connects to PostgREST Server
