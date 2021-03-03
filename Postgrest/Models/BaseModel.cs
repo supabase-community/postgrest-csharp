@@ -26,7 +26,7 @@ namespace Postgrest.Models
                 foreach (var prop in props)
                 {
                     var hasAttr = Attribute.GetCustomAttribute(prop, typeof(PrimaryKeyAttribute));
-                    if (hasAttr is PrimaryKeyAttribute pka)
+                    if (hasAttr is PrimaryKeyAttribute)
                     {
                         return prop.GetValue(this);
                     }

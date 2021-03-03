@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
@@ -565,7 +566,7 @@ namespace Postgrest
             var attr = filter.Op.GetAttribute<MapToAttribute>();
             if (attr is MapToAttribute asAttribute)
             {
-                var str = "";
+                var strBuilder = new StringBuilder();
                 switch (filter.Op)
                 {
                     case Operator.Or:
@@ -577,9 +578,9 @@ namespace Postgrest
                                 list.Add(PrepareFilter(subFilter));
 
                             foreach (var preppedFilter in list)
-                                str += $"{preppedFilter.Key}.{preppedFilter.Value},";
+                                strBuilder.Append($"{preppedFilter.Key}.{preppedFilter.Value},");
 
-                            return new KeyValuePair<string, string>(asAttribute.Mapping, $"({str.Trim(',')})");
+                            return new KeyValuePair<string, string>(asAttribute.Mapping, $"({strBuilder.ToString().Trim(',')})");
                         }
                         break;
                     case Operator.Not:
@@ -600,10 +601,9 @@ namespace Postgrest
                         if (filter.Criteria is List<object> inCriteria)
                         {
                             foreach (var item in inCriteria)
-                                str += $"\"{item}\",";
+                                strBuilder.Append($"\"{item}\",");
 
-                            str = str.Trim(',');
-                            return new KeyValuePair<string, string>(filter.Property, $"{asAttribute.Mapping}.({str})");
+                            return new KeyValuePair<string, string>(filter.Property, $"{asAttribute.Mapping}.({strBuilder.ToString().Trim(',')})");
                         }
                         else if (filter.Criteria is Dictionary<string, object> dictCriteria)
                         {
@@ -616,10 +616,9 @@ namespace Postgrest
                         if (filter.Criteria is List<object> listCriteria)
                         {
                             foreach (var item in listCriteria)
-                                str += $"{item},";
-                            str = str.Trim(',');
+                                strBuilder.Append($"{item},");
 
-                            return new KeyValuePair<string, string>(filter.Property, $"{asAttribute.Mapping}.{{{str}}}");
+                            return new KeyValuePair<string, string>(filter.Property, $"{asAttribute.Mapping}.{{{strBuilder.ToString().Trim(',')}}}");
                         }
                         else if (filter.Criteria is Dictionary<string, object> dictCriteria)
                         {
