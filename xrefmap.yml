@@ -1453,3 +1453,22 @@ references:
   fullName.vb: Postgrest.Table(Of T).Update
   nameWithType: Table<T>.Update
   nameWithType.vb: Table(Of T).Update
+- uid: Postgrest.Util
+  name: Util
+  href: api/Postgrest.Util.html
+  commentId: T:Postgrest.Util
+  fullName: Postgrest.Util
+  nameWithType: Util
+- uid: Postgrest.Util.GetAssemblyVersion
+  name: GetAssemblyVersion()
+  href: api/Postgrest.Util.html#Postgrest_Util_GetAssemblyVersion
+  commentId: M:Postgrest.Util.GetAssemblyVersion
+  fullName: Postgrest.Util.GetAssemblyVersion()
+  nameWithType: Util.GetAssemblyVersion()
+- uid: Postgrest.Util.GetAssemblyVersion*
+  name: GetAssemblyVersion
+  href: api/Postgrest.Util.html#Postgrest_Util_GetAssemblyVersion_
+  commentId: Overload:Postgrest.Util.GetAssemblyVersion
+  isSpec: "True"
+  fullName: Postgrest.Util.GetAssemblyVersion
+  nameWithType: Util.GetAssemblyVersion
