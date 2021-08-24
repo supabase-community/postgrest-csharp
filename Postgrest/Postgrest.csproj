@@ -1,31 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <PackOnBuild>true</PackOnBuild>
-    <PackageId>postgrest-csharp</PackageId>
-    <PackageVersion>1.0.6</PackageVersion>
-    <Authors>Joseph Schultz &lt;joseph@acupofjose.com&gt;</Authors>
-    <Copyright>MIT</Copyright>
-    <NeutralLanguage>en-US</NeutralLanguage>
-    <PackageLicenseUrl>https://github.com/supabase/postgrest-csharp/blob/master/LICENSE</PackageLicenseUrl>
-    <Owners>Joseph Schultz &lt;joseph@acupajoe.io&gt;</Owners>
-    <PackageProjectUrl>https://github.com/supabase/postgrest-csharp</PackageProjectUrl>
-    <Summary>Library to interact with postgREST servers</Summary>
-    <Title>postgrest-csharp</Title>
-    <Description>Postgrest-csharp is written primarily as a helper library for supabase/supabase-csharp, however, it should be easy enough to use outside of the supabase ecosystem.
+	<PropertyGroup>
+		<TargetFramework>netstandard2.1</TargetFramework>
+		<PackOnBuild>true</PackOnBuild>
+		<PackageId>postgrest-csharp</PackageId>
+		<Authors>Joseph Schultz &lt;joseph@acupofjose.com&gt;</Authors>
+		<Copyright>MIT</Copyright>
+		<NeutralLanguage>en-US</NeutralLanguage>
+		<PackageLicenseUrl>https://github.com/supabase/postgrest-csharp/blob/master/LICENSE</PackageLicenseUrl>
+		<Owners>Joseph Schultz &lt;joseph@acupajoe.io&gt;</Owners>
+		<PackageProjectUrl>https://github.com/supabase/postgrest-csharp</PackageProjectUrl>
+		<Summary>Library to interact with postgREST servers</Summary>
+		<Title>postgrest-csharp</Title>
+		<Description>Postgrest-csharp is written primarily as a helper library for supabase/supabase-csharp, however, it should be easy enough to use outside of the supabase ecosystem.
 
 The bulk of this library is a translation and c-sharp-ification of the supabase/postgrest-js library.</Description>
-    <PackageIconUrl>https://avatars.githubusercontent.com/u/54469796?s=200&amp;v=4</PackageIconUrl>
-    <PackageTags>supabase,postgrest</PackageTags>
-    <ReleaseVersion>1.0.6</ReleaseVersion>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Attributes\" />
-    <Folder Include="Converters\" />
-  </ItemGroup>
+		<PackageIconUrl>https://avatars.githubusercontent.com/u/54469796?s=200&amp;v=4</PackageIconUrl>
+		<PackageTags>supabase,postgrest</PackageTags>
+		<ReleaseVersion>1.0.7</ReleaseVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Version)' == '' ">
+		<VersionPrefix Condition=" '$(VersionPrefix)' == '' ">1.0.7</VersionPrefix>
+		<VersionSuffix Condition=" '$(VersionSuffix)' == '' ">
+		</VersionSuffix>
+		<Version Condition=" '$(VersionSuffix)' != '' ">$(VersionPrefix)-$(VersionSuffix)</Version>
+		<Version Condition=" '$(Version)' == '' ">$(VersionPrefix)</Version>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="Attributes\" />
+		<Folder Include="Converters\" />
+	</ItemGroup>
 </Project>
