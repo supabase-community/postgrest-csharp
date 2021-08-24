@@ -18,6 +18,7 @@ The bulk of this library is a translation and c-sharp-ification of the supabase/
 		<PackageIconUrl>https://avatars.githubusercontent.com/u/54469796?s=200&amp;v=4</PackageIconUrl>
 		<PackageTags>supabase,postgrest</PackageTags>
 		<ReleaseVersion>1.0.7</ReleaseVersion>
+		<PackageVersion>1.0.7</PackageVersion>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Version)' == '' ">
 		<VersionPrefix Condition=" '$(VersionPrefix)' == '' ">1.0.7</VersionPrefix>
