@@ -132,7 +132,10 @@ namespace Postgrest
                 headers.Add("Range", $"{rangeFrom}-{(rangeTo != int.MinValue ? rangeTo.ToString() : null)}");
             }
 
-            headers.Add("X-Client-Info", Util.GetAssemblyVersion());
+            if (!headers.ContainsKey("X-Client-Info"))
+            {
+                headers.Add("X-Client-Info", Util.GetAssemblyVersion());
+            }
 
             return headers;
         }
