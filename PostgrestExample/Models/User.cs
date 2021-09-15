@@ -1,4 +1,5 @@
 ﻿using System;
+using Postgrest;
 using Postgrest.Attributes;
 using Postgrest.Models;
 
@@ -14,7 +15,7 @@ namespace PostgrestExample.Models
         public string Data { get; set; }
 
         [Column("age_range")]
-        public Range AgeRange { get; set; }
+        public IntRange AgeRange { get; set; }
 
         [Column("catchphrase")]
         public string Catchphrase { get; set; }

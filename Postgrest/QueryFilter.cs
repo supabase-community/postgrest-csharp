@@ -123,7 +123,7 @@ namespace Postgrest
         /// <param name="property"></param>
         /// <param name="op">Operator: Overlap, StrictlyLeft, StrictlyRight, NotRightOf, NotLeftOf, Adjacent</param>
         /// <param name="range"></param>
-        public QueryFilter(string property, Operator op, Range range)
+        public QueryFilter(string property, Operator op, IntRange range)
         {
             switch (op)
             {

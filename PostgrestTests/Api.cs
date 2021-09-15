@@ -233,7 +233,7 @@ namespace PostgrestTests
 
             foreach (var pair in dict)
             {
-                var config = new Range(2, 3);
+                var config = new IntRange(2, 3);
                 var filter = new QueryFilter("foo", pair.Key, config);
                 var result = client.Table<User>().PrepareFilter(filter);
                 Assert.AreEqual("foo", result.Key);
@@ -325,7 +325,7 @@ namespace PostgrestTests
             var newUser = new User
             {
                 Username = Guid.NewGuid().ToString(),
-                AgeRange = new Range(18, 22),
+                AgeRange = new IntRange(18, 22),
                 Catchphrase = "what a shot",
                 Status = "ONLINE"
             };
@@ -364,7 +364,7 @@ namespace PostgrestTests
             var supaUpdated = new User
             {
                 Username = "supabot",
-                AgeRange = new Range(3, 8),
+                AgeRange = new IntRange(3, 8),
                 Status = "OFFLINE",
                 Catchphrase = "fat cat"
             };
@@ -689,11 +689,11 @@ namespace PostgrestTests
         {
             var client = Client.Initialize(baseUrl);
 
-            await client.Table<User>().Insert(new User { Username = "skikra", Status = "ONLINE", AgeRange = new Range(1, 3) }, new InsertOptions { Upsert = true });
-            var filteredResponse = await client.Table<User>().Filter("age_range", Operator.Contains, new Range(1, 2)).Get();
+            await client.Table<User>().Insert(new User { Username = "skikra", Status = "ONLINE", AgeRange = new IntRange(1, 3) }, new InsertOptions { Upsert = true });
+            var filteredResponse = await client.Table<User>().Filter("age_range", Operator.Contains, new IntRange(1, 2)).Get();
             var usersResponse = await client.Table<User>().Get();
 
-            var testAgainst = usersResponse.Models.Where(m => m.AgeRange.Start.Value <= 1 && m.AgeRange.End.Value >= 2).ToList();
+            var testAgainst = usersResponse.Models.Where(m => m.AgeRange?.Start.Value <= 1 && m.AgeRange?.End.Value >= 2).ToList();
 
             CollectionAssert.AreEqual(testAgainst, filteredResponse.Models);
         }
@@ -703,10 +703,10 @@ namespace PostgrestTests
         {
             var client = Client.Initialize(baseUrl);
 
-            var filteredResponse = await client.Table<User>().Filter("age_range", Operator.ContainedIn, new Range(25, 35)).Get();
+            var filteredResponse = await client.Table<User>().Filter("age_range", Operator.ContainedIn, new IntRange(25, 35)).Get();
             var usersResponse = await client.Table<User>().Get();
 
-            var testAgainst = usersResponse.Models.Where(m => m.AgeRange.Start.Value >= 25 && m.AgeRange.End.Value <= 35).ToList();
+            var testAgainst = usersResponse.Models.Where(m => m.AgeRange?.Start.Value >= 25 && m.AgeRange?.End.Value <= 35).ToList();
 
             CollectionAssert.AreEqual(testAgainst, filteredResponse.Models);
         }
@@ -716,11 +716,11 @@ namespace PostgrestTests
         {
             var client = Client.Initialize(baseUrl);
 
-            await client.Table<User>().Insert(new User { Username = "minds3t", Status = "ONLINE", AgeRange = new Range(3, 6) }, new InsertOptions { Upsert = true });
-            var filteredResponse = await client.Table<User>().Filter("age_range", Operator.StrictlyLeft, new Range(7, 8)).Get();
+            await client.Table<User>().Insert(new User { Username = "minds3t", Status = "ONLINE", AgeRange = new IntRange(3, 6) }, new InsertOptions { Upsert = true });
+            var filteredResponse = await client.Table<User>().Filter("age_range", Operator.StrictlyLeft, new IntRange(7, 8)).Get();
             var usersResponse = await client.Table<User>().Get();
 
-            var testAgainst = usersResponse.Models.Where(m => m.AgeRange.Start.Value < 7 && m.AgeRange.End.Value < 7).ToList();
+            var testAgainst = usersResponse.Models.Where(m => m.AgeRange?.Start.Value < 7 && m.AgeRange?.End.Value < 7).ToList();
 
             CollectionAssert.AreEqual(testAgainst, filteredResponse.Models);
         }
@@ -730,10 +730,10 @@ namespace PostgrestTests
         {
             var client = Client.Initialize(baseUrl);
 
-            var filteredResponse = await client.Table<User>().Filter("age_range", Operator.StrictlyRight, new Range(1, 2)).Get();
+            var filteredResponse = await client.Table<User>().Filter("age_range", Operator.StrictlyRight, new IntRange(1, 2)).Get();
             var usersResponse = await client.Table<User>().Get();
 
-            var testAgainst = usersResponse.Models.Where(m => m.AgeRange.Start.Value > 2 && m.AgeRange.End.Value > 2).ToList();
+            var testAgainst = usersResponse.Models.Where(m => m.AgeRange?.Start.Value > 2 && m.AgeRange?.End.Value > 2).ToList();
 
             CollectionAssert.AreEqual(testAgainst, filteredResponse.Models);
         }
@@ -743,10 +743,10 @@ namespace PostgrestTests
         {
             var client = Client.Initialize(baseUrl);
 
-            var filteredResponse = await client.Table<User>().Filter("age_range", Operator.NotLeftOf, new Range(2, 4)).Get();
+            var filteredResponse = await client.Table<User>().Filter("age_range", Operator.NotLeftOf, new IntRange(2, 4)).Get();
             var usersResponse = await client.Table<User>().Get();
 
-            var testAgainst = usersResponse.Models.Where(m => m.AgeRange.Start.Value >= 2 && m.AgeRange.End.Value >= 2).ToList();
+            var testAgainst = usersResponse.Models.Where(m => m.AgeRange?.Start.Value >= 2 && m.AgeRange?.End.Value >= 2).ToList();
 
             CollectionAssert.AreEqual(testAgainst, filteredResponse.Models);
         }
@@ -756,10 +756,10 @@ namespace PostgrestTests
         {
             var client = Client.Initialize(baseUrl);
 
-            var filteredResponse = await client.Table<User>().Filter("age_range", Operator.NotRightOf, new Range(2, 4)).Get();
+            var filteredResponse = await client.Table<User>().Filter("age_range", Operator.NotRightOf, new IntRange(2, 4)).Get();
             var usersResponse = await client.Table<User>().Get();
 
-            var testAgainst = usersResponse.Models.Where(m => m.AgeRange.Start.Value <= 4 && m.AgeRange.End.Value <= 4).ToList();
+            var testAgainst = usersResponse.Models.Where(m => m.AgeRange?.Start.Value <= 4 && m.AgeRange?.End.Value <= 4).ToList();
 
             CollectionAssert.AreEqual(testAgainst, filteredResponse.Models);
         }
@@ -769,10 +769,10 @@ namespace PostgrestTests
         {
             var client = Client.Initialize(baseUrl);
 
-            var filteredResponse = await client.Table<User>().Filter("age_range", Operator.Adjacent, new Range(1, 2)).Get();
+            var filteredResponse = await client.Table<User>().Filter("age_range", Operator.Adjacent, new IntRange(1, 2)).Get();
             var usersResponse = await client.Table<User>().Get();
 
-            var testAgainst = usersResponse.Models.Where(m => (m.AgeRange.End.Value == 0) || m.AgeRange.Start.Value == 3).ToList();
+            var testAgainst = usersResponse.Models.Where(m => m.AgeRange?.End.Value == 0 || m.AgeRange?.Start.Value == 3).ToList();
 
             CollectionAssert.AreEqual(testAgainst, filteredResponse.Models);
         }
@@ -782,10 +782,10 @@ namespace PostgrestTests
         {
             var client = Client.Initialize(baseUrl);
 
-            var filteredResponse = await client.Table<User>().Filter("age_range", Operator.Overlap, new Range(2, 4)).Get();
+            var filteredResponse = await client.Table<User>().Filter("age_range", Operator.Overlap, new IntRange(2, 4)).Get();
             var usersResponse = await client.Table<User>().Get();
 
-            var testAgainst = usersResponse.Models.Where(m => m.AgeRange.Start.Value <= 4 && m.AgeRange.End.Value >= 2).ToList();
+            var testAgainst = usersResponse.Models.Where(m => m.AgeRange?.Start.Value <= 4 && m.AgeRange?.End.Value >= 2).ToList();
 
             CollectionAssert.AreEqual(testAgainst, filteredResponse.Models);
         }
@@ -908,14 +908,14 @@ namespace PostgrestTests
             var rocketUser = new User
             {
                 Username = "rocket",
-                AgeRange = new Range(35, 40),
+                AgeRange = new IntRange(35, 40),
                 Status = "ONLINE"
             };
 
             var aceUser = new User
             {
                 Username = "ace",
-                AgeRange = new Range(21, 28),
+                AgeRange = new IntRange(21, 28),
                 Status = "OFFLINE"
             };
             var users = new List<User>

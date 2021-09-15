@@ -18,7 +18,7 @@ namespace Postgrest.Attributes
             JsonProperty prop = base.CreateProperty(member, memberSerialization);
 
             // Handle non-primitive conversions from a Postgres type to C#
-            if (prop.PropertyType == typeof(Range))
+            if (prop.PropertyType == typeof(IntRange))
             {
                 prop.Converter = new RangeConverter();
             }

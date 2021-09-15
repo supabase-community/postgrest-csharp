@@ -18,16 +18,19 @@ namespace Postgrest.Converters
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            return ParseIntRange(reader.Value.ToString());
+            if (reader.Value != null)
+                return ParseIntRange(reader.Value.ToString());
+
+            return null;
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            Range val = (Range)value;
+            IntRange val = (IntRange)value;
             writer.WriteValue(val.ToPostgresString());
         }
 
-        public static Range ParseIntRange(string value)
+        public static IntRange ParseIntRange(string value)
         {
             //int4range (0,1] , [123,4123], etc. etc.
             string pattern = @"^(\[|\()(\d+),(\d+)(\]|\))$";
@@ -47,10 +50,10 @@ namespace Postgrest.Converters
                 // Edge-case, includes no points
                 if (count < start)
                 {
-                    return new Range();
+                    return new IntRange(0, 0);
                 }
 
-                return new Range(start, count);
+                return new IntRange(start, count);
             }
 
             throw new Exception("Unknown Range format.");

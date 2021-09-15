@@ -125,7 +125,7 @@ namespace Postgrest
                 filters.Add(new QueryFilter(columnName, op, dictCriteria));
                 return this;
             }
-            else if (criterion is Range rangeCriteria)
+            else if (criterion is IntRange rangeCriteria)
             {
                 filters.Add(new QueryFilter(columnName, op, rangeCriteria));
                 return this;
@@ -337,7 +337,7 @@ namespace Postgrest
         /// <returns>A typed response from the database.</returns>
         public Task<ModeledResponse<T>> Update(T model)
         {
-            method = HttpMethod.Patch;
+            method = new HttpMethod("PATCH");
 
             filters.Add(new QueryFilter(model.PrimaryKeyColumn, Operator.Equals, model.PrimaryKeyValue.ToString()));
 
@@ -624,7 +624,7 @@ namespace Postgrest
                         {
                             return new KeyValuePair<string, string>(filter.Property, $"{asAttribute.Mapping}.{JsonConvert.SerializeObject(dictCriteria)}");
                         }
-                        else if (filter.Criteria is Range rangeCriteria)
+                        else if (filter.Criteria is IntRange rangeCriteria)
                         {
                             return new KeyValuePair<string, string>(filter.Property, $"{asAttribute.Mapping}.{rangeCriteria.ToPostgresString()}");
                         }
@@ -634,7 +634,7 @@ namespace Postgrest
                     case Operator.NotRightOf:
                     case Operator.NotLeftOf:
                     case Operator.Adjacent:
-                        if (filter.Criteria is Range rangeCritera)
+                        if (filter.Criteria is IntRange rangeCritera)
                         {
                             return new KeyValuePair<string, string>(filter.Property, $"{asAttribute.Mapping}.{rangeCritera.ToPostgresString()}");
                         }

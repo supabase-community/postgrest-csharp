@@ -1,7 +1,7 @@
 ﻿using System;
+
 namespace Postgrest.Extensions
 {
-
     public static class RangeExtensions
     {
         /// <summary>
@@ -9,6 +9,6 @@ namespace Postgrest.Extensions
         /// </summary>
         /// <param name="range"></param>
         /// <returns></returns>
-        internal static string ToPostgresString(this Range range) => $"[{range.Start},{range.End}]";
+        internal static string ToPostgresString(this IntRange range) => $"[{range.Start},{range.End}]";
     }
 }

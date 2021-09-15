@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Postgrest;
 using Postgrest.Extensions;
 
 namespace PostgrestTests
@@ -44,10 +45,10 @@ namespace PostgrestTests
         [TestMethod("`Range` should serialize into a string postgres understands")]
         public void TestRangeToPostgresString()
         {
-            var test1 = new Range(1, 7).ToPostgresString();
+            var test1 = new IntRange(1, 7).ToPostgresString();
             Assert.AreEqual("[1,7]", test1);
 
-            var test2 = new Range(4, 6).ToPostgresString();
+            var test2 = new IntRange(4, 6).ToPostgresString();
             Assert.AreEqual("[4,6]", test2);
         }
     }

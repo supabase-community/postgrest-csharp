@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Postgrest;
 using PostgrestExample.Models;
 
 namespace PostgrestExample
@@ -44,7 +45,7 @@ namespace PostgrestExample
             var newUser = new User
             {
                 Username = "Ash Ketchum",
-                AgeRange = new Range(20, 25),
+                AgeRange = new IntRange(20, 25),
                 Catchphrase = "Gotta catch them all",
                 Status = "ONLINE"
             };
