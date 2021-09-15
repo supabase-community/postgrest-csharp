@@ -320,7 +320,7 @@ namespace Postgrest
         /// <param name="model"></param>
         /// <param name="options"></param>
         /// <returns>A typed model response from the database.</returns>
-        public Task<ModeledResponse<T>> Insert(T model, InsertOptions options = null) => PerformInsert(model, options);
+        public Task<ModeledResponse<T>> Insert(T model, QueryOptions options = null) => PerformInsert(model, options);
 
         /// <summary>
         /// Executes a BULK INSERT query using the defined query params on the current instance.
@@ -328,25 +328,63 @@ namespace Postgrest
         /// <param name="model"></param>
         /// <param name="options"></param>
         /// <returns>A typed model response from the database.</returns>
-        public Task<ModeledResponse<T>> Insert(ICollection<T> models, InsertOptions options = null) => PerformInsert(models, options);
+        public Task<ModeledResponse<T>> Insert(ICollection<T> models, QueryOptions options = null) => PerformInsert(models, options);
+
+        /// <summary>
+        /// Executes an UPSERT query using the defined query params on the current instance.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        public Task<ModeledResponse<T>> Upsert(T model, QueryOptions options = null)
+        {
+            if (options == null)
+            {
+                options = new QueryOptions();
+            }
+
+            // Enforce Upsert
+            options.Upsert = true;
+
+            return PerformInsert(model, options);
+        }
+
+        /// <summary>
+        /// Executes an UPSERT query using the defined query params on the current instance.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        public Task<ModeledResponse<T>> Upsert(ICollection<T> model, QueryOptions options = null)
+        {
+            if (options == null)
+            {
+                options = new QueryOptions();
+            }
+
+            // Enforce Upsert
+            options.Upsert = true;
+
+            return PerformInsert(model, options);
+        }
 
         /// <summary>
         /// Executes an UPDATE query using the defined query params on the current instance.
         /// </summary>
         /// <param name="model"></param>
         /// <returns>A typed response from the database.</returns>
-        public Task<ModeledResponse<T>> Update(T model)
+        public Task<ModeledResponse<T>> Update(T model, QueryOptions options = null)
         {
+            if (options == null)
+            {
+                options = new QueryOptions();
+            }
+
             method = new HttpMethod("PATCH");
 
             filters.Add(new QueryFilter(model.PrimaryKeyColumn, Operator.Equals, model.PrimaryKeyValue.ToString()));
 
-            var headers = new Dictionary<string, string>
-            {
-                { "Prefer", "return=representation"}
-            };
-
-            var request = Send<T>(method, model, headers);
+            var request = Send<T>(method, model, options.ToHeaders());
 
             Clear();
 
@@ -357,11 +395,16 @@ namespace Postgrest
         /// Executes a delete request using the defined query params on the current instance.
         /// </summary>
         /// <returns></returns>
-        public Task Delete()
+        public Task Delete(QueryOptions options = null)
         {
+            if (options == null)
+            {
+                options = new QueryOptions();
+            }
+
             method = HttpMethod.Delete;
 
-            var request = Send(method, null, null);
+            var request = Send(method, null, options.ToHeaders());
 
             Clear();
 
@@ -373,11 +416,16 @@ namespace Postgrest
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public Task Delete(T model)
+        public Task<ModeledResponse<T>> Delete(T model, QueryOptions options = null)
         {
+            if (options == null)
+            {
+                options = new QueryOptions();
+            }
+
             method = HttpMethod.Delete;
             Filter(model.PrimaryKeyColumn, Operator.Equals, model.PrimaryKeyValue.ToString());
-            var request = Send(method, null, null);
+            var request = Send<T>(method, null, options.ToHeaders());
             Clear();
             return request;
         }
@@ -675,24 +723,20 @@ namespace Postgrest
             offsetForeignKey = null;
         }
 
+
         /// <summary>
         /// Performs an INSERT Request.
         /// </summary>
         /// <param name="data"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        private Task<ModeledResponse<T>> PerformInsert(object data, InsertOptions options = null)
+        private Task<ModeledResponse<T>> PerformInsert(object data, QueryOptions options = null)
         {
             method = HttpMethod.Post;
             if (options == null)
-                options = new InsertOptions();
+                options = new QueryOptions();
 
-            var headers = new Dictionary<string, string>
-            {
-                { "Prefer", options.Upsert ? "return=representation,resolution=merge-duplicates" : "return=representation"}
-            };
-
-            var request = Send<T>(method, data, headers);
+            var request = Send<T>(method, data, options.ToHeaders());
 
             Clear();
 

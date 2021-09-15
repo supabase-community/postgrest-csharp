@@ -11,9 +11,9 @@
 
 ------
 
-### BREAKING CHANGES FOR v2.0.0
+### BREAKING CHANGES FOR v2.0.1
 - `System.Range` (netstandard2.1) is not available in netstandard2.0, so all `System.Range` calls should be changed to `Postgrest.IntRange` instead.
-
+- `InsertOptions` has been generalized to `QueryOptions` which allows for setting return `minimal` or `representation`
 ------
 
 Documentation can be found [here](https://supabase.github.io/postgrest-csharp/api/Postgrest.html).

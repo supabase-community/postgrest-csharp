@@ -341,6 +341,26 @@ namespace PostgrestTests
             await client.Table<User>().Delete(newUser);
         }
 
+        [TestMethod("insert: headers generated")]
+        public void TestInsertHeaderGeneration()
+        {
+            var option = new QueryOptions { };
+            Assert.AreEqual("return=representation", option.ToHeaders()["Prefer"]);
+
+            option.Returning = QueryOptions.ReturnType.Minimal;
+            Assert.AreEqual("return=minimal", option.ToHeaders()["Prefer"]);
+
+            option.Upsert = true;
+            Assert.AreEqual("resolution=merge-duplicates,return=minimal", option.ToHeaders()["Prefer"]);
+
+            option.DuplicateResolution = QueryOptions.DuplicateResolutionType.IgnoreDuplicates;
+            Assert.AreEqual("resolution=ignore-duplicates,return=minimal", option.ToHeaders()["Prefer"]);
+
+            option.Upsert = false;
+            option.Count = QueryOptions.CountType.Exact;
+            Assert.AreEqual("return=minimal,count=exact", option.ToHeaders()["Prefer"]);
+        }
+
         [TestMethod("Exceptions: Throws when inserting a user with same primary key value as an existing one without upsert option")]
         public async Task TestThrowsRequestExceptionInsertPkConflict()
         {
@@ -369,7 +389,7 @@ namespace PostgrestTests
                 Catchphrase = "fat cat"
             };
 
-            var insertOptions = new InsertOptions
+            var insertOptions = new QueryOptions
             {
                 Upsert = true
             };
@@ -509,7 +529,7 @@ namespace PostgrestTests
         {
             var client = Client.Initialize(baseUrl);
 
-            await client.Table<User>().Insert(new User { Username = "acupofjose", Status = "ONLINE", Catchphrase = null }, new InsertOptions { Upsert = true });
+            await client.Table<User>().Insert(new User { Username = "acupofjose", Status = "ONLINE", Catchphrase = null }, new QueryOptions { Upsert = true });
 
             var filteredResponse = await client.Table<User>().Filter("catchphrase", Operator.Equals, null).Get();
             var usersResponse = await client.Table<User>().Get();
@@ -525,7 +545,7 @@ namespace PostgrestTests
         {
             var client = Client.Initialize(baseUrl);
 
-            await client.Table<User>().Insert(new User { Username = "acupofjose", Status = "ONLINE", Catchphrase = null }, new InsertOptions { Upsert = true });
+            await client.Table<User>().Insert(new User { Username = "acupofjose", Status = "ONLINE", Catchphrase = null }, new QueryOptions { Upsert = true });
 
             var filteredResponse = await client.Table<User>().Filter("catchphrase", Operator.Is, null).Get();
             var usersResponse = await client.Table<User>().Get();
@@ -541,7 +561,7 @@ namespace PostgrestTests
         {
             var client = Client.Initialize(baseUrl);
 
-            await client.Table<User>().Insert(new User { Username = "acupofjose", Status = "ONLINE", Catchphrase = null }, new InsertOptions { Upsert = true });
+            await client.Table<User>().Insert(new User { Username = "acupofjose", Status = "ONLINE", Catchphrase = null }, new QueryOptions { Upsert = true });
 
             var filteredResponse = await client.Table<User>().Filter("catchphrase", Operator.NotEqual, null).Get();
             var usersResponse = await client.Table<User>().Get();
@@ -557,7 +577,7 @@ namespace PostgrestTests
         {
             var client = Client.Initialize(baseUrl);
 
-            await client.Table<User>().Insert(new User { Username = "acupofjose", Status = "ONLINE", Catchphrase = null }, new InsertOptions { Upsert = true });
+            await client.Table<User>().Insert(new User { Username = "acupofjose", Status = "ONLINE", Catchphrase = null }, new QueryOptions { Upsert = true });
 
             var filteredResponse = await client.Table<User>().Filter("catchphrase", Operator.Not, null).Get();
             var usersResponse = await client.Table<User>().Get();
@@ -689,7 +709,7 @@ namespace PostgrestTests
         {
             var client = Client.Initialize(baseUrl);
 
-            await client.Table<User>().Insert(new User { Username = "skikra", Status = "ONLINE", AgeRange = new IntRange(1, 3) }, new InsertOptions { Upsert = true });
+            await client.Table<User>().Insert(new User { Username = "skikra", Status = "ONLINE", AgeRange = new IntRange(1, 3) }, new QueryOptions { Upsert = true });
             var filteredResponse = await client.Table<User>().Filter("age_range", Operator.Contains, new IntRange(1, 2)).Get();
             var usersResponse = await client.Table<User>().Get();
 
@@ -716,7 +736,7 @@ namespace PostgrestTests
         {
             var client = Client.Initialize(baseUrl);
 
-            await client.Table<User>().Insert(new User { Username = "minds3t", Status = "ONLINE", AgeRange = new IntRange(3, 6) }, new InsertOptions { Upsert = true });
+            await client.Table<User>().Insert(new User { Username = "minds3t", Status = "ONLINE", AgeRange = new IntRange(3, 6) }, new QueryOptions { Upsert = true });
             var filteredResponse = await client.Table<User>().Filter("age_range", Operator.StrictlyLeft, new IntRange(7, 8)).Get();
             var usersResponse = await client.Table<User>().Get();
 
