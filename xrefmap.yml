@@ -753,25 +753,6 @@ references:
   isSpec: "True"
   fullName: Postgrest.Index.Value
   nameWithType: Index.Value
-- uid: Postgrest.InsertOptions
-  name: InsertOptions
-  href: api/Postgrest.InsertOptions.html
-  commentId: T:Postgrest.InsertOptions
-  fullName: Postgrest.InsertOptions
-  nameWithType: InsertOptions
-- uid: Postgrest.InsertOptions.Upsert
-  name: Upsert
-  href: api/Postgrest.InsertOptions.html#Postgrest_InsertOptions_Upsert
-  commentId: P:Postgrest.InsertOptions.Upsert
-  fullName: Postgrest.InsertOptions.Upsert
-  nameWithType: InsertOptions.Upsert
-- uid: Postgrest.InsertOptions.Upsert*
-  name: Upsert
-  href: api/Postgrest.InsertOptions.html#Postgrest_InsertOptions_Upsert_
-  commentId: Overload:Postgrest.InsertOptions.Upsert
-  isSpec: "True"
-  fullName: Postgrest.InsertOptions.Upsert
-  nameWithType: InsertOptions.Upsert
 - uid: Postgrest.IntRange
   name: IntRange
   href: api/Postgrest.IntRange.html
@@ -1115,6 +1096,143 @@ references:
   isSpec: "True"
   fullName: Postgrest.QueryFilter.Property
   nameWithType: QueryFilter.Property
+- uid: Postgrest.QueryOptions
+  name: QueryOptions
+  href: api/Postgrest.QueryOptions.html
+  commentId: T:Postgrest.QueryOptions
+  fullName: Postgrest.QueryOptions
+  nameWithType: QueryOptions
+- uid: Postgrest.QueryOptions.Count
+  name: Count
+  href: api/Postgrest.QueryOptions.html#Postgrest_QueryOptions_Count
+  commentId: P:Postgrest.QueryOptions.Count
+  fullName: Postgrest.QueryOptions.Count
+  nameWithType: QueryOptions.Count
+- uid: Postgrest.QueryOptions.Count*
+  name: Count
+  href: api/Postgrest.QueryOptions.html#Postgrest_QueryOptions_Count_
+  commentId: Overload:Postgrest.QueryOptions.Count
+  isSpec: "True"
+  fullName: Postgrest.QueryOptions.Count
+  nameWithType: QueryOptions.Count
+- uid: Postgrest.QueryOptions.CountType
+  name: QueryOptions.CountType
+  href: api/Postgrest.QueryOptions.CountType.html
+  commentId: T:Postgrest.QueryOptions.CountType
+  fullName: Postgrest.QueryOptions.CountType
+  nameWithType: QueryOptions.CountType
+- uid: Postgrest.QueryOptions.CountType.Estimated
+  name: Estimated
+  href: api/Postgrest.QueryOptions.CountType.html#Postgrest_QueryOptions_CountType_Estimated
+  commentId: F:Postgrest.QueryOptions.CountType.Estimated
+  fullName: Postgrest.QueryOptions.CountType.Estimated
+  nameWithType: QueryOptions.CountType.Estimated
+- uid: Postgrest.QueryOptions.CountType.Exact
+  name: Exact
+  href: api/Postgrest.QueryOptions.CountType.html#Postgrest_QueryOptions_CountType_Exact
+  commentId: F:Postgrest.QueryOptions.CountType.Exact
+  fullName: Postgrest.QueryOptions.CountType.Exact
+  nameWithType: QueryOptions.CountType.Exact
+- uid: Postgrest.QueryOptions.CountType.None
+  name: None
+  href: api/Postgrest.QueryOptions.CountType.html#Postgrest_QueryOptions_CountType_None
+  commentId: F:Postgrest.QueryOptions.CountType.None
+  fullName: Postgrest.QueryOptions.CountType.None
+  nameWithType: QueryOptions.CountType.None
+- uid: Postgrest.QueryOptions.CountType.Planned
+  name: Planned
+  href: api/Postgrest.QueryOptions.CountType.html#Postgrest_QueryOptions_CountType_Planned
+  commentId: F:Postgrest.QueryOptions.CountType.Planned
+  fullName: Postgrest.QueryOptions.CountType.Planned
+  nameWithType: QueryOptions.CountType.Planned
+- uid: Postgrest.QueryOptions.DuplicateResolution
+  name: DuplicateResolution
+  href: api/Postgrest.QueryOptions.html#Postgrest_QueryOptions_DuplicateResolution
+  commentId: P:Postgrest.QueryOptions.DuplicateResolution
+  fullName: Postgrest.QueryOptions.DuplicateResolution
+  nameWithType: QueryOptions.DuplicateResolution
+- uid: Postgrest.QueryOptions.DuplicateResolution*
+  name: DuplicateResolution
+  href: api/Postgrest.QueryOptions.html#Postgrest_QueryOptions_DuplicateResolution_
+  commentId: Overload:Postgrest.QueryOptions.DuplicateResolution
+  isSpec: "True"
+  fullName: Postgrest.QueryOptions.DuplicateResolution
+  nameWithType: QueryOptions.DuplicateResolution
+- uid: Postgrest.QueryOptions.DuplicateResolutionType
+  name: QueryOptions.DuplicateResolutionType
+  href: api/Postgrest.QueryOptions.DuplicateResolutionType.html
+  commentId: T:Postgrest.QueryOptions.DuplicateResolutionType
+  fullName: Postgrest.QueryOptions.DuplicateResolutionType
+  nameWithType: QueryOptions.DuplicateResolutionType
+- uid: Postgrest.QueryOptions.DuplicateResolutionType.IgnoreDuplicates
+  name: IgnoreDuplicates
+  href: api/Postgrest.QueryOptions.DuplicateResolutionType.html#Postgrest_QueryOptions_DuplicateResolutionType_IgnoreDuplicates
+  commentId: F:Postgrest.QueryOptions.DuplicateResolutionType.IgnoreDuplicates
+  fullName: Postgrest.QueryOptions.DuplicateResolutionType.IgnoreDuplicates
+  nameWithType: QueryOptions.DuplicateResolutionType.IgnoreDuplicates
+- uid: Postgrest.QueryOptions.DuplicateResolutionType.MergeDuplicates
+  name: MergeDuplicates
+  href: api/Postgrest.QueryOptions.DuplicateResolutionType.html#Postgrest_QueryOptions_DuplicateResolutionType_MergeDuplicates
+  commentId: F:Postgrest.QueryOptions.DuplicateResolutionType.MergeDuplicates
+  fullName: Postgrest.QueryOptions.DuplicateResolutionType.MergeDuplicates
+  nameWithType: QueryOptions.DuplicateResolutionType.MergeDuplicates
+- uid: Postgrest.QueryOptions.Returning
+  name: Returning
+  href: api/Postgrest.QueryOptions.html#Postgrest_QueryOptions_Returning
+  commentId: P:Postgrest.QueryOptions.Returning
+  fullName: Postgrest.QueryOptions.Returning
+  nameWithType: QueryOptions.Returning
+- uid: Postgrest.QueryOptions.Returning*
+  name: Returning
+  href: api/Postgrest.QueryOptions.html#Postgrest_QueryOptions_Returning_
+  commentId: Overload:Postgrest.QueryOptions.Returning
+  isSpec: "True"
+  fullName: Postgrest.QueryOptions.Returning
+  nameWithType: QueryOptions.Returning
+- uid: Postgrest.QueryOptions.ReturnType
+  name: QueryOptions.ReturnType
+  href: api/Postgrest.QueryOptions.ReturnType.html
+  commentId: T:Postgrest.QueryOptions.ReturnType
+  fullName: Postgrest.QueryOptions.ReturnType
+  nameWithType: QueryOptions.ReturnType
+- uid: Postgrest.QueryOptions.ReturnType.Minimal
+  name: Minimal
+  href: api/Postgrest.QueryOptions.ReturnType.html#Postgrest_QueryOptions_ReturnType_Minimal
+  commentId: F:Postgrest.QueryOptions.ReturnType.Minimal
+  fullName: Postgrest.QueryOptions.ReturnType.Minimal
+  nameWithType: QueryOptions.ReturnType.Minimal
+- uid: Postgrest.QueryOptions.ReturnType.Representation
+  name: Representation
+  href: api/Postgrest.QueryOptions.ReturnType.html#Postgrest_QueryOptions_ReturnType_Representation
+  commentId: F:Postgrest.QueryOptions.ReturnType.Representation
+  fullName: Postgrest.QueryOptions.ReturnType.Representation
+  nameWithType: QueryOptions.ReturnType.Representation
+- uid: Postgrest.QueryOptions.ToHeaders
+  name: ToHeaders()
+  href: api/Postgrest.QueryOptions.html#Postgrest_QueryOptions_ToHeaders
+  commentId: M:Postgrest.QueryOptions.ToHeaders
+  fullName: Postgrest.QueryOptions.ToHeaders()
+  nameWithType: QueryOptions.ToHeaders()
+- uid: Postgrest.QueryOptions.ToHeaders*
+  name: ToHeaders
+  href: api/Postgrest.QueryOptions.html#Postgrest_QueryOptions_ToHeaders_
+  commentId: Overload:Postgrest.QueryOptions.ToHeaders
+  isSpec: "True"
+  fullName: Postgrest.QueryOptions.ToHeaders
+  nameWithType: QueryOptions.ToHeaders
+- uid: Postgrest.QueryOptions.Upsert
+  name: Upsert
+  href: api/Postgrest.QueryOptions.html#Postgrest_QueryOptions_Upsert
+  commentId: P:Postgrest.QueryOptions.Upsert
+  fullName: Postgrest.QueryOptions.Upsert
+  nameWithType: QueryOptions.Upsert
+- uid: Postgrest.QueryOptions.Upsert*
+  name: Upsert
+  href: api/Postgrest.QueryOptions.html#Postgrest_QueryOptions_Upsert_
+  commentId: Overload:Postgrest.QueryOptions.Upsert
+  isSpec: "True"
+  fullName: Postgrest.QueryOptions.Upsert
+  nameWithType: QueryOptions.Upsert
 - uid: Postgrest.QueryOrderer
   name: QueryOrderer
   href: api/Postgrest.QueryOrderer.html
@@ -1465,22 +1583,22 @@ references:
   fullName.vb: Postgrest.Table(Of T).Count
   nameWithType: Table<T>.Count
   nameWithType.vb: Table(Of T).Count
-- uid: Postgrest.Table`1.Delete
-  name: Delete()
-  href: api/Postgrest.Table-1.html#Postgrest_Table_1_Delete
-  commentId: M:Postgrest.Table`1.Delete
-  fullName: Postgrest.Table<T>.Delete()
-  fullName.vb: Postgrest.Table(Of T).Delete()
-  nameWithType: Table<T>.Delete()
-  nameWithType.vb: Table(Of T).Delete()
-- uid: Postgrest.Table`1.Delete(`0)
-  name: Delete(T)
-  href: api/Postgrest.Table-1.html#Postgrest_Table_1_Delete__0_
-  commentId: M:Postgrest.Table`1.Delete(`0)
-  fullName: Postgrest.Table<T>.Delete(T)
-  fullName.vb: Postgrest.Table(Of T).Delete(T)
-  nameWithType: Table<T>.Delete(T)
-  nameWithType.vb: Table(Of T).Delete(T)
+- uid: Postgrest.Table`1.Delete(`0,Postgrest.QueryOptions)
+  name: Delete(T, QueryOptions)
+  href: api/Postgrest.Table-1.html#Postgrest_Table_1_Delete__0_Postgrest_QueryOptions_
+  commentId: M:Postgrest.Table`1.Delete(`0,Postgrest.QueryOptions)
+  fullName: Postgrest.Table<T>.Delete(T, Postgrest.QueryOptions)
+  fullName.vb: Postgrest.Table(Of T).Delete(T, Postgrest.QueryOptions)
+  nameWithType: Table<T>.Delete(T, QueryOptions)
+  nameWithType.vb: Table(Of T).Delete(T, QueryOptions)
+- uid: Postgrest.Table`1.Delete(Postgrest.QueryOptions)
+  name: Delete(QueryOptions)
+  href: api/Postgrest.Table-1.html#Postgrest_Table_1_Delete_Postgrest_QueryOptions_
+  commentId: M:Postgrest.Table`1.Delete(Postgrest.QueryOptions)
+  fullName: Postgrest.Table<T>.Delete(Postgrest.QueryOptions)
+  fullName.vb: Postgrest.Table(Of T).Delete(Postgrest.QueryOptions)
+  nameWithType: Table<T>.Delete(QueryOptions)
+  nameWithType.vb: Table(Of T).Delete(QueryOptions)
 - uid: Postgrest.Table`1.Delete*
   name: Delete
   href: api/Postgrest.Table-1.html#Postgrest_Table_1_Delete_
@@ -1524,23 +1642,23 @@ references:
   fullName.vb: Postgrest.Table(Of T).Get
   nameWithType: Table<T>.Get
   nameWithType.vb: Table(Of T).Get
-- uid: Postgrest.Table`1.Insert(`0,Postgrest.InsertOptions)
-  name: Insert(T, InsertOptions)
-  href: api/Postgrest.Table-1.html#Postgrest_Table_1_Insert__0_Postgrest_InsertOptions_
-  commentId: M:Postgrest.Table`1.Insert(`0,Postgrest.InsertOptions)
-  fullName: Postgrest.Table<T>.Insert(T, Postgrest.InsertOptions)
-  fullName.vb: Postgrest.Table(Of T).Insert(T, Postgrest.InsertOptions)
-  nameWithType: Table<T>.Insert(T, InsertOptions)
-  nameWithType.vb: Table(Of T).Insert(T, InsertOptions)
-- uid: Postgrest.Table`1.Insert(ICollection{`0},Postgrest.InsertOptions)
-  name: Insert(ICollection<T>, InsertOptions)
-  href: api/Postgrest.Table-1.html#Postgrest_Table_1_Insert_ICollection__0__Postgrest_InsertOptions_
-  commentId: M:Postgrest.Table`1.Insert(ICollection{`0},Postgrest.InsertOptions)
-  name.vb: Insert(ICollection(Of T), InsertOptions)
-  fullName: Postgrest.Table<T>.Insert(ICollection<T>, Postgrest.InsertOptions)
-  fullName.vb: Postgrest.Table(Of T).Insert(ICollection(Of T), Postgrest.InsertOptions)
-  nameWithType: Table<T>.Insert(ICollection<T>, InsertOptions)
-  nameWithType.vb: Table(Of T).Insert(ICollection(Of T), InsertOptions)
+- uid: Postgrest.Table`1.Insert(`0,Postgrest.QueryOptions)
+  name: Insert(T, QueryOptions)
+  href: api/Postgrest.Table-1.html#Postgrest_Table_1_Insert__0_Postgrest_QueryOptions_
+  commentId: M:Postgrest.Table`1.Insert(`0,Postgrest.QueryOptions)
+  fullName: Postgrest.Table<T>.Insert(T, Postgrest.QueryOptions)
+  fullName.vb: Postgrest.Table(Of T).Insert(T, Postgrest.QueryOptions)
+  nameWithType: Table<T>.Insert(T, QueryOptions)
+  nameWithType.vb: Table(Of T).Insert(T, QueryOptions)
+- uid: Postgrest.Table`1.Insert(ICollection{`0},Postgrest.QueryOptions)
+  name: Insert(ICollection<T>, QueryOptions)
+  href: api/Postgrest.Table-1.html#Postgrest_Table_1_Insert_ICollection__0__Postgrest_QueryOptions_
+  commentId: M:Postgrest.Table`1.Insert(ICollection{`0},Postgrest.QueryOptions)
+  name.vb: Insert(ICollection(Of T), QueryOptions)
+  fullName: Postgrest.Table<T>.Insert(ICollection<T>, Postgrest.QueryOptions)
+  fullName.vb: Postgrest.Table(Of T).Insert(ICollection(Of T), Postgrest.QueryOptions)
+  nameWithType: Table<T>.Insert(ICollection<T>, QueryOptions)
+  nameWithType.vb: Table(Of T).Insert(ICollection(Of T), QueryOptions)
 - uid: Postgrest.Table`1.Insert*
   name: Insert
   href: api/Postgrest.Table-1.html#Postgrest_Table_1_Insert_
@@ -1764,14 +1882,14 @@ references:
   fullName.vb: Postgrest.Table(Of T).TableName
   nameWithType: Table<T>.TableName
   nameWithType.vb: Table(Of T).TableName
-- uid: Postgrest.Table`1.Update(`0)
-  name: Update(T)
-  href: api/Postgrest.Table-1.html#Postgrest_Table_1_Update__0_
-  commentId: M:Postgrest.Table`1.Update(`0)
-  fullName: Postgrest.Table<T>.Update(T)
-  fullName.vb: Postgrest.Table(Of T).Update(T)
-  nameWithType: Table<T>.Update(T)
-  nameWithType.vb: Table(Of T).Update(T)
+- uid: Postgrest.Table`1.Update(`0,Postgrest.QueryOptions)
+  name: Update(T, QueryOptions)
+  href: api/Postgrest.Table-1.html#Postgrest_Table_1_Update__0_Postgrest_QueryOptions_
+  commentId: M:Postgrest.Table`1.Update(`0,Postgrest.QueryOptions)
+  fullName: Postgrest.Table<T>.Update(T, Postgrest.QueryOptions)
+  fullName.vb: Postgrest.Table(Of T).Update(T, Postgrest.QueryOptions)
+  nameWithType: Table<T>.Update(T, QueryOptions)
+  nameWithType.vb: Table(Of T).Update(T, QueryOptions)
 - uid: Postgrest.Table`1.Update*
   name: Update
   href: api/Postgrest.Table-1.html#Postgrest_Table_1_Update_
@@ -1781,6 +1899,32 @@ references:
   fullName.vb: Postgrest.Table(Of T).Update
   nameWithType: Table<T>.Update
   nameWithType.vb: Table(Of T).Update
+- uid: Postgrest.Table`1.Upsert(`0,Postgrest.QueryOptions)
+  name: Upsert(T, QueryOptions)
+  href: api/Postgrest.Table-1.html#Postgrest_Table_1_Upsert__0_Postgrest_QueryOptions_
+  commentId: M:Postgrest.Table`1.Upsert(`0,Postgrest.QueryOptions)
+  fullName: Postgrest.Table<T>.Upsert(T, Postgrest.QueryOptions)
+  fullName.vb: Postgrest.Table(Of T).Upsert(T, Postgrest.QueryOptions)
+  nameWithType: Table<T>.Upsert(T, QueryOptions)
+  nameWithType.vb: Table(Of T).Upsert(T, QueryOptions)
+- uid: Postgrest.Table`1.Upsert(ICollection{`0},Postgrest.QueryOptions)
+  name: Upsert(ICollection<T>, QueryOptions)
+  href: api/Postgrest.Table-1.html#Postgrest_Table_1_Upsert_ICollection__0__Postgrest_QueryOptions_
+  commentId: M:Postgrest.Table`1.Upsert(ICollection{`0},Postgrest.QueryOptions)
+  name.vb: Upsert(ICollection(Of T), QueryOptions)
+  fullName: Postgrest.Table<T>.Upsert(ICollection<T>, Postgrest.QueryOptions)
+  fullName.vb: Postgrest.Table(Of T).Upsert(ICollection(Of T), Postgrest.QueryOptions)
+  nameWithType: Table<T>.Upsert(ICollection<T>, QueryOptions)
+  nameWithType.vb: Table(Of T).Upsert(ICollection(Of T), QueryOptions)
+- uid: Postgrest.Table`1.Upsert*
+  name: Upsert
+  href: api/Postgrest.Table-1.html#Postgrest_Table_1_Upsert_
+  commentId: Overload:Postgrest.Table`1.Upsert
+  isSpec: "True"
+  fullName: Postgrest.Table<T>.Upsert
+  fullName.vb: Postgrest.Table(Of T).Upsert
+  nameWithType: Table<T>.Upsert
+  nameWithType.vb: Table(Of T).Upsert
 - uid: Postgrest.Util
   name: Util
   href: api/Postgrest.Util.html
