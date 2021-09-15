@@ -9,6 +9,13 @@
 </a>
 </p>
 
+------
+
+### BREAKING CHANGES FOR v2.0.0
+- `System.Range` (netstandard2.1) is not available in netstandard2.0, so all `System.Range` calls should be changed to `Postgrest.IntRange` instead.
+
+------
+
 Documentation can be found [here](https://supabase.github.io/postgrest-csharp/api/Postgrest.html).
 
 Postgrest-csharp is written primarily as a helper library for [supabase/supabase-csharp](https://github.com/supabase/supabase-csharp), however, it should be easy enough to use outside of the supabase ecosystem.
