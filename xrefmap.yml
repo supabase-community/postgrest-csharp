@@ -576,6 +576,183 @@ references:
   isSpec: "True"
   fullName: Postgrest.FullTextSearchConfig.QueryText
   nameWithType: FullTextSearchConfig.QueryText
+- uid: Postgrest.Index
+  name: Index
+  href: api/Postgrest.Index.html
+  commentId: T:Postgrest.Index
+  fullName: Postgrest.Index
+  nameWithType: Index
+- uid: Postgrest.Index.#ctor(System.Int32,System.Boolean)
+  name: Index(Int32, Boolean)
+  href: api/Postgrest.Index.html#Postgrest_Index__ctor_System_Int32_System_Boolean_
+  commentId: M:Postgrest.Index.#ctor(System.Int32,System.Boolean)
+  fullName: Postgrest.Index.Index(System.Int32, System.Boolean)
+  nameWithType: Index.Index(Int32, Boolean)
+- uid: Postgrest.Index.#ctor*
+  name: Index
+  href: api/Postgrest.Index.html#Postgrest_Index__ctor_
+  commentId: Overload:Postgrest.Index.#ctor
+  isSpec: "True"
+  fullName: Postgrest.Index.Index
+  nameWithType: Index.Index
+- uid: Postgrest.Index.End
+  name: End
+  href: api/Postgrest.Index.html#Postgrest_Index_End
+  commentId: P:Postgrest.Index.End
+  fullName: Postgrest.Index.End
+  nameWithType: Index.End
+- uid: Postgrest.Index.End*
+  name: End
+  href: api/Postgrest.Index.html#Postgrest_Index_End_
+  commentId: Overload:Postgrest.Index.End
+  isSpec: "True"
+  fullName: Postgrest.Index.End
+  nameWithType: Index.End
+- uid: Postgrest.Index.Equals(Postgrest.Index)
+  name: Equals(Index)
+  href: api/Postgrest.Index.html#Postgrest_Index_Equals_Postgrest_Index_
+  commentId: M:Postgrest.Index.Equals(Postgrest.Index)
+  fullName: Postgrest.Index.Equals(Postgrest.Index)
+  nameWithType: Index.Equals(Index)
+- uid: Postgrest.Index.Equals(System.Nullable{System.Object})
+  name: Equals(Nullable<Object>)
+  href: api/Postgrest.Index.html#Postgrest_Index_Equals_System_Nullable_System_Object__
+  commentId: M:Postgrest.Index.Equals(System.Nullable{System.Object})
+  name.vb: Equals(Nullable(Of Object))
+  fullName: Postgrest.Index.Equals(System.Nullable<System.Object>)
+  fullName.vb: Postgrest.Index.Equals(System.Nullable(Of System.Object))
+  nameWithType: Index.Equals(Nullable<Object>)
+  nameWithType.vb: Index.Equals(Nullable(Of Object))
+- uid: Postgrest.Index.Equals*
+  name: Equals
+  href: api/Postgrest.Index.html#Postgrest_Index_Equals_
+  commentId: Overload:Postgrest.Index.Equals
+  isSpec: "True"
+  fullName: Postgrest.Index.Equals
+  nameWithType: Index.Equals
+- uid: Postgrest.Index.FromEnd(System.Int32)
+  name: FromEnd(Int32)
+  href: api/Postgrest.Index.html#Postgrest_Index_FromEnd_System_Int32_
+  commentId: M:Postgrest.Index.FromEnd(System.Int32)
+  fullName: Postgrest.Index.FromEnd(System.Int32)
+  nameWithType: Index.FromEnd(Int32)
+- uid: Postgrest.Index.FromEnd*
+  name: FromEnd
+  href: api/Postgrest.Index.html#Postgrest_Index_FromEnd_
+  commentId: Overload:Postgrest.Index.FromEnd
+  isSpec: "True"
+  fullName: Postgrest.Index.FromEnd
+  nameWithType: Index.FromEnd
+- uid: Postgrest.Index.FromStart(System.Int32)
+  name: FromStart(Int32)
+  href: api/Postgrest.Index.html#Postgrest_Index_FromStart_System_Int32_
+  commentId: M:Postgrest.Index.FromStart(System.Int32)
+  fullName: Postgrest.Index.FromStart(System.Int32)
+  nameWithType: Index.FromStart(Int32)
+- uid: Postgrest.Index.FromStart*
+  name: FromStart
+  href: api/Postgrest.Index.html#Postgrest_Index_FromStart_
+  commentId: Overload:Postgrest.Index.FromStart
+  isSpec: "True"
+  fullName: Postgrest.Index.FromStart
+  nameWithType: Index.FromStart
+- uid: Postgrest.Index.GetHashCode
+  name: GetHashCode()
+  href: api/Postgrest.Index.html#Postgrest_Index_GetHashCode
+  commentId: M:Postgrest.Index.GetHashCode
+  fullName: Postgrest.Index.GetHashCode()
+  nameWithType: Index.GetHashCode()
+- uid: Postgrest.Index.GetHashCode*
+  name: GetHashCode
+  href: api/Postgrest.Index.html#Postgrest_Index_GetHashCode_
+  commentId: Overload:Postgrest.Index.GetHashCode
+  isSpec: "True"
+  fullName: Postgrest.Index.GetHashCode
+  nameWithType: Index.GetHashCode
+- uid: Postgrest.Index.GetOffset(System.Int32)
+  name: GetOffset(Int32)
+  href: api/Postgrest.Index.html#Postgrest_Index_GetOffset_System_Int32_
+  commentId: M:Postgrest.Index.GetOffset(System.Int32)
+  fullName: Postgrest.Index.GetOffset(System.Int32)
+  nameWithType: Index.GetOffset(Int32)
+- uid: Postgrest.Index.GetOffset*
+  name: GetOffset
+  href: api/Postgrest.Index.html#Postgrest_Index_GetOffset_
+  commentId: Overload:Postgrest.Index.GetOffset
+  isSpec: "True"
+  fullName: Postgrest.Index.GetOffset
+  nameWithType: Index.GetOffset
+- uid: Postgrest.Index.IsFromEnd
+  name: IsFromEnd
+  href: api/Postgrest.Index.html#Postgrest_Index_IsFromEnd
+  commentId: P:Postgrest.Index.IsFromEnd
+  fullName: Postgrest.Index.IsFromEnd
+  nameWithType: Index.IsFromEnd
+- uid: Postgrest.Index.IsFromEnd*
+  name: IsFromEnd
+  href: api/Postgrest.Index.html#Postgrest_Index_IsFromEnd_
+  commentId: Overload:Postgrest.Index.IsFromEnd
+  isSpec: "True"
+  fullName: Postgrest.Index.IsFromEnd
+  nameWithType: Index.IsFromEnd
+- uid: Postgrest.Index.op_Implicit(System.Int32)~Postgrest.Index
+  name: Implicit(Int32 to Index)
+  href: api/Postgrest.Index.html#Postgrest_Index_op_Implicit_System_Int32__Postgrest_Index
+  commentId: M:Postgrest.Index.op_Implicit(System.Int32)~Postgrest.Index
+  name.vb: Widening(Int32 to Index)
+  fullName: Postgrest.Index.Implicit(System.Int32 to Postgrest.Index)
+  fullName.vb: Postgrest.Index.Widening(System.Int32 to Postgrest.Index)
+  nameWithType: Index.Implicit(Int32 to Index)
+  nameWithType.vb: Index.Widening(Int32 to Index)
+- uid: Postgrest.Index.op_Implicit*
+  name: Implicit
+  href: api/Postgrest.Index.html#Postgrest_Index_op_Implicit_
+  commentId: Overload:Postgrest.Index.op_Implicit
+  isSpec: "True"
+  name.vb: Widening
+  fullName: Postgrest.Index.Implicit
+  fullName.vb: Postgrest.Index.Widening
+  nameWithType: Index.Implicit
+  nameWithType.vb: Index.Widening
+- uid: Postgrest.Index.Start
+  name: Start
+  href: api/Postgrest.Index.html#Postgrest_Index_Start
+  commentId: P:Postgrest.Index.Start
+  fullName: Postgrest.Index.Start
+  nameWithType: Index.Start
+- uid: Postgrest.Index.Start*
+  name: Start
+  href: api/Postgrest.Index.html#Postgrest_Index_Start_
+  commentId: Overload:Postgrest.Index.Start
+  isSpec: "True"
+  fullName: Postgrest.Index.Start
+  nameWithType: Index.Start
+- uid: Postgrest.Index.ToString
+  name: ToString()
+  href: api/Postgrest.Index.html#Postgrest_Index_ToString
+  commentId: M:Postgrest.Index.ToString
+  fullName: Postgrest.Index.ToString()
+  nameWithType: Index.ToString()
+- uid: Postgrest.Index.ToString*
+  name: ToString
+  href: api/Postgrest.Index.html#Postgrest_Index_ToString_
+  commentId: Overload:Postgrest.Index.ToString
+  isSpec: "True"
+  fullName: Postgrest.Index.ToString
+  nameWithType: Index.ToString
+- uid: Postgrest.Index.Value
+  name: Value
+  href: api/Postgrest.Index.html#Postgrest_Index_Value
+  commentId: P:Postgrest.Index.Value
+  fullName: Postgrest.Index.Value
+  nameWithType: Index.Value
+- uid: Postgrest.Index.Value*
+  name: Value
+  href: api/Postgrest.Index.html#Postgrest_Index_Value_
+  commentId: Overload:Postgrest.Index.Value
+  isSpec: "True"
+  fullName: Postgrest.Index.Value
+  nameWithType: Index.Value
 - uid: Postgrest.InsertOptions
   name: InsertOptions
   href: api/Postgrest.InsertOptions.html
@@ -595,6 +772,157 @@ references:
   isSpec: "True"
   fullName: Postgrest.InsertOptions.Upsert
   nameWithType: InsertOptions.Upsert
+- uid: Postgrest.IntRange
+  name: IntRange
+  href: api/Postgrest.IntRange.html
+  commentId: T:Postgrest.IntRange
+  fullName: Postgrest.IntRange
+  nameWithType: IntRange
+- uid: Postgrest.IntRange.#ctor
+  name: IntRange()
+  href: api/Postgrest.IntRange.html#Postgrest_IntRange__ctor
+  commentId: M:Postgrest.IntRange.#ctor
+  fullName: Postgrest.IntRange.IntRange()
+  nameWithType: IntRange.IntRange()
+- uid: Postgrest.IntRange.#ctor(Postgrest.Index,Postgrest.Index)
+  name: IntRange(Index, Index)
+  href: api/Postgrest.IntRange.html#Postgrest_IntRange__ctor_Postgrest_Index_Postgrest_Index_
+  commentId: M:Postgrest.IntRange.#ctor(Postgrest.Index,Postgrest.Index)
+  fullName: Postgrest.IntRange.IntRange(Postgrest.Index, Postgrest.Index)
+  nameWithType: IntRange.IntRange(Index, Index)
+- uid: Postgrest.IntRange.#ctor*
+  name: IntRange
+  href: api/Postgrest.IntRange.html#Postgrest_IntRange__ctor_
+  commentId: Overload:Postgrest.IntRange.#ctor
+  isSpec: "True"
+  fullName: Postgrest.IntRange.IntRange
+  nameWithType: IntRange.IntRange
+- uid: Postgrest.IntRange.All
+  name: All
+  href: api/Postgrest.IntRange.html#Postgrest_IntRange_All
+  commentId: P:Postgrest.IntRange.All
+  fullName: Postgrest.IntRange.All
+  nameWithType: IntRange.All
+- uid: Postgrest.IntRange.All*
+  name: All
+  href: api/Postgrest.IntRange.html#Postgrest_IntRange_All_
+  commentId: Overload:Postgrest.IntRange.All
+  isSpec: "True"
+  fullName: Postgrest.IntRange.All
+  nameWithType: IntRange.All
+- uid: Postgrest.IntRange.End
+  name: End
+  href: api/Postgrest.IntRange.html#Postgrest_IntRange_End
+  commentId: P:Postgrest.IntRange.End
+  fullName: Postgrest.IntRange.End
+  nameWithType: IntRange.End
+- uid: Postgrest.IntRange.End*
+  name: End
+  href: api/Postgrest.IntRange.html#Postgrest_IntRange_End_
+  commentId: Overload:Postgrest.IntRange.End
+  isSpec: "True"
+  fullName: Postgrest.IntRange.End
+  nameWithType: IntRange.End
+- uid: Postgrest.IntRange.EndAt(Postgrest.Index)
+  name: EndAt(Index)
+  href: api/Postgrest.IntRange.html#Postgrest_IntRange_EndAt_Postgrest_Index_
+  commentId: M:Postgrest.IntRange.EndAt(Postgrest.Index)
+  fullName: Postgrest.IntRange.EndAt(Postgrest.Index)
+  nameWithType: IntRange.EndAt(Index)
+- uid: Postgrest.IntRange.EndAt*
+  name: EndAt
+  href: api/Postgrest.IntRange.html#Postgrest_IntRange_EndAt_
+  commentId: Overload:Postgrest.IntRange.EndAt
+  isSpec: "True"
+  fullName: Postgrest.IntRange.EndAt
+  nameWithType: IntRange.EndAt
+- uid: Postgrest.IntRange.Equals(Postgrest.IntRange)
+  name: Equals(IntRange)
+  href: api/Postgrest.IntRange.html#Postgrest_IntRange_Equals_Postgrest_IntRange_
+  commentId: M:Postgrest.IntRange.Equals(Postgrest.IntRange)
+  fullName: Postgrest.IntRange.Equals(Postgrest.IntRange)
+  nameWithType: IntRange.Equals(IntRange)
+- uid: Postgrest.IntRange.Equals(System.Nullable{System.Object})
+  name: Equals(Nullable<Object>)
+  href: api/Postgrest.IntRange.html#Postgrest_IntRange_Equals_System_Nullable_System_Object__
+  commentId: M:Postgrest.IntRange.Equals(System.Nullable{System.Object})
+  name.vb: Equals(Nullable(Of Object))
+  fullName: Postgrest.IntRange.Equals(System.Nullable<System.Object>)
+  fullName.vb: Postgrest.IntRange.Equals(System.Nullable(Of System.Object))
+  nameWithType: IntRange.Equals(Nullable<Object>)
+  nameWithType.vb: IntRange.Equals(Nullable(Of Object))
+- uid: Postgrest.IntRange.Equals*
+  name: Equals
+  href: api/Postgrest.IntRange.html#Postgrest_IntRange_Equals_
+  commentId: Overload:Postgrest.IntRange.Equals
+  isSpec: "True"
+  fullName: Postgrest.IntRange.Equals
+  nameWithType: IntRange.Equals
+- uid: Postgrest.IntRange.GetHashCode
+  name: GetHashCode()
+  href: api/Postgrest.IntRange.html#Postgrest_IntRange_GetHashCode
+  commentId: M:Postgrest.IntRange.GetHashCode
+  fullName: Postgrest.IntRange.GetHashCode()
+  nameWithType: IntRange.GetHashCode()
+- uid: Postgrest.IntRange.GetHashCode*
+  name: GetHashCode
+  href: api/Postgrest.IntRange.html#Postgrest_IntRange_GetHashCode_
+  commentId: Overload:Postgrest.IntRange.GetHashCode
+  isSpec: "True"
+  fullName: Postgrest.IntRange.GetHashCode
+  nameWithType: IntRange.GetHashCode
+- uid: Postgrest.IntRange.GetOffsetAndLength(System.Int32)
+  name: GetOffsetAndLength(Int32)
+  href: api/Postgrest.IntRange.html#Postgrest_IntRange_GetOffsetAndLength_System_Int32_
+  commentId: M:Postgrest.IntRange.GetOffsetAndLength(System.Int32)
+  fullName: Postgrest.IntRange.GetOffsetAndLength(System.Int32)
+  nameWithType: IntRange.GetOffsetAndLength(Int32)
+- uid: Postgrest.IntRange.GetOffsetAndLength*
+  name: GetOffsetAndLength
+  href: api/Postgrest.IntRange.html#Postgrest_IntRange_GetOffsetAndLength_
+  commentId: Overload:Postgrest.IntRange.GetOffsetAndLength
+  isSpec: "True"
+  fullName: Postgrest.IntRange.GetOffsetAndLength
+  nameWithType: IntRange.GetOffsetAndLength
+- uid: Postgrest.IntRange.Start
+  name: Start
+  href: api/Postgrest.IntRange.html#Postgrest_IntRange_Start
+  commentId: P:Postgrest.IntRange.Start
+  fullName: Postgrest.IntRange.Start
+  nameWithType: IntRange.Start
+- uid: Postgrest.IntRange.Start*
+  name: Start
+  href: api/Postgrest.IntRange.html#Postgrest_IntRange_Start_
+  commentId: Overload:Postgrest.IntRange.Start
+  isSpec: "True"
+  fullName: Postgrest.IntRange.Start
+  nameWithType: IntRange.Start
+- uid: Postgrest.IntRange.StartAt(Postgrest.Index)
+  name: StartAt(Index)
+  href: api/Postgrest.IntRange.html#Postgrest_IntRange_StartAt_Postgrest_Index_
+  commentId: M:Postgrest.IntRange.StartAt(Postgrest.Index)
+  fullName: Postgrest.IntRange.StartAt(Postgrest.Index)
+  nameWithType: IntRange.StartAt(Index)
+- uid: Postgrest.IntRange.StartAt*
+  name: StartAt
+  href: api/Postgrest.IntRange.html#Postgrest_IntRange_StartAt_
+  commentId: Overload:Postgrest.IntRange.StartAt
+  isSpec: "True"
+  fullName: Postgrest.IntRange.StartAt
+  nameWithType: IntRange.StartAt
+- uid: Postgrest.IntRange.ToString
+  name: ToString()
+  href: api/Postgrest.IntRange.html#Postgrest_IntRange_ToString
+  commentId: M:Postgrest.IntRange.ToString
+  fullName: Postgrest.IntRange.ToString()
+  nameWithType: IntRange.ToString()
+- uid: Postgrest.IntRange.ToString*
+  name: ToString
+  href: api/Postgrest.IntRange.html#Postgrest_IntRange_ToString_
+  commentId: Overload:Postgrest.IntRange.ToString
+  isSpec: "True"
+  fullName: Postgrest.IntRange.ToString
+  nameWithType: IntRange.ToString
 - uid: Postgrest.Models
   name: Postgrest.Models
   href: api/Postgrest.Models.html
@@ -723,12 +1051,12 @@ references:
   commentId: M:Postgrest.QueryFilter.#ctor(System.String,Postgrest.Constants.Operator,Postgrest.FullTextSearchConfig)
   fullName: Postgrest.QueryFilter.QueryFilter(System.String, Postgrest.Constants.Operator, Postgrest.FullTextSearchConfig)
   nameWithType: QueryFilter.QueryFilter(String, Constants.Operator, FullTextSearchConfig)
-- uid: Postgrest.QueryFilter.#ctor(System.String,Postgrest.Constants.Operator,Range)
-  name: QueryFilter(String, Constants.Operator, Range)
-  href: api/Postgrest.QueryFilter.html#Postgrest_QueryFilter__ctor_System_String_Postgrest_Constants_Operator_Range_
-  commentId: M:Postgrest.QueryFilter.#ctor(System.String,Postgrest.Constants.Operator,Range)
-  fullName: Postgrest.QueryFilter.QueryFilter(System.String, Postgrest.Constants.Operator, Range)
-  nameWithType: QueryFilter.QueryFilter(String, Constants.Operator, Range)
+- uid: Postgrest.QueryFilter.#ctor(System.String,Postgrest.Constants.Operator,Postgrest.IntRange)
+  name: QueryFilter(String, Constants.Operator, IntRange)
+  href: api/Postgrest.QueryFilter.html#Postgrest_QueryFilter__ctor_System_String_Postgrest_Constants_Operator_Postgrest_IntRange_
+  commentId: M:Postgrest.QueryFilter.#ctor(System.String,Postgrest.Constants.Operator,Postgrest.IntRange)
+  fullName: Postgrest.QueryFilter.QueryFilter(System.String, Postgrest.Constants.Operator, Postgrest.IntRange)
+  nameWithType: QueryFilter.QueryFilter(String, Constants.Operator, IntRange)
 - uid: Postgrest.QueryFilter.#ctor(System.String,Postgrest.Constants.Operator,System.Object)
   name: QueryFilter(String, Constants.Operator, Object)
   href: api/Postgrest.QueryFilter.html#Postgrest_QueryFilter__ctor_System_String_Postgrest_Constants_Operator_System_Object_
