@@ -16,7 +16,7 @@
 - `InsertOptions` has been generalized to `QueryOptions` which allows for setting return `minimal` or `representation`
 ------
 
-Documentation can be found [here](https://supabase.github.io/postgrest-csharp/api/Postgrest.html).
+Documentation can be found [here](https://supabase-community.github.io/postgrest-csharp/api/Postgrest.html).
 
 Postgrest-csharp is written primarily as a helper library for [supabase/supabase-csharp](https://github.com/supabase/supabase-csharp), however, it should be easy enough to use outside of the supabase ecosystem.
 
