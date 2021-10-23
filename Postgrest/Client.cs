@@ -75,7 +75,7 @@ namespace Postgrest
 
                 return new JsonSerializerSettings
                 {
-                    ContractResolver = new CustomContractResolver(),
+                    ContractResolver = new PostgrestContractResolver(),
                     Converters =
                     {
                         // 2020-08-28T12:01:54.763231

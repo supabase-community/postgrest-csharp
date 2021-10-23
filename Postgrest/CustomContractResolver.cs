@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
@@ -11,7 +12,7 @@ namespace Postgrest.Attributes
     /// A custom resolver that handles mapping column names and property names as well
     /// as handling the conversion of Postgrest Ranges to a C# `Range`.
     /// </summary>
-    internal class CustomContractResolver : DefaultContractResolver
+    public class PostgrestContractResolver : DefaultContractResolver
     {
         protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
         {
@@ -21,6 +22,11 @@ namespace Postgrest.Attributes
             if (prop.PropertyType == typeof(IntRange))
             {
                 prop.Converter = new RangeConverter();
+            }
+
+            if (prop.PropertyType == typeof(List<int>))
+            {
+                prop.Converter = new IntArrayConverter();
             }
 
             // Dynamically set the name of the key we are serializing/deserializing from the model.

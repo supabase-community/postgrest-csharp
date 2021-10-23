@@ -11,6 +11,7 @@ CREATE TABLE public.users (
   username text primary key,
   inserted_at timestamp without time zone DEFAULT timezone('utc'::text, now()) NOT NULL,
   updated_at timestamp without time zone DEFAULT timezone('utc'::text, now()) NOT NULL,
+  favorite_numbers int[] DEFAULT null,
   data jsonb DEFAULT null,
   age_range int4range DEFAULT null,
   status user_status DEFAULT 'ONLINE'::public.user_status,

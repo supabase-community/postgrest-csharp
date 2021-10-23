@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Postgrest;
 using Postgrest.Attributes;
 using Postgrest.Models;
@@ -13,6 +14,9 @@ namespace PostgrestTests.Models
 
         [Column("data")]
         public string Data { get; set; }
+
+        [Column("favorite_numbers")]
+        public List<int> FavoriteNumbers { get; set; }
 
         [Column("age_range")]
         public IntRange AgeRange { get; set; }

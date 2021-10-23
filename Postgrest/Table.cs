@@ -599,7 +599,9 @@ namespace Postgrest
             if (data is ICollection<T>)
                 return JsonConvert.DeserializeObject<ICollection<T>>(JsonConvert.SerializeObject(data, Client.Instance.SerializerSettings));
 
-            return JsonConvert.DeserializeObject<Dictionary<string, string>>(JsonConvert.SerializeObject(data, Client.Instance.SerializerSettings));
+            var serialized = JsonConvert.SerializeObject(data, Client.Instance.SerializerSettings);
+
+            return JsonConvert.DeserializeObject<Dictionary<string, string>>(serialized, Client.Instance.SerializerSettings);
         }
 
         /// <summary>

@@ -975,6 +975,17 @@ namespace PostgrestTests
             Assert.IsNotNull(resp);
         }
 
+        [TestMethod("support: int arrays")]
+        public async Task TestSupportIntArraysAsLists()
+        {
+            var client = Client.Initialize(baseUrl);
+
+            var numbers = new List<int> { 1, 2, 3 };
+            var result = await client.Table<User>().Insert(new User { Username = "WALRUS", FavoriteNumbers = numbers, AgeRange = new IntRange(15, 25) }, new QueryOptions { Upsert = true });
+
+            CollectionAssert.AreEqual(numbers, result.Models.First().FavoriteNumbers);
+        }
+
         [TestMethod("stored procedure")]
         public async Task TestStoredProcedure()
         {
