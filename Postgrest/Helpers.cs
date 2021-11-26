@@ -30,10 +30,10 @@ namespace Postgrest
         /// <param name="reqParams"></param>
         /// <param name="headers"></param>
         /// <returns></returns>
-        public static async Task<ModeledResponse<T>> MakeRequest<T>(HttpMethod method, string url, object data = null, Dictionary<string, string> headers = null)
+        public static async Task<ModeledResponse<T>> MakeRequest<T>(HttpMethod method, string url, JsonSerializerSettings serializerSettings, object data = null, Dictionary<string, string> headers = null)
         {
-            var baseResponse = await MakeRequest(method, url, data, headers);
-            return new ModeledResponse<T>(baseResponse);
+            var baseResponse = await MakeRequest(method, url, serializerSettings, data, headers);
+            return new ModeledResponse<T>(baseResponse, serializerSettings);
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Postgrest
         /// <param name="reqParams"></param>
         /// <param name="headers"></param>
         /// <returns></returns>
-        public static async Task<BaseResponse> MakeRequest(HttpMethod method, string url, object data = null, Dictionary<string, string> headers = null)
+        public static async Task<BaseResponse> MakeRequest(HttpMethod method, string url, JsonSerializerSettings serializerSettings, object data = null, Dictionary<string, string> headers = null)
         {
             var builder = new UriBuilder(url);
             var query = HttpUtility.ParseQueryString(builder.Query);
@@ -66,7 +66,7 @@ namespace Postgrest
 
                 if (data != null && method != HttpMethod.Get)
                 {
-                    requestMessage.Content = new StringContent(JsonConvert.SerializeObject(data, Client.Instance.SerializerSettings), Encoding.UTF8, "application/json");
+                    requestMessage.Content = new StringContent(JsonConvert.SerializeObject(data, serializerSettings), Encoding.UTF8, "application/json");
                 }
 
                 if (headers != null)

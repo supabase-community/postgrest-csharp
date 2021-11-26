@@ -12,10 +12,13 @@ namespace Postgrest.Responses
     /// <typeparam name="T"></typeparam>
     public class ModeledResponse<T> : BaseResponse
     {
+        private JsonSerializerSettings SerializerSettings { get; set; }
+
         public List<T> Models { get; private set; } = new List<T>();
 
-        public ModeledResponse(BaseResponse baseResponse, bool shouldParse = true)
+        public ModeledResponse(BaseResponse baseResponse, JsonSerializerSettings serializerSettings, bool shouldParse = true)
         {
+            SerializerSettings = serializerSettings;
             Content = baseResponse.Content;
             ResponseMessage = baseResponse.ResponseMessage;
 
@@ -25,12 +28,12 @@ namespace Postgrest.Responses
 
                 if (token is JArray)
                 {
-                    Models = JsonConvert.DeserializeObject<List<T>>(Content, Client.Instance.SerializerSettings);
+                    Models = JsonConvert.DeserializeObject<List<T>>(Content, serializerSettings);
                 }
                 else if (token is JObject)
                 {
                     Models.Clear();
-                    T obj = JsonConvert.DeserializeObject<T>(Content, Client.Instance.SerializerSettings);
+                    T obj = JsonConvert.DeserializeObject<T>(Content, serializerSettings);
                     Models.Add(obj);
                 }
             }

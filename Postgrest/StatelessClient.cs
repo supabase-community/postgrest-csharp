@@ -12,52 +12,34 @@ using Postgrest.Responses;
 namespace Postgrest
 {
     /// <summary>
-    /// A Singleton that represents a single, reusable connection to a Postgrest endpoint. Should be first called with the `Initialize()` method.
+    /// A StatelessClient that allows one-off API interactions.
     /// </summary>
-    public class Client
+    public static class StatelessClient
     {
         /// <summary>
-        /// API Base Url for subsequent calls.
+        /// Custom Serializer resolvers and converters that will be used for encoding and decoding Postgrest JSON responses.
+        ///
+        /// By default, Postgrest seems to use a date format that C# and Newtonsoft do not like, so this initial
+        /// configuration handles that.
         /// </summary>
-        public string BaseUrl { get; private set; }
-
-        private ClientOptions options;
-
-        private static Client instance;
-        /// <summary>
-        /// Returns the Singleton Instance of this Class.
-        /// </summary>
-        public static Client Instance
+        internal static JsonSerializerSettings SerializerSettings(ClientOptions options = null)
         {
-            get
-            {
-                if (instance == null)
-                    instance = new Client();
-
-                return instance;
-            }
-        }
-
-        private Client() { }
-
-        /// <summary>
-        /// Should be the first call to this class to initialize a connection with a Postgrest API Server
-        /// </summary>
-        /// <param name="baseUrl">Api Endpoint (ex: "http://localhost:8000"), no trailing slash required.</param>
-        /// <param name="authorization">Authorization Information.</param>
-        /// <param name="options">Optional client configuration.</param>
-        /// <returns></returns>
-        public static Client Initialize(string baseUrl, ClientOptions options = null)
-        {
-            instance = new Client();
-            instance.BaseUrl = baseUrl;
-
             if (options == null)
                 options = new ClientOptions();
 
-            instance.options = options;
-
-            return instance;
+            return new JsonSerializerSettings
+            {
+                ContractResolver = new PostgrestContractResolver(),
+                Converters =
+                    {
+                        // 2020-08-28T12:01:54.763231
+                        new IsoDateTimeConverter
+                        {
+                            DateTimeStyles = options.DateTimeStyles,
+                            DateTimeFormat = options.DateTimeFormat
+                        }
+                    }
+            };
         }
 
         /// <summary>
@@ -65,7 +47,7 @@ namespace Postgrest
         /// </summary>
         /// <typeparam name="T">Custom Model derived from `BaseModel`</typeparam>
         /// <returns></returns>
-        public Table<T> Table<T>() where T : BaseModel, new() => new Table<T>(BaseUrl, options, StatelessClient.SerializerSettings(options));
+        public static Table<T> Table<T>(StatelessClientOptions options) where T : BaseModel, new() => new Table<T>(options.BaseUrl, options, SerializerSettings(options));
 
         /// <summary>
         /// Perform a stored procedure call.
@@ -73,10 +55,10 @@ namespace Postgrest
         /// <param name="procedureName">The function name to call</param>
         /// <param name="parameters">The parameters to pass to the function call</param>
         /// <returns></returns>
-        public Task<BaseResponse> Rpc(string procedureName, Dictionary<string, object> parameters)
+        public static Task<BaseResponse> Rpc(string procedureName, Dictionary<string, object> parameters, StatelessClientOptions options)
         {
             // Build Uri
-            var builder = new UriBuilder($"{BaseUrl}/rpc/{procedureName}");
+            var builder = new UriBuilder($"{options.BaseUrl}/rpc/{procedureName}");
 
             var canonicalUri = builder.Uri.ToString();
 

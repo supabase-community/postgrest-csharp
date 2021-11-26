@@ -31,6 +31,7 @@ namespace Postgrest
         public string TableName { get; private set; }
 
         private ClientOptions options;
+        private JsonSerializerSettings serializerSettings;
 
         private HttpMethod method = HttpMethod.Get;
 
@@ -49,7 +50,7 @@ namespace Postgrest
         private string offsetForeignKey;
 
         /// <summary>
-        /// Typically called from the Client Singleton using `Client.Instance.Builder<T>`
+        /// Typically called from the Client Singleton using `Client.Instance.Table<T>`
         /// </summary>
         /// <param name="baseUrl">Api Endpoint (ex: "http://localhost:8000"), no trailing slash required.</param>
         /// <param name="authorization">Authorization Information.</param>
@@ -63,6 +64,9 @@ namespace Postgrest
 
             this.options = options;
 
+            if (serializerSettings == null)
+                serializerSettings = StatelessClient.SerializerSettings(options);
+
             var attr = Attribute.GetCustomAttribute(typeof(T), typeof(TableAttribute));
             if (attr is TableAttribute tableAttr)
             {
@@ -72,6 +76,17 @@ namespace Postgrest
             {
                 TableName = typeof(T).Name;
             }
+        }
+
+        /// <summary>
+        /// Constructor that specifies the serializer settings
+        /// </summary>
+        /// <param name="baseUrl"></param>
+        /// <param name="options"></param>
+        /// <param name="serializerSettings"></param>
+        public Table(string baseUrl, ClientOptions options, JsonSerializerSettings serializerSettings) : this(baseUrl, options)
+        {
+            this.serializerSettings = serializerSettings;
         }
 
         /// <summary>
@@ -587,7 +602,7 @@ namespace Postgrest
         }
 
         /// <summary>
-        /// Transforms an object into a string mapped dictionary using `Client.Instance.SerializerSettings`.
+        /// Transforms an object into a string mapped dictionary using `JsonSerializerSettings`.
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
@@ -597,11 +612,11 @@ namespace Postgrest
 
             // Check if data is a Collection for the Insert Bulk case
             if (data is ICollection<T>)
-                return JsonConvert.DeserializeObject<ICollection<T>>(JsonConvert.SerializeObject(data, Client.Instance.SerializerSettings));
+                return JsonConvert.DeserializeObject<ICollection<T>>(JsonConvert.SerializeObject(data, serializerSettings));
 
-            var serialized = JsonConvert.SerializeObject(data, Client.Instance.SerializerSettings);
+            var serialized = JsonConvert.SerializeObject(data, serializerSettings);
 
-            return JsonConvert.DeserializeObject<Dictionary<string, string>>(serialized, Client.Instance.SerializerSettings);
+            return JsonConvert.DeserializeObject<Dictionary<string, object>>(serialized, serializerSettings);
         }
 
         /// <summary>
@@ -748,13 +763,13 @@ namespace Postgrest
         private Task<BaseResponse> Send(HttpMethod method, object data, Dictionary<string, string> headers = null)
         {
             var requestHeaders = Helpers.PrepareRequestHeaders(method, headers, options, rangeFrom, rangeTo);
-            return Helpers.MakeRequest(method, GenerateUrl(), PrepareRequestData(data), requestHeaders);
+            return Helpers.MakeRequest(method, GenerateUrl(), serializerSettings, PrepareRequestData(data), requestHeaders);
         }
 
         private Task<ModeledResponse<U>> Send<U>(HttpMethod method, object data, Dictionary<string, string> headers = null) where U : BaseModel, new()
         {
             var requestHeaders = Helpers.PrepareRequestHeaders(method, headers, options, rangeFrom, rangeTo);
-            return Helpers.MakeRequest<U>(method, GenerateUrl(), PrepareRequestData(data), requestHeaders);
+            return Helpers.MakeRequest<U>(method, GenerateUrl(), serializerSettings, PrepareRequestData(data), requestHeaders);
         }
     }
 }
