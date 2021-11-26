@@ -13,7 +13,7 @@ services:
   db:
     image: postgres:12
     ports:
-      - "6543:5432"
+      - "5432:5432"
     volumes:
       - ./PostgrestTests/db:/docker-entrypoint-initdb.d/
     environment:

@@ -23,10 +23,17 @@ namespace Postgrest.Attributes
             {
                 prop.Converter = new RangeConverter();
             }
-
-            if (prop.PropertyType == typeof(List<int>))
+            else if (prop.PropertyType == typeof(DateTime))
+            {
+                prop.Converter = new DateTimeConverter();
+            }
+            else if (prop.PropertyType == typeof(List<int>))
             {
                 prop.Converter = new IntArrayConverter();
+            }
+            else if (prop.PropertyType == typeof(List<DateTime>))
+            {
+                prop.Converter = new DateTimeConverter();
             }
 
             // Dynamically set the name of the key we are serializing/deserializing from the model.

@@ -11,7 +11,7 @@ using System.Net.Http;
 namespace PostgrestTests
 {
     [TestClass]
-    public class Api
+    public class ClientApi
     {
         private static string baseUrl = "http://localhost:3000";
 
@@ -981,7 +981,7 @@ namespace PostgrestTests
             var client = Client.Initialize(baseUrl);
 
             var numbers = new List<int> { 1, 2, 3 };
-            var result = await client.Table<User>().Insert(new User { Username = "WALRUS", FavoriteNumbers = numbers, AgeRange = new IntRange(15, 25) }, new QueryOptions { Upsert = true });
+            var result = await client.Table<User>().Insert(new User { Username = "WALRUS", Status = "ONLINE", Catchphrase = "I'm a walrus", FavoriteNumbers = numbers, AgeRange = new IntRange(15, 25) }, new QueryOptions { Upsert = true });
 
             CollectionAssert.AreEqual(numbers, result.Models.First().FavoriteNumbers);
         }
