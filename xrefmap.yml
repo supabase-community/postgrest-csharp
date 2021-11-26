@@ -202,19 +202,6 @@ references:
   isSpec: "True"
   fullName: Postgrest.Client.Rpc
   nameWithType: Client.Rpc
-- uid: Postgrest.Client.SerializerSettings
-  name: SerializerSettings
-  href: api/Postgrest.Client.html#Postgrest_Client_SerializerSettings
-  commentId: P:Postgrest.Client.SerializerSettings
-  fullName: Postgrest.Client.SerializerSettings
-  nameWithType: Client.SerializerSettings
-- uid: Postgrest.Client.SerializerSettings*
-  name: SerializerSettings
-  href: api/Postgrest.Client.html#Postgrest_Client_SerializerSettings_
-  commentId: Overload:Postgrest.Client.SerializerSettings
-  isSpec: "True"
-  fullName: Postgrest.Client.SerializerSettings
-  nameWithType: Client.SerializerSettings
 - uid: Postgrest.Client.Table*
   name: Table
   href: api/Postgrest.Client.html#Postgrest_Client_Table_
@@ -516,6 +503,64 @@ references:
   commentId: N:Postgrest.Converters
   fullName: Postgrest.Converters
   nameWithType: Postgrest.Converters
+- uid: Postgrest.Converters.DateTimeConverter
+  name: DateTimeConverter
+  href: api/Postgrest.Converters.DateTimeConverter.html
+  commentId: T:Postgrest.Converters.DateTimeConverter
+  fullName: Postgrest.Converters.DateTimeConverter
+  nameWithType: DateTimeConverter
+- uid: Postgrest.Converters.DateTimeConverter.CanConvert(Type)
+  name: CanConvert(Type)
+  href: api/Postgrest.Converters.DateTimeConverter.html#Postgrest_Converters_DateTimeConverter_CanConvert_Type_
+  commentId: M:Postgrest.Converters.DateTimeConverter.CanConvert(Type)
+  fullName: Postgrest.Converters.DateTimeConverter.CanConvert(Type)
+  nameWithType: DateTimeConverter.CanConvert(Type)
+- uid: Postgrest.Converters.DateTimeConverter.CanConvert*
+  name: CanConvert
+  href: api/Postgrest.Converters.DateTimeConverter.html#Postgrest_Converters_DateTimeConverter_CanConvert_
+  commentId: Overload:Postgrest.Converters.DateTimeConverter.CanConvert
+  isSpec: "True"
+  fullName: Postgrest.Converters.DateTimeConverter.CanConvert
+  nameWithType: DateTimeConverter.CanConvert
+- uid: Postgrest.Converters.DateTimeConverter.CanWrite
+  name: CanWrite
+  href: api/Postgrest.Converters.DateTimeConverter.html#Postgrest_Converters_DateTimeConverter_CanWrite
+  commentId: P:Postgrest.Converters.DateTimeConverter.CanWrite
+  fullName: Postgrest.Converters.DateTimeConverter.CanWrite
+  nameWithType: DateTimeConverter.CanWrite
+- uid: Postgrest.Converters.DateTimeConverter.CanWrite*
+  name: CanWrite
+  href: api/Postgrest.Converters.DateTimeConverter.html#Postgrest_Converters_DateTimeConverter_CanWrite_
+  commentId: Overload:Postgrest.Converters.DateTimeConverter.CanWrite
+  isSpec: "True"
+  fullName: Postgrest.Converters.DateTimeConverter.CanWrite
+  nameWithType: DateTimeConverter.CanWrite
+- uid: Postgrest.Converters.DateTimeConverter.ReadJson(JsonReader,Type,System.Object,JsonSerializer)
+  name: ReadJson(JsonReader, Type, Object, JsonSerializer)
+  href: api/Postgrest.Converters.DateTimeConverter.html#Postgrest_Converters_DateTimeConverter_ReadJson_JsonReader_Type_System_Object_JsonSerializer_
+  commentId: M:Postgrest.Converters.DateTimeConverter.ReadJson(JsonReader,Type,System.Object,JsonSerializer)
+  fullName: Postgrest.Converters.DateTimeConverter.ReadJson(JsonReader, Type, System.Object, JsonSerializer)
+  nameWithType: DateTimeConverter.ReadJson(JsonReader, Type, Object, JsonSerializer)
+- uid: Postgrest.Converters.DateTimeConverter.ReadJson*
+  name: ReadJson
+  href: api/Postgrest.Converters.DateTimeConverter.html#Postgrest_Converters_DateTimeConverter_ReadJson_
+  commentId: Overload:Postgrest.Converters.DateTimeConverter.ReadJson
+  isSpec: "True"
+  fullName: Postgrest.Converters.DateTimeConverter.ReadJson
+  nameWithType: DateTimeConverter.ReadJson
+- uid: Postgrest.Converters.DateTimeConverter.WriteJson(JsonWriter,System.Object,JsonSerializer)
+  name: WriteJson(JsonWriter, Object, JsonSerializer)
+  href: api/Postgrest.Converters.DateTimeConverter.html#Postgrest_Converters_DateTimeConverter_WriteJson_JsonWriter_System_Object_JsonSerializer_
+  commentId: M:Postgrest.Converters.DateTimeConverter.WriteJson(JsonWriter,System.Object,JsonSerializer)
+  fullName: Postgrest.Converters.DateTimeConverter.WriteJson(JsonWriter, System.Object, JsonSerializer)
+  nameWithType: DateTimeConverter.WriteJson(JsonWriter, Object, JsonSerializer)
+- uid: Postgrest.Converters.DateTimeConverter.WriteJson*
+  name: WriteJson
+  href: api/Postgrest.Converters.DateTimeConverter.html#Postgrest_Converters_DateTimeConverter_WriteJson_
+  commentId: Overload:Postgrest.Converters.DateTimeConverter.WriteJson
+  isSpec: "True"
+  fullName: Postgrest.Converters.DateTimeConverter.WriteJson
+  nameWithType: DateTimeConverter.WriteJson
 - uid: Postgrest.Converters.IntArrayConverter
   name: IntArrayConverter
   href: api/Postgrest.Converters.IntArrayConverter.html
@@ -1537,14 +1582,14 @@ references:
   fullName.vb: Postgrest.Responses.ModeledResponse(Of T)
   nameWithType: ModeledResponse<T>
   nameWithType.vb: ModeledResponse(Of T)
-- uid: Postgrest.Responses.ModeledResponse`1.#ctor(Postgrest.Responses.BaseResponse,System.Boolean)
-  name: ModeledResponse(BaseResponse, Boolean)
-  href: api/Postgrest.Responses.ModeledResponse-1.html#Postgrest_Responses_ModeledResponse_1__ctor_Postgrest_Responses_BaseResponse_System_Boolean_
-  commentId: M:Postgrest.Responses.ModeledResponse`1.#ctor(Postgrest.Responses.BaseResponse,System.Boolean)
-  fullName: Postgrest.Responses.ModeledResponse<T>.ModeledResponse(Postgrest.Responses.BaseResponse, System.Boolean)
-  fullName.vb: Postgrest.Responses.ModeledResponse(Of T).ModeledResponse(Postgrest.Responses.BaseResponse, System.Boolean)
-  nameWithType: ModeledResponse<T>.ModeledResponse(BaseResponse, Boolean)
-  nameWithType.vb: ModeledResponse(Of T).ModeledResponse(BaseResponse, Boolean)
+- uid: Postgrest.Responses.ModeledResponse`1.#ctor(Postgrest.Responses.BaseResponse,JsonSerializerSettings,System.Boolean)
+  name: ModeledResponse(BaseResponse, JsonSerializerSettings, Boolean)
+  href: api/Postgrest.Responses.ModeledResponse-1.html#Postgrest_Responses_ModeledResponse_1__ctor_Postgrest_Responses_BaseResponse_JsonSerializerSettings_System_Boolean_
+  commentId: M:Postgrest.Responses.ModeledResponse`1.#ctor(Postgrest.Responses.BaseResponse,JsonSerializerSettings,System.Boolean)
+  fullName: Postgrest.Responses.ModeledResponse<T>.ModeledResponse(Postgrest.Responses.BaseResponse, JsonSerializerSettings, System.Boolean)
+  fullName.vb: Postgrest.Responses.ModeledResponse(Of T).ModeledResponse(Postgrest.Responses.BaseResponse, JsonSerializerSettings, System.Boolean)
+  nameWithType: ModeledResponse<T>.ModeledResponse(BaseResponse, JsonSerializerSettings, Boolean)
+  nameWithType.vb: ModeledResponse(Of T).ModeledResponse(BaseResponse, JsonSerializerSettings, Boolean)
 - uid: Postgrest.Responses.ModeledResponse`1.#ctor*
   name: ModeledResponse
   href: api/Postgrest.Responses.ModeledResponse-1.html#Postgrest_Responses_ModeledResponse_1__ctor_
@@ -1571,6 +1616,76 @@ references:
   fullName.vb: Postgrest.Responses.ModeledResponse(Of T).Models
   nameWithType: ModeledResponse<T>.Models
   nameWithType.vb: ModeledResponse(Of T).Models
+- uid: Postgrest.StatelessClient
+  name: StatelessClient
+  href: api/Postgrest.StatelessClient.html
+  commentId: T:Postgrest.StatelessClient
+  fullName: Postgrest.StatelessClient
+  nameWithType: StatelessClient
+- uid: Postgrest.StatelessClient.Rpc(System.String,Dictionary{System.String,System.Object},Postgrest.StatelessClientOptions)
+  name: Rpc(String, Dictionary<String, Object>, StatelessClientOptions)
+  href: api/Postgrest.StatelessClient.html#Postgrest_StatelessClient_Rpc_System_String_Dictionary_System_String_System_Object__Postgrest_StatelessClientOptions_
+  commentId: M:Postgrest.StatelessClient.Rpc(System.String,Dictionary{System.String,System.Object},Postgrest.StatelessClientOptions)
+  name.vb: Rpc(String, Dictionary(Of String, Object), StatelessClientOptions)
+  fullName: Postgrest.StatelessClient.Rpc(System.String, Dictionary<System.String, System.Object>, Postgrest.StatelessClientOptions)
+  fullName.vb: Postgrest.StatelessClient.Rpc(System.String, Dictionary(Of System.String, System.Object), Postgrest.StatelessClientOptions)
+  nameWithType: StatelessClient.Rpc(String, Dictionary<String, Object>, StatelessClientOptions)
+  nameWithType.vb: StatelessClient.Rpc(String, Dictionary(Of String, Object), StatelessClientOptions)
+- uid: Postgrest.StatelessClient.Rpc*
+  name: Rpc
+  href: api/Postgrest.StatelessClient.html#Postgrest_StatelessClient_Rpc_
+  commentId: Overload:Postgrest.StatelessClient.Rpc
+  isSpec: "True"
+  fullName: Postgrest.StatelessClient.Rpc
+  nameWithType: StatelessClient.Rpc
+- uid: Postgrest.StatelessClient.Table*
+  name: Table
+  href: api/Postgrest.StatelessClient.html#Postgrest_StatelessClient_Table_
+  commentId: Overload:Postgrest.StatelessClient.Table
+  isSpec: "True"
+  fullName: Postgrest.StatelessClient.Table
+  nameWithType: StatelessClient.Table
+- uid: Postgrest.StatelessClient.Table``1(Postgrest.StatelessClientOptions)
+  name: Table<T>(StatelessClientOptions)
+  href: api/Postgrest.StatelessClient.html#Postgrest_StatelessClient_Table__1_Postgrest_StatelessClientOptions_
+  commentId: M:Postgrest.StatelessClient.Table``1(Postgrest.StatelessClientOptions)
+  name.vb: Table(Of T)(StatelessClientOptions)
+  fullName: Postgrest.StatelessClient.Table<T>(Postgrest.StatelessClientOptions)
+  fullName.vb: Postgrest.StatelessClient.Table(Of T)(Postgrest.StatelessClientOptions)
+  nameWithType: StatelessClient.Table<T>(StatelessClientOptions)
+  nameWithType.vb: StatelessClient.Table(Of T)(StatelessClientOptions)
+- uid: Postgrest.StatelessClientOptions
+  name: StatelessClientOptions
+  href: api/Postgrest.StatelessClientOptions.html
+  commentId: T:Postgrest.StatelessClientOptions
+  fullName: Postgrest.StatelessClientOptions
+  nameWithType: StatelessClientOptions
+- uid: Postgrest.StatelessClientOptions.#ctor(System.String)
+  name: StatelessClientOptions(String)
+  href: api/Postgrest.StatelessClientOptions.html#Postgrest_StatelessClientOptions__ctor_System_String_
+  commentId: M:Postgrest.StatelessClientOptions.#ctor(System.String)
+  fullName: Postgrest.StatelessClientOptions.StatelessClientOptions(System.String)
+  nameWithType: StatelessClientOptions.StatelessClientOptions(String)
+- uid: Postgrest.StatelessClientOptions.#ctor*
+  name: StatelessClientOptions
+  href: api/Postgrest.StatelessClientOptions.html#Postgrest_StatelessClientOptions__ctor_
+  commentId: Overload:Postgrest.StatelessClientOptions.#ctor
+  isSpec: "True"
+  fullName: Postgrest.StatelessClientOptions.StatelessClientOptions
+  nameWithType: StatelessClientOptions.StatelessClientOptions
+- uid: Postgrest.StatelessClientOptions.BaseUrl
+  name: BaseUrl
+  href: api/Postgrest.StatelessClientOptions.html#Postgrest_StatelessClientOptions_BaseUrl
+  commentId: P:Postgrest.StatelessClientOptions.BaseUrl
+  fullName: Postgrest.StatelessClientOptions.BaseUrl
+  nameWithType: StatelessClientOptions.BaseUrl
+- uid: Postgrest.StatelessClientOptions.BaseUrl*
+  name: BaseUrl
+  href: api/Postgrest.StatelessClientOptions.html#Postgrest_StatelessClientOptions_BaseUrl_
+  commentId: Overload:Postgrest.StatelessClientOptions.BaseUrl
+  isSpec: "True"
+  fullName: Postgrest.StatelessClientOptions.BaseUrl
+  nameWithType: StatelessClientOptions.BaseUrl
 - uid: Postgrest.Table`1
   name: Table<T>
   href: api/Postgrest.Table-1.html
@@ -1588,6 +1703,14 @@ references:
   fullName.vb: Postgrest.Table(Of T).Table(System.String, Postgrest.ClientOptions)
   nameWithType: Table<T>.Table(String, ClientOptions)
   nameWithType.vb: Table(Of T).Table(String, ClientOptions)
+- uid: Postgrest.Table`1.#ctor(System.String,Postgrest.ClientOptions,JsonSerializerSettings)
+  name: Table(String, ClientOptions, JsonSerializerSettings)
+  href: api/Postgrest.Table-1.html#Postgrest_Table_1__ctor_System_String_Postgrest_ClientOptions_JsonSerializerSettings_
+  commentId: M:Postgrest.Table`1.#ctor(System.String,Postgrest.ClientOptions,JsonSerializerSettings)
+  fullName: Postgrest.Table<T>.Table(System.String, Postgrest.ClientOptions, JsonSerializerSettings)
+  fullName.vb: Postgrest.Table(Of T).Table(System.String, Postgrest.ClientOptions, JsonSerializerSettings)
+  nameWithType: Table<T>.Table(String, ClientOptions, JsonSerializerSettings)
+  nameWithType.vb: Table(Of T).Table(String, ClientOptions, JsonSerializerSettings)
 - uid: Postgrest.Table`1.#ctor*
   name: Table
   href: api/Postgrest.Table-1.html#Postgrest_Table_1__ctor_
