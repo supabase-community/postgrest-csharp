@@ -44,6 +44,20 @@ CREATE TABLE public.messages (
 ALTER TABLE public.messages REPLICA IDENTITY FULL; -- Send "previous data" to supabase
 COMMENT ON COLUMN public.messages.data IS 'For unstructured data and prototyping.';
 
+create table "public"."kitchen_sink" (
+  "id" serial primary key,
+  "string_value" varchar(255) null,
+  "int_value" INT null,
+  "float_value" FLOAT null,
+  "double_value" DOUBLE PRECISION null,
+  "datetime_value" DATE null,
+  "list_of_strings" TEXT [ ] null,
+  "list_of_datetimes" DATE [ ] null,
+  "list_of_ints" INT [ ] null,
+  "list_of_floats" FLOAT [ ] null,
+  "int_range" INT4RANGE null
+);
+
 -- STORED FUNCTION
 CREATE FUNCTION public.get_status(name_param text)
 RETURNS user_status AS $$

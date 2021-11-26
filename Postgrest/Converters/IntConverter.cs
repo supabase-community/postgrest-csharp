@@ -24,7 +24,5 @@ namespace Postgrest.Converters
             List<int> list = value as List<int>;
             writer.WriteValue($"{{{String.Join(",", list)}}}");
         }
-
-        
     }
 }
