@@ -602,7 +602,7 @@ namespace Postgrest
         }
 
         /// <summary>
-        /// Transforms an object into a string mapped dictionary using `JsonSerializerSettings`.
+        /// Transforms an object into a string mapped list/dictionary using `JsonSerializerSettings`.
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
@@ -612,11 +612,15 @@ namespace Postgrest
 
             // Check if data is a Collection for the Insert Bulk case
             if (data is ICollection<T>)
-                return JsonConvert.DeserializeObject<ICollection<T>>(JsonConvert.SerializeObject(data, serializerSettings));
-
-            var serialized = JsonConvert.SerializeObject(data, serializerSettings);
-
-            return JsonConvert.DeserializeObject<Dictionary<string, object>>(serialized, serializerSettings);
+            {
+                var serialized = JsonConvert.SerializeObject(data, serializerSettings);
+                return JsonConvert.DeserializeObject<List<object>>(serialized);
+            }
+            else
+            {
+                var serialized = JsonConvert.SerializeObject(data, serializerSettings);
+                return JsonConvert.DeserializeObject<Dictionary<string, object>>(serialized, serializerSettings);
+            }
         }
 
         /// <summary>
