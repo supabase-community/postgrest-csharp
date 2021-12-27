@@ -58,6 +58,7 @@ namespace Postgrest
 
         public Dictionary<string, string> ToHeaders()
         {
+            var headers = new Dictionary<string, string>();
             var prefersHeaders = new List<string>();
 
             if (Upsert)
@@ -78,10 +79,14 @@ namespace Postgrest
                 prefersHeaders.Add($"count={countAttr.Mapping}");
             }
 
-            return new Dictionary<string, string>
+            headers.Add("Prefer", String.Join(",", prefersHeaders.ToArray()));
+
+            if (Returning == ReturnType.Minimal)
             {
-                { "Prefer", String.Join(",", prefersHeaders.ToArray()) }
-            };
+                headers.Add("Accept", "*/*");
+            }
+
+            return headers;
         }
     }
 }

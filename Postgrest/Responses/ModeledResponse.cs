@@ -22,7 +22,7 @@ namespace Postgrest.Responses
             Content = baseResponse.Content;
             ResponseMessage = baseResponse.ResponseMessage;
 
-            if (shouldParse)
+            if (shouldParse && !string.IsNullOrEmpty(Content))
             {
                 var token = JToken.Parse(Content);
 

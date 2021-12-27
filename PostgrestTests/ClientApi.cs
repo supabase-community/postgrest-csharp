@@ -339,6 +339,11 @@ namespace PostgrestTests
             Assert.AreEqual(newUser.Status, insertedUser.Status);
 
             await client.Table<User>().Delete(newUser);
+
+            var response2 = await client.Table<User>().Insert(newUser, new QueryOptions { Returning = QueryOptions.ReturnType.Minimal });
+            Assert.AreEqual("", response2.Content);
+
+            await client.Table<User>().Delete(newUser);
         }
 
         [TestMethod("insert: headers generated")]
@@ -938,12 +943,12 @@ namespace PostgrestTests
                 AgeRange = new IntRange(21, 28),
                 Status = "OFFLINE"
             };
+
             var users = new List<User>
             {
                rocketUser,
                aceUser
             };
-
 
             var response = await client.Table<User>().Insert(users);
             var insertedUsers = response.Models;
