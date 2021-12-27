@@ -39,6 +39,6 @@ Global
 		$1.DirectoryNamespaceAssociation = PrefixedHierarchical
 		$0.StandardHeader = $2
 		$0.VersionControlPolicy = $3
-		version = 2.0.4
+		version = 2.0.5
 	EndGlobalSection
 EndGlobal
