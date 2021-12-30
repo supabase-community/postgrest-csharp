@@ -44,6 +44,7 @@ namespace Postgrest.Attributes
                 if (columnAtt != null)
                 {
                     prop.PropertyName = columnAtt.ColumnName;
+                    prop.NullValueHandling = columnAtt.NullValueHandling;
                     return prop;
                 }
 

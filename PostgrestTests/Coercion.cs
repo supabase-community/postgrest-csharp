@@ -22,7 +22,7 @@ namespace PostgrestTests
             var intValue = 1;
             var floatValue = 1.1f;
             var doubleValue = 1.1d;
-            var dateTimeValue = new DateTime(2021, 12, 12);
+            var dateTimeValue = DateTime.UtcNow;
             var listOfStrings = new List<string> { "test", "1", "2", "3" };
             var listOfDateTime = new List<DateTime> { new DateTime(2021, 12, 10), new DateTime(2021, 12, 11), new DateTime(2021, 12, 12) };
             var listOfInts = new List<int> { 1, 2, 3 };

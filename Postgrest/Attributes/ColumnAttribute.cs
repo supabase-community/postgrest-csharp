@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using Newtonsoft.Json;
 
 namespace Postgrest.Attributes
 {
@@ -18,10 +19,12 @@ namespace Postgrest.Attributes
     public class ColumnAttribute : Attribute
     {
         public string ColumnName { get; set; }
+        public NullValueHandling NullValueHandling { get; set; }
 
-        public ColumnAttribute([CallerMemberName] string columnName = null)
+        public ColumnAttribute([CallerMemberName] string columnName = null, NullValueHandling nullValueHandling = NullValueHandling.Include)
         {
             ColumnName = columnName;
+            NullValueHandling = nullValueHandling;
         }
     }
 }
