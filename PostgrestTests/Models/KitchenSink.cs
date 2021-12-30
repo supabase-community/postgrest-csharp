@@ -5,16 +5,17 @@ using Postgrest;
 using Postgrest.Attributes;
 using Postgrest.Models;
 
+#nullable enable
 namespace PostgrestTests.Models
 {
     [Table("kitchen_sink")]
     public class KitchenSink : BaseModel
     {
         [PrimaryKey("id", false)]
-        public string Id { get; set; }
+        public string? Id { get; set; }
 
         [Column("string_value")]
-        public string StringValue { get; set; }
+        public string? StringValue { get; set; }
 
         [Column("int_value")]
         public int IntValue { get; set; }
@@ -32,18 +33,18 @@ namespace PostgrestTests.Models
         public DateTime? DateTimeValue1 { get; set; }
 
         [Column("list_of_strings")]
-        public List<string> ListOfStrings { get; set; }
+        public List<string>? ListOfStrings { get; set; }
 
         [Column("list_of_datetimes", NullValueHandling = NullValueHandling.Ignore)]
-        public List<DateTime> ListOfDateTimes { get; set; }
+        public List<DateTime>? ListOfDateTimes { get; set; }
 
         [Column("list_of_ints")]
-        public List<int> ListOfInts { get; set; }
+        public List<int>? ListOfInts { get; set; }
 
         [Column("list_of_floats")]
-        public List<float> ListOfFloats { get; set; }
+        public List<float>? ListOfFloats { get; set; }
 
         [Column("int_range")]
-        public IntRange IntRange { get; set; }
+        public IntRange? IntRange { get; set; }
     }
 }

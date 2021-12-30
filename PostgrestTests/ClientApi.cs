@@ -1040,8 +1040,8 @@ namespace PostgrestTests
 
             var insertResponse = await client.Table<KitchenSink>().Insert(model);
             
-            Assert.AreEqual(now, insertResponse.Models[0].DateTimeValue);
-            Assert.AreEqual(now, insertResponse.Models[0].DateTimeValue1);
+            Assert.AreEqual(now.ToString(), insertResponse.Models[0].DateTimeValue.ToString());
+            Assert.AreEqual(now.ToString(), insertResponse.Models[0].DateTimeValue1.ToString());
 
             insertResponse.Models[0].DateTimeValue = null;
             insertResponse.Models[0].DateTimeValue1 = null;
