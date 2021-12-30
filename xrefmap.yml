@@ -19,12 +19,12 @@ references:
   commentId: T:Postgrest.Attributes.ColumnAttribute
   fullName: Postgrest.Attributes.ColumnAttribute
   nameWithType: ColumnAttribute
-- uid: Postgrest.Attributes.ColumnAttribute.#ctor(System.String)
-  name: ColumnAttribute(String)
-  href: api/Postgrest.Attributes.ColumnAttribute.html#Postgrest_Attributes_ColumnAttribute__ctor_System_String_
-  commentId: M:Postgrest.Attributes.ColumnAttribute.#ctor(System.String)
-  fullName: Postgrest.Attributes.ColumnAttribute.ColumnAttribute(System.String)
-  nameWithType: ColumnAttribute.ColumnAttribute(String)
+- uid: Postgrest.Attributes.ColumnAttribute.#ctor(System.String,NullValueHandling)
+  name: ColumnAttribute(String, NullValueHandling)
+  href: api/Postgrest.Attributes.ColumnAttribute.html#Postgrest_Attributes_ColumnAttribute__ctor_System_String_NullValueHandling_
+  commentId: M:Postgrest.Attributes.ColumnAttribute.#ctor(System.String,NullValueHandling)
+  fullName: Postgrest.Attributes.ColumnAttribute.ColumnAttribute(System.String, NullValueHandling)
+  nameWithType: ColumnAttribute.ColumnAttribute(String, NullValueHandling)
 - uid: Postgrest.Attributes.ColumnAttribute.#ctor*
   name: ColumnAttribute
   href: api/Postgrest.Attributes.ColumnAttribute.html#Postgrest_Attributes_ColumnAttribute__ctor_
@@ -45,6 +45,19 @@ references:
   isSpec: "True"
   fullName: Postgrest.Attributes.ColumnAttribute.ColumnName
   nameWithType: ColumnAttribute.ColumnName
+- uid: Postgrest.Attributes.ColumnAttribute.NullValueHandling
+  name: NullValueHandling
+  href: api/Postgrest.Attributes.ColumnAttribute.html#Postgrest_Attributes_ColumnAttribute_NullValueHandling
+  commentId: P:Postgrest.Attributes.ColumnAttribute.NullValueHandling
+  fullName: Postgrest.Attributes.ColumnAttribute.NullValueHandling
+  nameWithType: ColumnAttribute.NullValueHandling
+- uid: Postgrest.Attributes.ColumnAttribute.NullValueHandling*
+  name: NullValueHandling
+  href: api/Postgrest.Attributes.ColumnAttribute.html#Postgrest_Attributes_ColumnAttribute_NullValueHandling_
+  commentId: Overload:Postgrest.Attributes.ColumnAttribute.NullValueHandling
+  isSpec: "True"
+  fullName: Postgrest.Attributes.ColumnAttribute.NullValueHandling
+  nameWithType: ColumnAttribute.NullValueHandling
 - uid: Postgrest.Attributes.PostgrestContractResolver
   name: PostgrestContractResolver
   href: api/Postgrest.Attributes.PostgrestContractResolver.html
