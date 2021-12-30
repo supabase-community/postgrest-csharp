@@ -1,5 +1,9 @@
 ﻿# Changelog
 
+## 2.0.6 - 2021-12-30
+
+- Fix for [#38](https://github.com/supabase-community/postgrest-csharp/issues/38), Add support for `NullValueHandling` to be specified on a `Column` Attribute and for it to be honored on Inserts and Updates. Defaults to: `NullValueHandling.Include`.
+
 ## 2.0.5 - 2021-12-26
 
 - Fix for [#37](https://github.com/supabase-community/postgrest-csharp/issues/37) - Fixes #37 - Return Type `minimal` would fail to resolve because of incorrect `Accept` headers. Added header and test to verify for future.
