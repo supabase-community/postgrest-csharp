@@ -208,7 +208,7 @@ namespace Postgrest
         /// <returns></returns>
         public Table<T> And(List<QueryFilter> filters)
         {
-            filters.Add(new QueryFilter(Operator.And, filters));
+            this.filters.Add(new QueryFilter(Operator.And, filters));
             return this;
         }
 
@@ -219,7 +219,7 @@ namespace Postgrest
         /// <returns></returns>
         public Table<T> Or(List<QueryFilter> filters)
         {
-            filters.Add(new QueryFilter(Operator.Or, filters));
+            this.filters.Add(new QueryFilter(Operator.Or, filters));
             return this;
         }
 
