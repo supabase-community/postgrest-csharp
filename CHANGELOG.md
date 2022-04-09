@@ -1,5 +1,9 @@
 ﻿# Changelog
 
+## 2.0.7 - 2022-04-09
+
+- Merged [#39](https://github.com/supabase-community/postgrest-csharp/pull/39), which a fixed shadowed variable in `Table.And` and `Table.Or`. Thanks [@erichards3](https://github.com/erichards3)!
+
 ## 2.0.6 - 2021-12-30
 
 - Fix for [#38](https://github.com/supabase-community/postgrest-csharp/issues/38), Add support for `NullValueHandling` to be specified on a `Column` Attribute and for it to be honored on Inserts and Updates. Defaults to: `NullValueHandling.Include`.
