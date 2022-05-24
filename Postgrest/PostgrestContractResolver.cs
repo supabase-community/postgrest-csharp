@@ -23,7 +23,7 @@ namespace Postgrest.Attributes
             {
                 prop.Converter = new RangeConverter();
             }
-            else if (prop.PropertyType == typeof(DateTime))
+            else if (prop.PropertyType == typeof(DateTime) || Nullable.GetUnderlyingType(prop.PropertyType) == typeof(DateTime))
             {
                 prop.Converter = new DateTimeConverter();
             }
@@ -31,7 +31,7 @@ namespace Postgrest.Attributes
             {
                 prop.Converter = new IntArrayConverter();
             }
-            else if (prop.PropertyType == typeof(List<DateTime>))
+            else if (prop.PropertyType == typeof(List<DateTime>) || Nullable.GetUnderlyingType(prop.PropertyType) == typeof(List<DateTime>))
             {
                 prop.Converter = new DateTimeConverter();
             }

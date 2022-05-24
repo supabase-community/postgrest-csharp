@@ -52,6 +52,8 @@ create table "public"."kitchen_sink" (
   "double_value" DOUBLE PRECISION null,
   "datetime_value" timestamp null,
   "datetime_value_1" timestamp null,
+  "datetime_pos_infinite_value" timestamp null,
+  "datetime_neg_infinite_value" timestamp null,
   "list_of_strings" TEXT [ ] null,
   "list_of_datetimes" DATE [ ] null,
   "list_of_ints" INT [ ] null,

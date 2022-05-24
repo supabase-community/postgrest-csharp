@@ -20,22 +20,57 @@ namespace Postgrest.Converters
             if (reader.Value != null)
             {
                 var str = reader.Value.ToString();
-                var date =  DateTime.Parse(str);
+
+                var infinity = ParseInfinity(str);
+                if (infinity != null)
+                {
+                    return (DateTime)infinity;
+                }
+
+                var date = DateTime.Parse(str);
                 return date;
             }
             else
             {
                 List<DateTime> result = new List<DateTime>();
-                JArray jo = JArray.Load(reader);
 
-                foreach (var item in jo.ToArray())
+                try
                 {
-                    var date = DateTime.Parse(item.ToString());
-                    result.Add(date);
+                    JArray jo = JArray.Load(reader);
+
+                    foreach (var item in jo.ToArray())
+                    {
+                        var inner = item.ToString();
+
+                        var infinity = ParseInfinity(inner);
+                        if (infinity != null)
+                        {
+                            result.Add((DateTime)infinity);
+                        }
+
+                        var date = DateTime.Parse(inner);
+                        result.Add(date);
+                    }
                 }
+                catch (JsonReaderException ex)
+                {
+                    return null;
+                }
+
 
                 return result;
             }
+
+        }
+
+        private DateTime? ParseInfinity(string input)
+        {
+            if (input.ToLower().Contains("infinity"))
+            {
+                return input.Contains("-") ? DateTime.MinValue : DateTime.MaxValue;
+            }
+
+            return null;
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

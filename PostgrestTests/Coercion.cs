@@ -18,6 +18,20 @@ namespace PostgrestTests
         {
             var options = new StatelessClientOptions(baseUrl);
 
+            // Check against already included case (inserted in `01-dummy-data.sql`
+            var existingItem = await StatelessClient.Table<KitchenSink>(options).Single();
+
+            if (existingItem != null)
+            {
+                Assert.AreEqual(99999.0f, existingItem.FloatValue);
+                Assert.AreEqual(99999.0d, existingItem.DoubleValue);
+                Assert.AreEqual(new List<string> { "set", "of", "strings" }, existingItem.StringValue);
+                Assert.AreEqual(DateTime.MaxValue, existingItem.DateTimePosInfinity);
+                Assert.AreEqual(DateTime.MinValue, existingItem.DateTimeNegInfinity);
+                Assert.AreEqual(new List<float> { 10.0f, 12.0f }, existingItem.ListOfFloats);
+                Assert.AreEqual(new IntRange(20, 50), existingItem.IntRange);
+            }
+
             var stringValue = "test";
             var intValue = 1;
             var floatValue = 1.1f;
@@ -37,6 +51,8 @@ namespace PostgrestTests
                 FloatValue = floatValue,
                 DoubleValue = doubleValue,
                 DateTimeValue = dateTimeValue,
+                DateTimeNegInfinity = DateTime.MinValue,
+                DateTimePosInfinity = DateTime.MaxValue,
                 ListOfStrings = listOfStrings,
                 ListOfDateTimes = listOfDateTime,
                 ListOfInts = listOfInts,

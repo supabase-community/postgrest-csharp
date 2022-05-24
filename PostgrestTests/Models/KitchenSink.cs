@@ -32,6 +32,12 @@ namespace PostgrestTests.Models
         [Column("datetime_value_1", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? DateTimeValue1 { get; set; }
 
+        [Column("datetime_pos_infinite_value", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? DateTimePosInfinity { get; set; }
+
+        [Column("datetime_neg_infinite_value", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? DateTimeNegInfinity { get; set; }
+
         [Column("list_of_strings")]
         public List<string>? ListOfStrings { get; set; }
 
