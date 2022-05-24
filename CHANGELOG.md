@@ -1,5 +1,9 @@
 ﻿# Changelog
 
+## 2.0.8 - 2022-05-24
+
+- Implements [#41](https://github.com/supabase-community/postgrest-csharp/issues/41), which adds support for `infinity` and `-infinity` as readable values.
+
 ## 2.0.7 - 2022-04-09
 
 - Merged [#39](https://github.com/supabase-community/postgrest-csharp/pull/39), which a fixed shadowed variable in `Table.And` and `Table.Or`. Thanks [@erichards3](https://github.com/erichards3)!
