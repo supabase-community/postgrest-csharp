@@ -25,10 +25,10 @@ namespace PostgrestTests
             {
                 Assert.AreEqual(99999.0f, existingItem.FloatValue);
                 Assert.AreEqual(99999.0d, existingItem.DoubleValue);
-                Assert.AreEqual(new List<string> { "set", "of", "strings" }, existingItem.StringValue);
+                CollectionAssert.AreEquivalent(new List<string> { "set", "of", "strings" }, existingItem.ListOfStrings);
                 Assert.AreEqual(DateTime.MaxValue, existingItem.DateTimePosInfinity);
                 Assert.AreEqual(DateTime.MinValue, existingItem.DateTimeNegInfinity);
-                Assert.AreEqual(new List<float> { 10.0f, 12.0f }, existingItem.ListOfFloats);
+                CollectionAssert.AreEquivalent(new List<float> { 10.0f, 12.0f }, existingItem.ListOfFloats);
                 Assert.AreEqual(new IntRange(20, 50), existingItem.IntRange);
             }
 

@@ -51,7 +51,7 @@ VALUES
         '99999.0'::float8, 
         'Tue May 24 06:30:00 2022'::timestamp, 
         'Tue May 20 06:00:00 2022'::timestamp, 
-        'infinity', 
+        'Infinity', 
         '-infinity', 
         '{"set", "of", "strings"}',
         '{NOW()}',

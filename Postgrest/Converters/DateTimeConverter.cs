@@ -65,7 +65,7 @@ namespace Postgrest.Converters
 
         private DateTime? ParseInfinity(string input)
         {
-            if (input.ToLower().Contains("infinity"))
+            if (input.Contains("infinity"))
             {
                 return input.Contains("-") ? DateTime.MinValue : DateTime.MaxValue;
             }
