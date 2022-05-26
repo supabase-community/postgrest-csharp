@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Postgrest.Extensions
+﻿namespace Postgrest.Extensions
 {
     public static class RangeExtensions
     {

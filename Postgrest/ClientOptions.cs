@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Globalization;
 
 namespace Postgrest
 {
@@ -9,9 +9,13 @@ namespace Postgrest
     public class ClientOptions
     {
         public string Schema { get; set; } = "public";
-        public System.Globalization.DateTimeStyles DateTimeStyles = System.Globalization.DateTimeStyles.AdjustToUniversal;
-        public string DateTimeFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFK";
+
+        public readonly DateTimeStyles DateTimeStyles = DateTimeStyles.AdjustToUniversal;
+
+        public const string DateTimeFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss.FFFFFFK";
+
         public Dictionary<string, string> Headers { get; set; } = new Dictionary<string, string>();
+
         public Dictionary<string, string> QueryParams { get; set; } = new Dictionary<string, string>();
     }
 }

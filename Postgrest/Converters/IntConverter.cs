@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Newtonsoft.Json;
 
 namespace Postgrest.Converters
@@ -21,8 +20,10 @@ namespace Postgrest.Converters
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            List<int> list = value as List<int>;
-            writer.WriteValue($"{{{String.Join(",", list)}}}");
+            if (value is List<int> list)
+            {
+                writer.WriteValue($"{{{string.Join(",", list)}}}");
+            }
         }
     }
 }

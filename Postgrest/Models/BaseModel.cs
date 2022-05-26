@@ -11,8 +11,10 @@ namespace Postgrest.Models
     /// </summary>
     public abstract class BaseModel
     {
-        public virtual Task<ModeledResponse<T>> Update<T>() where T : BaseModel, new() => Client.Instance.Table<T>().Update((T)this);
-        public virtual Task Delete<T>() where T : BaseModel, new() => Client.Instance.Table<T>().Delete((T)this);
+        public virtual Task<ModeledResponse<T>> Update<T>() where T : BaseModel, new() =>
+            Client.Instance.Table<T>().Update((T) this);
+
+        public virtual Task Delete<T>() where T : BaseModel, new() => Client.Instance.Table<T>().Delete((T) this);
 
         /// <summary>
         /// Gets the value of the PrimaryKey from a model's instance as defined by the [PrimaryKey] attribute on a property on the model.
@@ -23,9 +25,11 @@ namespace Postgrest.Models
             get
             {
                 var props = this.GetType().GetProperties();
+
                 foreach (var prop in props)
                 {
                     var hasAttr = Attribute.GetCustomAttribute(prop, typeof(PrimaryKeyAttribute));
+
                     if (hasAttr is PrimaryKeyAttribute)
                     {
                         return prop.GetValue(this);
@@ -41,11 +45,11 @@ namespace Postgrest.Models
         {
             get
             {
-                var attr = Attribute.GetCustomAttribute(GetType(), typeof(TableAttribute));
-                if (attr is TableAttribute tableAttr)
-                    return tableAttr.Name;
-                else
-                    return GetType().Name;
+                var attribute = Attribute.GetCustomAttribute(GetType(), typeof(TableAttribute));
+
+                return attribute is TableAttribute tableAttr
+                    ? tableAttr.Name
+                    : GetType().Name;
             }
         }
 
@@ -57,10 +61,12 @@ namespace Postgrest.Models
         {
             get
             {
-                var props = this.GetType().GetProperties();
-                foreach (var prop in props)
+                var propertyInfos = this.GetType().GetProperties();
+
+                foreach (var info in propertyInfos)
                 {
-                    var hasAttr = Attribute.GetCustomAttribute(prop, typeof(PrimaryKeyAttribute));
+                    var hasAttr = Attribute.GetCustomAttribute(info, typeof(PrimaryKeyAttribute));
+
                     if (hasAttr is PrimaryKeyAttribute pka)
                     {
                         return pka.ColumnName;

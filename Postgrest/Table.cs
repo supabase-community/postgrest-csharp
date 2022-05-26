@@ -23,12 +23,12 @@ namespace Postgrest
     /// <typeparam name="T">Model derived from `BaseModel`.</typeparam>
     public class Table<T> where T : BaseModel, new()
     {
-        public string BaseUrl { get; private set; }
+        public string BaseUrl { get; }
 
         /// <summary>
         /// Name of the Table parsed by the Model.
         /// </summary>
-        public string TableName { get; private set; }
+        public string TableName { get; }
 
         private ClientOptions options;
         private JsonSerializerSettings serializerSettings;
@@ -53,29 +53,26 @@ namespace Postgrest
         /// Typically called from the Client Singleton using `Client.Instance.Table<T>`
         /// </summary>
         /// <param name="baseUrl">Api Endpoint (ex: "http://localhost:8000"), no trailing slash required.</param>
-        /// <param name="authorization">Authorization Information.</param>
         /// <param name="options">Optional client configuration.</param>
         public Table(string baseUrl, ClientOptions options = null)
         {
             BaseUrl = baseUrl;
 
-            if (options == null)
-                options = new ClientOptions();
+            options ??= new ClientOptions();
 
             this.options = options;
 
-            if (serializerSettings == null)
-                serializerSettings = StatelessClient.SerializerSettings(options);
+            serializerSettings = StatelessClient.SerializerSettings(options);
 
             var attr = Attribute.GetCustomAttribute(typeof(T), typeof(TableAttribute));
+            
             if (attr is TableAttribute tableAttr)
             {
                 TableName = tableAttr.Name;
+                return;
             }
-            else
-            {
-                TableName = typeof(T).Name;
-            }
+
+            TableName = typeof(T).Name;
         }
 
         /// <summary>
@@ -104,11 +101,11 @@ namespace Postgrest
                 {
                     case Operator.Equals:
                     case Operator.Is:
-                        filters.Add(new QueryFilter(columnName, Operator.Is, QueryFilter.NULL_VAL));
+                        filters.Add(new QueryFilter(columnName, Operator.Is, QueryFilter.NullVal));
                         break;
                     case Operator.Not:
                     case Operator.NotEqual:
-                        filters.Add(new QueryFilter(columnName, Operator.Not, new QueryFilter(columnName, Operator.Is, QueryFilter.NULL_VAL)));
+                        filters.Add(new QueryFilter(columnName, Operator.Not, new QueryFilter(columnName, Operator.Is, QueryFilter.NullVal)));
                         break;
                     default:
                         throw new Exception("NOT filters must use the `Equals`, `Is`, `Not` or `NotEqual` operators");

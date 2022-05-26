@@ -23,7 +23,8 @@ namespace Postgrest.Attributes
             {
                 prop.Converter = new RangeConverter();
             }
-            else if (prop.PropertyType == typeof(DateTime) || Nullable.GetUnderlyingType(prop.PropertyType) == typeof(DateTime))
+            else if (prop.PropertyType != null && (prop.PropertyType == typeof(DateTime) ||
+                                                   Nullable.GetUnderlyingType(prop.PropertyType) == typeof(DateTime)))
             {
                 prop.Converter = new DateTimeConverter();
             }
@@ -31,33 +32,37 @@ namespace Postgrest.Attributes
             {
                 prop.Converter = new IntArrayConverter();
             }
-            else if (prop.PropertyType == typeof(List<DateTime>) || Nullable.GetUnderlyingType(prop.PropertyType) == typeof(List<DateTime>))
+            else if (prop.PropertyType != null && (prop.PropertyType == typeof(List<DateTime>) ||
+                                                   Nullable.GetUnderlyingType(prop.PropertyType) ==
+                                                   typeof(List<DateTime>)))
             {
                 prop.Converter = new DateTimeConverter();
             }
 
             // Dynamically set the name of the key we are serializing/deserializing from the model.
-            if (member.CustomAttributes.Count() > 0)
+            if (!member.CustomAttributes.Any())
             {
-                ColumnAttribute columnAtt = member.GetCustomAttribute<ColumnAttribute>();
-
-                if (columnAtt != null)
-                {
-                    prop.PropertyName = columnAtt.ColumnName;
-                    prop.NullValueHandling = columnAtt.NullValueHandling;
-                    return prop;
-                }
-
-                PrimaryKeyAttribute primaryKeyAtt = member.GetCustomAttribute<PrimaryKeyAttribute>();
-
-                if (primaryKeyAtt != null)
-                {
-                    prop.PropertyName = primaryKeyAtt.ColumnName;
-                    prop.ShouldSerialize = instance => primaryKeyAtt.ShouldInsert;
-                    return prop;
-                }
+                return prop;
             }
 
+            var columnAttribute = member.GetCustomAttribute<ColumnAttribute>();
+
+            if (columnAttribute != null)
+            {
+                prop.PropertyName = columnAttribute.ColumnName;
+                prop.NullValueHandling = columnAttribute.NullValueHandling;
+                return prop;
+            }
+
+            var primaryKeyAttribute = member.GetCustomAttribute<PrimaryKeyAttribute>();
+
+            if (primaryKeyAttribute == null)
+            {
+                return prop;
+            }
+
+            prop.PropertyName = primaryKeyAttribute.ColumnName;
+            prop.ShouldSerialize = instance => primaryKeyAttribute.ShouldInsert;
             return prop;
         }
     }

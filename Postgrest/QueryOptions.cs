@@ -53,7 +53,7 @@ namespace Postgrest
         /// <summary>
         /// If the record should be upserted
         /// </summary>
-        public bool Upsert { get; set; } = false;
+        public bool Upsert { get; set; }
 
 
         public Dictionary<string, string> ToHeaders()

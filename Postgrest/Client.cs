@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Postgrest.Attributes;
 using Postgrest.Models;
 using Postgrest.Responses;
 
@@ -24,36 +21,30 @@ namespace Postgrest
         private ClientOptions options;
 
         private static Client instance;
+
         /// <summary>
         /// Returns the Singleton Instance of this Class.
         /// </summary>
-        public static Client Instance
+        public static Client Instance => instance ??= new Client();
+
+        private Client()
         {
-            get
-            {
-                if (instance == null)
-                    instance = new Client();
-
-                return instance;
-            }
         }
-
-        private Client() { }
 
         /// <summary>
         /// Should be the first call to this class to initialize a connection with a Postgrest API Server
         /// </summary>
         /// <param name="baseUrl">Api Endpoint (ex: "http://localhost:8000"), no trailing slash required.</param>
-        /// <param name="authorization">Authorization Information.</param>
         /// <param name="options">Optional client configuration.</param>
         /// <returns></returns>
         public static Client Initialize(string baseUrl, ClientOptions options = null)
         {
-            instance = new Client();
-            instance.BaseUrl = baseUrl;
+            instance = new Client
+            {
+                BaseUrl = baseUrl
+            };
 
-            if (options == null)
-                options = new ClientOptions();
+            options ??= new ClientOptions();
 
             instance.options = options;
 
@@ -65,7 +56,8 @@ namespace Postgrest
         /// </summary>
         /// <typeparam name="T">Custom Model derived from `BaseModel`</typeparam>
         /// <returns></returns>
-        public Table<T> Table<T>() where T : BaseModel, new() => new Table<T>(BaseUrl, options, StatelessClient.SerializerSettings(options));
+        public Table<T> Table<T>() where T : BaseModel, new() =>
+            new Table<T>(BaseUrl, options, StatelessClient.SerializerSettings(options));
 
         /// <summary>
         /// Perform a stored procedure call.
@@ -83,9 +75,13 @@ namespace Postgrest
             var serializerSettings = StatelessClient.SerializerSettings(options);
 
             // Prepare parameters
-            var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(JsonConvert.SerializeObject(parameters, serializerSettings));
+            var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+                JsonConvert.SerializeObject(parameters, serializerSettings));
+
             // Prepare headers
-            var headers = Helpers.PrepareRequestHeaders(HttpMethod.Post, new Dictionary<string, string>(options.Headers), options);
+            var headers = Helpers.PrepareRequestHeaders(HttpMethod.Post,
+                new Dictionary<string, string>(options.Headers), options);
+
             // Send request
             var request = Helpers.MakeRequest(HttpMethod.Post, canonicalUri, serializerSettings, data, headers);
             return request;
