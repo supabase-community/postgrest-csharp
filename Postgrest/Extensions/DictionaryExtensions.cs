@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Postgrest.Extensions
@@ -12,21 +11,22 @@ namespace Postgrest.Extensions
         // Example: 
         //   result = map.MergeLeft(other1, other2, ...)
         // From: https://stackoverflow.com/a/2679857/3629438
-        public static T MergeLeft<T, K, V>(this T me, params IDictionary<K, V>[] others)
-            where T : IDictionary<K, V>, new()
+        public static T MergeLeft<T, TK, TV>(this T me, params IDictionary<TK, TV>[] others)
+            where T : IDictionary<TK, TV>, new()
         {
-            T newMap = new T();
-            foreach (IDictionary<K, V> src in
-                (new List<IDictionary<K, V>> { me }).Concat(others))
+            var map = new T();
+            var dictionaries = new List<IDictionary<TK, TV>> {me}.Concat(others);
+
+            foreach (var dictionary in dictionaries)
             {
                 // ^-- echk. Not quite there type-system.
-                foreach (KeyValuePair<K, V> p in src)
+                foreach (var keyValuePair in dictionary)
                 {
-                    newMap[p.Key] = p.Value;
+                    map[keyValuePair.Key] = keyValuePair.Value;
                 }
             }
-            return newMap;
-        }
 
+            return map;
+        }
     }
 }

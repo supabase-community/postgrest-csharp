@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace Postgrest
 {
@@ -7,12 +6,14 @@ namespace Postgrest
     {
         public static string GetAssemblyVersion()
         {
-            var assembly = typeof(Postgrest.Client).Assembly;
-            var informationVersion = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+            var assembly = typeof(Client).Assembly;
+            
+            var informationVersion = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                .InformationalVersion;
+            
             var name = assembly.GetName().Name;
 
-            return $"{name.ToString().ToLower()}-csharp/{informationVersion}";
+            return $"{name.ToLower()}-csharp/{informationVersion}";
         }
     }
-
 }

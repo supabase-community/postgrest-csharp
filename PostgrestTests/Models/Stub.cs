@@ -1,5 +1,4 @@
-﻿using System;
-using Postgrest.Models;
+﻿using Postgrest.Models;
 
 namespace PostgrestTests.Models
 {

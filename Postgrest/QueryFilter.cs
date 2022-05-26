@@ -10,7 +10,7 @@ namespace Postgrest
         /// <summary>
         /// String value to be subsituted for a null criterion
         /// </summary>
-        public static string NULL_VAL = "null";
+        public const string NullVal = "null";
 
         public string Property { get; private set; }
         public Operator Op { get; private set; }

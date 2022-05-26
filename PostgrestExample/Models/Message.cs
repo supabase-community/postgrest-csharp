@@ -1,5 +1,4 @@
-﻿using System;
-using Postgrest.Attributes;
+﻿using Postgrest.Attributes;
 using Postgrest.Models;
 
 namespace PostgrestExample.Models

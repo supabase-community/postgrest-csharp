@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Postgrest
+﻿namespace Postgrest
 {
     /// <summary>
     /// Options that can be passed to the Client configuration
@@ -13,6 +10,6 @@ namespace Postgrest
             BaseUrl = baseUrl;
         }
 
-        public string BaseUrl { get; private set; }
+        public string BaseUrl { get; }
     }
 }

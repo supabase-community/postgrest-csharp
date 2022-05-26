@@ -1,10 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
 using Postgrest;
-using Postgrest.Attributes;
 using Postgrest.Extensions;
-using PostgrestTests.Models;
 
 namespace PostgrestTests
 {
