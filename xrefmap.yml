@@ -652,14 +652,14 @@ references:
   fullName: Postgrest.Extensions.DictionaryExtensions.MergeLeft
   nameWithType: DictionaryExtensions.MergeLeft
 - uid: Postgrest.Extensions.DictionaryExtensions.MergeLeft``3(``0,IDictionary{``1,``2}[])
-  name: MergeLeft<T, K, V>(T, IDictionary<K, V>[])
+  name: MergeLeft<T, TK, TV>(T, IDictionary<TK, TV>[])
   href: api/Postgrest.Extensions.DictionaryExtensions.html#Postgrest_Extensions_DictionaryExtensions_MergeLeft__3___0_IDictionary___1___2____
   commentId: M:Postgrest.Extensions.DictionaryExtensions.MergeLeft``3(``0,IDictionary{``1,``2}[])
-  name.vb: MergeLeft(Of T, K, V)(T, IDictionary(Of K, V)())
-  fullName: Postgrest.Extensions.DictionaryExtensions.MergeLeft<T, K, V>(T, IDictionary<K, V>[])
-  fullName.vb: Postgrest.Extensions.DictionaryExtensions.MergeLeft(Of T, K, V)(T, IDictionary(Of K, V)())
-  nameWithType: DictionaryExtensions.MergeLeft<T, K, V>(T, IDictionary<K, V>[])
-  nameWithType.vb: DictionaryExtensions.MergeLeft(Of T, K, V)(T, IDictionary(Of K, V)())
+  name.vb: MergeLeft(Of T, TK, TV)(T, IDictionary(Of TK, TV)())
+  fullName: Postgrest.Extensions.DictionaryExtensions.MergeLeft<T, TK, TV>(T, IDictionary<TK, TV>[])
+  fullName.vb: Postgrest.Extensions.DictionaryExtensions.MergeLeft(Of T, TK, TV)(T, IDictionary(Of TK, TV)())
+  nameWithType: DictionaryExtensions.MergeLeft<T, TK, TV>(T, IDictionary<TK, TV>[])
+  nameWithType.vb: DictionaryExtensions.MergeLeft(Of T, TK, TV)(T, IDictionary(Of TK, TV)())
 - uid: Postgrest.Extensions.EnumExtensions
   name: EnumExtensions
   href: api/Postgrest.Extensions.EnumExtensions.html
@@ -1205,12 +1205,12 @@ references:
   isSpec: "True"
   fullName: Postgrest.QueryFilter.Criteria
   nameWithType: QueryFilter.Criteria
-- uid: Postgrest.QueryFilter.NULL_VAL
-  name: NULL_VAL
-  href: api/Postgrest.QueryFilter.html#Postgrest_QueryFilter_NULL_VAL
-  commentId: F:Postgrest.QueryFilter.NULL_VAL
-  fullName: Postgrest.QueryFilter.NULL_VAL
-  nameWithType: QueryFilter.NULL_VAL
+- uid: Postgrest.QueryFilter.NullVal
+  name: NullVal
+  href: api/Postgrest.QueryFilter.html#Postgrest_QueryFilter_NullVal
+  commentId: F:Postgrest.QueryFilter.NullVal
+  fullName: Postgrest.QueryFilter.NullVal
+  nameWithType: QueryFilter.NullVal
 - uid: Postgrest.QueryFilter.Op
   name: Op
   href: api/Postgrest.QueryFilter.html#Postgrest_QueryFilter_Op
