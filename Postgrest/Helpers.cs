@@ -80,7 +80,7 @@ namespace Postgrest
 
             using var requestMessage = new HttpRequestMessage(method, builder.Uri);
 
-            if (data != null && method != HttpMethod.Get)
+            if (!string.IsNullOrWhiteSpace(data as string) && method != HttpMethod.Get)
             {
                 requestMessage.Content = new StringContent(JsonConvert.SerializeObject(data, serializerSettings),
                     Encoding.UTF8, "application/json");
