@@ -7,6 +7,7 @@ using System.Web;
 using Newtonsoft.Json;
 using Postgrest.Responses;
 using System.Runtime.CompilerServices;
+using Newtonsoft.Json.Linq;
 using Postgrest.Extensions;
 
 [assembly: InternalsVisibleTo("PostgrestTests")]
@@ -82,8 +83,13 @@ namespace Postgrest
 
             if (data != null && method != HttpMethod.Get)
             {
-                requestMessage.Content = new StringContent(JsonConvert.SerializeObject(data, serializerSettings),
-                    Encoding.UTF8, "application/json");
+                var stringContent = JsonConvert.SerializeObject(data, serializerSettings);
+
+                if (!string.IsNullOrWhiteSpace(stringContent) && JToken.Parse(stringContent).HasValues)
+                {
+                    requestMessage.Content = new StringContent(stringContent,
+                        Encoding.UTF8, "application/json");
+                }
             }
 
             if (headers != null)
