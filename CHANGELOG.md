@@ -1,5 +1,9 @@
 ﻿# Changelog
 
+## 2.0.9 - 2022-07-17
+
+- Merged [#49](https://github.com/supabase-community/postgrest-csharp/pull/44) Fixing zero length content when sending requests without body. Thanks [@SameerOmar](https://github.com/sameeromar)!
+
 ## 2.0.8 - 2022-05-24
 
 - Implements [#41](https://github.com/supabase-community/postgrest-csharp/issues/41), which adds support for `infinity` and `-infinity` as readable values.
