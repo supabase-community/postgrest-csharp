@@ -1,5 +1,9 @@
 ﻿# Changelog
 
+## 2.0.10 - 2022-08-01
+
+- Added `OnConflict` parameter for UNIQUE resolution with reference to [supabase-community/supabase-csharp#29](https://github.com/supabase-community/supabase-csharp/issues/29)
+
 ## 2.0.9 - 2022-07-17
 
 - Merged [#49](https://github.com/supabase-community/postgrest-csharp/pull/44) Fixing zero length content when sending requests without body. Thanks [@SameerOmar](https://github.com/sameeromar)!
