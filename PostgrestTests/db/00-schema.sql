@@ -47,6 +47,7 @@ COMMENT ON COLUMN public.messages.data IS 'For unstructured data and prototyping
 create table "public"."kitchen_sink" (
   "id" serial primary key,
   "string_value" varchar(255) null,
+  "unique_value" varchar(255) UNIQUE,
   "int_value" INT null,
   "float_value" FLOAT null,
   "double_value" DOUBLE PRECISION null,

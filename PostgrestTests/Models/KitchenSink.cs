@@ -17,6 +17,9 @@ namespace PostgrestTests.Models
         [Column("string_value")]
         public string? StringValue { get; set; }
 
+        [Column("unique_value")]
+        public string? UniqueValue { get; set; }
+
         [Column("int_value")]
         public int IntValue { get; set; }
 

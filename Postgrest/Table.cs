@@ -49,6 +49,8 @@ namespace Postgrest
         private int offset = int.MinValue;
         private string offsetForeignKey;
 
+        private string onConflict;
+
         /// <summary>
         /// Typically called from the Client Singleton using `Client.Instance.Table<T>`
         /// </summary>
@@ -309,6 +311,12 @@ namespace Postgrest
         {
             this.limit = limit;
             this.limitForeignKey = foreignTableName;
+            return this;
+        }
+
+        public Table<T> OnConflict(string columnName)
+        {
+            onConflict = columnName;
             return this;
         }
 
@@ -582,6 +590,11 @@ namespace Postgrest
                 query["select"] = Regex.Replace(columnQuery, @"\s", "");
             }
 
+            if (!string.IsNullOrEmpty(onConflict))
+            {
+                query["on_conflict"] = onConflict;
+            }
+
             if (limit != int.MinValue)
             {
                 var key = limitForeignKey != null ? $"{limitForeignKey}.limit" : "limit";
@@ -739,6 +752,8 @@ namespace Postgrest
 
             offset = int.MinValue;
             offsetForeignKey = null;
+
+            onConflict = null;
         }
 
 

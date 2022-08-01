@@ -400,6 +400,17 @@ namespace PostgrestTests
             };
 
             var response = await client.Table<User>().Insert(supaUpdated, insertOptions);
+
+            var kitchenSink1 = new KitchenSink
+            {
+                UniqueValue = "Testing"
+            };
+
+            var ks1 = await client.Table<KitchenSink>().OnConflict("unique_value").Upsert(kitchenSink1);
+            var uks1 = ks1.Models.First();
+            uks1.StringValue = "Testing 1";
+            var ks3 = await client.Table<KitchenSink>().OnConflict("unique_value").Upsert(uks1);
+
             var updatedUser = response.Models.First();
 
             Assert.AreEqual(1, response.Models.Count);
@@ -1039,7 +1050,7 @@ namespace PostgrestTests
             };
 
             var insertResponse = await client.Table<KitchenSink>().Insert(model);
-            
+
             Assert.AreEqual(now.ToString(), insertResponse.Models[0].DateTimeValue.ToString());
             Assert.AreEqual(now.ToString(), insertResponse.Models[0].DateTimeValue1.ToString());
 
