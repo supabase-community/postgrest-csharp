@@ -1317,6 +1317,19 @@ references:
   commentId: F:Postgrest.QueryOptions.DuplicateResolutionType.MergeDuplicates
   fullName: Postgrest.QueryOptions.DuplicateResolutionType.MergeDuplicates
   nameWithType: QueryOptions.DuplicateResolutionType.MergeDuplicates
+- uid: Postgrest.QueryOptions.OnConflict
+  name: OnConflict
+  href: api/Postgrest.QueryOptions.html#Postgrest_QueryOptions_OnConflict
+  commentId: P:Postgrest.QueryOptions.OnConflict
+  fullName: Postgrest.QueryOptions.OnConflict
+  nameWithType: QueryOptions.OnConflict
+- uid: Postgrest.QueryOptions.OnConflict*
+  name: OnConflict
+  href: api/Postgrest.QueryOptions.html#Postgrest_QueryOptions_OnConflict_
+  commentId: Overload:Postgrest.QueryOptions.OnConflict
+  isSpec: "True"
+  fullName: Postgrest.QueryOptions.OnConflict
+  nameWithType: QueryOptions.OnConflict
 - uid: Postgrest.QueryOptions.Returning
   name: Returning
   href: api/Postgrest.QueryOptions.html#Postgrest_QueryOptions_Returning
