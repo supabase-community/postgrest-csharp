@@ -314,6 +314,11 @@ namespace Postgrest
             return this;
         }
 
+        /// <summary>
+        /// By specifying the onConflict query parameter, you can make UPSERT work on a column(s) that has a UNIQUE constraint.
+        /// </summary>
+        /// <param name="columnName"></param>
+        /// <returns></returns>
         public Table<T> OnConflict(string columnName)
         {
             onConflict = columnName;
@@ -352,6 +357,10 @@ namespace Postgrest
 
         /// <summary>
         /// Executes an UPSERT query using the defined query params on the current instance.
+        /// 
+        /// By default the new record is returned. Set QueryOptions.ReturnType to Minimal if you don't need this value.
+        /// By specifying the QueryOptions.OnConflict parameter, you can make UPSERT work on a column(s) that has a UNIQUE constraint.
+        /// QueryOptions.DuplicateResolution.IgnoreDuplicates Specifies if duplicate rows should be ignored and not inserted.
         /// </summary>
         /// <param name="model"></param>
         /// <param name="options"></param>
@@ -371,6 +380,10 @@ namespace Postgrest
 
         /// <summary>
         /// Executes an UPSERT query using the defined query params on the current instance.
+        ///
+        /// By default the new record is returned. Set QueryOptions.ReturnType to Minimal if you don't need this value.
+        /// By specifying the QueryOptions.OnConflict parameter, you can make UPSERT work on a column(s) that has a UNIQUE constraint.
+        /// QueryOptions.DuplicateResolution.IgnoreDuplicates Specifies if duplicate rows should be ignored and not inserted.
         /// </summary>
         /// <param name="model"></param>
         /// <param name="options"></param>
@@ -768,6 +781,11 @@ namespace Postgrest
             method = HttpMethod.Post;
             if (options == null)
                 options = new QueryOptions();
+
+            if (!string.IsNullOrEmpty(options.OnConflict))
+            {
+                OnConflict(options.OnConflict);
+            }
 
             var request = Send<T>(method, data, options.ToHeaders());
 
