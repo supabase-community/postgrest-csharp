@@ -1,5 +1,9 @@
 ﻿# Changelog
 
+## 2.0.11 - 2022-08-01
+
+- Additional `OnConflict` Access via `QueryOptions` with reference to [supabase-community/supabase-csharp#29](https://github.com/supabase-community/supabase-csharp/issues/29)
+
 ## 2.0.10 - 2022-08-01
 
 - Added `OnConflict` parameter for UNIQUE resolution with reference to [supabase-community/supabase-csharp#29](https://github.com/supabase-community/supabase-csharp/issues/29)
