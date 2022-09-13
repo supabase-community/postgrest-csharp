@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Postgrest.Attributes;
@@ -11,10 +12,11 @@ namespace Postgrest.Models
     /// </summary>
     public abstract class BaseModel
     {
-        public virtual Task<ModeledResponse<T>> Update<T>() where T : BaseModel, new() =>
-            Client.Instance.Table<T>().Update((T) this);
+        public virtual Task<ModeledResponse<T>> Update<T>(CancellationToken cancellationToken = default) where T : BaseModel, new() =>
+            Client.Instance.Table<T>().Update((T) this, cancellationToken: cancellationToken);
 
-        public virtual Task Delete<T>() where T : BaseModel, new() => Client.Instance.Table<T>().Delete((T) this);
+        public virtual Task Delete<T>(CancellationToken cancellationToken = default) where T : BaseModel, new() =>
+            Client.Instance.Table<T>().Delete((T) this, cancellationToken: cancellationToken);
 
         /// <summary>
         /// Gets the value of the PrimaryKey from a model's instance as defined by the [PrimaryKey] attribute on a property on the model.
