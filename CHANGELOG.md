@@ -1,5 +1,9 @@
 ﻿# Changelog
 
+## 2.0.12 - 2022-09-13
+
+- Merged [#47](https://github.com/supabase-community/postgrest-csharp/pull/49) which added cancellation token support to `Table<T>` methods. Thanks [@devpikachu](https://github.com/devpikachu)!
+
 ## 2.0.11 - 2022-08-01
 
 - Additional `OnConflict` Access via `QueryOptions` with reference to [supabase-community/supabase-csharp#29](https://github.com/supabase-community/supabase-csharp/issues/29)
@@ -10,7 +14,7 @@
 
 ## 2.0.9 - 2022-07-17
 
-- Merged [#49](https://github.com/supabase-community/postgrest-csharp/pull/44) Fixing zero length content when sending requests without body. Thanks [@SameerOmar](https://github.com/sameeromar)!
+- Merged [#44](https://github.com/supabase-community/postgrest-csharp/pull/44) Fixing zero length content when sending requests without body. Thanks [@SameerOmar](https://github.com/sameeromar)!
 
 ## 2.0.8 - 2022-05-24
 
