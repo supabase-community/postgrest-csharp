@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using Newtonsoft.Json;
@@ -344,16 +345,18 @@ namespace Postgrest
         /// </summary>
         /// <param name="model"></param>
         /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns>A typed model response from the database.</returns>
-        public Task<ModeledResponse<T>> Insert(T model, QueryOptions options = null) => PerformInsert(model, options);
+        public Task<ModeledResponse<T>> Insert(T model, QueryOptions options = null, CancellationToken cancellationToken = default) => PerformInsert(model, options, cancellationToken);
 
         /// <summary>
         /// Executes a BULK INSERT query using the defined query params on the current instance.
         /// </summary>
         /// <param name="model"></param>
         /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns>A typed model response from the database.</returns>
-        public Task<ModeledResponse<T>> Insert(ICollection<T> models, QueryOptions options = null) => PerformInsert(models, options);
+        public Task<ModeledResponse<T>> Insert(ICollection<T> models, QueryOptions options = null, CancellationToken cancellationToken = default) => PerformInsert(models, options, cancellationToken);
 
         /// <summary>
         /// Executes an UPSERT query using the defined query params on the current instance.
@@ -364,8 +367,9 @@ namespace Postgrest
         /// </summary>
         /// <param name="model"></param>
         /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public Task<ModeledResponse<T>> Upsert(T model, QueryOptions options = null)
+        public Task<ModeledResponse<T>> Upsert(T model, QueryOptions options = null, CancellationToken cancellationToken = default)
         {
             if (options == null)
             {
@@ -375,7 +379,7 @@ namespace Postgrest
             // Enforce Upsert
             options.Upsert = true;
 
-            return PerformInsert(model, options);
+            return PerformInsert(model, options, cancellationToken);
         }
 
         /// <summary>
@@ -387,8 +391,9 @@ namespace Postgrest
         /// </summary>
         /// <param name="model"></param>
         /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public Task<ModeledResponse<T>> Upsert(ICollection<T> model, QueryOptions options = null)
+        public Task<ModeledResponse<T>> Upsert(ICollection<T> model, QueryOptions options = null, CancellationToken cancellationToken = default)
         {
             if (options == null)
             {
@@ -398,15 +403,16 @@ namespace Postgrest
             // Enforce Upsert
             options.Upsert = true;
 
-            return PerformInsert(model, options);
+            return PerformInsert(model, options, cancellationToken);
         }
 
         /// <summary>
         /// Executes an UPDATE query using the defined query params on the current instance.
         /// </summary>
         /// <param name="model"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns>A typed response from the database.</returns>
-        public Task<ModeledResponse<T>> Update(T model, QueryOptions options = null)
+        public Task<ModeledResponse<T>> Update(T model, QueryOptions options = null, CancellationToken cancellationToken = default)
         {
             if (options == null)
             {
@@ -417,7 +423,7 @@ namespace Postgrest
 
             filters.Add(new QueryFilter(model.PrimaryKeyColumn, Operator.Equals, model.PrimaryKeyValue.ToString()));
 
-            var request = Send<T>(method, model, options.ToHeaders());
+            var request = Send<T>(method, model, options.ToHeaders(), cancellationToken);
 
             Clear();
 
@@ -428,7 +434,7 @@ namespace Postgrest
         /// Executes a delete request using the defined query params on the current instance.
         /// </summary>
         /// <returns></returns>
-        public Task Delete(QueryOptions options = null)
+        public Task Delete(QueryOptions options = null, CancellationToken cancellationToken = default)
         {
             if (options == null)
             {
@@ -437,7 +443,7 @@ namespace Postgrest
 
             method = HttpMethod.Delete;
 
-            var request = Send(method, null, options.ToHeaders());
+            var request = Send(method, null, options.ToHeaders(), cancellationToken);
 
             Clear();
 
@@ -448,8 +454,9 @@ namespace Postgrest
         /// Executes a delete request using the model's primary key as the filter for the request.
         /// </summary>
         /// <param name="model"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public Task<ModeledResponse<T>> Delete(T model, QueryOptions options = null)
+        public Task<ModeledResponse<T>> Delete(T model, QueryOptions options = null, CancellationToken cancellationToken = default)
         {
             if (options == null)
             {
@@ -458,7 +465,7 @@ namespace Postgrest
 
             method = HttpMethod.Delete;
             Filter(model.PrimaryKeyColumn, Operator.Equals, model.PrimaryKeyValue.ToString());
-            var request = Send<T>(method, null, options.ToHeaders());
+            var request = Send<T>(method, null, options.ToHeaders(), cancellationToken);
             Clear();
             return request;
         }
@@ -469,8 +476,9 @@ namespace Postgrest
         /// See: https://postgrest.org/en/v7.0.0/api.html?highlight=count
         /// </summary>
         /// <param name="type"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public Task<int> Count(CountType type)
+        public Task<int> Count(CountType type, CancellationToken cancellationToken = default)
         {
             var tsc = new TaskCompletionSource<int>();
 
@@ -484,7 +492,7 @@ namespace Postgrest
                     { "Prefer", $"count={attr.Mapping}" }
                 };
 
-                var request = Send(method, null, headers);
+                var request = Send(method, null, headers, cancellationToken);
                 Clear();
 
                 try
@@ -511,8 +519,9 @@ namespace Postgrest
         /// Executes a query that expects to have a single object returned, rather than returning list of models
         /// it will return a single model.
         /// </summary>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public Task<T> Single()
+        public Task<T> Single(CancellationToken cancellationToken = default)
         {
             var tsc = new TaskCompletionSource<T>();
 
@@ -525,7 +534,7 @@ namespace Postgrest
                     { "Prefer", "return=representation"}
                 };
 
-                var request = Send<T>(method, null, headers);
+                var request = Send<T>(method, null, headers, cancellationToken);
 
                 Clear();
 
@@ -554,10 +563,11 @@ namespace Postgrest
         /// <summary>
         /// Executes the query using the defined filters on the current instance.
         /// </summary>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public Task<ModeledResponse<T>> Get()
+        public Task<ModeledResponse<T>> Get(CancellationToken cancellationToken = default)
         {
-            var request = Send<T>(method, null, null);
+            var request = Send<T>(method, null, null, cancellationToken);
             Clear();
             return request;
         }
@@ -775,8 +785,9 @@ namespace Postgrest
         /// </summary>
         /// <param name="data"></param>
         /// <param name="options"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        private Task<ModeledResponse<T>> PerformInsert(object data, QueryOptions options = null)
+        private Task<ModeledResponse<T>> PerformInsert(object data, QueryOptions options = null, CancellationToken cancellationToken = default)
         {
             method = HttpMethod.Post;
             if (options == null)
@@ -787,23 +798,23 @@ namespace Postgrest
                 OnConflict(options.OnConflict);
             }
 
-            var request = Send<T>(method, data, options.ToHeaders());
+            var request = Send<T>(method, data, options.ToHeaders(), cancellationToken);
 
             Clear();
 
             return request;
         }
 
-        private Task<BaseResponse> Send(HttpMethod method, object data, Dictionary<string, string> headers = null)
+        private Task<BaseResponse> Send(HttpMethod method, object data, Dictionary<string, string> headers = null, CancellationToken cancellationToken = default)
         {
             var requestHeaders = Helpers.PrepareRequestHeaders(method, headers, options, rangeFrom, rangeTo);
-            return Helpers.MakeRequest(method, GenerateUrl(), serializerSettings, PrepareRequestData(data), requestHeaders);
+            return Helpers.MakeRequest(method, GenerateUrl(), serializerSettings, PrepareRequestData(data), requestHeaders, cancellationToken);
         }
 
-        private Task<ModeledResponse<U>> Send<U>(HttpMethod method, object data, Dictionary<string, string> headers = null) where U : BaseModel, new()
+        private Task<ModeledResponse<U>> Send<U>(HttpMethod method, object data, Dictionary<string, string> headers = null, CancellationToken cancellationToken = default) where U : BaseModel, new()
         {
             var requestHeaders = Helpers.PrepareRequestHeaders(method, headers, options, rangeFrom, rangeTo);
-            return Helpers.MakeRequest<U>(method, GenerateUrl(), serializerSettings, PrepareRequestData(data), requestHeaders);
+            return Helpers.MakeRequest<U>(method, GenerateUrl(), serializerSettings, PrepareRequestData(data), requestHeaders, cancellationToken);
         }
     }
 }

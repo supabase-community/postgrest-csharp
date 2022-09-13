@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Linq;
 using static Postgrest.Constants;
 using System.Net.Http;
+using System.Threading;
+using Postgrest.Responses;
 
 namespace PostgrestTests
 {
@@ -1061,6 +1063,34 @@ namespace PostgrestTests
 
             Assert.IsNull(updatedResponse.Models[0].DateTimeValue);
             Assert.IsNotNull(updatedResponse.Models[0].DateTimeValue1);
+        }
+
+        [TestMethod("Test cancellation token")]
+        public async Task TestCancellationToken()
+        {
+            var client = Client.Initialize(baseUrl);
+            var now = DateTime.UtcNow;
+            
+            var cts = new CancellationTokenSource();
+            cts.CancelAfter(TimeSpan.FromTicks(1));
+            
+            var model = new KitchenSink
+            {
+                DateTimeValue = now,
+                DateTimeValue1 = now
+            };
+
+            ModeledResponse<KitchenSink> insertResponse = null;
+
+            try
+            {
+                insertResponse = await client.Table<KitchenSink>().Insert(model, cancellationToken: cts.Token);
+            }
+            catch (Exception ex)
+            {
+                Assert.IsInstanceOfType(ex, typeof(TaskCanceledException));
+                Assert.IsNull(insertResponse);
+            }
         }
     }
 }

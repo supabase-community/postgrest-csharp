@@ -7,6 +7,7 @@ using System.Web;
 using Newtonsoft.Json;
 using Postgrest.Responses;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using Newtonsoft.Json.Linq;
 using Postgrest.Extensions;
 
@@ -36,15 +37,17 @@ namespace Postgrest
         /// <param name="data"></param>
         /// <param name="headers"></param>
         /// <param name="serializerSettings"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public static async Task<ModeledResponse<T>> MakeRequest<T>(
             HttpMethod method,
             string url,
             JsonSerializerSettings serializerSettings,
             object data = null,
-            Dictionary<string, string> headers = null)
+            Dictionary<string, string> headers = null,
+            CancellationToken cancellationToken = default)
         {
-            var baseResponse = await MakeRequest(method, url, serializerSettings, data, headers);
+            var baseResponse = await MakeRequest(method, url, serializerSettings, data, headers, cancellationToken);
             return new ModeledResponse<T>(baseResponse, serializerSettings);
         }
 
@@ -56,13 +59,15 @@ namespace Postgrest
         /// <param name="data"></param>
         /// <param name="headers"></param>
         /// <param name="serializerSettings"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public static async Task<BaseResponse> MakeRequest(
             HttpMethod method,
             string url,
             JsonSerializerSettings serializerSettings,
             object data = null,
-            Dictionary<string, string> headers = null)
+            Dictionary<string, string> headers = null,
+            CancellationToken cancellationToken = default)
         {
             var builder = new UriBuilder(url);
             var query = HttpUtility.ParseQueryString(builder.Query);
@@ -99,8 +104,8 @@ namespace Postgrest
                     requestMessage.Headers.TryAddWithoutValidation(kvp.Key, kvp.Value);
                 }
             }
-
-            var response = await Client.SendAsync(requestMessage);
+            
+            var response = await Client.SendAsync(requestMessage, cancellationToken);
             var content = await response.Content.ReadAsStringAsync();
 
             if (!response.IsSuccessStatusCode)
