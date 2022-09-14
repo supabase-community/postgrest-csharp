@@ -2,7 +2,7 @@
 
 ## 2.0.12 - 2022-09-13
 
-- Merged [#47](https://github.com/supabase-community/postgrest-csharp/pull/49) which added cancellation token support to `Table<T>` methods. Thanks [@devpikachu](https://github.com/devpikachu)!
+- Merged [#47](https://github.com/supabase-community/postgrest-csharp/pull/47) which added cancellation token support to `Table<T>` methods. Thanks [@devpikachu](https://github.com/devpikachu)!
 
 ## 2.0.11 - 2022-08-01
 
