@@ -1,0 +1,97 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Newtonsoft.Json;
+using Postgrest.Models;
+
+namespace Postgrest.Attributes
+{
+    /// <summary>
+    /// Used to specify that a foreign key relationship exists in PostgreSQL
+    /// 
+    /// See: https://postgrest.org/en/stable/api.html#resource-embedding
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property)]
+    public class ReferenceAttribute : Attribute
+    {
+        /// <summary>
+        /// Type of the model referenced
+        /// </summary>
+        public Type Model { get; }
+
+        /// <summary>
+        /// Associated property name
+        /// </summary>
+        public string PropertyName { get; private set; }
+
+        /// <summary>
+        /// Table name of model
+        /// </summary>
+        public string TableName { get; private set; }
+
+        /// <summary>
+        /// Columns that exist on the model we will select from.
+        /// </summary>
+        public List<string> Columns { get; } = new List<string>();
+
+        /// <summary>
+        /// If the performed query is an Insert or Upsert, should this value be ignored? (DEFAULT TRUE)
+        /// </summary>
+        public bool IgnoreOnInsert { get; set; }
+
+        /// <summary>
+        /// If the performed query is an Update, should this value be ignored? (DEFAULT TRUE)
+        /// </summary>
+        public bool IgnoreOnUpdate { get; set; }
+
+        /// <summary>
+        /// If Reference should automatically be included in queries on this reference. (DEFAULT TRUE)
+        /// </summary>
+        public bool IncludeInQuery { get; set; }
+
+        /// <param name="model">Model referenced</param>
+        /// <param name="includeInQuery">Should referenced be included in queries?</param>
+        /// <param name="ignoreOnInsert">Should reference data be excluded from inserts/upserts?</param>
+        /// <param name="ignoreOnUpdate">Should reference data be excluded from updates?</param>
+        /// <param name="propertyName"></param>
+        /// <exception cref="Exception"></exception>
+        public ReferenceAttribute(Type model, bool includeInQuery = true, bool ignoreOnInsert = true, bool ignoreOnUpdate = true, [CallerMemberName] string propertyName = "")
+        {
+            if (model.BaseType != typeof(BaseModel))
+            {
+                throw new Exception("RefernceAttribute must be used with Postgrest BaseModels.");
+            }
+
+            Model = model;
+            IncludeInQuery = includeInQuery;
+            IgnoreOnInsert = ignoreOnInsert;
+            IgnoreOnUpdate = ignoreOnUpdate;
+            PropertyName = propertyName;
+
+            var attr = GetCustomAttribute(model, typeof(TableAttribute));
+            if (attr is TableAttribute tableAttr)
+            {
+                TableName = tableAttr.Name;
+            }
+            else
+            {
+                TableName = model.Name;
+            }
+
+            foreach (var property in model.GetProperties())
+            {
+                var attrs = property.GetCustomAttributes(true);
+
+                foreach (var item in attrs)
+                {
+                    if (item is ColumnAttribute col)
+                        Columns.Add(col.ColumnName);
+                    else if (item is PrimaryKeyAttribute pk)
+                        Columns.Add(pk.ColumnName);
+                    else if (item is ReferenceAttribute ra)
+                        Columns.Add($"{ra.TableName}!inner({string.Join(",", ra.Columns.ToArray())})");
+                }
+            }
+        }
+    }
+}

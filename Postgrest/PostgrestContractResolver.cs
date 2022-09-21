@@ -14,6 +14,15 @@ namespace Postgrest.Attributes
     /// </summary>
     public class PostgrestContractResolver : DefaultContractResolver
     {
+        public bool IsUpdate { get; private set; } = false;
+        public bool IsInsert { get; private set; } = false;
+
+        public void SetState(bool isInsert = false, bool isUpdate = false)
+        {
+            IsUpdate = isUpdate;
+            IsInsert = isInsert;
+        }
+
         protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
         {
             JsonProperty prop = base.CreateProperty(member, memberSerialization);
@@ -51,6 +60,28 @@ namespace Postgrest.Attributes
             {
                 prop.PropertyName = columnAttribute.ColumnName;
                 prop.NullValueHandling = columnAttribute.NullValueHandling;
+
+                if (IsInsert && columnAttribute.IgnoreOnInsert)
+                    prop.Ignored = true;
+
+                if (IsUpdate && columnAttribute.IgnoreOnUpdate)
+                    prop.Ignored = true;
+
+                return prop;
+            }
+
+            var referenceAttr = member.GetCustomAttribute<ReferenceAttribute>();
+
+            if (referenceAttr != null)
+            {
+                prop.PropertyName = referenceAttr.TableName;
+
+                if (IsInsert && referenceAttr.IgnoreOnInsert)
+                    prop.Ignored = true;
+
+                if (IsUpdate && referenceAttr.IgnoreOnUpdate)
+                    prop.Ignored = true;
+
                 return prop;
             }
 
@@ -60,7 +91,7 @@ namespace Postgrest.Attributes
             {
                 return prop;
             }
-
+           
             prop.PropertyName = primaryKeyAttribute.ColumnName;
             prop.ShouldSerialize = instance => primaryKeyAttribute.ShouldInsert;
             return prop;

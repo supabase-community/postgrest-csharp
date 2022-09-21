@@ -37,7 +37,6 @@ The bulk of this library is a translation and c-sharp-ification of the supabase/
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 	</ItemGroup>
 	<ItemGroup>
-		<Folder Include="Attributes\" />
 		<Folder Include="Converters\" />
 	</ItemGroup>
 </Project>

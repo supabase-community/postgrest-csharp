@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -40,6 +41,9 @@ namespace Postgrest
 
         private List<QueryFilter> filters = new List<QueryFilter>();
         private List<QueryOrderer> orderers = new List<QueryOrderer>();
+        private List<string> columns = new List<string>();
+
+        private List<ReferenceAttribute> references = new List<ReferenceAttribute>();
 
         private int rangeFrom = int.MinValue;
         private int rangeTo = int.MinValue;
@@ -67,15 +71,15 @@ namespace Postgrest
 
             serializerSettings = StatelessClient.SerializerSettings(options);
 
-            var attr = Attribute.GetCustomAttribute(typeof(T), typeof(TableAttribute));
-            
-            if (attr is TableAttribute tableAttr)
+            foreach (var property in typeof(T).GetProperties())
             {
-                TableName = tableAttr.Name;
-                return;
+                var attrs = property.GetCustomAttributes(typeof(ReferenceAttribute), true);
+
+                if (attrs.Length > 0)
+                    references.Add((ReferenceAttribute)attrs.First());
             }
 
-            TableName = typeof(T).Name;
+            TableName = FindTableName();
         }
 
         /// <summary>
@@ -326,6 +330,23 @@ namespace Postgrest
             return this;
         }
 
+        /// <summary>
+        /// By using the columns query parameter it’s possible to specify the payload keys that will be inserted and ignore the rest of the payload.
+        /// 
+        /// The rest of the JSON keys will be ignored.
+        /// Using this also has the side-effect of being more efficient for Bulk Insert since PostgREST will not process the JSON and it’ll send it directly to PostgreSQL.
+        /// 
+        /// See: https://postgrest.org/en/stable/api.html#specifying-columns
+        /// </summary>
+        /// <param name="columns"></param>
+        /// <returns></returns>
+        public Table<T> Columns(string[] columns)
+        {
+            foreach (var column in columns)
+                this.columns.Add(column);
+
+            return this;
+        }
 
         /// <summary>
         /// Sets an offset with an optional foreign table reference.
@@ -423,7 +444,7 @@ namespace Postgrest
 
             filters.Add(new QueryFilter(model.PrimaryKeyColumn, Operator.Equals, model.PrimaryKeyValue.ToString()));
 
-            var request = Send<T>(method, model, options.ToHeaders(), cancellationToken);
+            var request = Send<T>(method, model, options.ToHeaders(), cancellationToken, isUpdate: true);
 
             Clear();
 
@@ -591,6 +612,11 @@ namespace Postgrest
                 query.Add("apikey", options.Headers["apikey"]);
             }
 
+            if (columns.Count > 0)
+            {
+                query["columns"] = string.Join(",", columns);
+            }
+
             foreach (var filter in filters)
             {
                 var parsedFilter = PrepareFilter(filter);
@@ -611,6 +637,21 @@ namespace Postgrest
             if (!string.IsNullOrEmpty(columnQuery))
             {
                 query["select"] = Regex.Replace(columnQuery, @"\s", "");
+            }
+
+            if (references.Count > 0)
+            {
+                if (query["select"] == null)
+                    query["select"] = "*";
+
+                foreach (var reference in references)
+                {
+                    if (reference.IncludeInQuery)
+                    {
+                        var columns = string.Join(",", reference.Columns.ToArray());
+                        query["select"] = query["select"] + $",{reference.TableName}!inner({columns})";
+                    }
+                }
             }
 
             if (!string.IsNullOrEmpty(onConflict))
@@ -639,19 +680,25 @@ namespace Postgrest
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        internal object PrepareRequestData(object data)
+        internal object PrepareRequestData(object data, bool isInsert = false, bool isUpdate = false)
         {
             if (data == null) return new Dictionary<string, string>();
+
+            var resolver = (PostgrestContractResolver)serializerSettings.ContractResolver;
+
+            resolver.SetState(isInsert, isUpdate);
+
+            var serialized = JsonConvert.SerializeObject(data, serializerSettings);
+
+            resolver.SetState();
 
             // Check if data is a Collection for the Insert Bulk case
             if (data is ICollection<T>)
             {
-                var serialized = JsonConvert.SerializeObject(data, serializerSettings);
                 return JsonConvert.DeserializeObject<List<object>>(serialized);
             }
             else
             {
-                var serialized = JsonConvert.SerializeObject(data, serializerSettings);
                 return JsonConvert.DeserializeObject<Dictionary<string, object>>(serialized, serializerSettings);
             }
         }
@@ -766,6 +813,7 @@ namespace Postgrest
 
             filters.Clear();
             orderers.Clear();
+            columns.Clear();
 
             rangeFrom = int.MinValue;
             rangeTo = int.MinValue;
@@ -798,23 +846,38 @@ namespace Postgrest
                 OnConflict(options.OnConflict);
             }
 
-            var request = Send<T>(method, data, options.ToHeaders(), cancellationToken);
+            var request = Send<T>(method, data, options.ToHeaders(), cancellationToken, isInsert: true);
 
             Clear();
 
             return request;
         }
 
-        private Task<BaseResponse> Send(HttpMethod method, object data, Dictionary<string, string> headers = null, CancellationToken cancellationToken = default)
+        private Task<BaseResponse> Send(HttpMethod method, object data, Dictionary<string, string> headers = null, CancellationToken cancellationToken = default, bool isInsert = false, bool isUpdate = false)
         {
             var requestHeaders = Helpers.PrepareRequestHeaders(method, headers, options, rangeFrom, rangeTo);
-            return Helpers.MakeRequest(method, GenerateUrl(), serializerSettings, PrepareRequestData(data), requestHeaders, cancellationToken);
+            var preparedData = PrepareRequestData(data, isInsert, isUpdate);
+            return Helpers.MakeRequest(method, GenerateUrl(), serializerSettings, preparedData, requestHeaders, cancellationToken);
         }
 
-        private Task<ModeledResponse<U>> Send<U>(HttpMethod method, object data, Dictionary<string, string> headers = null, CancellationToken cancellationToken = default) where U : BaseModel, new()
+        private Task<ModeledResponse<U>> Send<U>(HttpMethod method, object data, Dictionary<string, string> headers = null, CancellationToken cancellationToken = default, bool isInsert = false, bool isUpdate = false) where U : BaseModel, new()
         {
             var requestHeaders = Helpers.PrepareRequestHeaders(method, headers, options, rangeFrom, rangeTo);
-            return Helpers.MakeRequest<U>(method, GenerateUrl(), serializerSettings, PrepareRequestData(data), requestHeaders, cancellationToken);
+            var preparedData = PrepareRequestData(data, isInsert, isUpdate);
+            return Helpers.MakeRequest<U>(method, GenerateUrl(), serializerSettings, preparedData, requestHeaders, cancellationToken);
+        }
+
+        internal static string FindTableName(object obj = null)
+        {
+            var type = obj == null ? typeof(T) : obj is Type t ? t : obj.GetType();
+            var attr = Attribute.GetCustomAttribute(type, typeof(TableAttribute));
+
+            if (attr is TableAttribute tableAttr)
+            {
+                return tableAttr.Name;
+            }
+
+            return type.Name;
         }
     }
 }

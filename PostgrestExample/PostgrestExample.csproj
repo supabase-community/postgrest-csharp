@@ -9,7 +9,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Postgrest\Postgrest.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
 </Project>

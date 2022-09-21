@@ -1070,10 +1070,10 @@ namespace PostgrestTests
         {
             var client = Client.Initialize(baseUrl);
             var now = DateTime.UtcNow;
-            
+
             var cts = new CancellationTokenSource();
             cts.CancelAfter(TimeSpan.FromTicks(1));
-            
+
             var model = new KitchenSink
             {
                 DateTimeValue = now,
@@ -1091,6 +1091,52 @@ namespace PostgrestTests
                 Assert.IsInstanceOfType(ex, typeof(TaskCanceledException));
                 Assert.IsNull(insertResponse);
             }
+        }
+
+        [TestMethod("references")]
+        public async Task TestReferences()
+        {
+            var client = Client.Initialize(baseUrl);
+
+            var movies = await client.Table<Movie>().Get();
+            Assert.IsTrue(movies.Models.Count > 0);
+
+            var first = movies.Models.First();
+            Assert.IsTrue(first.Persons.Count > 0);
+
+            var people = first.Persons.First();
+            Assert.IsNotNull(people.Profile);
+
+            var person = await client.Table<Person>()
+                .Filter("first_name", Operator.Equals, "Bob")
+                .Single();
+
+            Assert.IsNotNull(person.Profile);
+
+            var byEmail = await client.Table<Person>()
+                .Filter("profile.email", Operator.Equals, "bob.saggett@supabase.io")
+                .Single();
+
+            Assert.IsNotNull(byEmail);
+        }
+
+        [TestMethod("columns")]
+        public async Task TestColumns()
+        {
+            var client = Client.Initialize(baseUrl);
+            
+            var movies = await client.Table<Movie>().Get();
+            var first = movies.Models.First();
+            var originalTime = first.CreatedAt;
+            var newTime = DateTime.UtcNow;
+            
+            first.Name = "I should be ignored on insert attempt.";
+            first.CreatedAt = newTime;
+
+            var result = await client.Table<Movie>().Columns(new[] { "created_at" }).Update(first);
+
+            Assert.AreNotEqual(first.Name, result.Models.First().Name);
+            Assert.AreNotEqual(originalTime, result.Models.First().CreatedAt);
         }
     }
 }

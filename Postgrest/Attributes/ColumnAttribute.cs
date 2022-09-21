@@ -18,13 +18,32 @@ namespace Postgrest.Attributes
     [AttributeUsage(AttributeTargets.Property)]
     public class ColumnAttribute : Attribute
     {
+        /// <summary>
+        /// The name in postgres of this column.
+        /// </summary>
         public string ColumnName { get; set; }
+        
+        /// <summary>
+        /// Specifies what should be serialied in the event this column's value is NULL
+        /// </summary>
         public NullValueHandling NullValueHandling { get; set; }
 
-        public ColumnAttribute([CallerMemberName] string columnName = null, NullValueHandling nullValueHandling = NullValueHandling.Include)
+        /// <summary>
+        /// If the performed query is an Insert or Upsert, should this value be ignored?
+        /// </summary>
+        public bool IgnoreOnInsert { get; set; }
+
+        /// <summary>
+        /// If the performed query is an Update, should this value be ignored?
+        /// </summary>
+        public bool IgnoreOnUpdate { get; set; }
+
+        public ColumnAttribute([CallerMemberName] string columnName = null, NullValueHandling nullValueHandling = NullValueHandling.Include, bool ignoreOnInsert = false, bool ignoreOnUpdate = false)
         {
             ColumnName = columnName;
             NullValueHandling = nullValueHandling;
+            IgnoreOnInsert = ignoreOnInsert;
+            IgnoreOnUpdate = ignoreOnUpdate;
         }
     }
 }
