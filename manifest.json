@@ -9,7 +9,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Attributes.ColumnAttribute.html",
-          "hash": "BvZIHzHFbJWj1JeIvmYxiQ=="
+          "hash": "JNSdjQHJ6NEmSRStPCpF/w=="
         }
       },
       "is_incremental": false,
@@ -21,7 +21,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Attributes.PostgrestContractResolver.html",
-          "hash": "2/2cxf+u3IfbbdgUYzrlCg=="
+          "hash": "Iki89GRP2ZgV5PFdwiNcyg=="
         }
       },
       "is_incremental": false,
@@ -41,6 +41,18 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Postgrest.Attributes.ReferenceAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Postgrest.Attributes.ReferenceAttribute.html",
+          "hash": "26FvQjEZs299yf0yexWiXQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Postgrest.Attributes.TableAttribute.yml",
       "output": {
         ".html": {
@@ -53,11 +65,23 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Postgrest.Attributes.callerName.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Postgrest.Attributes.callerName.html",
+          "hash": "23Yx0WoLJOSzHQPiPRzHxw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Postgrest.Attributes.yml",
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Attributes.html",
-          "hash": "ExYtqPzAl/xtBA4BB1lkWw=="
+          "hash": "wVY26x74gLtgTWEQeu8z0w=="
         }
       },
       "is_incremental": false,
@@ -453,7 +477,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Table-1.html",
-          "hash": "TT20I/x2UkU6uv4gXa6FdA=="
+          "hash": "EMWobGSOfb4+kbTF5oac2g=="
         }
       },
       "is_incremental": false,
@@ -501,7 +525,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "P97zZRjOfw4tNZ4BnPEdGg=="
+          "hash": "Y6SHA+TWzfR/fp7rL/50rA=="
         }
       },
       "is_incremental": false,
@@ -552,7 +576,7 @@
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 40,
+          "total_file_count": 42,
           "skipped_file_count": 0
         },
         "TocDocumentProcessor": {
