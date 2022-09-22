@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
+using Postgrest.Extensions;
 using Postgrest.Models;
 
 namespace Postgrest.Attributes
@@ -57,7 +58,7 @@ namespace Postgrest.Attributes
         /// <exception cref="Exception"></exception>
         public ReferenceAttribute(Type model, bool includeInQuery = true, bool ignoreOnInsert = true, bool ignoreOnUpdate = true, [CallerMemberName] string propertyName = "")
         {
-            if (model.BaseType != typeof(BaseModel))
+            if (!IsDerivedFromBaseModel(model))
             {
                 throw new Exception("RefernceAttribute must be used with Postgrest BaseModels.");
             }
@@ -89,9 +90,24 @@ namespace Postgrest.Attributes
                     else if (item is PrimaryKeyAttribute pk)
                         Columns.Add(pk.ColumnName);
                     else if (item is ReferenceAttribute ra)
-                        Columns.Add($"{ra.TableName}!inner({string.Join(",", ra.Columns.ToArray())})");
+                        if (ra.IncludeInQuery)
+                            Columns.Add($"{ra.TableName}!inner({string.Join(",", ra.Columns.ToArray())})");
                 }
             }
+        }
+        private bool IsDerivedFromBaseModel(Type type)
+        {
+            var isDerived = false;
+            foreach (var t in type.GetInheritanceHierarchy())
+            {
+                if (t == typeof(BaseModel))
+                {
+                    isDerived = true;
+                    break;
+                }
+            }
+
+            return isDerived;
         }
     }
 }
