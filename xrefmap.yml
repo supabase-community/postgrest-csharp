@@ -13,12 +13,6 @@ references:
   commentId: N:Postgrest.Attributes
   fullName: Postgrest.Attributes
   nameWithType: Postgrest.Attributes
-- uid: Postgrest.Attributes.callerName
-  name: callerName
-  href: api/Postgrest.Attributes.callerName.html
-  commentId: T:Postgrest.Attributes.callerName
-  fullName: Postgrest.Attributes.callerName
-  nameWithType: callerName
 - uid: Postgrest.Attributes.ColumnAttribute
   name: ColumnAttribute
   href: api/Postgrest.Attributes.ColumnAttribute.html

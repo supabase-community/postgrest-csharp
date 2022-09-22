@@ -65,23 +65,11 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "api/Postgrest.Attributes.callerName.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/Postgrest.Attributes.callerName.html",
-          "hash": "23Yx0WoLJOSzHQPiPRzHxw=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
       "source_relative_path": "api/Postgrest.Attributes.yml",
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Attributes.html",
-          "hash": "wVY26x74gLtgTWEQeu8z0w=="
+          "hash": "Jz55SVduVasB4eS7JC49ag=="
         }
       },
       "is_incremental": false,
@@ -525,7 +513,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "Y6SHA+TWzfR/fp7rL/50rA=="
+          "hash": "QzpkBCp4T/rTTI5t5Z6v1Q=="
         }
       },
       "is_incremental": false,
@@ -576,7 +564,7 @@
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 42,
+          "total_file_count": 41,
           "skipped_file_count": 0
         },
         "TocDocumentProcessor": {
