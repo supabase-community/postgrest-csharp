@@ -9,13 +9,6 @@
 </a>
 </p>
 
-------
-
-### BREAKING CHANGES FOR v2.0.1
-- `System.Range` (netstandard2.1) is not available in netstandard2.0, so all `System.Range` calls should be changed to `Postgrest.IntRange` instead.
-- `InsertOptions` has been generalized to `QueryOptions` which allows for setting return `minimal` or `representation`
-------
-
 Documentation can be found [here](https://supabase-community.github.io/postgrest-csharp/api/Postgrest.html).
 
 Postgrest-csharp is written primarily as a helper library for [supabase/supabase-csharp](https://github.com/supabase/supabase-csharp), however, it should be easy enough to use outside of the supabase ecosystem.
@@ -85,6 +78,113 @@ void Initialize()
     var response1 = await StatelessClient.Table<Message>(options).Get();
 }
 ```
+
+## Foreign Keys, Join Tables, and Relationships
+
+The Postgrest server does introspection on relationships between tables and supports returning query data from
+tables with these included. **Foreign key constrains are required for postgrest to detect these relationships.**
+
+This library implements the attribute, `Reference` to specify on a model when a relationship should be included in a query.
+
+- [One-to-one Relationships](https://postgrest.org/en/stable/api.html#one-to-one-relationships): One-to-one relationships are detected if there’s an unique constraint on a foreign key.
+- [One-to-many Relationships](https://postgrest.org/en/stable/api.html#one-to-many-relationships): The inverse one-to-many relationship between two tables is detected based on the foreign key reference.
+- [Many-to-many Relationships](https://postgrest.org/en/stable/api.html#many-to-many-relationships): Many-to-many relationships are detected based on the join table. The join table must contain foreign keys to other two tables and they must be part of its composite key.
+
+Given the following schema:
+
+![example schema](.github/postgrest-relationship-example.drawio.png)
+
+We can define the following models:
+
+```c#
+[Table("movie")]
+public class Movie : BaseModel
+{
+    [PrimaryKey("id", false)]
+    public int Id { get; set; }
+
+    [Column("name")]
+    public string Name { get; set; }
+
+    [Reference(typeof(Person))]
+    public List<Person> Persons { get; set; }
+
+
+    [Column("created_at")]
+    public DateTime CreatedAt { get; set; }
+}
+
+[Table("person")]
+public class Person : BaseModel
+{
+    [PrimaryKey("id",false)]
+    public int Id { get; set; }
+
+    [Column("first_name")]
+    public string FirstName { get; set; }
+
+    [Column("last_name")]
+    public string LastName { get; set; }
+
+    [Reference(typeof(Profile))]
+    public Profile Profile { get; set; }
+
+    [Column("created_at")]
+    public DateTime CreatedAt { get; set; }
+}
+
+[Table("profile")]
+public class Profile : BaseModel
+{
+    [Column("email")]
+    public string Email { get; set; }
+}
+```
+
+**Note that each related model should inherit `BaseModel` and specify its `Table` and `Column` attributes as usual.**
+
+The `Reference` Attribute by default will include the referenced model in all queries on the table (this can be disabled in its constructor).
+
+As such, a query on the `Movie` model (given the above) would return something like:
+```json
+[
+    {
+        id: 1,
+        created_at: "2022-08-20T00:29:45.400188",
+        name: "Top Gun: Maverick",
+        person: [
+            {
+            id: 1,
+            created_at: "2022-08-20T00:30:02.120528",
+            first_name: "Tom",
+            last_name: "Cruise",
+            profile: {
+                profile_id: 1,
+                email: "tom.cruise@supabase.io",
+                created_at: "2022-08-20T00:30:33.72443"
+                }
+            },
+            {
+                id: 3,
+                created_at: "2022-08-20T00:30:33.72443",
+                first_name: "Bob",
+                last_name: "Saggett",
+                profile: {
+                    profile_id: 3,
+                    email: "bob.saggett@supabase.io",
+                    created_at: "2022-08-20T00:30:33.72443"
+                }
+            }
+        ]
+    },
+    // ...
+]
+```
+
+**Further Notes**:
+- Postgrest does not support nested inserts or upserts. Relational keys on models will be ignored when attempting to insert or upsert on a root model.
+- The `Relation` attribute uses reflection to only select the attributes specified on the Class Model (i.e. the `Profile` model has a property only for `email`, only the property will be requested in the query).
+
 
 ## Status
 
