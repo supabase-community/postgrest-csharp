@@ -227,6 +227,11 @@ namespace Postgrest
             return this;
         }
 
+        /// <summary>
+        /// Fills in query parameters based on a given model's primary key(s).
+        /// </summary>
+        /// <param name="model">A model with a primary key column</param>
+        /// <returns></returns>
         public Table<T> Match(T model)
         {
             foreach (var kvp in model.PrimaryKey)
