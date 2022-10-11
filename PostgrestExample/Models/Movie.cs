@@ -48,4 +48,17 @@ namespace PostgrestExample.Models
         [Column("email")]
         public string Email { get; set; }
     }
+
+    [Table("movie_person")]
+    public class MoviePerson : BaseModel
+    {
+        [PrimaryKey("id", false)]
+        public int Id { get; set; }
+
+        [PrimaryKey("movie_id", false)]
+        public int MovieId { get; set; }
+
+        [PrimaryKey("person_id", false)]
+        public int PersonId { get; set; }
+    }
 }

@@ -227,6 +227,16 @@ namespace Postgrest
             return this;
         }
 
+        public Table<T> Match(T model)
+        {
+            foreach (var kvp in model.PrimaryKey)
+            {
+                filters.Add(new QueryFilter(kvp.Key.ColumnName, Operator.Equals, kvp.Value));
+            }
+
+            return this;
+        }
+
         /// <summary>
         /// Finds all rows whose columns match the specified `query` object.
         /// </summary>
@@ -442,7 +452,7 @@ namespace Postgrest
 
             method = new HttpMethod("PATCH");
 
-            filters.Add(new QueryFilter(model.PrimaryKeyColumn, Operator.Equals, model.PrimaryKeyValue.ToString()));
+            Match(model);
 
             var request = Send<T>(method, model, options.ToHeaders(), cancellationToken, isUpdate: true);
 
@@ -485,7 +495,9 @@ namespace Postgrest
             }
 
             method = HttpMethod.Delete;
-            Filter(model.PrimaryKeyColumn, Operator.Equals, model.PrimaryKeyValue.ToString());
+            
+            Match(model);
+
             var request = Send<T>(method, null, options.ToHeaders(), cancellationToken);
             Clear();
             return request;

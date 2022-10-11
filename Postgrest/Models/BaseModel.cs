@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -18,30 +20,6 @@ namespace Postgrest.Models
         public virtual Task Delete<T>(CancellationToken cancellationToken = default) where T : BaseModel, new() =>
             Client.Instance.Table<T>().Delete((T) this, cancellationToken: cancellationToken);
 
-        /// <summary>
-        /// Gets the value of the PrimaryKey from a model's instance as defined by the [PrimaryKey] attribute on a property on the model.
-        /// </summary>
-        [JsonIgnore]
-        public object PrimaryKeyValue
-        {
-            get
-            {
-                var props = this.GetType().GetProperties();
-
-                foreach (var prop in props)
-                {
-                    var hasAttr = Attribute.GetCustomAttribute(prop, typeof(PrimaryKeyAttribute));
-
-                    if (hasAttr is PrimaryKeyAttribute)
-                    {
-                        return prop.GetValue(this);
-                    }
-                }
-
-                throw new Exception("Models must specify their Primary Key via the [PrimaryKey] Attribute");
-            }
-        }
-
         [JsonIgnore]
         public string TableName
         {
@@ -56,13 +34,14 @@ namespace Postgrest.Models
         }
 
         /// <summary>
-        /// Gets the name of the PrimaryKey column on a model's instance as defined by the [PrimaryKey] attribute on a property on the model.
+        /// Gets the values of the PrimaryKey columns (there can be multiple) on a model's instance as defined by the [PrimaryKey] attributes on a property on the model.
         /// </summary>
         [JsonIgnore]
-        public string PrimaryKeyColumn
+        public Dictionary<PrimaryKeyAttribute, object> PrimaryKey
         {
             get
             {
+                var result = new Dictionary<PrimaryKeyAttribute, object>();
                 var propertyInfos = this.GetType().GetProperties();
 
                 foreach (var info in propertyInfos)
@@ -71,8 +50,13 @@ namespace Postgrest.Models
 
                     if (hasAttr is PrimaryKeyAttribute pka)
                     {
-                        return pka.ColumnName;
+                        result.Add(pka, info.GetValue(this));
                     }
+                }
+
+                if (result.Count > 0)
+                {
+                    return result;
                 }
 
                 throw new Exception("Models must specify their Primary Key via the [PrimaryKey] Attribute");
