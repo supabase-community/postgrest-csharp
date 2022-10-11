@@ -86,7 +86,7 @@ tables with these included. **Foreign key constrains are required for postgrest 
 
 This library implements the attribute, `Reference` to specify on a model when a relationship should be included in a query.
 
-- [One-to-one Relationships](https://postgrest.org/en/stable/api.html#one-to-one-relationships): One-to-one relationships are detected if there’s an unique constraint on a foreign key.
+- [One-to-one Relationships](https://postgrest.org/en/stable/api.html#one-to-one-relationships): One-to-one relationships are detected if thereâ€™s an unique constraint on a foreign key.
 - [One-to-many Relationships](https://postgrest.org/en/stable/api.html#one-to-many-relationships): The inverse one-to-many relationship between two tables is detected based on the foreign key reference.
 - [Many-to-many Relationships](https://postgrest.org/en/stable/api.html#many-to-many-relationships): Many-to-many relationships are detected based on the join table. The join table must contain foreign keys to other two tables and they must be part of its composite key.
 
@@ -146,7 +146,7 @@ public class Profile : BaseModel
 The `Reference` Attribute by default will include the referenced model in all queries on the table (this can be disabled in its constructor).
 
 As such, a query on the `Movie` model (given the above) would return something like:
-```json
+```js
 [
     {
         id: 1,
