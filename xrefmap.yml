@@ -1248,32 +1248,19 @@ references:
   fullName.vb: Postgrest.Models.BaseModel.Delete(Of T)(CancellationToken)
   nameWithType: BaseModel.Delete<T>(CancellationToken)
   nameWithType.vb: BaseModel.Delete(Of T)(CancellationToken)
-- uid: Postgrest.Models.BaseModel.PrimaryKeyColumn
-  name: PrimaryKeyColumn
-  href: api/Postgrest.Models.BaseModel.html#Postgrest_Models_BaseModel_PrimaryKeyColumn
-  commentId: P:Postgrest.Models.BaseModel.PrimaryKeyColumn
-  fullName: Postgrest.Models.BaseModel.PrimaryKeyColumn
-  nameWithType: BaseModel.PrimaryKeyColumn
-- uid: Postgrest.Models.BaseModel.PrimaryKeyColumn*
-  name: PrimaryKeyColumn
-  href: api/Postgrest.Models.BaseModel.html#Postgrest_Models_BaseModel_PrimaryKeyColumn_
-  commentId: Overload:Postgrest.Models.BaseModel.PrimaryKeyColumn
+- uid: Postgrest.Models.BaseModel.PrimaryKey
+  name: PrimaryKey
+  href: api/Postgrest.Models.BaseModel.html#Postgrest_Models_BaseModel_PrimaryKey
+  commentId: P:Postgrest.Models.BaseModel.PrimaryKey
+  fullName: Postgrest.Models.BaseModel.PrimaryKey
+  nameWithType: BaseModel.PrimaryKey
+- uid: Postgrest.Models.BaseModel.PrimaryKey*
+  name: PrimaryKey
+  href: api/Postgrest.Models.BaseModel.html#Postgrest_Models_BaseModel_PrimaryKey_
+  commentId: Overload:Postgrest.Models.BaseModel.PrimaryKey
   isSpec: "True"
-  fullName: Postgrest.Models.BaseModel.PrimaryKeyColumn
-  nameWithType: BaseModel.PrimaryKeyColumn
-- uid: Postgrest.Models.BaseModel.PrimaryKeyValue
-  name: PrimaryKeyValue
-  href: api/Postgrest.Models.BaseModel.html#Postgrest_Models_BaseModel_PrimaryKeyValue
-  commentId: P:Postgrest.Models.BaseModel.PrimaryKeyValue
-  fullName: Postgrest.Models.BaseModel.PrimaryKeyValue
-  nameWithType: BaseModel.PrimaryKeyValue
-- uid: Postgrest.Models.BaseModel.PrimaryKeyValue*
-  name: PrimaryKeyValue
-  href: api/Postgrest.Models.BaseModel.html#Postgrest_Models_BaseModel_PrimaryKeyValue_
-  commentId: Overload:Postgrest.Models.BaseModel.PrimaryKeyValue
-  isSpec: "True"
-  fullName: Postgrest.Models.BaseModel.PrimaryKeyValue
-  nameWithType: BaseModel.PrimaryKeyValue
+  fullName: Postgrest.Models.BaseModel.PrimaryKey
+  nameWithType: BaseModel.PrimaryKey
 - uid: Postgrest.Models.BaseModel.TableName
   name: TableName
   href: api/Postgrest.Models.BaseModel.html#Postgrest_Models_BaseModel_TableName
@@ -2110,6 +2097,14 @@ references:
   fullName.vb: Postgrest.Table(Of T).Limit
   nameWithType: Table<T>.Limit
   nameWithType.vb: Table(Of T).Limit
+- uid: Postgrest.Table`1.Match(`0)
+  name: Match(T)
+  href: api/Postgrest.Table-1.html#Postgrest_Table_1_Match__0_
+  commentId: M:Postgrest.Table`1.Match(`0)
+  fullName: Postgrest.Table<T>.Match(T)
+  fullName.vb: Postgrest.Table(Of T).Match(T)
+  nameWithType: Table<T>.Match(T)
+  nameWithType.vb: Table(Of T).Match(T)
 - uid: Postgrest.Table`1.Match(Dictionary{System.String,System.String})
   name: Match(Dictionary<String, String>)
   href: api/Postgrest.Table-1.html#Postgrest_Table_1_Match_Dictionary_System_String_System_String__
