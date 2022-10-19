@@ -667,14 +667,13 @@ namespace Postgrest
                     {
                         var columns = string.Join(",", reference.Columns.ToArray());
 
-                        switch (reference.EmbedType)
+                        if (reference.ShouldFilterTopLevel)
                         {
-                            case ReferenceAttribute.EmbedQueryType.Standard:
-                                query["select"] = query["select"] + $",{reference.TableName}({columns})";
-                                break;
-                            case ReferenceAttribute.EmbedQueryType.Inner:
-                                query["select"] = query["select"] + $",{reference.TableName}!inner({columns})";
-                                break;
+                            query["select"] = query["select"] + $",{reference.TableName}!inner({columns})";
+                        }
+                        else
+                        {
+                            query["select"] = query["select"] + $",{reference.TableName}({columns})";
                         }
                     }
                 }

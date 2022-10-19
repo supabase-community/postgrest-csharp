@@ -15,17 +15,6 @@ namespace Postgrest.Attributes
     [AttributeUsage(AttributeTargets.Property)]
     public class ReferenceAttribute : Attribute
     {
-
-        /// <summary>
-        /// Determines type of resource embedding
-        /// In order to filter the top level rows you need to add use EmbedType.Inner, otherwise use EmbedType.Standard
-        /// </summary>
-        public enum EmbedQueryType
-        {
-            Standard,
-            Inner,
-        }
-
         /// <summary>
         /// Type of the model referenced
         /// </summary>
@@ -62,18 +51,20 @@ namespace Postgrest.Attributes
         public bool IncludeInQuery { get; private set; }
 
         /// <summary>
-        /// In order to filter the top level rows you need to add use EmbedType.Inner, otherwise use EmbedType.Standard
+        /// As to whether the query will filter top-level rows.
+        /// 
+        /// See: https://postgrest.org/en/stable/api.html#resource-embedding
         /// </summary>
-        public EmbedQueryType EmbedType { get; private set; }
+        public bool ShouldFilterTopLevel { get; private set; }
 
         /// <param name="model">Model referenced</param>
         /// <param name="includeInQuery">Should referenced be included in queries?</param>
         /// <param name="ignoreOnInsert">Should reference data be excluded from inserts/upserts?</param>
         /// <param name="ignoreOnUpdate">Should reference data be excluded from updates?</param>
-        /// <param name="embedType">In order to filter the top level rows you need to add use EmbedType.Inner, otherwise use EmbedType.Standard</param>
+        /// <param name="shouldFilterTopLevel">As to whether the query will filter top-level rows.</param>
         /// <param name="propertyName"></param>
         /// <exception cref="Exception"></exception>
-        public ReferenceAttribute(Type model, bool includeInQuery = true, bool ignoreOnInsert = true, bool ignoreOnUpdate = true, EmbedQueryType embedType = EmbedQueryType.Inner, [CallerMemberName] string propertyName = "")
+        public ReferenceAttribute(Type model, bool includeInQuery = true, bool ignoreOnInsert = true, bool ignoreOnUpdate = true, bool shouldFilterTopLevel = true, [CallerMemberName] string propertyName = "")
         {
             if (!IsDerivedFromBaseModel(model))
             {
@@ -85,7 +76,7 @@ namespace Postgrest.Attributes
             IgnoreOnInsert = ignoreOnInsert;
             IgnoreOnUpdate = ignoreOnUpdate;
             PropertyName = propertyName;
-            EmbedType = embedType;
+            ShouldFilterTopLevel = shouldFilterTopLevel;
 
             var attr = GetCustomAttribute(model, typeof(TableAttribute));
             if (attr is TableAttribute tableAttr)
@@ -115,14 +106,13 @@ namespace Postgrest.Attributes
                     {
                         if (refAttr.IncludeInQuery)
                         {
-                            switch (EmbedType)
+                            if (ShouldFilterTopLevel)
                             {
-                                case EmbedQueryType.Inner:
-                                    Columns.Add($"{refAttr.TableName}!inner({string.Join(",", refAttr.Columns.ToArray())})");
-                                    break;
-                                case EmbedQueryType.Standard:
-                                    Columns.Add($"{refAttr.TableName}({string.Join(",", refAttr.Columns.ToArray())})");
-                                    break;
+                                Columns.Add($"{refAttr.TableName}!inner({string.Join(",", refAttr.Columns.ToArray())})");
+                            }
+                            else
+                            {
+                                Columns.Add($"{refAttr.TableName}({string.Join(",", refAttr.Columns.ToArray())})");
                             }
                         }
                     }
