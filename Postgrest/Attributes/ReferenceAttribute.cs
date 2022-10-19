@@ -15,6 +15,17 @@ namespace Postgrest.Attributes
     [AttributeUsage(AttributeTargets.Property)]
     public class ReferenceAttribute : Attribute
     {
+
+        /// <summary>
+        /// Determines type of resource embedding
+        /// In order to filter the top level rows you need to add use EmbedType.Inner, otherwise use EmbedType.Standard
+        /// </summary>
+        public enum EmbedQueryType
+        {
+            Standard,
+            Inner,
+        }
+
         /// <summary>
         /// Type of the model referenced
         /// </summary>
@@ -38,25 +49,31 @@ namespace Postgrest.Attributes
         /// <summary>
         /// If the performed query is an Insert or Upsert, should this value be ignored? (DEFAULT TRUE)
         /// </summary>
-        public bool IgnoreOnInsert { get; set; }
+        public bool IgnoreOnInsert { get; private set; }
 
         /// <summary>
         /// If the performed query is an Update, should this value be ignored? (DEFAULT TRUE)
         /// </summary>
-        public bool IgnoreOnUpdate { get; set; }
+        public bool IgnoreOnUpdate { get; private set; }
 
         /// <summary>
         /// If Reference should automatically be included in queries on this reference. (DEFAULT TRUE)
         /// </summary>
-        public bool IncludeInQuery { get; set; }
+        public bool IncludeInQuery { get; private set; }
+
+        /// <summary>
+        /// In order to filter the top level rows you need to add use EmbedType.Inner, otherwise use EmbedType.Standard
+        /// </summary>
+        public EmbedQueryType EmbedType { get; private set; }
 
         /// <param name="model">Model referenced</param>
         /// <param name="includeInQuery">Should referenced be included in queries?</param>
         /// <param name="ignoreOnInsert">Should reference data be excluded from inserts/upserts?</param>
         /// <param name="ignoreOnUpdate">Should reference data be excluded from updates?</param>
+        /// <param name="embedType">In order to filter the top level rows you need to add use EmbedType.Inner, otherwise use EmbedType.Standard</param>
         /// <param name="propertyName"></param>
         /// <exception cref="Exception"></exception>
-        public ReferenceAttribute(Type model, bool includeInQuery = true, bool ignoreOnInsert = true, bool ignoreOnUpdate = true, [CallerMemberName] string propertyName = "")
+        public ReferenceAttribute(Type model, bool includeInQuery = true, bool ignoreOnInsert = true, bool ignoreOnUpdate = true, EmbedQueryType embedType = EmbedQueryType.Inner, [CallerMemberName] string propertyName = "")
         {
             if (!IsDerivedFromBaseModel(model))
             {
@@ -68,6 +85,7 @@ namespace Postgrest.Attributes
             IgnoreOnInsert = ignoreOnInsert;
             IgnoreOnUpdate = ignoreOnUpdate;
             PropertyName = propertyName;
+            EmbedType = embedType;
 
             var attr = GetCustomAttribute(model, typeof(TableAttribute));
             if (attr is TableAttribute tableAttr)
@@ -86,12 +104,28 @@ namespace Postgrest.Attributes
                 foreach (var item in attrs)
                 {
                     if (item is ColumnAttribute col)
+                    {
                         Columns.Add(col.ColumnName);
+                    }
                     else if (item is PrimaryKeyAttribute pk)
+                    {
                         Columns.Add(pk.ColumnName);
-                    else if (item is ReferenceAttribute ra)
-                        if (ra.IncludeInQuery)
-                            Columns.Add($"{ra.TableName}!inner({string.Join(",", ra.Columns.ToArray())})");
+                    }
+                    else if (item is ReferenceAttribute refAttr)
+                    {
+                        if (refAttr.IncludeInQuery)
+                        {
+                            switch (EmbedType)
+                            {
+                                case EmbedQueryType.Inner:
+                                    Columns.Add($"{refAttr.TableName}!inner({string.Join(",", refAttr.Columns.ToArray())})");
+                                    break;
+                                case EmbedQueryType.Standard:
+                                    Columns.Add($"{refAttr.TableName}({string.Join(",", refAttr.Columns.ToArray())})");
+                                    break;
+                            }
+                        }
+                    }
                 }
             }
         }

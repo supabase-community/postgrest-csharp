@@ -500,7 +500,7 @@ namespace Postgrest
             }
 
             method = HttpMethod.Delete;
-            
+
             Match(model);
 
             var request = Send<T>(method, null, options.ToHeaders(), cancellationToken);
@@ -666,7 +666,16 @@ namespace Postgrest
                     if (reference.IncludeInQuery)
                     {
                         var columns = string.Join(",", reference.Columns.ToArray());
-                        query["select"] = query["select"] + $",{reference.TableName}!inner({columns})";
+
+                        switch (reference.EmbedType)
+                        {
+                            case ReferenceAttribute.EmbedQueryType.Standard:
+                                query["select"] = query["select"] + $",{reference.TableName}({columns})";
+                                break;
+                            case ReferenceAttribute.EmbedQueryType.Inner:
+                                query["select"] = query["select"] + $",{reference.TableName}!inner({columns})";
+                                break;
+                        }
                     }
                 }
             }
