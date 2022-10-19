@@ -38,25 +38,33 @@ namespace Postgrest.Attributes
         /// <summary>
         /// If the performed query is an Insert or Upsert, should this value be ignored? (DEFAULT TRUE)
         /// </summary>
-        public bool IgnoreOnInsert { get; set; }
+        public bool IgnoreOnInsert { get; private set; }
 
         /// <summary>
         /// If the performed query is an Update, should this value be ignored? (DEFAULT TRUE)
         /// </summary>
-        public bool IgnoreOnUpdate { get; set; }
+        public bool IgnoreOnUpdate { get; private set; }
 
         /// <summary>
         /// If Reference should automatically be included in queries on this reference. (DEFAULT TRUE)
         /// </summary>
-        public bool IncludeInQuery { get; set; }
+        public bool IncludeInQuery { get; private set; }
+
+        /// <summary>
+        /// As to whether the query will filter top-level rows.
+        /// 
+        /// See: https://postgrest.org/en/stable/api.html#resource-embedding
+        /// </summary>
+        public bool ShouldFilterTopLevel { get; private set; }
 
         /// <param name="model">Model referenced</param>
         /// <param name="includeInQuery">Should referenced be included in queries?</param>
         /// <param name="ignoreOnInsert">Should reference data be excluded from inserts/upserts?</param>
         /// <param name="ignoreOnUpdate">Should reference data be excluded from updates?</param>
+        /// <param name="shouldFilterTopLevel">As to whether the query will filter top-level rows.</param>
         /// <param name="propertyName"></param>
         /// <exception cref="Exception"></exception>
-        public ReferenceAttribute(Type model, bool includeInQuery = true, bool ignoreOnInsert = true, bool ignoreOnUpdate = true, [CallerMemberName] string propertyName = "")
+        public ReferenceAttribute(Type model, bool includeInQuery = true, bool ignoreOnInsert = true, bool ignoreOnUpdate = true, bool shouldFilterTopLevel = true, [CallerMemberName] string propertyName = "")
         {
             if (!IsDerivedFromBaseModel(model))
             {
@@ -68,6 +76,7 @@ namespace Postgrest.Attributes
             IgnoreOnInsert = ignoreOnInsert;
             IgnoreOnUpdate = ignoreOnUpdate;
             PropertyName = propertyName;
+            ShouldFilterTopLevel = shouldFilterTopLevel;
 
             var attr = GetCustomAttribute(model, typeof(TableAttribute));
             if (attr is TableAttribute tableAttr)
@@ -86,12 +95,27 @@ namespace Postgrest.Attributes
                 foreach (var item in attrs)
                 {
                     if (item is ColumnAttribute col)
+                    {
                         Columns.Add(col.ColumnName);
+                    }
                     else if (item is PrimaryKeyAttribute pk)
+                    {
                         Columns.Add(pk.ColumnName);
-                    else if (item is ReferenceAttribute ra)
-                        if (ra.IncludeInQuery)
-                            Columns.Add($"{ra.TableName}!inner({string.Join(",", ra.Columns.ToArray())})");
+                    }
+                    else if (item is ReferenceAttribute refAttr)
+                    {
+                        if (refAttr.IncludeInQuery)
+                        {
+                            if (ShouldFilterTopLevel)
+                            {
+                                Columns.Add($"{refAttr.TableName}!inner({string.Join(",", refAttr.Columns.ToArray())})");
+                            }
+                            else
+                            {
+                                Columns.Add($"{refAttr.TableName}({string.Join(",", refAttr.Columns.ToArray())})");
+                            }
+                        }
+                    }
                 }
             }
         }
