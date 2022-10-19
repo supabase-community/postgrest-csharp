@@ -1,5 +1,9 @@
 ﻿# Changelog
 
+## 2.1.1 - 2022-10-19
+
+- Re: [#50](https://github.com/supabase-community/postgrest-csharp/issues/50) & [#51](https://github.com/supabase-community/postgrest-csharp/pull/51) Adds `shouldFilterTopRows` as constructor parameter for `ReferenceAttribute` which defaults to `true` to match current API expectations.
+
 ## 2.1.0 - 2022-10-11
 
 - [Minor] Breaking API change: Remove `BaseModel.PrimaryKeyValue` and `BaseModel.PrimaryKeyColumn` in favor of a `PrimaryKey` dictionary with support for composite keys.
