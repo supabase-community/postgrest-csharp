@@ -57,12 +57,12 @@ void Initialize()
     var client = Client.Initialize("http://localhost:3000");
 
     // Get All Messages
-    var response = await Client.Table<Message>().Get();
+    var response = await client.Table<Message>().Get();
     List<Message> models = response.Models;
 
     // Insert
     var newMessage = new Message { UserName = "acupofjose", ChannelId = 1 };
-    await Client.Table<Message>().Insert();
+    await client.Table<Message>().Insert();
 
     // Update
     var model = response.Models.First();
