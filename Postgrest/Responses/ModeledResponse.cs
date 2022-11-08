@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Postgrest.Extensions;
+using Postgrest.Models;
 
 namespace Postgrest.Responses
 {
@@ -8,13 +10,13 @@ namespace Postgrest.Responses
     /// A representation of a successful Postgrest response that transforms the string response into a C# Modelled response.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class ModeledResponse<T> : BaseResponse
+    public class ModeledResponse<T> : BaseResponse where T : BaseModel, new()
     {
         private JsonSerializerSettings SerializerSettings { get; set; }
 
-        public List<T> Models { get; private set; } = new List<T>();
+        public List<T>? Models { get; private set; } = new List<T>();
 
-        public ModeledResponse(BaseResponse baseResponse, JsonSerializerSettings serializerSettings, bool shouldParse = true)
+        public ModeledResponse(BaseResponse baseResponse, JsonSerializerSettings serializerSettings, bool shouldParse = true) : base(baseResponse.ClientOptions, baseResponse.ResponseMessage, baseResponse.Content)
         {
             SerializerSettings = serializerSettings;
             Content = baseResponse.Content;
@@ -22,17 +24,33 @@ namespace Postgrest.Responses
 
             if (shouldParse && !string.IsNullOrEmpty(Content))
             {
-                var token = JToken.Parse(Content);
+                var token = JToken.Parse(Content!);
 
                 if (token is JArray)
                 {
-                    Models = JsonConvert.DeserializeObject<List<T>>(Content, serializerSettings);
+                    Models = JsonConvert.DeserializeObject<List<T>>(Content!, serializerSettings);
+
+                    if (Models != null)
+                    {
+                        foreach (var model in Models)
+                        {
+                            model.BaseUrl = baseResponse.ResponseMessage!.RequestMessage.RequestUri.GetBaseUrl();
+                            model.RequestClientOptions = ClientOptions;
+                        }
+                    }
                 }
                 else if (token is JObject)
                 {
                     Models.Clear();
-                    T obj = JsonConvert.DeserializeObject<T>(Content, serializerSettings);
-                    Models.Add(obj);
+                    T? obj = JsonConvert.DeserializeObject<T>(Content!, serializerSettings);
+
+                    if (obj != null)
+                    {
+                        obj.BaseUrl = baseResponse.ResponseMessage!.RequestMessage.RequestUri.GetBaseUrl();
+                        obj.RequestClientOptions = ClientOptions;
+
+                        Models.Add(obj);
+                    }
                 }
             }
         }

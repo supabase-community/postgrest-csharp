@@ -12,13 +12,20 @@
 		<PackageProjectUrl>https://github.com/supabase/postgrest-csharp</PackageProjectUrl>
 		<Summary>Library to interact with postgREST servers</Summary>
 		<Title>postgrest-csharp</Title>
-		<Description>Postgrest-csharp is written primarily as a helper library for supabase/supabase-csharp, however, it should be easy enough to use outside of the supabase ecosystem.
+		<Description>
+			Postgrest-csharp is written primarily as a helper library for supabase/supabase-csharp, however, it should be easy enough to use outside of the supabase ecosystem.
 
-The bulk of this library is a translation and c-sharp-ification of the supabase/postgrest-js library.</Description>
+			The bulk of this library is a translation and c-sharp-ification of the supabase/postgrest-js library.
+		</Description>
 		<PackageIconUrl>https://avatars.githubusercontent.com/u/54469796?s=200&amp;v=4</PackageIconUrl>
 		<PackageTags>supabase,postgrest</PackageTags>
 		<ReleaseVersion>2.1.1</ReleaseVersion>
 		<PackageVersion>2.1.1</PackageVersion>
+	</PropertyGroup>
+	<PropertyGroup>
+		<Nullable>enable</Nullable>
+		<LangVersion>8.0</LangVersion>
+		<WarningsAsErrors>CS8600;CS8602;CS8603</WarningsAsErrors>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Version)' == '' ">
 		<VersionPrefix Condition=" '$(VersionPrefix)' == '' ">2.1.1</VersionPrefix>
@@ -28,10 +35,10 @@ The bulk of this library is a translation and c-sharp-ification of the supabase/
 		<Version Condition=" '$(Version)' == '' ">$(VersionPrefix)</Version>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-	  <LangVersion>8.0</LangVersion>
+		<LangVersion>8.0</LangVersion>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-	  <LangVersion>8.0</LangVersion>
+		<LangVersion>8.0</LangVersion>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />

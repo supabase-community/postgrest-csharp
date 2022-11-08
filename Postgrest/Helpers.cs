@@ -10,6 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using Newtonsoft.Json.Linq;
 using Postgrest.Extensions;
+using Postgrest.Models;
 
 [assembly: InternalsVisibleTo("PostgrestTests")]
 
@@ -18,13 +19,13 @@ namespace Postgrest
     internal static class Helpers
     {
         public static T GetPropertyValue<T>(object obj, string propName) =>
-            (T) obj.GetType().GetProperty(propName)?.GetValue(obj, null);
+            (T)obj.GetType().GetProperty(propName).GetValue(obj, null);
 
         public static T GetCustomAttribute<T>(object obj) where T : Attribute =>
-            (T) Attribute.GetCustomAttribute(obj.GetType(), typeof(T));
+            (T)Attribute.GetCustomAttribute(obj.GetType(), typeof(T));
 
         public static T GetCustomAttribute<T>(Type type) where T : Attribute =>
-            (T) Attribute.GetCustomAttribute(type, typeof(T));
+            (T)Attribute.GetCustomAttribute(type, typeof(T));
 
         private static readonly HttpClient Client = new HttpClient();
 
@@ -39,15 +40,9 @@ namespace Postgrest
         /// <param name="serializerSettings"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public static async Task<ModeledResponse<T>> MakeRequest<T>(
-            HttpMethod method,
-            string url,
-            JsonSerializerSettings serializerSettings,
-            object data = null,
-            Dictionary<string, string> headers = null,
-            CancellationToken cancellationToken = default)
+        public static async Task<ModeledResponse<T>> MakeRequest<T>(ClientOptions clientOptions, HttpMethod method, string url, JsonSerializerSettings serializerSettings, object? data = null, Dictionary<string, string>? headers = null, CancellationToken cancellationToken = default) where T : BaseModel, new()
         {
-            var baseResponse = await MakeRequest(method, url, serializerSettings, data, headers, cancellationToken);
+            var baseResponse = await MakeRequest(clientOptions, method, url, serializerSettings, data, headers, cancellationToken);
             return new ModeledResponse<T>(baseResponse, serializerSettings);
         }
 
@@ -61,13 +56,7 @@ namespace Postgrest
         /// <param name="serializerSettings"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public static async Task<BaseResponse> MakeRequest(
-            HttpMethod method,
-            string url,
-            JsonSerializerSettings serializerSettings,
-            object data = null,
-            Dictionary<string, string> headers = null,
-            CancellationToken cancellationToken = default)
+        public static async Task<BaseResponse> MakeRequest(ClientOptions clientOptions, HttpMethod method, string url, JsonSerializerSettings serializerSettings, object? data = null, Dictionary<string, string>? headers = null, CancellationToken cancellationToken = default)
         {
             var builder = new UriBuilder(url);
             var query = HttpUtility.ParseQueryString(builder.Query);
@@ -104,13 +93,13 @@ namespace Postgrest
                     requestMessage.Headers.TryAddWithoutValidation(kvp.Key, kvp.Value);
                 }
             }
-            
+
             var response = await Client.SendAsync(requestMessage, cancellationToken);
             var content = await response.Content.ReadAsStringAsync();
 
             if (!response.IsSuccessStatusCode)
             {
-                ErrorResponse obj = null;
+                ErrorResponse? obj = null;
 
                 try
                 {
@@ -118,18 +107,17 @@ namespace Postgrest
                 }
                 catch (JsonSerializationException)
                 {
-                    obj = new ErrorResponse
+                    obj = new ErrorResponse(clientOptions, response, content)
                     {
                         Message =
                             "Invalid or Empty response received. Are you trying to update or delete a record that does not exist?"
                     };
                 }
 
-                obj.Content = content;
-                throw new RequestException(response, obj);
+                throw new RequestException(response, obj!);
             }
 
-            return new BaseResponse {Content = content, ResponseMessage = response};
+            return new BaseResponse(clientOptions, response, content);
         }
 
         /// <summary>
@@ -141,12 +129,7 @@ namespace Postgrest
         /// <param name="rangeFrom"></param>
         /// <param name="rangeTo"></param>
         /// <returns></returns>
-        public static Dictionary<string, string> PrepareRequestHeaders(
-            HttpMethod method,
-            Dictionary<string, string> headers = null,
-            ClientOptions options = null,
-            int rangeFrom = int.MinValue,
-            int rangeTo = int.MinValue)
+        public static Dictionary<string, string> PrepareRequestHeaders(HttpMethod method, Dictionary<string, string>? headers = null, ClientOptions? options = null, int rangeFrom = int.MinValue, int rangeTo = int.MinValue)
         {
             options ??= new ClientOptions();
 

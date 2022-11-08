@@ -37,7 +37,7 @@ namespace Postgrest
 
         private HttpMethod method = HttpMethod.Get;
 
-        private string columnQuery;
+        private string? columnQuery;
 
         private List<QueryFilter> filters = new List<QueryFilter>();
         private List<QueryOrderer> orderers = new List<QueryOrderer>();
@@ -49,19 +49,19 @@ namespace Postgrest
         private int rangeTo = int.MinValue;
 
         private int limit = int.MinValue;
-        private string limitForeignKey;
+        private string? limitForeignKey;
 
         private int offset = int.MinValue;
-        private string offsetForeignKey;
+        private string? offsetForeignKey;
 
-        private string onConflict;
+        private string? onConflict;
 
         /// <summary>
         /// Typically called from the Client Singleton using `Client.Instance.Table<T>`
         /// </summary>
         /// <param name="baseUrl">Api Endpoint (ex: "http://localhost:8000"), no trailing slash required.</param>
         /// <param name="options">Optional client configuration.</param>
-        public Table(string baseUrl, ClientOptions options = null)
+        public Table(string baseUrl, ClientOptions? options = null)
         {
             BaseUrl = baseUrl;
 
@@ -327,7 +327,7 @@ namespace Postgrest
         /// <param name="limit"></param>
         /// <param name="foreignTableName"></param>
         /// <returns></returns>
-        public Table<T> Limit(int limit, string foreignTableName = null)
+        public Table<T> Limit(int limit, string? foreignTableName = null)
         {
             this.limit = limit;
             this.limitForeignKey = foreignTableName;
@@ -369,7 +369,7 @@ namespace Postgrest
         /// <param name="offset"></param>
         /// <param name="foreignTableName"></param>
         /// <returns></returns>
-        public Table<T> Offset(int offset, string foreignTableName = null)
+        public Table<T> Offset(int offset, string? foreignTableName = null)
         {
             this.offset = offset;
             this.offsetForeignKey = foreignTableName;
@@ -383,7 +383,7 @@ namespace Postgrest
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>A typed model response from the database.</returns>
-        public Task<ModeledResponse<T>> Insert(T model, QueryOptions options = null, CancellationToken cancellationToken = default) => PerformInsert(model, options, cancellationToken);
+        public Task<ModeledResponse<T>> Insert(T model, QueryOptions? options = null, CancellationToken cancellationToken = default) => PerformInsert(model, options, cancellationToken);
 
         /// <summary>
         /// Executes a BULK INSERT query using the defined query params on the current instance.
@@ -392,7 +392,7 @@ namespace Postgrest
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>A typed model response from the database.</returns>
-        public Task<ModeledResponse<T>> Insert(ICollection<T> models, QueryOptions options = null, CancellationToken cancellationToken = default) => PerformInsert(models, options, cancellationToken);
+        public Task<ModeledResponse<T>> Insert(ICollection<T> models, QueryOptions? options = null, CancellationToken cancellationToken = default) => PerformInsert(models, options, cancellationToken);
 
         /// <summary>
         /// Executes an UPSERT query using the defined query params on the current instance.
@@ -405,7 +405,7 @@ namespace Postgrest
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public Task<ModeledResponse<T>> Upsert(T model, QueryOptions options = null, CancellationToken cancellationToken = default)
+        public Task<ModeledResponse<T>> Upsert(T model, QueryOptions? options = null, CancellationToken cancellationToken = default)
         {
             if (options == null)
             {
@@ -429,7 +429,7 @@ namespace Postgrest
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public Task<ModeledResponse<T>> Upsert(ICollection<T> model, QueryOptions options = null, CancellationToken cancellationToken = default)
+        public Task<ModeledResponse<T>> Upsert(ICollection<T> model, QueryOptions? options = null, CancellationToken cancellationToken = default)
         {
             if (options == null)
             {
@@ -448,7 +448,7 @@ namespace Postgrest
         /// <param name="model"></param>
         /// <param name="cancellationToken"></param>
         /// <returns>A typed response from the database.</returns>
-        public Task<ModeledResponse<T>> Update(T model, QueryOptions options = null, CancellationToken cancellationToken = default)
+        public Task<ModeledResponse<T>> Update(T model, QueryOptions? options = null, CancellationToken cancellationToken = default)
         {
             if (options == null)
             {
@@ -470,7 +470,7 @@ namespace Postgrest
         /// Executes a delete request using the defined query params on the current instance.
         /// </summary>
         /// <returns></returns>
-        public Task Delete(QueryOptions options = null, CancellationToken cancellationToken = default)
+        public Task Delete(QueryOptions? options = null, CancellationToken cancellationToken = default)
         {
             if (options == null)
             {
@@ -492,7 +492,7 @@ namespace Postgrest
         /// <param name="model"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public Task<ModeledResponse<T>> Delete(T model, QueryOptions options = null, CancellationToken cancellationToken = default)
+        public Task<ModeledResponse<T>> Delete(T model, QueryOptions? options = null, CancellationToken cancellationToken = default)
         {
             if (options == null)
             {
@@ -527,7 +527,7 @@ namespace Postgrest
                 var attr = type.GetAttribute<MapToAttribute>();
 
                 var headers = new Dictionary<string, string> {
-                    { "Prefer", $"count={attr.Mapping}" }
+                    { "Prefer", $"count={attr?.Mapping}" }
                 };
 
                 var request = Send(method, null, headers, cancellationToken);
@@ -536,8 +536,8 @@ namespace Postgrest
                 try
                 {
                     var response = await request;
-                    var countStr = response.ResponseMessage.Content.Headers.GetValues("Content-Range").FirstOrDefault();
-                    if (countStr.Contains("/"))
+                    var countStr = response.ResponseMessage?.Content.Headers.GetValues("Content-Range").FirstOrDefault();
+                    if (!string.IsNullOrEmpty(countStr) && countStr!.Contains("/"))
                     {
                         // Returns X-Y/COUNT [0-3/4]
                         tsc.SetResult(int.Parse(countStr.Split('/')[1]));
@@ -559,9 +559,9 @@ namespace Postgrest
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public Task<T> Single(CancellationToken cancellationToken = default)
+        public Task<T?> Single(CancellationToken cancellationToken = default)
         {
-            var tsc = new TaskCompletionSource<T>();
+            var tsc = new TaskCompletionSource<T?>();
 
             Task.Run(async () =>
             {
@@ -705,11 +705,11 @@ namespace Postgrest
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        internal object PrepareRequestData(object data, bool isInsert = false, bool isUpdate = false)
+        internal object? PrepareRequestData(object? data, bool isInsert = false, bool isUpdate = false)
         {
             if (data == null) return new Dictionary<string, string>();
 
-            var resolver = (PostgrestContractResolver)serializerSettings.ContractResolver;
+            PostgrestContractResolver? resolver = (PostgrestContractResolver)serializerSettings.ContractResolver!; // Specified in constructor;
 
             resolver.SetState(isInsert, isUpdate);
 
@@ -766,20 +766,20 @@ namespace Postgrest
                         break;
                     case Operator.Like:
                     case Operator.ILike:
-                        if (filter.Criteria is string likeCriteria)
+                        if (filter.Criteria is string likeCriteria && filter.Property != null)
                         {
                             return new KeyValuePair<string, string>(filter.Property, $"{asAttribute.Mapping}.{likeCriteria.Replace("%", "*")}");
                         }
                         break;
                     case Operator.In:
-                        if (filter.Criteria is List<object> inCriteria)
+                        if (filter.Criteria is List<object> inCriteria && filter.Property != null)
                         {
                             foreach (var item in inCriteria)
                                 strBuilder.Append($"\"{item}\",");
 
                             return new KeyValuePair<string, string>(filter.Property, $"{asAttribute.Mapping}.({strBuilder.ToString().Trim(',')})");
                         }
-                        else if (filter.Criteria is Dictionary<string, object> dictCriteria)
+                        else if (filter.Criteria is Dictionary<string, object> dictCriteria && filter.Property != null)
                         {
                             return new KeyValuePair<string, string>(filter.Property, $"{asAttribute.Mapping}.{JsonConvert.SerializeObject(dictCriteria)}");
                         }
@@ -787,18 +787,18 @@ namespace Postgrest
                     case Operator.Contains:
                     case Operator.ContainedIn:
                     case Operator.Overlap:
-                        if (filter.Criteria is List<object> listCriteria)
+                        if (filter.Criteria is List<object> listCriteria && filter.Property != null)
                         {
                             foreach (var item in listCriteria)
                                 strBuilder.Append($"{item},");
 
                             return new KeyValuePair<string, string>(filter.Property, $"{asAttribute.Mapping}.{{{strBuilder.ToString().Trim(',')}}}");
                         }
-                        else if (filter.Criteria is Dictionary<string, object> dictCriteria)
+                        else if (filter.Criteria is Dictionary<string, object> dictCriteria && filter.Property != null)
                         {
                             return new KeyValuePair<string, string>(filter.Property, $"{asAttribute.Mapping}.{JsonConvert.SerializeObject(dictCriteria)}");
                         }
-                        else if (filter.Criteria is IntRange rangeCriteria)
+                        else if (filter.Criteria is IntRange rangeCriteria && filter.Property != null)
                         {
                             return new KeyValuePair<string, string>(filter.Property, $"{asAttribute.Mapping}.{rangeCriteria.ToPostgresString()}");
                         }
@@ -808,7 +808,7 @@ namespace Postgrest
                     case Operator.NotRightOf:
                     case Operator.NotLeftOf:
                     case Operator.Adjacent:
-                        if (filter.Criteria is IntRange rangeCritera)
+                        if (filter.Criteria is IntRange rangeCritera && filter.Property != null)
                         {
                             return new KeyValuePair<string, string>(filter.Property, $"{asAttribute.Mapping}.{rangeCritera.ToPostgresString()}");
                         }
@@ -817,13 +817,13 @@ namespace Postgrest
                     case Operator.PHFTS:
                     case Operator.PLFTS:
                     case Operator.WFTS:
-                        if (filter.Criteria is FullTextSearchConfig searchConfig)
+                        if (filter.Criteria is FullTextSearchConfig searchConfig && filter.Property != null)
                         {
                             return new KeyValuePair<string, string>(filter.Property, $"{asAttribute.Mapping}({searchConfig.Config}).{searchConfig.QueryText}");
                         }
                         break;
                     default:
-                        return new KeyValuePair<string, string>(filter.Property, $"{asAttribute.Mapping}.{filter.Criteria}");
+                        return new KeyValuePair<string, string>(filter.Property ?? "", $"{asAttribute.Mapping}.{filter.Criteria}");
                 }
             }
             return new KeyValuePair<string, string>();
@@ -860,7 +860,7 @@ namespace Postgrest
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        private Task<ModeledResponse<T>> PerformInsert(object data, QueryOptions options = null, CancellationToken cancellationToken = default)
+        private Task<ModeledResponse<T>> PerformInsert(object data, QueryOptions? options = null, CancellationToken cancellationToken = default)
         {
             method = HttpMethod.Post;
             if (options == null)
@@ -868,7 +868,7 @@ namespace Postgrest
 
             if (!string.IsNullOrEmpty(options.OnConflict))
             {
-                OnConflict(options.OnConflict);
+                OnConflict(options.OnConflict!);
             }
 
             var request = Send<T>(method, data, options.ToHeaders(), cancellationToken, isInsert: true);
@@ -878,21 +878,21 @@ namespace Postgrest
             return request;
         }
 
-        private Task<BaseResponse> Send(HttpMethod method, object data, Dictionary<string, string> headers = null, CancellationToken cancellationToken = default, bool isInsert = false, bool isUpdate = false)
+        private Task<BaseResponse> Send(HttpMethod method, object? data, Dictionary<string, string>? headers = null, CancellationToken cancellationToken = default, bool isInsert = false, bool isUpdate = false)
         {
             var requestHeaders = Helpers.PrepareRequestHeaders(method, headers, options, rangeFrom, rangeTo);
             var preparedData = PrepareRequestData(data, isInsert, isUpdate);
-            return Helpers.MakeRequest(method, GenerateUrl(), serializerSettings, preparedData, requestHeaders, cancellationToken);
+            return Helpers.MakeRequest(options, method, GenerateUrl(), serializerSettings, preparedData, requestHeaders, cancellationToken);
         }
 
-        private Task<ModeledResponse<U>> Send<U>(HttpMethod method, object data, Dictionary<string, string> headers = null, CancellationToken cancellationToken = default, bool isInsert = false, bool isUpdate = false) where U : BaseModel, new()
+        private Task<ModeledResponse<U>> Send<U>(HttpMethod method, object? data, Dictionary<string, string>? headers = null, CancellationToken cancellationToken = default, bool isInsert = false, bool isUpdate = false) where U : BaseModel, new()
         {
             var requestHeaders = Helpers.PrepareRequestHeaders(method, headers, options, rangeFrom, rangeTo);
             var preparedData = PrepareRequestData(data, isInsert, isUpdate);
-            return Helpers.MakeRequest<U>(method, GenerateUrl(), serializerSettings, preparedData, requestHeaders, cancellationToken);
+            return Helpers.MakeRequest<U>(options, method, GenerateUrl(), serializerSettings, preparedData, requestHeaders, cancellationToken);
         }
 
-        internal static string FindTableName(object obj = null)
+        internal static string FindTableName(object? obj = null)
         {
             var type = obj == null ? typeof(T) : obj is Type t ? t : obj.GetType();
             var attr = Attribute.GetCustomAttribute(type, typeof(TableAttribute));

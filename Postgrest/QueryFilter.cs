@@ -12,7 +12,7 @@ namespace Postgrest
         /// </summary>
         public const string NullVal = "null";
 
-        public string Property { get; private set; }
+        public string? Property { get; private set; }
         public Operator Op { get; private set; }
         public object Criteria { get; private set; }
 

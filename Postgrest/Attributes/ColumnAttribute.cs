@@ -38,9 +38,9 @@ namespace Postgrest.Attributes
         /// </summary>
         public bool IgnoreOnUpdate { get; set; }
 
-        public ColumnAttribute([CallerMemberName] string columnName = null, NullValueHandling nullValueHandling = NullValueHandling.Include, bool ignoreOnInsert = false, bool ignoreOnUpdate = false)
+        public ColumnAttribute([CallerMemberName] string? columnName = null, NullValueHandling nullValueHandling = NullValueHandling.Include, bool ignoreOnInsert = false, bool ignoreOnUpdate = false)
         {
-            ColumnName = columnName;
+            ColumnName = columnName!; // Will either be user specified or given by runtime compiler.
             NullValueHandling = nullValueHandling;
             IgnoreOnInsert = ignoreOnInsert;
             IgnoreOnUpdate = ignoreOnUpdate;

@@ -9,9 +9,19 @@ namespace Postgrest.Responses
     public class BaseResponse
     {
         [JsonIgnore]
-        public HttpResponseMessage ResponseMessage { get; set; }
+        public HttpResponseMessage? ResponseMessage { get; set; }
 
         [JsonIgnore]
-        public string Content { get; set; }
+        public string? Content { get; set; }
+
+        [JsonIgnore]
+        public ClientOptions ClientOptions { get; set; }
+
+        public BaseResponse(ClientOptions clientOptions, HttpResponseMessage? responseMessage, string? content)
+        {
+            ClientOptions = clientOptions;
+            ResponseMessage = responseMessage;
+            Content = content;
+        }
     }
 }
