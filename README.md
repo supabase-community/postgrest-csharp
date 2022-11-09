@@ -78,7 +78,7 @@ Utitilizing the client is then just a matter of instantiating it and specifying 
 void Initialize()
 {
     // The default client is a Singleton class that keeps options persisted through an instance
-    var client = Client.Initialize("http://localhost:3000");
+    var client = new Client("http://localhost:3000");
 
     // Get All Messages
     var response = await client.Table<Message>().Get();
@@ -95,11 +95,6 @@ void Initialize()
 
     // Delete
     await response.Models.Last().Delete();
-
-    // Alternatively, the StatelessClient can be used with Options passed into it.
-    var options = new StatelessClientOptions("http://localhost:3000") {};
-
-    var response1 = await StatelessClient.Table<Message>(options).Get();
 }
 ```
 
