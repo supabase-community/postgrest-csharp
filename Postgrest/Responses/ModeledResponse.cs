@@ -14,7 +14,7 @@ namespace Postgrest.Responses
     {
         private JsonSerializerSettings SerializerSettings { get; set; }
 
-        public List<T>? Models { get; private set; } = new List<T>();
+        public List<T> Models { get; private set; } = new List<T>();
 
         public ModeledResponse(BaseResponse baseResponse, JsonSerializerSettings serializerSettings, bool shouldParse = true) : base(baseResponse.ClientOptions, baseResponse.ResponseMessage, baseResponse.Content)
         {
@@ -28,7 +28,10 @@ namespace Postgrest.Responses
 
                 if (token is JArray)
                 {
-                    Models = JsonConvert.DeserializeObject<List<T>>(Content!, serializerSettings);
+                    var deserialized = JsonConvert.DeserializeObject<List<T>>(Content!, serializerSettings);
+
+                    if (deserialized != null)
+                        Models = deserialized;
 
                     if (Models != null)
                     {
@@ -42,6 +45,7 @@ namespace Postgrest.Responses
                 else if (token is JObject)
                 {
                     Models.Clear();
+
                     T? obj = JsonConvert.DeserializeObject<T>(Content!, serializerSettings);
 
                     if (obj != null)
