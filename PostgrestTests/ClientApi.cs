@@ -302,23 +302,6 @@ namespace PostgrestTests
             }
         }
 
-        [TestMethod("Exceptions: Throws when attempting to update a non-existent record")]
-        public async Task TestThrowsRequestExceptionOnNonExistantUpdate()
-        {
-            var client = new Client(baseUrl);
-
-            await Assert.ThrowsExceptionAsync<RequestException>(async () =>
-            {
-                var nonExistentRecord = new User
-                {
-                    BaseUrl = baseUrl,
-                    Username = "Foo",
-                    Status = "Bar"
-                };
-                await nonExistentRecord.Update<User>();
-
-            });
-        }
 
         [TestMethod("insert: basic")]
         public async Task TestBasicInsert()
