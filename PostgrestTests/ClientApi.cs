@@ -36,21 +36,21 @@ namespace PostgrestTests
                 }
             });
 
-            Assert.AreEqual($"{baseUrl}/users?some-param=foo&other-param=bar", client.Table<User>().GenerateUrl());
+            Assert.AreEqual($"{baseUrl}/users?some-param=foo&other-param=bar", (client.Table<User>() as Table<User>).GenerateUrl());
         }
 
         [TestMethod("will use TableAttribute")]
         public void TestTableAttribute()
         {
             var client = new Client(baseUrl, null);
-            Assert.AreEqual($"{baseUrl}/users", client.Table<User>().GenerateUrl());
+            Assert.AreEqual($"{baseUrl}/users", (client.Table<User>() as Table<User>).GenerateUrl());
         }
 
         [TestMethod("will default to Class.name in absence of TableAttribute")]
         public void TestTableAttributeDefault()
         {
             var client = new Client(baseUrl, null);
-            Assert.AreEqual($"{baseUrl}/Stub", client.Table<Stub>().GenerateUrl());
+            Assert.AreEqual($"{baseUrl}/Stub", (client.Table<Stub>() as Table<Stub>).GenerateUrl());
         }
 
         [TestMethod("will set header from options")]
@@ -71,7 +71,7 @@ namespace PostgrestTests
                     { "apikey", "some-key" }
                 }
             });
-            Assert.AreEqual($"{baseUrl}/users?apikey=some-key", client.Table<User>().GenerateUrl());
+            Assert.AreEqual($"{baseUrl}/users?apikey=some-key", (client.Table<User>() as Table<User>).GenerateUrl());
         }
 
         [TestMethod("filters: simple")]
@@ -92,7 +92,7 @@ namespace PostgrestTests
             foreach (var pair in dict)
             {
                 var filter = new QueryFilter("foo", pair.Key, "bar");
-                var result = client.Table<User>().PrepareFilter(filter);
+                var result = (client.Table<User>() as Table<User>).PrepareFilter(filter);
                 Assert.AreEqual("foo", result.Key);
                 Assert.AreEqual(pair.Value, result.Value);
             }
@@ -104,14 +104,14 @@ namespace PostgrestTests
             var client = new Client(baseUrl);
             var dict = new Dictionary<Constants.Operator, string>
             {
-                { Constants.Operator.Like, "like.*bar*" },
-                { Constants.Operator.ILike, "ilike.*bar*" },
+                { Operator.Like, "like.*bar*" },
+                { Operator.ILike, "ilike.*bar*" },
             };
 
             foreach (var pair in dict)
             {
                 var filter = new QueryFilter("foo", pair.Key, "%bar%");
-                var result = client.Table<User>().PrepareFilter(filter);
+                var result = (client.Table<User>() as Table<User>).PrepareFilter(filter);
                 Assert.AreEqual("foo", result.Key);
                 Assert.AreEqual(pair.Value, result.Value);
             }
@@ -129,14 +129,14 @@ namespace PostgrestTests
             string exp = "(\"bar\",\"buzz\")";
             var dict = new Dictionary<Constants.Operator, string>
             {
-                { Constants.Operator.In, $"in.{exp}" },
+                { Operator.In, $"in.{exp}" },
             };
 
             foreach (var pair in dict)
             {
                 var list = new List<object> { "bar", "buzz" };
                 var filter = new QueryFilter("foo", pair.Key, list);
-                var result = client.Table<User>().PrepareFilter(filter);
+                var result = (client.Table<User>() as Table<User>).PrepareFilter(filter);
                 Assert.AreEqual("foo", result.Key);
                 Assert.AreEqual(pair.Value, result.Value);
             }
@@ -154,16 +154,16 @@ namespace PostgrestTests
             string exp = "{bar,buzz}";
             var dict = new Dictionary<Constants.Operator, string>
             {
-                { Constants.Operator.Contains, $"cs.{exp}" },
-                { Constants.Operator.ContainedIn, $"cd.{exp}" },
-                { Constants.Operator.Overlap, $"ov.{exp}" },
+                { Operator.Contains, $"cs.{exp}" },
+                { Operator.ContainedIn, $"cd.{exp}" },
+                { Operator.Overlap, $"ov.{exp}" },
             };
 
             foreach (var pair in dict)
             {
                 var list = new List<object> { "bar", "buzz" };
                 var filter = new QueryFilter("foo", pair.Key, list);
-                var result = client.Table<User>().PrepareFilter(filter);
+                var result = (client.Table<User>() as Table<User>).PrepareFilter(filter);
                 Assert.AreEqual("foo", result.Key);
                 Assert.AreEqual(pair.Value, result.Value);
             }
@@ -177,17 +177,17 @@ namespace PostgrestTests
             string exp = "{\"bar\":100,\"buzz\":\"zap\"}";
             var dict = new Dictionary<Constants.Operator, string>
             {
-                { Constants.Operator.In, $"in.{exp}" },
-                { Constants.Operator.Contains, $"cs.{exp}" },
-                { Constants.Operator.ContainedIn, $"cd.{exp}" },
-                { Constants.Operator.Overlap, $"ov.{exp}" },
+                { Operator.In, $"in.{exp}" },
+                { Operator.Contains, $"cs.{exp}" },
+                { Operator.ContainedIn, $"cd.{exp}" },
+                { Operator.Overlap, $"ov.{exp}" },
             };
 
             foreach (var pair in dict)
             {
                 var value = new Dictionary<string, object> { { "bar", 100 }, { "buzz", "zap" } };
                 var filter = new QueryFilter("foo", pair.Key, value);
-                var result = client.Table<User>().PrepareFilter(filter);
+                var result = (client.Table<User>() as Table<User>).PrepareFilter(filter);
                 Assert.AreEqual("foo", result.Key);
                 Assert.AreEqual(pair.Value, result.Value);
             }
@@ -202,17 +202,17 @@ namespace PostgrestTests
             var exp = "(english).bar";
             var dict = new Dictionary<Constants.Operator, string>
             {
-                { Constants.Operator.FTS, $"fts{exp}" },
-                { Constants.Operator.PHFTS, $"phfts{exp}" },
-                { Constants.Operator.PLFTS, $"plfts{exp}" },
-                { Constants.Operator.WFTS, $"wfts{exp}" },
+                { Operator.FTS, $"fts{exp}" },
+                { Operator.PHFTS, $"phfts{exp}" },
+                { Operator.PLFTS, $"plfts{exp}" },
+                { Operator.WFTS, $"wfts{exp}" },
             };
 
             foreach (var pair in dict)
             {
                 var config = new FullTextSearchConfig("bar", "english");
                 var filter = new QueryFilter("foo", pair.Key, config);
-                var result = client.Table<User>().PrepareFilter(filter);
+                var result = (client.Table<User>() as Table<User>).PrepareFilter(filter);
                 Assert.AreEqual("foo", result.Key);
                 Assert.AreEqual(pair.Value, result.Value);
             }
@@ -226,18 +226,18 @@ namespace PostgrestTests
             var exp = "[2,3]";
             var dict = new Dictionary<Constants.Operator, string>
             {
-                { Constants.Operator.StrictlyLeft, $"sl.{exp}" },
-                { Constants.Operator.StrictlyRight, $"sr.{exp}" },
-                { Constants.Operator.NotRightOf, $"nxr.{exp}" },
-                { Constants.Operator.NotLeftOf, $"nxl.{exp}" },
-                { Constants.Operator.Adjacent, $"adj.{exp}" },
+                { Operator.StrictlyLeft, $"sl.{exp}" },
+                { Operator.StrictlyRight, $"sr.{exp}" },
+                { Operator.NotRightOf, $"nxr.{exp}" },
+                { Operator.NotLeftOf, $"nxl.{exp}" },
+                { Operator.Adjacent, $"adj.{exp}" },
             };
 
             foreach (var pair in dict)
             {
                 var config = new IntRange(2, 3);
                 var filter = new QueryFilter("foo", pair.Key, config);
-                var result = client.Table<User>().PrepareFilter(filter);
+                var result = (client.Table<User>() as Table<User>).PrepareFilter(filter);
                 Assert.AreEqual("foo", result.Key);
                 Assert.AreEqual(pair.Value, result.Value);
             }
@@ -247,9 +247,9 @@ namespace PostgrestTests
         public void TestFiltersNot()
         {
             var client = new Client(baseUrl);
-            var filter = new QueryFilter("foo", Constants.Operator.Equals, "bar");
-            var notFilter = new QueryFilter(Constants.Operator.Not, filter);
-            var result = client.Table<User>().PrepareFilter(notFilter);
+            var filter = new QueryFilter("foo", Operator.Equals, "bar");
+            var notFilter = new QueryFilter(Operator.Not, filter);
+            var result = (client.Table<User>() as Table<User>).PrepareFilter(notFilter);
 
             Assert.AreEqual("foo", result.Key);
             Assert.AreEqual("not.eq.bar", result.Value);
@@ -263,19 +263,19 @@ namespace PostgrestTests
 
             var dict = new Dictionary<Constants.Operator, string>
             {
-                { Constants.Operator.And, $"and={exp}" },
-                { Constants.Operator.Or, $"or={exp}" },
+                { Operator.And, $"and={exp}" },
+                { Operator.Or, $"or={exp}" },
             };
 
             var subfilters = new List<QueryFilter> {
-                new QueryFilter("a", Constants.Operator.GreaterThanOrEqual, "0"),
-                new QueryFilter("a", Constants.Operator.LessThanOrEqual, "100")
+                new QueryFilter("a", Operator.GreaterThanOrEqual, "0"),
+                new QueryFilter("a", Operator.LessThanOrEqual, "100")
             };
 
             foreach (var pair in dict)
             {
                 var filter = new QueryFilter(pair.Key, subfilters);
-                var result = client.Table<User>().PrepareFilter(filter);
+                var result = (client.Table<User>() as Table<User>).PrepareFilter(filter);
                 Assert.AreEqual(pair.Value, $"{result.Key}={result.Value}");
             }
         }
@@ -285,7 +285,7 @@ namespace PostgrestTests
         {
             var client = new Client(baseUrl);
 
-            var user = await client.Table<User>().Filter("username", Postgrest.Constants.Operator.Equals, "supabot").Single();
+            var user = await client.Table<User>().Filter("username", Operator.Equals, "supabot").Single();
 
             if (user != null)
             {
@@ -427,7 +427,7 @@ namespace PostgrestTests
         {
             var client = new Client(baseUrl);
 
-            var orderedResponse = await client.Table<User>().Order("username", Constants.Ordering.Descending).Get();
+            var orderedResponse = await client.Table<User>().Order("username", Ordering.Descending).Get();
             var unorderedResponse = await client.Table<User>().Get();
 
             var supaOrderedUsers = orderedResponse.Models;
@@ -510,7 +510,7 @@ namespace PostgrestTests
         public async Task TestNotFilter()
         {
             var client = new Client(baseUrl);
-            var filter = new QueryFilter("username", Constants.Operator.Equals, "supabot");
+            var filter = new QueryFilter("username", Operator.Equals, "supabot");
 
             var filteredResponse = await client.Table<User>().Not(filter).Get();
             var usersResponse = await client.Table<User>().Get();
@@ -1125,12 +1125,12 @@ namespace PostgrestTests
         public async Task TestColumns()
         {
             var client = new Client(baseUrl);
-            
+
             var movies = await client.Table<Movie>().Get();
             var first = movies.Models.First();
             var originalTime = first.CreatedAt;
             var newTime = DateTime.UtcNow;
-            
+
             first.Name = "I should be ignored on insert attempt.";
             first.CreatedAt = newTime;
 

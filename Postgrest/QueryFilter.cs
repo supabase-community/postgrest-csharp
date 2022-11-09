@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Postgrest.Interfaces;
 using static Postgrest.Constants;
 
 namespace Postgrest
 {
-    public class QueryFilter
+    public class QueryFilter : IPostgrestQueryFilter
     {
         /// <summary>
         /// String value to be subsituted for a null criterion

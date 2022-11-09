@@ -11,6 +11,7 @@ using System.Web;
 using Newtonsoft.Json;
 using Postgrest.Attributes;
 using Postgrest.Extensions;
+using Postgrest.Interfaces;
 using Postgrest.Models;
 using Postgrest.Responses;
 using static Postgrest.Constants;
@@ -23,7 +24,7 @@ namespace Postgrest
     /// Representative of a `USE $TABLE` command.
     /// </summary>
     /// <typeparam name="T">Model derived from `BaseModel`.</typeparam>
-    public class Table<T> where T : BaseModel, new()
+    public class Table<T> : IPostgrestTable<T> where T : BaseModel, new()
     {
         public string BaseUrl { get; }
 
@@ -57,7 +58,7 @@ namespace Postgrest
         private string? onConflict;
 
         /// <summary>
-        /// Typically called from the Client Singleton using `Client.Instance.Table<T>`
+        /// Typically called from the Client `new Client.Table<ModelType>`
         /// </summary>
         /// <param name="baseUrl">Api Endpoint (ex: "http://localhost:8000"), no trailing slash required.</param>
         /// <param name="options">Optional client configuration.</param>
@@ -614,7 +615,7 @@ namespace Postgrest
         /// Generates the encoded URL with defined query parameters that will be sent to the Postgrest API.
         /// </summary>
         /// <returns></returns>
-        internal string GenerateUrl()
+        public string GenerateUrl()
         {
             var builder = new UriBuilder($"{BaseUrl}/{TableName}");
             var query = HttpUtility.ParseQueryString(builder.Query);

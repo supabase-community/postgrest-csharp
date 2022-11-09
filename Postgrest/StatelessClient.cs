@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Postgrest.Attributes;
+using Postgrest.Interfaces;
 using Postgrest.Models;
 using Postgrest.Responses;
 
@@ -13,7 +14,7 @@ namespace Postgrest
     /// <summary>
     /// A StatelessClient that allows one-off API interactions.
     /// </summary>
-    public static class StatelessClient
+    public class StatelessClient : IPostgrestStatelessClient
     {
         /// <summary>
         /// Custom Serializer resolvers and converters that will be used for encoding and decoding Postgrest JSON responses.
@@ -45,7 +46,7 @@ namespace Postgrest
         /// </summary>
         /// <typeparam name="T">Custom Model derived from `BaseModel`</typeparam>
         /// <returns></returns>
-        public static Table<T> Table<T>(StatelessClientOptions options) where T : BaseModel, new() =>
+        public IPostgrestTable<T> Table<T>(StatelessClientOptions options) where T : BaseModel, new() =>
             new Table<T>(options.BaseUrl, options, SerializerSettings(options));
 
         /// <summary>
@@ -55,10 +56,7 @@ namespace Postgrest
         /// <param name="parameters">The parameters to pass to the function call</param>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static Task<BaseResponse> Rpc(
-            string procedureName,
-            Dictionary<string, object> parameters,
-            StatelessClientOptions options)
+        public Task<BaseResponse> Rpc(string procedureName, Dictionary<string, object> parameters, StatelessClientOptions options)
         {
             // Build Uri
             var builder = new UriBuilder($"{options.BaseUrl}/rpc/{procedureName}");
@@ -68,12 +66,10 @@ namespace Postgrest
             var serializerSettings = SerializerSettings(options);
 
             // Prepare parameters
-            var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(
-                JsonConvert.SerializeObject(parameters, serializerSettings));
+            var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(JsonConvert.SerializeObject(parameters, serializerSettings));
 
             // Prepare headers
-            var headers = Helpers.PrepareRequestHeaders(HttpMethod.Post,
-                new Dictionary<string, string>(options.Headers), options);
+            var headers = Helpers.PrepareRequestHeaders(HttpMethod.Post, new Dictionary<string, string>(options.Headers), options);
 
             // Send request
             var request = Helpers.MakeRequest(

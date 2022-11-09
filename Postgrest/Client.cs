@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Postgrest.Interfaces;
 using Postgrest.Models;
 using Postgrest.Responses;
 
@@ -11,7 +12,7 @@ namespace Postgrest
     /// <summary>
     /// A a single, reusable connection to a Postgrest endpoint.
     /// </summary>
-    public class Client
+    public class Client : IPostgrestClient
     {
         /// <summary>
         /// API Base Url for subsequent calls.
@@ -44,7 +45,7 @@ namespace Postgrest
         /// </summary>
         /// <typeparam name="T">Custom Model derived from `BaseModel`</typeparam>
         /// <returns></returns>
-        public Table<T> Table<T>() where T : BaseModel, new() =>
+        public IPostgrestTable<T> Table<T>() where T : BaseModel, new() =>
             new Table<T>(BaseUrl, Options, StatelessClient.SerializerSettings(Options));
 
         /// <summary>
