@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class Table&lt;T&gt;
+    <title>Interface IPostgrestTable&lt;T&gt;
    </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class Table&lt;T&gt;
+    <meta name="title" content="Interface IPostgrestTable&lt;T&gt;
    ">
     <meta name="generator" content="docfx 2.56.7.0">
     
@@ -68,29 +68,19 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="Postgrest.Table`1">
+            <article class="content wrap" id="_content" data-uid="Postgrest.Interfaces.IPostgrestTable`1">
   
   
-  <h1 id="Postgrest_Table_1" data-uid="Postgrest.Table`1" class="text-break">Class Table&lt;T&gt;
+  <h1 id="Postgrest_Interfaces_IPostgrestTable_1" data-uid="Postgrest.Interfaces.IPostgrestTable`1" class="text-break">Interface IPostgrestTable&lt;T&gt;
   </h1>
-  <div class="markdown level0 summary"><p>Class created from a model derived from <code>BaseModel</code> that can generate query requests to a Postgrest Endpoint.</p>
-<p>Representative of a <code>USE $TABLE</code> command.</p>
-</div>
+  <div class="markdown level0 summary"></div>
   <div class="markdown level0 conceptual"></div>
-  <div class="inheritance">
-    <h5>Inheritance</h5>
-    <div class="level0"><span class="xref">System.Object</span></div>
-    <div class="level1"><span class="xref">Table&lt;T&gt;</span></div>
-  </div>
-  <div classs="implements">
-    <h5>Implements</h5>
-    <div><a class="xref" href="Postgrest.Interfaces.IPostgrestTable-1.html">IPostgrestTable</a>&lt;T&gt;</div>
-  </div>
-  <h6><strong>Namespace</strong>: <a class="xref" href="Postgrest.html">Postgrest</a></h6>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Postgrest.Interfaces.html">Postgrest.Interfaces</a></h6>
   <h6><strong>Assembly</strong>: Postgrest.dll</h6>
-  <h5 id="Postgrest_Table_1_syntax">Syntax</h5>
+  <h5 id="Postgrest_Interfaces_IPostgrestTable_1_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class Table&lt;T&gt; : object, IPostgrestTable&lt;T&gt; where T : BaseModel, new()</code></pre>
+    <pre><code class="lang-csharp hljs">public interface IPostgrestTable&lt;T&gt;
+    where T : BaseModel, new()</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -103,51 +93,6 @@
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td><p>Model derived from <code>BaseModel</code>.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h3 id="constructors">Constructors
-  </h3>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1__ctor_System_String_JsonSerializerSettings_Postgrest_ClientOptions_.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.%23ctor(System.String%2CJsonSerializerSettings%2CPostgrest.ClientOptions)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L65">View Source</a>
-  </span>
-  <a id="Postgrest_Table_1__ctor_" data-uid="Postgrest.Table`1.#ctor*"></a>
-  <h4 id="Postgrest_Table_1__ctor_System_String_JsonSerializerSettings_Postgrest_ClientOptions_" data-uid="Postgrest.Table`1.#ctor(System.String,JsonSerializerSettings,Postgrest.ClientOptions)">Table(String, JsonSerializerSettings, ClientOptions)</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Table(string baseUrl, JsonSerializerSettings serializerSettings, ClientOptions options = null)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td><span class="parametername">baseUrl</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><span class="xref">JsonSerializerSettings</span></td>
-        <td><span class="parametername">serializerSettings</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Postgrest.ClientOptions.html">ClientOptions</a></td>
-        <td><span class="parametername">options</span></td>
         <td></td>
       </tr>
     </tbody>
@@ -156,18 +101,18 @@
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_BaseUrl.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.BaseUrl%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1_BaseUrl.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601.BaseUrl%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L29">View Source</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L11">View Source</a>
   </span>
-  <a id="Postgrest_Table_1_BaseUrl_" data-uid="Postgrest.Table`1.BaseUrl*"></a>
-  <h4 id="Postgrest_Table_1_BaseUrl" data-uid="Postgrest.Table`1.BaseUrl">BaseUrl</h4>
+  <a id="Postgrest_Interfaces_IPostgrestTable_1_BaseUrl_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.BaseUrl*"></a>
+  <h4 id="Postgrest_Interfaces_IPostgrestTable_1_BaseUrl" data-uid="Postgrest.Interfaces.IPostgrestTable`1.BaseUrl">BaseUrl</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string BaseUrl { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">string BaseUrl { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -186,19 +131,18 @@
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_TableName.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.TableName%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1_TableName.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601.TableName%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L34">View Source</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L12">View Source</a>
   </span>
-  <a id="Postgrest_Table_1_TableName_" data-uid="Postgrest.Table`1.TableName*"></a>
-  <h4 id="Postgrest_Table_1_TableName" data-uid="Postgrest.Table`1.TableName">TableName</h4>
-  <div class="markdown level1 summary"><p>Name of the Table parsed by the Model.</p>
-</div>
+  <a id="Postgrest_Interfaces_IPostgrestTable_1_TableName_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.TableName*"></a>
+  <h4 id="Postgrest_Interfaces_IPostgrestTable_1_TableName" data-uid="Postgrest.Interfaces.IPostgrestTable`1.TableName">TableName</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string TableName { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">string TableName { get; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -219,19 +163,18 @@
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_And_List_Postgrest_QueryFilter__.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.And(List%7BPostgrest.QueryFilter%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1_And_List_Postgrest_QueryFilter__.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601.And(List%7BPostgrest.QueryFilter%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L204">View Source</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L14">View Source</a>
   </span>
-  <a id="Postgrest_Table_1_And_" data-uid="Postgrest.Table`1.And*"></a>
-  <h4 id="Postgrest_Table_1_And_List_Postgrest_QueryFilter__" data-uid="Postgrest.Table`1.And(List{Postgrest.QueryFilter})">And(List&lt;QueryFilter&gt;)</h4>
-  <div class="markdown level1 summary"><p>Adds an AND Filter to the current query args.</p>
-</div>
+  <a id="Postgrest_Interfaces_IPostgrestTable_1_And_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.And*"></a>
+  <h4 id="Postgrest_Interfaces_IPostgrestTable_1_And_List_Postgrest_QueryFilter__" data-uid="Postgrest.Interfaces.IPostgrestTable`1.And(List{Postgrest.QueryFilter})">And(List&lt;QueryFilter&gt;)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Table&lt;T&gt; And(List&lt;QueryFilter&gt; filters)</code></pre>
+    <pre><code class="lang-csharp hljs">Table&lt;T&gt; And(List&lt;QueryFilter&gt; filters)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -267,38 +210,33 @@
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_Clear.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.Clear%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1_Clear.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601.Clear%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L826">View Source</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L15">View Source</a>
   </span>
-  <a id="Postgrest_Table_1_Clear_" data-uid="Postgrest.Table`1.Clear*"></a>
-  <h4 id="Postgrest_Table_1_Clear" data-uid="Postgrest.Table`1.Clear">Clear()</h4>
-  <div class="markdown level1 summary"><p>Clears currently defined query values.</p>
-</div>
+  <a id="Postgrest_Interfaces_IPostgrestTable_1_Clear_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Clear*"></a>
+  <h4 id="Postgrest_Interfaces_IPostgrestTable_1_Clear" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Clear">Clear()</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void Clear()</code></pre>
+    <pre><code class="lang-csharp hljs">void Clear()</code></pre>
   </div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_Columns_System_String___.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.Columns(System.String%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1_Columns_System_String___.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601.Columns(System.String%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L349">View Source</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L16">View Source</a>
   </span>
-  <a id="Postgrest_Table_1_Columns_" data-uid="Postgrest.Table`1.Columns*"></a>
-  <h4 id="Postgrest_Table_1_Columns_System_String___" data-uid="Postgrest.Table`1.Columns(System.String[])">Columns(String[])</h4>
-  <div class="markdown level1 summary"><p>By using the columns query parameter it’s possible to specify the payload keys that will be inserted and ignore the rest of the payload.</p>
-<p>The rest of the JSON keys will be ignored.
-Using this also has the side-effect of being more efficient for Bulk Insert since PostgREST will not process the JSON and it’ll send it directly to PostgreSQL.</p>
-<p>See: <a href="https://postgrest.org/en/stable/api.html#specifying-columns">https://postgrest.org/en/stable/api.html#specifying-columns</a></p>
-</div>
+  <a id="Postgrest_Interfaces_IPostgrestTable_1_Columns_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Columns*"></a>
+  <h4 id="Postgrest_Interfaces_IPostgrestTable_1_Columns_System_String___" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Columns(System.String[])">Columns(String[])</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Table&lt;T&gt; Columns(string[] columns)</code></pre>
+    <pre><code class="lang-csharp hljs">Table&lt;T&gt; Columns(string[] columns)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -334,20 +272,18 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_Count_Postgrest_Constants_CountType_CancellationToken_.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.Count(Postgrest.Constants.CountType%2CCancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1_Count_Postgrest_Constants_CountType_CancellationToken_.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601.Count(Postgrest.Constants.CountType%2CCancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L510">View Source</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L17">View Source</a>
   </span>
-  <a id="Postgrest_Table_1_Count_" data-uid="Postgrest.Table`1.Count*"></a>
-  <h4 id="Postgrest_Table_1_Count_Postgrest_Constants_CountType_CancellationToken_" data-uid="Postgrest.Table`1.Count(Postgrest.Constants.CountType,CancellationToken)">Count(Constants.CountType, CancellationToken)</h4>
-  <div class="markdown level1 summary"><p>Returns ONLY a count from the specified query.</p>
-<p>See: <a href="https://postgrest.org/en/v7.0.0/api.html?highlight=count">https://postgrest.org/en/v7.0.0/api.html?highlight=count</a></p>
-</div>
+  <a id="Postgrest_Interfaces_IPostgrestTable_1_Count_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Count*"></a>
+  <h4 id="Postgrest_Interfaces_IPostgrestTable_1_Count_Postgrest_Constants_CountType_CancellationToken_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Count(Postgrest.Constants.CountType,CancellationToken)">Count(Constants.CountType, CancellationToken)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;int&gt; Count(Constants.CountType type, CancellationToken cancellationToken = null)</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;int&gt; Count(Constants.CountType type, CancellationToken cancellationToken = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -388,19 +324,18 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_Delete__0_Postgrest_QueryOptions_CancellationToken_.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.Delete(%600%2CPostgrest.QueryOptions%2CCancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1_Delete__0_Postgrest_QueryOptions_CancellationToken_.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601.Delete(%600%2CPostgrest.QueryOptions%2CCancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L486">View Source</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L19">View Source</a>
   </span>
-  <a id="Postgrest_Table_1_Delete_" data-uid="Postgrest.Table`1.Delete*"></a>
-  <h4 id="Postgrest_Table_1_Delete__0_Postgrest_QueryOptions_CancellationToken_" data-uid="Postgrest.Table`1.Delete(`0,Postgrest.QueryOptions,CancellationToken)">Delete(T, QueryOptions, CancellationToken)</h4>
-  <div class="markdown level1 summary"><p>Executes a delete request using the model's primary key as the filter for the request.</p>
-</div>
+  <a id="Postgrest_Interfaces_IPostgrestTable_1_Delete_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Delete*"></a>
+  <h4 id="Postgrest_Interfaces_IPostgrestTable_1_Delete__0_Postgrest_QueryOptions_CancellationToken_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Delete(`0,Postgrest.QueryOptions,CancellationToken)">Delete(T, QueryOptions, CancellationToken)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;ModeledResponse&lt;T&gt;&gt; Delete(T model, QueryOptions options = null, CancellationToken cancellationToken = null)</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;ModeledResponse&lt;T&gt;&gt; Delete(T model, QueryOptions options = null, CancellationToken cancellationToken = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -446,19 +381,18 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_Delete_Postgrest_QueryOptions_CancellationToken_.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.Delete(Postgrest.QueryOptions%2CCancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1_Delete_Postgrest_QueryOptions_CancellationToken_.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601.Delete(Postgrest.QueryOptions%2CCancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L464">View Source</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L18">View Source</a>
   </span>
-  <a id="Postgrest_Table_1_Delete_" data-uid="Postgrest.Table`1.Delete*"></a>
-  <h4 id="Postgrest_Table_1_Delete_Postgrest_QueryOptions_CancellationToken_" data-uid="Postgrest.Table`1.Delete(Postgrest.QueryOptions,CancellationToken)">Delete(QueryOptions, CancellationToken)</h4>
-  <div class="markdown level1 summary"><p>Executes a delete request using the defined query params on the current instance.</p>
-</div>
+  <a id="Postgrest_Interfaces_IPostgrestTable_1_Delete_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Delete*"></a>
+  <h4 id="Postgrest_Interfaces_IPostgrestTable_1_Delete_Postgrest_QueryOptions_CancellationToken_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Delete(Postgrest.QueryOptions,CancellationToken)">Delete(QueryOptions, CancellationToken)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task Delete(QueryOptions options = null, CancellationToken cancellationToken = null)</code></pre>
+    <pre><code class="lang-csharp hljs">Task Delete(QueryOptions options = null, CancellationToken cancellationToken = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -499,18 +433,18 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_Filter_System_String_Postgrest_Constants_Operator_System_Object_.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.Filter(System.String%2CPostgrest.Constants.Operator%2CSystem.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1_Filter_System_String_Postgrest_Constants_Operator_System_Object_.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601.Filter(System.String%2CPostgrest.Constants.Operator%2CSystem.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L94">View Source</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L20">View Source</a>
   </span>
-  <a id="Postgrest_Table_1_Filter_" data-uid="Postgrest.Table`1.Filter*"></a>
-  <h4 id="Postgrest_Table_1_Filter_System_String_Postgrest_Constants_Operator_System_Object_" data-uid="Postgrest.Table`1.Filter(System.String,Postgrest.Constants.Operator,System.Object)">Filter(String, Constants.Operator, Object)</h4>
+  <a id="Postgrest_Interfaces_IPostgrestTable_1_Filter_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Filter*"></a>
+  <h4 id="Postgrest_Interfaces_IPostgrestTable_1_Filter_System_String_Postgrest_Constants_Operator_System_Object_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Filter(System.String,Postgrest.Constants.Operator,System.Object)">Filter(String, Constants.Operator, Object)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Table&lt;T&gt; Filter(string columnName, Constants.Operator op, object criterion)</code></pre>
+    <pre><code class="lang-csharp hljs">Table&lt;T&gt; Filter(string columnName, Constants.Operator op, object criterion)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -556,50 +490,18 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_GenerateUrl.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.GenerateUrl%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1_Get_CancellationToken_.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601.Get(CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L608">View Source</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L21">View Source</a>
   </span>
-  <a id="Postgrest_Table_1_GenerateUrl_" data-uid="Postgrest.Table`1.GenerateUrl*"></a>
-  <h4 id="Postgrest_Table_1_GenerateUrl" data-uid="Postgrest.Table`1.GenerateUrl">GenerateUrl()</h4>
-  <div class="markdown level1 summary"><p>Generates the encoded URL with defined query parameters that will be sent to the Postgrest API.</p>
-</div>
+  <a id="Postgrest_Interfaces_IPostgrestTable_1_Get_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Get*"></a>
+  <h4 id="Postgrest_Interfaces_IPostgrestTable_1_Get_CancellationToken_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Get(CancellationToken)">Get(CancellationToken)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string GenerateUrl()</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_Get_CancellationToken_.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.Get(CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L597">View Source</a>
-  </span>
-  <a id="Postgrest_Table_1_Get_" data-uid="Postgrest.Table`1.Get*"></a>
-  <h4 id="Postgrest_Table_1_Get_CancellationToken_" data-uid="Postgrest.Table`1.Get(CancellationToken)">Get(CancellationToken)</h4>
-  <div class="markdown level1 summary"><p>Executes the query using the defined filters on the current instance.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;ModeledResponse&lt;T&gt;&gt; Get(CancellationToken cancellationToken = null)</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;ModeledResponse&lt;T&gt;&gt; Get(CancellationToken cancellationToken = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -635,19 +537,18 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_Insert__0_Postgrest_QueryOptions_CancellationToken_.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.Insert(%600%2CPostgrest.QueryOptions%2CCancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1_Insert__0_Postgrest_QueryOptions_CancellationToken_.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601.Insert(%600%2CPostgrest.QueryOptions%2CCancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L377">View Source</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L23">View Source</a>
   </span>
-  <a id="Postgrest_Table_1_Insert_" data-uid="Postgrest.Table`1.Insert*"></a>
-  <h4 id="Postgrest_Table_1_Insert__0_Postgrest_QueryOptions_CancellationToken_" data-uid="Postgrest.Table`1.Insert(`0,Postgrest.QueryOptions,CancellationToken)">Insert(T, QueryOptions, CancellationToken)</h4>
-  <div class="markdown level1 summary"><p>Executes an INSERT query using the defined query params on the current instance.</p>
-</div>
+  <a id="Postgrest_Interfaces_IPostgrestTable_1_Insert_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Insert*"></a>
+  <h4 id="Postgrest_Interfaces_IPostgrestTable_1_Insert__0_Postgrest_QueryOptions_CancellationToken_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Insert(`0,Postgrest.QueryOptions,CancellationToken)">Insert(T, QueryOptions, CancellationToken)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;ModeledResponse&lt;T&gt;&gt; Insert(T model, QueryOptions options = null, CancellationToken cancellationToken = null)</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;ModeledResponse&lt;T&gt;&gt; Insert(T model, QueryOptions options = null, CancellationToken cancellationToken = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -687,26 +588,24 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
     <tbody>
       <tr>
         <td><span class="xref">Task</span>&lt;<a class="xref" href="Postgrest.Responses.ModeledResponse-1.html">ModeledResponse</a>&lt;T&gt;&gt;</td>
-        <td><p>A typed model response from the database.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_Insert_ICollection__0__Postgrest_QueryOptions_CancellationToken_.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.Insert(ICollection%7B%600%7D%2CPostgrest.QueryOptions%2CCancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1_Insert_ICollection__0__Postgrest_QueryOptions_CancellationToken_.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601.Insert(ICollection%7B%600%7D%2CPostgrest.QueryOptions%2CCancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L386">View Source</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L22">View Source</a>
   </span>
-  <a id="Postgrest_Table_1_Insert_" data-uid="Postgrest.Table`1.Insert*"></a>
-  <h4 id="Postgrest_Table_1_Insert_ICollection__0__Postgrest_QueryOptions_CancellationToken_" data-uid="Postgrest.Table`1.Insert(ICollection{`0},Postgrest.QueryOptions,CancellationToken)">Insert(ICollection&lt;T&gt;, QueryOptions, CancellationToken)</h4>
-  <div class="markdown level1 summary"><p>Executes a BULK INSERT query using the defined query params on the current instance.</p>
-</div>
+  <a id="Postgrest_Interfaces_IPostgrestTable_1_Insert_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Insert*"></a>
+  <h4 id="Postgrest_Interfaces_IPostgrestTable_1_Insert_ICollection__0__Postgrest_QueryOptions_CancellationToken_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Insert(ICollection{`0},Postgrest.QueryOptions,CancellationToken)">Insert(ICollection&lt;T&gt;, QueryOptions, CancellationToken)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;ModeledResponse&lt;T&gt;&gt; Insert(ICollection&lt;T&gt; models, QueryOptions options = null, CancellationToken cancellationToken = null)</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;ModeledResponse&lt;T&gt;&gt; Insert(ICollection&lt;T&gt; models, QueryOptions options = null, CancellationToken cancellationToken = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -746,26 +645,24 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
     <tbody>
       <tr>
         <td><span class="xref">Task</span>&lt;<a class="xref" href="Postgrest.Responses.ModeledResponse-1.html">ModeledResponse</a>&lt;T&gt;&gt;</td>
-        <td><p>A typed model response from the database.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_Limit_System_Int32_System_Nullable_System_String__.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.Limit(System.Int32%2CSystem.Nullable%7BSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1_Limit_System_Int32_System_Nullable_System_String__.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601.Limit(System.Int32%2CSystem.Nullable%7BSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L321">View Source</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L24">View Source</a>
   </span>
-  <a id="Postgrest_Table_1_Limit_" data-uid="Postgrest.Table`1.Limit*"></a>
-  <h4 id="Postgrest_Table_1_Limit_System_Int32_System_Nullable_System_String__" data-uid="Postgrest.Table`1.Limit(System.Int32,System.Nullable{System.String})">Limit(Int32, Nullable&lt;String&gt;)</h4>
-  <div class="markdown level1 summary"><p>Sets a limit with an optional foreign table reference.</p>
-</div>
+  <a id="Postgrest_Interfaces_IPostgrestTable_1_Limit_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Limit*"></a>
+  <h4 id="Postgrest_Interfaces_IPostgrestTable_1_Limit_System_Int32_System_Nullable_System_String__" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Limit(System.Int32,System.Nullable{System.String})">Limit(Int32, Nullable&lt;String&gt;)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Table&lt;T&gt; Limit(int limit, string? foreignTableName = null)</code></pre>
+    <pre><code class="lang-csharp hljs">Table&lt;T&gt; Limit(int limit, string? foreignTableName = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -806,19 +703,18 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_Match__0_.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.Match(%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1_Match__0_.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601.Match(%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L226">View Source</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L26">View Source</a>
   </span>
-  <a id="Postgrest_Table_1_Match_" data-uid="Postgrest.Table`1.Match*"></a>
-  <h4 id="Postgrest_Table_1_Match__0_" data-uid="Postgrest.Table`1.Match(`0)">Match(T)</h4>
-  <div class="markdown level1 summary"><p>Fills in query parameters based on a given model's primary key(s).</p>
-</div>
+  <a id="Postgrest_Interfaces_IPostgrestTable_1_Match_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Match*"></a>
+  <h4 id="Postgrest_Interfaces_IPostgrestTable_1_Match__0_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Match(`0)">Match(T)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Table&lt;T&gt; Match(T model)</code></pre>
+    <pre><code class="lang-csharp hljs">Table&lt;T&gt; Match(T model)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -833,8 +729,7 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
       <tr>
         <td><span class="xref">T</span></td>
         <td><span class="parametername">model</span></td>
-        <td><p>A model with a primary key column</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -855,19 +750,18 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_Match_Dictionary_System_String_System_String__.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.Match(Dictionary%7BSystem.String%2CSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1_Match_Dictionary_System_String_System_String__.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601.Match(Dictionary%7BSystem.String%2CSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L241">View Source</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L25">View Source</a>
   </span>
-  <a id="Postgrest_Table_1_Match_" data-uid="Postgrest.Table`1.Match*"></a>
-  <h4 id="Postgrest_Table_1_Match_Dictionary_System_String_System_String__" data-uid="Postgrest.Table`1.Match(Dictionary{System.String,System.String})">Match(Dictionary&lt;String, String&gt;)</h4>
-  <div class="markdown level1 summary"><p>Finds all rows whose columns match the specified <code>query</code> object.</p>
-</div>
+  <a id="Postgrest_Interfaces_IPostgrestTable_1_Match_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Match*"></a>
+  <h4 id="Postgrest_Interfaces_IPostgrestTable_1_Match_Dictionary_System_String_System_String__" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Match(Dictionary{System.String,System.String})">Match(Dictionary&lt;String, String&gt;)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Table&lt;T&gt; Match(Dictionary&lt;string, string&gt; query)</code></pre>
+    <pre><code class="lang-csharp hljs">Table&lt;T&gt; Match(Dictionary&lt;string, string&gt; query)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -882,8 +776,7 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
       <tr>
         <td><span class="xref">Dictionary</span>&lt;<span class="xref">System.String</span>, <span class="xref">System.String</span>&gt;</td>
         <td><span class="parametername">query</span></td>
-        <td><p>The object to filter with, with column names as keys mapped to their filter values.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -904,19 +797,18 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_Not_Postgrest_QueryFilter_.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.Not(Postgrest.QueryFilter)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1_Not_Postgrest_QueryFilter_.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601.Not(Postgrest.QueryFilter)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L157">View Source</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L27">View Source</a>
   </span>
-  <a id="Postgrest_Table_1_Not_" data-uid="Postgrest.Table`1.Not*"></a>
-  <h4 id="Postgrest_Table_1_Not_Postgrest_QueryFilter_" data-uid="Postgrest.Table`1.Not(Postgrest.QueryFilter)">Not(QueryFilter)</h4>
-  <div class="markdown level1 summary"><p>Adds a NOT filter to the current query args.</p>
-</div>
+  <a id="Postgrest_Interfaces_IPostgrestTable_1_Not_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Not*"></a>
+  <h4 id="Postgrest_Interfaces_IPostgrestTable_1_Not_Postgrest_QueryFilter_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Not(Postgrest.QueryFilter)">Not(QueryFilter)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Table&lt;T&gt; Not(QueryFilter filter)</code></pre>
+    <pre><code class="lang-csharp hljs">Table&lt;T&gt; Not(QueryFilter filter)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -952,19 +844,18 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_Not_System_String_Postgrest_Constants_Operator_Dictionary_System_String_System_Object__.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.Not(System.String%2CPostgrest.Constants.Operator%2CDictionary%7BSystem.String%2CSystem.Object%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1_Not_System_String_Postgrest_Constants_Operator_Dictionary_System_String_System_Object__.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601.Not(System.String%2CPostgrest.Constants.Operator%2CDictionary%7BSystem.String%2CSystem.Object%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L197">View Source</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L28">View Source</a>
   </span>
-  <a id="Postgrest_Table_1_Not_" data-uid="Postgrest.Table`1.Not*"></a>
-  <h4 id="Postgrest_Table_1_Not_System_String_Postgrest_Constants_Operator_Dictionary_System_String_System_Object__" data-uid="Postgrest.Table`1.Not(System.String,Postgrest.Constants.Operator,Dictionary{System.String,System.Object})">Not(String, Constants.Operator, Dictionary&lt;String, Object&gt;)</h4>
-  <div class="markdown level1 summary"><p>Adds a NOT filter to the current query args.</p>
-</div>
+  <a id="Postgrest_Interfaces_IPostgrestTable_1_Not_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Not*"></a>
+  <h4 id="Postgrest_Interfaces_IPostgrestTable_1_Not_System_String_Postgrest_Constants_Operator_Dictionary_System_String_System_Object__" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Not(System.String,Postgrest.Constants.Operator,Dictionary{System.String,System.Object})">Not(String, Constants.Operator, Dictionary&lt;String, Object&gt;)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Table&lt;T&gt; Not(string columnName, Constants.Operator op, Dictionary&lt;string, object&gt; criteria)</code></pre>
+    <pre><code class="lang-csharp hljs">Table&lt;T&gt; Not(string columnName, Constants.Operator op, Dictionary&lt;string, object&gt; criteria)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1010,18 +901,18 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_Not_System_String_Postgrest_Constants_Operator_List_System_Object__.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.Not(System.String%2CPostgrest.Constants.Operator%2CList%7BSystem.Object%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1_Not_System_String_Postgrest_Constants_Operator_List_System_Object__.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601.Not(System.String%2CPostgrest.Constants.Operator%2CList%7BSystem.Object%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L188">View Source</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L29">View Source</a>
   </span>
-  <a id="Postgrest_Table_1_Not_" data-uid="Postgrest.Table`1.Not*"></a>
-  <h4 id="Postgrest_Table_1_Not_System_String_Postgrest_Constants_Operator_List_System_Object__" data-uid="Postgrest.Table`1.Not(System.String,Postgrest.Constants.Operator,List{System.Object})">Not(String, Constants.Operator, List&lt;Object&gt;)</h4>
+  <a id="Postgrest_Interfaces_IPostgrestTable_1_Not_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Not*"></a>
+  <h4 id="Postgrest_Interfaces_IPostgrestTable_1_Not_System_String_Postgrest_Constants_Operator_List_System_Object__" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Not(System.String,Postgrest.Constants.Operator,List{System.Object})">Not(String, Constants.Operator, List&lt;Object&gt;)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Table&lt;T&gt; Not(string columnName, Constants.Operator op, List&lt;object&gt; criteria)</code></pre>
+    <pre><code class="lang-csharp hljs">Table&lt;T&gt; Not(string columnName, Constants.Operator op, List&lt;object&gt; criteria)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1067,18 +958,18 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_Not_System_String_Postgrest_Constants_Operator_System_String_.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.Not(System.String%2CPostgrest.Constants.Operator%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1_Not_System_String_Postgrest_Constants_Operator_System_String_.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601.Not(System.String%2CPostgrest.Constants.Operator%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L175">View Source</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L30">View Source</a>
   </span>
-  <a id="Postgrest_Table_1_Not_" data-uid="Postgrest.Table`1.Not*"></a>
-  <h4 id="Postgrest_Table_1_Not_System_String_Postgrest_Constants_Operator_System_String_" data-uid="Postgrest.Table`1.Not(System.String,Postgrest.Constants.Operator,System.String)">Not(String, Constants.Operator, String)</h4>
+  <a id="Postgrest_Interfaces_IPostgrestTable_1_Not_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Not*"></a>
+  <h4 id="Postgrest_Interfaces_IPostgrestTable_1_Not_System_String_Postgrest_Constants_Operator_System_String_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Not(System.String,Postgrest.Constants.Operator,System.String)">Not(String, Constants.Operator, String)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Table&lt;T&gt; Not(string columnName, Constants.Operator op, string criterion)</code></pre>
+    <pre><code class="lang-csharp hljs">Table&lt;T&gt; Not(string columnName, Constants.Operator op, string criterion)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1124,19 +1015,18 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_Offset_System_Int32_System_Nullable_System_String__.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.Offset(System.Int32%2CSystem.Nullable%7BSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1_Offset_System_Int32_System_Nullable_System_String__.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601.Offset(System.Int32%2CSystem.Nullable%7BSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L363">View Source</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L31">View Source</a>
   </span>
-  <a id="Postgrest_Table_1_Offset_" data-uid="Postgrest.Table`1.Offset*"></a>
-  <h4 id="Postgrest_Table_1_Offset_System_Int32_System_Nullable_System_String__" data-uid="Postgrest.Table`1.Offset(System.Int32,System.Nullable{System.String})">Offset(Int32, Nullable&lt;String&gt;)</h4>
-  <div class="markdown level1 summary"><p>Sets an offset with an optional foreign table reference.</p>
-</div>
+  <a id="Postgrest_Interfaces_IPostgrestTable_1_Offset_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Offset*"></a>
+  <h4 id="Postgrest_Interfaces_IPostgrestTable_1_Offset_System_Int32_System_Nullable_System_String__" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Offset(System.Int32,System.Nullable{System.String})">Offset(Int32, Nullable&lt;String&gt;)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Table&lt;T&gt; Offset(int offset, string? foreignTableName = null)</code></pre>
+    <pre><code class="lang-csharp hljs">Table&lt;T&gt; Offset(int offset, string? foreignTableName = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1177,19 +1067,18 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_OnConflict_System_String_.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.OnConflict(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1_OnConflict_System_String_.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601.OnConflict(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L333">View Source</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L32">View Source</a>
   </span>
-  <a id="Postgrest_Table_1_OnConflict_" data-uid="Postgrest.Table`1.OnConflict*"></a>
-  <h4 id="Postgrest_Table_1_OnConflict_System_String_" data-uid="Postgrest.Table`1.OnConflict(System.String)">OnConflict(String)</h4>
-  <div class="markdown level1 summary"><p>By specifying the onConflict query parameter, you can make UPSERT work on a column(s) that has a UNIQUE constraint.</p>
-</div>
+  <a id="Postgrest_Interfaces_IPostgrestTable_1_OnConflict_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.OnConflict*"></a>
+  <h4 id="Postgrest_Interfaces_IPostgrestTable_1_OnConflict_System_String_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.OnConflict(System.String)">OnConflict(String)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Table&lt;T&gt; OnConflict(string columnName)</code></pre>
+    <pre><code class="lang-csharp hljs">Table&lt;T&gt; OnConflict(string columnName)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1225,19 +1114,18 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_Or_List_Postgrest_QueryFilter__.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.Or(List%7BPostgrest.QueryFilter%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1_Or_List_Postgrest_QueryFilter__.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601.Or(List%7BPostgrest.QueryFilter%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L215">View Source</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L33">View Source</a>
   </span>
-  <a id="Postgrest_Table_1_Or_" data-uid="Postgrest.Table`1.Or*"></a>
-  <h4 id="Postgrest_Table_1_Or_List_Postgrest_QueryFilter__" data-uid="Postgrest.Table`1.Or(List{Postgrest.QueryFilter})">Or(List&lt;QueryFilter&gt;)</h4>
-  <div class="markdown level1 summary"><p>Adds a NOT Filter to the current query args.</p>
-</div>
+  <a id="Postgrest_Interfaces_IPostgrestTable_1_Or_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Or*"></a>
+  <h4 id="Postgrest_Interfaces_IPostgrestTable_1_Or_List_Postgrest_QueryFilter__" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Or(List{Postgrest.QueryFilter})">Or(List&lt;QueryFilter&gt;)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Table&lt;T&gt; Or(List&lt;QueryFilter&gt; filters)</code></pre>
+    <pre><code class="lang-csharp hljs">Table&lt;T&gt; Or(List&lt;QueryFilter&gt; filters)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1273,19 +1161,18 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_Order_System_String_Postgrest_Constants_Ordering_Postgrest_Constants_NullPosition_.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.Order(System.String%2CPostgrest.Constants.Ordering%2CPostgrest.Constants.NullPosition)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1_Order_System_String_Postgrest_Constants_Ordering_Postgrest_Constants_NullPosition_.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601.Order(System.String%2CPostgrest.Constants.Ordering%2CPostgrest.Constants.NullPosition)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L258">View Source</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L34">View Source</a>
   </span>
-  <a id="Postgrest_Table_1_Order_" data-uid="Postgrest.Table`1.Order*"></a>
-  <h4 id="Postgrest_Table_1_Order_System_String_Postgrest_Constants_Ordering_Postgrest_Constants_NullPosition_" data-uid="Postgrest.Table`1.Order(System.String,Postgrest.Constants.Ordering,Postgrest.Constants.NullPosition)">Order(String, Constants.Ordering, Constants.NullPosition)</h4>
-  <div class="markdown level1 summary"><p>Adds an ordering to the current query args.</p>
-</div>
+  <a id="Postgrest_Interfaces_IPostgrestTable_1_Order_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Order*"></a>
+  <h4 id="Postgrest_Interfaces_IPostgrestTable_1_Order_System_String_Postgrest_Constants_Ordering_Postgrest_Constants_NullPosition_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Order(System.String,Postgrest.Constants.Ordering,Postgrest.Constants.NullPosition)">Order(String, Constants.Ordering, Constants.NullPosition)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Table&lt;T&gt; Order(string column, Constants.Ordering ordering, Constants.NullPosition nullPosition = Constants.NullPosition.First)</code></pre>
+    <pre><code class="lang-csharp hljs">Table&lt;T&gt; Order(string column, Constants.Ordering ordering, Constants.NullPosition nullPosition = Constants.NullPosition.First)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1300,8 +1187,7 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">column</span></td>
-        <td><p>Column Name</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><a class="xref" href="Postgrest.Constants.Ordering.html">Constants.Ordering</a></td>
@@ -1332,19 +1218,18 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_Order_System_String_System_String_Postgrest_Constants_Ordering_Postgrest_Constants_NullPosition_.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.Order(System.String%2CSystem.String%2CPostgrest.Constants.Ordering%2CPostgrest.Constants.NullPosition)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1_Order_System_String_System_String_Postgrest_Constants_Ordering_Postgrest_Constants_NullPosition_.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601.Order(System.String%2CSystem.String%2CPostgrest.Constants.Ordering%2CPostgrest.Constants.NullPosition)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L272">View Source</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L35">View Source</a>
   </span>
-  <a id="Postgrest_Table_1_Order_" data-uid="Postgrest.Table`1.Order*"></a>
-  <h4 id="Postgrest_Table_1_Order_System_String_System_String_Postgrest_Constants_Ordering_Postgrest_Constants_NullPosition_" data-uid="Postgrest.Table`1.Order(System.String,System.String,Postgrest.Constants.Ordering,Postgrest.Constants.NullPosition)">Order(String, String, Constants.Ordering, Constants.NullPosition)</h4>
-  <div class="markdown level1 summary"><p>Adds an ordering to the current query args.</p>
-</div>
+  <a id="Postgrest_Interfaces_IPostgrestTable_1_Order_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Order*"></a>
+  <h4 id="Postgrest_Interfaces_IPostgrestTable_1_Order_System_String_System_String_Postgrest_Constants_Ordering_Postgrest_Constants_NullPosition_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Order(System.String,System.String,Postgrest.Constants.Ordering,Postgrest.Constants.NullPosition)">Order(String, String, Constants.Ordering, Constants.NullPosition)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Table&lt;T&gt; Order(string foreignTable, string column, Constants.Ordering ordering, Constants.NullPosition nullPosition = Constants.NullPosition.First)</code></pre>
+    <pre><code class="lang-csharp hljs">Table&lt;T&gt; Order(string foreignTable, string column, Constants.Ordering ordering, Constants.NullPosition nullPosition = Constants.NullPosition.First)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1395,19 +1280,18 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_Range_System_Int32_.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.Range(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1_Range_System_Int32_.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601.Range(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L283">View Source</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L36">View Source</a>
   </span>
-  <a id="Postgrest_Table_1_Range_" data-uid="Postgrest.Table`1.Range*"></a>
-  <h4 id="Postgrest_Table_1_Range_System_Int32_" data-uid="Postgrest.Table`1.Range(System.Int32)">Range(Int32)</h4>
-  <div class="markdown level1 summary"><p>Sets a FROM range, similar to a <code>StartAt</code> query.</p>
-</div>
+  <a id="Postgrest_Interfaces_IPostgrestTable_1_Range_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Range*"></a>
+  <h4 id="Postgrest_Interfaces_IPostgrestTable_1_Range_System_Int32_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Range(System.Int32)">Range(Int32)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Table&lt;T&gt; Range(int from)</code></pre>
+    <pre><code class="lang-csharp hljs">Table&lt;T&gt; Range(int from)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1443,19 +1327,18 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_Range_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.Range(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1_Range_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601.Range(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L295">View Source</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L37">View Source</a>
   </span>
-  <a id="Postgrest_Table_1_Range_" data-uid="Postgrest.Table`1.Range*"></a>
-  <h4 id="Postgrest_Table_1_Range_System_Int32_System_Int32_" data-uid="Postgrest.Table`1.Range(System.Int32,System.Int32)">Range(Int32, Int32)</h4>
-  <div class="markdown level1 summary"><p>Sets a bounded range to the current query.</p>
-</div>
+  <a id="Postgrest_Interfaces_IPostgrestTable_1_Range_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Range*"></a>
+  <h4 id="Postgrest_Interfaces_IPostgrestTable_1_Range_System_Int32_System_Int32_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Range(System.Int32,System.Int32)">Range(Int32, Int32)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Table&lt;T&gt; Range(int from, int to)</code></pre>
+    <pre><code class="lang-csharp hljs">Table&lt;T&gt; Range(int from, int to)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1496,19 +1379,18 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_Select_System_String_.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.Select(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1_Select_System_String_.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601.Select(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L307">View Source</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L38">View Source</a>
   </span>
-  <a id="Postgrest_Table_1_Select_" data-uid="Postgrest.Table`1.Select*"></a>
-  <h4 id="Postgrest_Table_1_Select_System_String_" data-uid="Postgrest.Table`1.Select(System.String)">Select(String)</h4>
-  <div class="markdown level1 summary"><p>Select columns for query.</p>
-</div>
+  <a id="Postgrest_Interfaces_IPostgrestTable_1_Select_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Select*"></a>
+  <h4 id="Postgrest_Interfaces_IPostgrestTable_1_Select_System_String_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Select(System.String)">Select(String)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Table&lt;T&gt; Select(string columnQuery)</code></pre>
+    <pre><code class="lang-csharp hljs">Table&lt;T&gt; Select(string columnQuery)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1544,20 +1426,18 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_Single_CancellationToken_.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.Single(CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1_Single_CancellationToken_.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601.Single(CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L553">View Source</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L39">View Source</a>
   </span>
-  <a id="Postgrest_Table_1_Single_" data-uid="Postgrest.Table`1.Single*"></a>
-  <h4 id="Postgrest_Table_1_Single_CancellationToken_" data-uid="Postgrest.Table`1.Single(CancellationToken)">Single(CancellationToken)</h4>
-  <div class="markdown level1 summary"><p>Executes a query that expects to have a single object returned, rather than returning list of models
-it will return a single model.</p>
-</div>
+  <a id="Postgrest_Interfaces_IPostgrestTable_1_Single_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Single*"></a>
+  <h4 id="Postgrest_Interfaces_IPostgrestTable_1_Single_CancellationToken_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Single(CancellationToken)">Single(CancellationToken)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;T&gt; Single(CancellationToken cancellationToken = null)</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;T&gt; Single(CancellationToken cancellationToken = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1593,81 +1473,18 @@ it will return a single model.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_Update__0_Postgrest_QueryOptions_CancellationToken_.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.Update(%600%2CPostgrest.QueryOptions%2CCancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1_Update__0_Postgrest_QueryOptions_CancellationToken_.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601.Update(%600%2CPostgrest.QueryOptions%2CCancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L442">View Source</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L40">View Source</a>
   </span>
-  <a id="Postgrest_Table_1_Update_" data-uid="Postgrest.Table`1.Update*"></a>
-  <h4 id="Postgrest_Table_1_Update__0_Postgrest_QueryOptions_CancellationToken_" data-uid="Postgrest.Table`1.Update(`0,Postgrest.QueryOptions,CancellationToken)">Update(T, QueryOptions, CancellationToken)</h4>
-  <div class="markdown level1 summary"><p>Executes an UPDATE query using the defined query params on the current instance.</p>
-</div>
+  <a id="Postgrest_Interfaces_IPostgrestTable_1_Update_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Update*"></a>
+  <h4 id="Postgrest_Interfaces_IPostgrestTable_1_Update__0_Postgrest_QueryOptions_CancellationToken_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Update(`0,Postgrest.QueryOptions,CancellationToken)">Update(T, QueryOptions, CancellationToken)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;ModeledResponse&lt;T&gt;&gt; Update(T model, QueryOptions options = null, CancellationToken cancellationToken = null)</code></pre>
-  </div>
-  <h5 class="parameters">Parameters</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Name</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">T</span></td>
-        <td><span class="parametername">model</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><a class="xref" href="Postgrest.QueryOptions.html">QueryOptions</a></td>
-        <td><span class="parametername">options</span></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><span class="xref">CancellationToken</span></td>
-        <td><span class="parametername">cancellationToken</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">Task</span>&lt;<a class="xref" href="Postgrest.Responses.ModeledResponse-1.html">ModeledResponse</a>&lt;T&gt;&gt;</td>
-        <td><p>A typed response from the database.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_Upsert__0_Postgrest_QueryOptions_CancellationToken_.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.Upsert(%600%2CPostgrest.QueryOptions%2CCancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L399">View Source</a>
-  </span>
-  <a id="Postgrest_Table_1_Upsert_" data-uid="Postgrest.Table`1.Upsert*"></a>
-  <h4 id="Postgrest_Table_1_Upsert__0_Postgrest_QueryOptions_CancellationToken_" data-uid="Postgrest.Table`1.Upsert(`0,Postgrest.QueryOptions,CancellationToken)">Upsert(T, QueryOptions, CancellationToken)</h4>
-  <div class="markdown level1 summary"><p>Executes an UPSERT query using the defined query params on the current instance.</p>
-<p>By default the new record is returned. Set QueryOptions.ReturnType to Minimal if you don't need this value.
-By specifying the QueryOptions.OnConflict parameter, you can make UPSERT work on a column(s) that has a UNIQUE constraint.
-QueryOptions.DuplicateResolution.IgnoreDuplicates Specifies if duplicate rows should be ignored and not inserted.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;ModeledResponse&lt;T&gt;&gt; Upsert(T model, QueryOptions options = null, CancellationToken cancellationToken = null)</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;ModeledResponse&lt;T&gt;&gt; Update(T model, QueryOptions options = null, CancellationToken cancellationToken = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1713,22 +1530,75 @@ QueryOptions.DuplicateResolution.IgnoreDuplicates Specifies if duplicate rows sh
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1_Upsert_ICollection__0__Postgrest_QueryOptions_CancellationToken_.md&amp;value=---%0Auid%3A%20Postgrest.Table%601.Upsert(ICollection%7B%600%7D%2CPostgrest.QueryOptions%2CCancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1_Upsert__0_Postgrest_QueryOptions_CancellationToken_.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601.Upsert(%600%2CPostgrest.QueryOptions%2CCancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L423">View Source</a>
+    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L42">View Source</a>
   </span>
-  <a id="Postgrest_Table_1_Upsert_" data-uid="Postgrest.Table`1.Upsert*"></a>
-  <h4 id="Postgrest_Table_1_Upsert_ICollection__0__Postgrest_QueryOptions_CancellationToken_" data-uid="Postgrest.Table`1.Upsert(ICollection{`0},Postgrest.QueryOptions,CancellationToken)">Upsert(ICollection&lt;T&gt;, QueryOptions, CancellationToken)</h4>
-  <div class="markdown level1 summary"><p>Executes an UPSERT query using the defined query params on the current instance.</p>
-<p>By default the new record is returned. Set QueryOptions.ReturnType to Minimal if you don't need this value.
-By specifying the QueryOptions.OnConflict parameter, you can make UPSERT work on a column(s) that has a UNIQUE constraint.
-QueryOptions.DuplicateResolution.IgnoreDuplicates Specifies if duplicate rows should be ignored and not inserted.</p>
-</div>
+  <a id="Postgrest_Interfaces_IPostgrestTable_1_Upsert_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Upsert*"></a>
+  <h4 id="Postgrest_Interfaces_IPostgrestTable_1_Upsert__0_Postgrest_QueryOptions_CancellationToken_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Upsert(`0,Postgrest.QueryOptions,CancellationToken)">Upsert(T, QueryOptions, CancellationToken)</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Task&lt;ModeledResponse&lt;T&gt;&gt; Upsert(ICollection&lt;T&gt; model, QueryOptions options = null, CancellationToken cancellationToken = null)</code></pre>
+    <pre><code class="lang-csharp hljs">Task&lt;ModeledResponse&lt;T&gt;&gt; Upsert(T model, QueryOptions options = null, CancellationToken cancellationToken = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">model</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="Postgrest.QueryOptions.html">QueryOptions</a></td>
+        <td><span class="parametername">options</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">CancellationToken</span></td>
+        <td><span class="parametername">cancellationToken</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span>&lt;<a class="xref" href="Postgrest.Responses.ModeledResponse-1.html">ModeledResponse</a>&lt;T&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1_Upsert_ICollection__0__Postgrest_QueryOptions_CancellationToken_.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601.Upsert(ICollection%7B%600%7D%2CPostgrest.QueryOptions%2CCancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L41">View Source</a>
+  </span>
+  <a id="Postgrest_Interfaces_IPostgrestTable_1_Upsert_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Upsert*"></a>
+  <h4 id="Postgrest_Interfaces_IPostgrestTable_1_Upsert_ICollection__0__Postgrest_QueryOptions_CancellationToken_" data-uid="Postgrest.Interfaces.IPostgrestTable`1.Upsert(ICollection{`0},Postgrest.QueryOptions,CancellationToken)">Upsert(ICollection&lt;T&gt;, QueryOptions, CancellationToken)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Task&lt;ModeledResponse&lt;T&gt;&gt; Upsert(ICollection&lt;T&gt; model, QueryOptions options = null, CancellationToken cancellationToken = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1772,10 +1642,6 @@ QueryOptions.DuplicateResolution.IgnoreDuplicates Specifies if duplicate rows sh
       </tr>
     </tbody>
   </table>
-  <h3 id="implements">Implements</h3>
-  <div>
-      <a class="xref" href="Postgrest.Interfaces.IPostgrestTable-1.html">IPostgrestTable&lt;T&gt;</a>
-  </div>
 </article>
           </div>
           
@@ -1784,10 +1650,10 @@ QueryOptions.DuplicateResolution.IgnoreDuplicates Specifies if duplicate rows sh
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Table_1.md&amp;value=---%0Auid%3A%20Postgrest.Table%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Interfaces_IPostgrestTable_1.md&amp;value=---%0Auid%3A%20Postgrest.Interfaces.IPostgrestTable%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L27" class="contribution-link">View Source</a>
+                    <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestTable.cs/#L9" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

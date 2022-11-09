@@ -19,12 +19,15 @@ references:
   commentId: T:Postgrest.Attributes.ColumnAttribute
   fullName: Postgrest.Attributes.ColumnAttribute
   nameWithType: ColumnAttribute
-- uid: Postgrest.Attributes.ColumnAttribute.#ctor(System.String,NullValueHandling,System.Boolean,System.Boolean)
-  name: ColumnAttribute(String, NullValueHandling, Boolean, Boolean)
-  href: api/Postgrest.Attributes.ColumnAttribute.html#Postgrest_Attributes_ColumnAttribute__ctor_System_String_NullValueHandling_System_Boolean_System_Boolean_
-  commentId: M:Postgrest.Attributes.ColumnAttribute.#ctor(System.String,NullValueHandling,System.Boolean,System.Boolean)
-  fullName: Postgrest.Attributes.ColumnAttribute.ColumnAttribute(System.String, NullValueHandling, System.Boolean, System.Boolean)
-  nameWithType: ColumnAttribute.ColumnAttribute(String, NullValueHandling, Boolean, Boolean)
+- uid: Postgrest.Attributes.ColumnAttribute.#ctor(System.Nullable{System.String},NullValueHandling,System.Boolean,System.Boolean)
+  name: ColumnAttribute(Nullable<String>, NullValueHandling, Boolean, Boolean)
+  href: api/Postgrest.Attributes.ColumnAttribute.html#Postgrest_Attributes_ColumnAttribute__ctor_System_Nullable_System_String__NullValueHandling_System_Boolean_System_Boolean_
+  commentId: M:Postgrest.Attributes.ColumnAttribute.#ctor(System.Nullable{System.String},NullValueHandling,System.Boolean,System.Boolean)
+  name.vb: ColumnAttribute(Nullable(Of String), NullValueHandling, Boolean, Boolean)
+  fullName: Postgrest.Attributes.ColumnAttribute.ColumnAttribute(System.Nullable<System.String>, NullValueHandling, System.Boolean, System.Boolean)
+  fullName.vb: Postgrest.Attributes.ColumnAttribute.ColumnAttribute(System.Nullable(Of System.String), NullValueHandling, System.Boolean, System.Boolean)
+  nameWithType: ColumnAttribute.ColumnAttribute(Nullable<String>, NullValueHandling, Boolean, Boolean)
+  nameWithType.vb: ColumnAttribute.ColumnAttribute(Nullable(Of String), NullValueHandling, Boolean, Boolean)
 - uid: Postgrest.Attributes.ColumnAttribute.#ctor*
   name: ColumnAttribute
   href: api/Postgrest.Attributes.ColumnAttribute.html#Postgrest_Attributes_ColumnAttribute__ctor_
@@ -148,12 +151,15 @@ references:
   commentId: T:Postgrest.Attributes.PrimaryKeyAttribute
   fullName: Postgrest.Attributes.PrimaryKeyAttribute
   nameWithType: PrimaryKeyAttribute
-- uid: Postgrest.Attributes.PrimaryKeyAttribute.#ctor(System.String,System.Boolean)
-  name: PrimaryKeyAttribute(String, Boolean)
-  href: api/Postgrest.Attributes.PrimaryKeyAttribute.html#Postgrest_Attributes_PrimaryKeyAttribute__ctor_System_String_System_Boolean_
-  commentId: M:Postgrest.Attributes.PrimaryKeyAttribute.#ctor(System.String,System.Boolean)
-  fullName: Postgrest.Attributes.PrimaryKeyAttribute.PrimaryKeyAttribute(System.String, System.Boolean)
-  nameWithType: PrimaryKeyAttribute.PrimaryKeyAttribute(String, Boolean)
+- uid: Postgrest.Attributes.PrimaryKeyAttribute.#ctor(System.Nullable{System.String},System.Boolean)
+  name: PrimaryKeyAttribute(Nullable<String>, Boolean)
+  href: api/Postgrest.Attributes.PrimaryKeyAttribute.html#Postgrest_Attributes_PrimaryKeyAttribute__ctor_System_Nullable_System_String__System_Boolean_
+  commentId: M:Postgrest.Attributes.PrimaryKeyAttribute.#ctor(System.Nullable{System.String},System.Boolean)
+  name.vb: PrimaryKeyAttribute(Nullable(Of String), Boolean)
+  fullName: Postgrest.Attributes.PrimaryKeyAttribute.PrimaryKeyAttribute(System.Nullable<System.String>, System.Boolean)
+  fullName.vb: Postgrest.Attributes.PrimaryKeyAttribute.PrimaryKeyAttribute(System.Nullable(Of System.String), System.Boolean)
+  nameWithType: PrimaryKeyAttribute.PrimaryKeyAttribute(Nullable<String>, Boolean)
+  nameWithType.vb: PrimaryKeyAttribute.PrimaryKeyAttribute(Nullable(Of String), Boolean)
 - uid: Postgrest.Attributes.PrimaryKeyAttribute.#ctor*
   name: PrimaryKeyAttribute
   href: api/Postgrest.Attributes.PrimaryKeyAttribute.html#Postgrest_Attributes_PrimaryKeyAttribute__ctor_
@@ -348,6 +354,19 @@ references:
   commentId: T:Postgrest.Client
   fullName: Postgrest.Client
   nameWithType: Client
+- uid: Postgrest.Client.#ctor(System.String,Postgrest.ClientOptions)
+  name: Client(String, ClientOptions)
+  href: api/Postgrest.Client.html#Postgrest_Client__ctor_System_String_Postgrest_ClientOptions_
+  commentId: M:Postgrest.Client.#ctor(System.String,Postgrest.ClientOptions)
+  fullName: Postgrest.Client.Client(System.String, Postgrest.ClientOptions)
+  nameWithType: Client.Client(String, ClientOptions)
+- uid: Postgrest.Client.#ctor*
+  name: Client
+  href: api/Postgrest.Client.html#Postgrest_Client__ctor_
+  commentId: Overload:Postgrest.Client.#ctor
+  isSpec: "True"
+  fullName: Postgrest.Client.Client
+  nameWithType: Client.Client
 - uid: Postgrest.Client.BaseUrl
   name: BaseUrl
   href: api/Postgrest.Client.html#Postgrest_Client_BaseUrl
@@ -361,32 +380,19 @@ references:
   isSpec: "True"
   fullName: Postgrest.Client.BaseUrl
   nameWithType: Client.BaseUrl
-- uid: Postgrest.Client.Initialize(System.String,Postgrest.ClientOptions)
-  name: Initialize(String, ClientOptions)
-  href: api/Postgrest.Client.html#Postgrest_Client_Initialize_System_String_Postgrest_ClientOptions_
-  commentId: M:Postgrest.Client.Initialize(System.String,Postgrest.ClientOptions)
-  fullName: Postgrest.Client.Initialize(System.String, Postgrest.ClientOptions)
-  nameWithType: Client.Initialize(String, ClientOptions)
-- uid: Postgrest.Client.Initialize*
-  name: Initialize
-  href: api/Postgrest.Client.html#Postgrest_Client_Initialize_
-  commentId: Overload:Postgrest.Client.Initialize
+- uid: Postgrest.Client.Options
+  name: Options
+  href: api/Postgrest.Client.html#Postgrest_Client_Options
+  commentId: P:Postgrest.Client.Options
+  fullName: Postgrest.Client.Options
+  nameWithType: Client.Options
+- uid: Postgrest.Client.Options*
+  name: Options
+  href: api/Postgrest.Client.html#Postgrest_Client_Options_
+  commentId: Overload:Postgrest.Client.Options
   isSpec: "True"
-  fullName: Postgrest.Client.Initialize
-  nameWithType: Client.Initialize
-- uid: Postgrest.Client.Instance
-  name: Instance
-  href: api/Postgrest.Client.html#Postgrest_Client_Instance
-  commentId: P:Postgrest.Client.Instance
-  fullName: Postgrest.Client.Instance
-  nameWithType: Client.Instance
-- uid: Postgrest.Client.Instance*
-  name: Instance
-  href: api/Postgrest.Client.html#Postgrest_Client_Instance_
-  commentId: Overload:Postgrest.Client.Instance
-  isSpec: "True"
-  fullName: Postgrest.Client.Instance
-  nameWithType: Client.Instance
+  fullName: Postgrest.Client.Options
+  nameWithType: Client.Options
 - uid: Postgrest.Client.Rpc(System.String,Dictionary{System.String,System.Object})
   name: Rpc(String, Dictionary<String, Object>)
   href: api/Postgrest.Client.html#Postgrest_Client_Rpc_System_String_Dictionary_System_String_System_Object__
@@ -736,12 +742,15 @@ references:
   isSpec: "True"
   fullName: Postgrest.Converters.DateTimeConverter.CanWrite
   nameWithType: DateTimeConverter.CanWrite
-- uid: Postgrest.Converters.DateTimeConverter.ReadJson(JsonReader,Type,System.Object,JsonSerializer)
-  name: ReadJson(JsonReader, Type, Object, JsonSerializer)
-  href: api/Postgrest.Converters.DateTimeConverter.html#Postgrest_Converters_DateTimeConverter_ReadJson_JsonReader_Type_System_Object_JsonSerializer_
-  commentId: M:Postgrest.Converters.DateTimeConverter.ReadJson(JsonReader,Type,System.Object,JsonSerializer)
-  fullName: Postgrest.Converters.DateTimeConverter.ReadJson(JsonReader, Type, System.Object, JsonSerializer)
-  nameWithType: DateTimeConverter.ReadJson(JsonReader, Type, Object, JsonSerializer)
+- uid: Postgrest.Converters.DateTimeConverter.ReadJson(JsonReader,Type,System.Nullable{System.Object},JsonSerializer)
+  name: ReadJson(JsonReader, Type, Nullable<Object>, JsonSerializer)
+  href: api/Postgrest.Converters.DateTimeConverter.html#Postgrest_Converters_DateTimeConverter_ReadJson_JsonReader_Type_System_Nullable_System_Object__JsonSerializer_
+  commentId: M:Postgrest.Converters.DateTimeConverter.ReadJson(JsonReader,Type,System.Nullable{System.Object},JsonSerializer)
+  name.vb: ReadJson(JsonReader, Type, Nullable(Of Object), JsonSerializer)
+  fullName: Postgrest.Converters.DateTimeConverter.ReadJson(JsonReader, Type, System.Nullable<System.Object>, JsonSerializer)
+  fullName.vb: Postgrest.Converters.DateTimeConverter.ReadJson(JsonReader, Type, System.Nullable(Of System.Object), JsonSerializer)
+  nameWithType: DateTimeConverter.ReadJson(JsonReader, Type, Nullable<Object>, JsonSerializer)
+  nameWithType.vb: DateTimeConverter.ReadJson(JsonReader, Type, Nullable(Of Object), JsonSerializer)
 - uid: Postgrest.Converters.DateTimeConverter.ReadJson*
   name: ReadJson
   href: api/Postgrest.Converters.DateTimeConverter.html#Postgrest_Converters_DateTimeConverter_ReadJson_
@@ -749,12 +758,15 @@ references:
   isSpec: "True"
   fullName: Postgrest.Converters.DateTimeConverter.ReadJson
   nameWithType: DateTimeConverter.ReadJson
-- uid: Postgrest.Converters.DateTimeConverter.WriteJson(JsonWriter,System.Object,JsonSerializer)
-  name: WriteJson(JsonWriter, Object, JsonSerializer)
-  href: api/Postgrest.Converters.DateTimeConverter.html#Postgrest_Converters_DateTimeConverter_WriteJson_JsonWriter_System_Object_JsonSerializer_
-  commentId: M:Postgrest.Converters.DateTimeConverter.WriteJson(JsonWriter,System.Object,JsonSerializer)
-  fullName: Postgrest.Converters.DateTimeConverter.WriteJson(JsonWriter, System.Object, JsonSerializer)
-  nameWithType: DateTimeConverter.WriteJson(JsonWriter, Object, JsonSerializer)
+- uid: Postgrest.Converters.DateTimeConverter.WriteJson(JsonWriter,System.Nullable{System.Object},JsonSerializer)
+  name: WriteJson(JsonWriter, Nullable<Object>, JsonSerializer)
+  href: api/Postgrest.Converters.DateTimeConverter.html#Postgrest_Converters_DateTimeConverter_WriteJson_JsonWriter_System_Nullable_System_Object__JsonSerializer_
+  commentId: M:Postgrest.Converters.DateTimeConverter.WriteJson(JsonWriter,System.Nullable{System.Object},JsonSerializer)
+  name.vb: WriteJson(JsonWriter, Nullable(Of Object), JsonSerializer)
+  fullName: Postgrest.Converters.DateTimeConverter.WriteJson(JsonWriter, System.Nullable<System.Object>, JsonSerializer)
+  fullName.vb: Postgrest.Converters.DateTimeConverter.WriteJson(JsonWriter, System.Nullable(Of System.Object), JsonSerializer)
+  nameWithType: DateTimeConverter.WriteJson(JsonWriter, Nullable<Object>, JsonSerializer)
+  nameWithType.vb: DateTimeConverter.WriteJson(JsonWriter, Nullable(Of Object), JsonSerializer)
 - uid: Postgrest.Converters.DateTimeConverter.WriteJson*
   name: WriteJson
   href: api/Postgrest.Converters.DateTimeConverter.html#Postgrest_Converters_DateTimeConverter_WriteJson_
@@ -794,12 +806,15 @@ references:
   isSpec: "True"
   fullName: Postgrest.Converters.IntArrayConverter.CanRead
   nameWithType: IntArrayConverter.CanRead
-- uid: Postgrest.Converters.IntArrayConverter.ReadJson(JsonReader,Type,System.Object,JsonSerializer)
-  name: ReadJson(JsonReader, Type, Object, JsonSerializer)
-  href: api/Postgrest.Converters.IntArrayConverter.html#Postgrest_Converters_IntArrayConverter_ReadJson_JsonReader_Type_System_Object_JsonSerializer_
-  commentId: M:Postgrest.Converters.IntArrayConverter.ReadJson(JsonReader,Type,System.Object,JsonSerializer)
-  fullName: Postgrest.Converters.IntArrayConverter.ReadJson(JsonReader, Type, System.Object, JsonSerializer)
-  nameWithType: IntArrayConverter.ReadJson(JsonReader, Type, Object, JsonSerializer)
+- uid: Postgrest.Converters.IntArrayConverter.ReadJson(JsonReader,Type,System.Nullable{System.Object},JsonSerializer)
+  name: ReadJson(JsonReader, Type, Nullable<Object>, JsonSerializer)
+  href: api/Postgrest.Converters.IntArrayConverter.html#Postgrest_Converters_IntArrayConverter_ReadJson_JsonReader_Type_System_Nullable_System_Object__JsonSerializer_
+  commentId: M:Postgrest.Converters.IntArrayConverter.ReadJson(JsonReader,Type,System.Nullable{System.Object},JsonSerializer)
+  name.vb: ReadJson(JsonReader, Type, Nullable(Of Object), JsonSerializer)
+  fullName: Postgrest.Converters.IntArrayConverter.ReadJson(JsonReader, Type, System.Nullable<System.Object>, JsonSerializer)
+  fullName.vb: Postgrest.Converters.IntArrayConverter.ReadJson(JsonReader, Type, System.Nullable(Of System.Object), JsonSerializer)
+  nameWithType: IntArrayConverter.ReadJson(JsonReader, Type, Nullable<Object>, JsonSerializer)
+  nameWithType.vb: IntArrayConverter.ReadJson(JsonReader, Type, Nullable(Of Object), JsonSerializer)
 - uid: Postgrest.Converters.IntArrayConverter.ReadJson*
   name: ReadJson
   href: api/Postgrest.Converters.IntArrayConverter.html#Postgrest_Converters_IntArrayConverter_ReadJson_
@@ -807,12 +822,15 @@ references:
   isSpec: "True"
   fullName: Postgrest.Converters.IntArrayConverter.ReadJson
   nameWithType: IntArrayConverter.ReadJson
-- uid: Postgrest.Converters.IntArrayConverter.WriteJson(JsonWriter,System.Object,JsonSerializer)
-  name: WriteJson(JsonWriter, Object, JsonSerializer)
-  href: api/Postgrest.Converters.IntArrayConverter.html#Postgrest_Converters_IntArrayConverter_WriteJson_JsonWriter_System_Object_JsonSerializer_
-  commentId: M:Postgrest.Converters.IntArrayConverter.WriteJson(JsonWriter,System.Object,JsonSerializer)
-  fullName: Postgrest.Converters.IntArrayConverter.WriteJson(JsonWriter, System.Object, JsonSerializer)
-  nameWithType: IntArrayConverter.WriteJson(JsonWriter, Object, JsonSerializer)
+- uid: Postgrest.Converters.IntArrayConverter.WriteJson(JsonWriter,System.Nullable{System.Object},JsonSerializer)
+  name: WriteJson(JsonWriter, Nullable<Object>, JsonSerializer)
+  href: api/Postgrest.Converters.IntArrayConverter.html#Postgrest_Converters_IntArrayConverter_WriteJson_JsonWriter_System_Nullable_System_Object__JsonSerializer_
+  commentId: M:Postgrest.Converters.IntArrayConverter.WriteJson(JsonWriter,System.Nullable{System.Object},JsonSerializer)
+  name.vb: WriteJson(JsonWriter, Nullable(Of Object), JsonSerializer)
+  fullName: Postgrest.Converters.IntArrayConverter.WriteJson(JsonWriter, System.Nullable<System.Object>, JsonSerializer)
+  fullName.vb: Postgrest.Converters.IntArrayConverter.WriteJson(JsonWriter, System.Nullable(Of System.Object), JsonSerializer)
+  nameWithType: IntArrayConverter.WriteJson(JsonWriter, Nullable<Object>, JsonSerializer)
+  nameWithType.vb: IntArrayConverter.WriteJson(JsonWriter, Nullable(Of Object), JsonSerializer)
 - uid: Postgrest.Converters.IntArrayConverter.WriteJson*
   name: WriteJson
   href: api/Postgrest.Converters.IntArrayConverter.html#Postgrest_Converters_IntArrayConverter_WriteJson_
@@ -860,6 +878,25 @@ references:
   commentId: T:Postgrest.Extensions.RangeExtensions
   fullName: Postgrest.Extensions.RangeExtensions
   nameWithType: RangeExtensions
+- uid: Postgrest.Extensions.UriExtensions
+  name: UriExtensions
+  href: api/Postgrest.Extensions.UriExtensions.html
+  commentId: T:Postgrest.Extensions.UriExtensions
+  fullName: Postgrest.Extensions.UriExtensions
+  nameWithType: UriExtensions
+- uid: Postgrest.Extensions.UriExtensions.GetBaseUrl(Uri)
+  name: GetBaseUrl(Uri)
+  href: api/Postgrest.Extensions.UriExtensions.html#Postgrest_Extensions_UriExtensions_GetBaseUrl_Uri_
+  commentId: M:Postgrest.Extensions.UriExtensions.GetBaseUrl(Uri)
+  fullName: Postgrest.Extensions.UriExtensions.GetBaseUrl(Uri)
+  nameWithType: UriExtensions.GetBaseUrl(Uri)
+- uid: Postgrest.Extensions.UriExtensions.GetBaseUrl*
+  name: GetBaseUrl
+  href: api/Postgrest.Extensions.UriExtensions.html#Postgrest_Extensions_UriExtensions_GetBaseUrl_
+  commentId: Overload:Postgrest.Extensions.UriExtensions.GetBaseUrl
+  isSpec: "True"
+  fullName: Postgrest.Extensions.UriExtensions.GetBaseUrl
+  nameWithType: UriExtensions.GetBaseUrl
 - uid: Postgrest.FullTextSearchConfig
   name: FullTextSearchConfig
   href: api/Postgrest.FullTextSearchConfig.html
@@ -1082,18 +1119,592 @@ references:
   isSpec: "True"
   fullName: Postgrest.Index.Value
   nameWithType: Index.Value
+- uid: Postgrest.Interfaces
+  name: Postgrest.Interfaces
+  href: api/Postgrest.Interfaces.html
+  commentId: N:Postgrest.Interfaces
+  fullName: Postgrest.Interfaces
+  nameWithType: Postgrest.Interfaces
+- uid: Postgrest.Interfaces.IPostgrestClient
+  name: IPostgrestClient
+  href: api/Postgrest.Interfaces.IPostgrestClient.html
+  commentId: T:Postgrest.Interfaces.IPostgrestClient
+  fullName: Postgrest.Interfaces.IPostgrestClient
+  nameWithType: IPostgrestClient
+- uid: Postgrest.Interfaces.IPostgrestClient.BaseUrl
+  name: BaseUrl
+  href: api/Postgrest.Interfaces.IPostgrestClient.html#Postgrest_Interfaces_IPostgrestClient_BaseUrl
+  commentId: P:Postgrest.Interfaces.IPostgrestClient.BaseUrl
+  fullName: Postgrest.Interfaces.IPostgrestClient.BaseUrl
+  nameWithType: IPostgrestClient.BaseUrl
+- uid: Postgrest.Interfaces.IPostgrestClient.BaseUrl*
+  name: BaseUrl
+  href: api/Postgrest.Interfaces.IPostgrestClient.html#Postgrest_Interfaces_IPostgrestClient_BaseUrl_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestClient.BaseUrl
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestClient.BaseUrl
+  nameWithType: IPostgrestClient.BaseUrl
+- uid: Postgrest.Interfaces.IPostgrestClient.Options
+  name: Options
+  href: api/Postgrest.Interfaces.IPostgrestClient.html#Postgrest_Interfaces_IPostgrestClient_Options
+  commentId: P:Postgrest.Interfaces.IPostgrestClient.Options
+  fullName: Postgrest.Interfaces.IPostgrestClient.Options
+  nameWithType: IPostgrestClient.Options
+- uid: Postgrest.Interfaces.IPostgrestClient.Options*
+  name: Options
+  href: api/Postgrest.Interfaces.IPostgrestClient.html#Postgrest_Interfaces_IPostgrestClient_Options_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestClient.Options
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestClient.Options
+  nameWithType: IPostgrestClient.Options
+- uid: Postgrest.Interfaces.IPostgrestClient.Rpc(System.String,Dictionary{System.String,System.Object})
+  name: Rpc(String, Dictionary<String, Object>)
+  href: api/Postgrest.Interfaces.IPostgrestClient.html#Postgrest_Interfaces_IPostgrestClient_Rpc_System_String_Dictionary_System_String_System_Object__
+  commentId: M:Postgrest.Interfaces.IPostgrestClient.Rpc(System.String,Dictionary{System.String,System.Object})
+  name.vb: Rpc(String, Dictionary(Of String, Object))
+  fullName: Postgrest.Interfaces.IPostgrestClient.Rpc(System.String, Dictionary<System.String, System.Object>)
+  fullName.vb: Postgrest.Interfaces.IPostgrestClient.Rpc(System.String, Dictionary(Of System.String, System.Object))
+  nameWithType: IPostgrestClient.Rpc(String, Dictionary<String, Object>)
+  nameWithType.vb: IPostgrestClient.Rpc(String, Dictionary(Of String, Object))
+- uid: Postgrest.Interfaces.IPostgrestClient.Rpc*
+  name: Rpc
+  href: api/Postgrest.Interfaces.IPostgrestClient.html#Postgrest_Interfaces_IPostgrestClient_Rpc_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestClient.Rpc
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestClient.Rpc
+  nameWithType: IPostgrestClient.Rpc
+- uid: Postgrest.Interfaces.IPostgrestClient.Table*
+  name: Table
+  href: api/Postgrest.Interfaces.IPostgrestClient.html#Postgrest_Interfaces_IPostgrestClient_Table_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestClient.Table
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestClient.Table
+  nameWithType: IPostgrestClient.Table
+- uid: Postgrest.Interfaces.IPostgrestClient.Table``1
+  name: Table<T>()
+  href: api/Postgrest.Interfaces.IPostgrestClient.html#Postgrest_Interfaces_IPostgrestClient_Table__1
+  commentId: M:Postgrest.Interfaces.IPostgrestClient.Table``1
+  name.vb: Table(Of T)()
+  fullName: Postgrest.Interfaces.IPostgrestClient.Table<T>()
+  fullName.vb: Postgrest.Interfaces.IPostgrestClient.Table(Of T)()
+  nameWithType: IPostgrestClient.Table<T>()
+  nameWithType.vb: IPostgrestClient.Table(Of T)()
+- uid: Postgrest.Interfaces.IPostgrestQueryFilter
+  name: IPostgrestQueryFilter
+  href: api/Postgrest.Interfaces.IPostgrestQueryFilter.html
+  commentId: T:Postgrest.Interfaces.IPostgrestQueryFilter
+  fullName: Postgrest.Interfaces.IPostgrestQueryFilter
+  nameWithType: IPostgrestQueryFilter
+- uid: Postgrest.Interfaces.IPostgrestQueryFilter.Criteria
+  name: Criteria
+  href: api/Postgrest.Interfaces.IPostgrestQueryFilter.html#Postgrest_Interfaces_IPostgrestQueryFilter_Criteria
+  commentId: P:Postgrest.Interfaces.IPostgrestQueryFilter.Criteria
+  fullName: Postgrest.Interfaces.IPostgrestQueryFilter.Criteria
+  nameWithType: IPostgrestQueryFilter.Criteria
+- uid: Postgrest.Interfaces.IPostgrestQueryFilter.Criteria*
+  name: Criteria
+  href: api/Postgrest.Interfaces.IPostgrestQueryFilter.html#Postgrest_Interfaces_IPostgrestQueryFilter_Criteria_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestQueryFilter.Criteria
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestQueryFilter.Criteria
+  nameWithType: IPostgrestQueryFilter.Criteria
+- uid: Postgrest.Interfaces.IPostgrestQueryFilter.Op
+  name: Op
+  href: api/Postgrest.Interfaces.IPostgrestQueryFilter.html#Postgrest_Interfaces_IPostgrestQueryFilter_Op
+  commentId: P:Postgrest.Interfaces.IPostgrestQueryFilter.Op
+  fullName: Postgrest.Interfaces.IPostgrestQueryFilter.Op
+  nameWithType: IPostgrestQueryFilter.Op
+- uid: Postgrest.Interfaces.IPostgrestQueryFilter.Op*
+  name: Op
+  href: api/Postgrest.Interfaces.IPostgrestQueryFilter.html#Postgrest_Interfaces_IPostgrestQueryFilter_Op_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestQueryFilter.Op
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestQueryFilter.Op
+  nameWithType: IPostgrestQueryFilter.Op
+- uid: Postgrest.Interfaces.IPostgrestQueryFilter.Property
+  name: Property
+  href: api/Postgrest.Interfaces.IPostgrestQueryFilter.html#Postgrest_Interfaces_IPostgrestQueryFilter_Property
+  commentId: P:Postgrest.Interfaces.IPostgrestQueryFilter.Property
+  fullName: Postgrest.Interfaces.IPostgrestQueryFilter.Property
+  nameWithType: IPostgrestQueryFilter.Property
+- uid: Postgrest.Interfaces.IPostgrestQueryFilter.Property*
+  name: Property
+  href: api/Postgrest.Interfaces.IPostgrestQueryFilter.html#Postgrest_Interfaces_IPostgrestQueryFilter_Property_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestQueryFilter.Property
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestQueryFilter.Property
+  nameWithType: IPostgrestQueryFilter.Property
+- uid: Postgrest.Interfaces.IPostgrestTable`1
+  name: IPostgrestTable<T>
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html
+  commentId: T:Postgrest.Interfaces.IPostgrestTable`1
+  name.vb: IPostgrestTable(Of T)
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T)
+  nameWithType: IPostgrestTable<T>
+  nameWithType.vb: IPostgrestTable(Of T)
+- uid: Postgrest.Interfaces.IPostgrestTable`1.And(List{Postgrest.QueryFilter})
+  name: And(List<QueryFilter>)
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_And_List_Postgrest_QueryFilter__
+  commentId: M:Postgrest.Interfaces.IPostgrestTable`1.And(List{Postgrest.QueryFilter})
+  name.vb: And(List(Of QueryFilter))
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.And(List<Postgrest.QueryFilter>)
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).And(List(Of Postgrest.QueryFilter))
+  nameWithType: IPostgrestTable<T>.And(List<QueryFilter>)
+  nameWithType.vb: IPostgrestTable(Of T).And(List(Of QueryFilter))
+- uid: Postgrest.Interfaces.IPostgrestTable`1.And*
+  name: And
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_And_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestTable`1.And
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.And
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).And
+  nameWithType: IPostgrestTable<T>.And
+  nameWithType.vb: IPostgrestTable(Of T).And
+- uid: Postgrest.Interfaces.IPostgrestTable`1.BaseUrl
+  name: BaseUrl
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_BaseUrl
+  commentId: P:Postgrest.Interfaces.IPostgrestTable`1.BaseUrl
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.BaseUrl
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).BaseUrl
+  nameWithType: IPostgrestTable<T>.BaseUrl
+  nameWithType.vb: IPostgrestTable(Of T).BaseUrl
+- uid: Postgrest.Interfaces.IPostgrestTable`1.BaseUrl*
+  name: BaseUrl
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_BaseUrl_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestTable`1.BaseUrl
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.BaseUrl
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).BaseUrl
+  nameWithType: IPostgrestTable<T>.BaseUrl
+  nameWithType.vb: IPostgrestTable(Of T).BaseUrl
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Clear
+  name: Clear()
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Clear
+  commentId: M:Postgrest.Interfaces.IPostgrestTable`1.Clear
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Clear()
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Clear()
+  nameWithType: IPostgrestTable<T>.Clear()
+  nameWithType.vb: IPostgrestTable(Of T).Clear()
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Clear*
+  name: Clear
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Clear_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestTable`1.Clear
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Clear
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Clear
+  nameWithType: IPostgrestTable<T>.Clear
+  nameWithType.vb: IPostgrestTable(Of T).Clear
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Columns(System.String[])
+  name: Columns(String[])
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Columns_System_String___
+  commentId: M:Postgrest.Interfaces.IPostgrestTable`1.Columns(System.String[])
+  name.vb: Columns(String())
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Columns(System.String[])
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Columns(System.String())
+  nameWithType: IPostgrestTable<T>.Columns(String[])
+  nameWithType.vb: IPostgrestTable(Of T).Columns(String())
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Columns*
+  name: Columns
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Columns_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestTable`1.Columns
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Columns
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Columns
+  nameWithType: IPostgrestTable<T>.Columns
+  nameWithType.vb: IPostgrestTable(Of T).Columns
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Count(Postgrest.Constants.CountType,CancellationToken)
+  name: Count(Constants.CountType, CancellationToken)
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Count_Postgrest_Constants_CountType_CancellationToken_
+  commentId: M:Postgrest.Interfaces.IPostgrestTable`1.Count(Postgrest.Constants.CountType,CancellationToken)
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Count(Postgrest.Constants.CountType, CancellationToken)
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Count(Postgrest.Constants.CountType, CancellationToken)
+  nameWithType: IPostgrestTable<T>.Count(Constants.CountType, CancellationToken)
+  nameWithType.vb: IPostgrestTable(Of T).Count(Constants.CountType, CancellationToken)
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Count*
+  name: Count
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Count_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestTable`1.Count
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Count
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Count
+  nameWithType: IPostgrestTable<T>.Count
+  nameWithType.vb: IPostgrestTable(Of T).Count
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Delete(`0,Postgrest.QueryOptions,CancellationToken)
+  name: Delete(T, QueryOptions, CancellationToken)
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Delete__0_Postgrest_QueryOptions_CancellationToken_
+  commentId: M:Postgrest.Interfaces.IPostgrestTable`1.Delete(`0,Postgrest.QueryOptions,CancellationToken)
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Delete(T, Postgrest.QueryOptions, CancellationToken)
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Delete(T, Postgrest.QueryOptions, CancellationToken)
+  nameWithType: IPostgrestTable<T>.Delete(T, QueryOptions, CancellationToken)
+  nameWithType.vb: IPostgrestTable(Of T).Delete(T, QueryOptions, CancellationToken)
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Delete(Postgrest.QueryOptions,CancellationToken)
+  name: Delete(QueryOptions, CancellationToken)
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Delete_Postgrest_QueryOptions_CancellationToken_
+  commentId: M:Postgrest.Interfaces.IPostgrestTable`1.Delete(Postgrest.QueryOptions,CancellationToken)
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Delete(Postgrest.QueryOptions, CancellationToken)
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Delete(Postgrest.QueryOptions, CancellationToken)
+  nameWithType: IPostgrestTable<T>.Delete(QueryOptions, CancellationToken)
+  nameWithType.vb: IPostgrestTable(Of T).Delete(QueryOptions, CancellationToken)
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Delete*
+  name: Delete
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Delete_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestTable`1.Delete
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Delete
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Delete
+  nameWithType: IPostgrestTable<T>.Delete
+  nameWithType.vb: IPostgrestTable(Of T).Delete
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Filter(System.String,Postgrest.Constants.Operator,System.Object)
+  name: Filter(String, Constants.Operator, Object)
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Filter_System_String_Postgrest_Constants_Operator_System_Object_
+  commentId: M:Postgrest.Interfaces.IPostgrestTable`1.Filter(System.String,Postgrest.Constants.Operator,System.Object)
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Filter(System.String, Postgrest.Constants.Operator, System.Object)
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Filter(System.String, Postgrest.Constants.Operator, System.Object)
+  nameWithType: IPostgrestTable<T>.Filter(String, Constants.Operator, Object)
+  nameWithType.vb: IPostgrestTable(Of T).Filter(String, Constants.Operator, Object)
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Filter*
+  name: Filter
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Filter_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestTable`1.Filter
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Filter
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Filter
+  nameWithType: IPostgrestTable<T>.Filter
+  nameWithType.vb: IPostgrestTable(Of T).Filter
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Get(CancellationToken)
+  name: Get(CancellationToken)
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Get_CancellationToken_
+  commentId: M:Postgrest.Interfaces.IPostgrestTable`1.Get(CancellationToken)
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Get(CancellationToken)
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Get(CancellationToken)
+  nameWithType: IPostgrestTable<T>.Get(CancellationToken)
+  nameWithType.vb: IPostgrestTable(Of T).Get(CancellationToken)
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Get*
+  name: Get
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Get_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestTable`1.Get
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Get
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Get
+  nameWithType: IPostgrestTable<T>.Get
+  nameWithType.vb: IPostgrestTable(Of T).Get
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Insert(`0,Postgrest.QueryOptions,CancellationToken)
+  name: Insert(T, QueryOptions, CancellationToken)
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Insert__0_Postgrest_QueryOptions_CancellationToken_
+  commentId: M:Postgrest.Interfaces.IPostgrestTable`1.Insert(`0,Postgrest.QueryOptions,CancellationToken)
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Insert(T, Postgrest.QueryOptions, CancellationToken)
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Insert(T, Postgrest.QueryOptions, CancellationToken)
+  nameWithType: IPostgrestTable<T>.Insert(T, QueryOptions, CancellationToken)
+  nameWithType.vb: IPostgrestTable(Of T).Insert(T, QueryOptions, CancellationToken)
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Insert(ICollection{`0},Postgrest.QueryOptions,CancellationToken)
+  name: Insert(ICollection<T>, QueryOptions, CancellationToken)
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Insert_ICollection__0__Postgrest_QueryOptions_CancellationToken_
+  commentId: M:Postgrest.Interfaces.IPostgrestTable`1.Insert(ICollection{`0},Postgrest.QueryOptions,CancellationToken)
+  name.vb: Insert(ICollection(Of T), QueryOptions, CancellationToken)
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Insert(ICollection<T>, Postgrest.QueryOptions, CancellationToken)
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Insert(ICollection(Of T), Postgrest.QueryOptions, CancellationToken)
+  nameWithType: IPostgrestTable<T>.Insert(ICollection<T>, QueryOptions, CancellationToken)
+  nameWithType.vb: IPostgrestTable(Of T).Insert(ICollection(Of T), QueryOptions, CancellationToken)
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Insert*
+  name: Insert
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Insert_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestTable`1.Insert
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Insert
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Insert
+  nameWithType: IPostgrestTable<T>.Insert
+  nameWithType.vb: IPostgrestTable(Of T).Insert
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Limit(System.Int32,System.Nullable{System.String})
+  name: Limit(Int32, Nullable<String>)
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Limit_System_Int32_System_Nullable_System_String__
+  commentId: M:Postgrest.Interfaces.IPostgrestTable`1.Limit(System.Int32,System.Nullable{System.String})
+  name.vb: Limit(Int32, Nullable(Of String))
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Limit(System.Int32, System.Nullable<System.String>)
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Limit(System.Int32, System.Nullable(Of System.String))
+  nameWithType: IPostgrestTable<T>.Limit(Int32, Nullable<String>)
+  nameWithType.vb: IPostgrestTable(Of T).Limit(Int32, Nullable(Of String))
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Limit*
+  name: Limit
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Limit_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestTable`1.Limit
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Limit
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Limit
+  nameWithType: IPostgrestTable<T>.Limit
+  nameWithType.vb: IPostgrestTable(Of T).Limit
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Match(`0)
+  name: Match(T)
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Match__0_
+  commentId: M:Postgrest.Interfaces.IPostgrestTable`1.Match(`0)
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Match(T)
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Match(T)
+  nameWithType: IPostgrestTable<T>.Match(T)
+  nameWithType.vb: IPostgrestTable(Of T).Match(T)
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Match(Dictionary{System.String,System.String})
+  name: Match(Dictionary<String, String>)
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Match_Dictionary_System_String_System_String__
+  commentId: M:Postgrest.Interfaces.IPostgrestTable`1.Match(Dictionary{System.String,System.String})
+  name.vb: Match(Dictionary(Of String, String))
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Match(Dictionary<System.String, System.String>)
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Match(Dictionary(Of System.String, System.String))
+  nameWithType: IPostgrestTable<T>.Match(Dictionary<String, String>)
+  nameWithType.vb: IPostgrestTable(Of T).Match(Dictionary(Of String, String))
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Match*
+  name: Match
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Match_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestTable`1.Match
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Match
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Match
+  nameWithType: IPostgrestTable<T>.Match
+  nameWithType.vb: IPostgrestTable(Of T).Match
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Not(Postgrest.QueryFilter)
+  name: Not(QueryFilter)
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Not_Postgrest_QueryFilter_
+  commentId: M:Postgrest.Interfaces.IPostgrestTable`1.Not(Postgrest.QueryFilter)
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Not(Postgrest.QueryFilter)
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Not(Postgrest.QueryFilter)
+  nameWithType: IPostgrestTable<T>.Not(QueryFilter)
+  nameWithType.vb: IPostgrestTable(Of T).Not(QueryFilter)
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Not(System.String,Postgrest.Constants.Operator,Dictionary{System.String,System.Object})
+  name: Not(String, Constants.Operator, Dictionary<String, Object>)
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Not_System_String_Postgrest_Constants_Operator_Dictionary_System_String_System_Object__
+  commentId: M:Postgrest.Interfaces.IPostgrestTable`1.Not(System.String,Postgrest.Constants.Operator,Dictionary{System.String,System.Object})
+  name.vb: Not(String, Constants.Operator, Dictionary(Of String, Object))
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Not(System.String, Postgrest.Constants.Operator, Dictionary<System.String, System.Object>)
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Not(System.String, Postgrest.Constants.Operator, Dictionary(Of System.String, System.Object))
+  nameWithType: IPostgrestTable<T>.Not(String, Constants.Operator, Dictionary<String, Object>)
+  nameWithType.vb: IPostgrestTable(Of T).Not(String, Constants.Operator, Dictionary(Of String, Object))
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Not(System.String,Postgrest.Constants.Operator,List{System.Object})
+  name: Not(String, Constants.Operator, List<Object>)
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Not_System_String_Postgrest_Constants_Operator_List_System_Object__
+  commentId: M:Postgrest.Interfaces.IPostgrestTable`1.Not(System.String,Postgrest.Constants.Operator,List{System.Object})
+  name.vb: Not(String, Constants.Operator, List(Of Object))
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Not(System.String, Postgrest.Constants.Operator, List<System.Object>)
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Not(System.String, Postgrest.Constants.Operator, List(Of System.Object))
+  nameWithType: IPostgrestTable<T>.Not(String, Constants.Operator, List<Object>)
+  nameWithType.vb: IPostgrestTable(Of T).Not(String, Constants.Operator, List(Of Object))
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Not(System.String,Postgrest.Constants.Operator,System.String)
+  name: Not(String, Constants.Operator, String)
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Not_System_String_Postgrest_Constants_Operator_System_String_
+  commentId: M:Postgrest.Interfaces.IPostgrestTable`1.Not(System.String,Postgrest.Constants.Operator,System.String)
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Not(System.String, Postgrest.Constants.Operator, System.String)
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Not(System.String, Postgrest.Constants.Operator, System.String)
+  nameWithType: IPostgrestTable<T>.Not(String, Constants.Operator, String)
+  nameWithType.vb: IPostgrestTable(Of T).Not(String, Constants.Operator, String)
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Not*
+  name: Not
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Not_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestTable`1.Not
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Not
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Not
+  nameWithType: IPostgrestTable<T>.Not
+  nameWithType.vb: IPostgrestTable(Of T).Not
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Offset(System.Int32,System.Nullable{System.String})
+  name: Offset(Int32, Nullable<String>)
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Offset_System_Int32_System_Nullable_System_String__
+  commentId: M:Postgrest.Interfaces.IPostgrestTable`1.Offset(System.Int32,System.Nullable{System.String})
+  name.vb: Offset(Int32, Nullable(Of String))
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Offset(System.Int32, System.Nullable<System.String>)
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Offset(System.Int32, System.Nullable(Of System.String))
+  nameWithType: IPostgrestTable<T>.Offset(Int32, Nullable<String>)
+  nameWithType.vb: IPostgrestTable(Of T).Offset(Int32, Nullable(Of String))
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Offset*
+  name: Offset
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Offset_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestTable`1.Offset
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Offset
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Offset
+  nameWithType: IPostgrestTable<T>.Offset
+  nameWithType.vb: IPostgrestTable(Of T).Offset
+- uid: Postgrest.Interfaces.IPostgrestTable`1.OnConflict(System.String)
+  name: OnConflict(String)
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_OnConflict_System_String_
+  commentId: M:Postgrest.Interfaces.IPostgrestTable`1.OnConflict(System.String)
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.OnConflict(System.String)
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).OnConflict(System.String)
+  nameWithType: IPostgrestTable<T>.OnConflict(String)
+  nameWithType.vb: IPostgrestTable(Of T).OnConflict(String)
+- uid: Postgrest.Interfaces.IPostgrestTable`1.OnConflict*
+  name: OnConflict
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_OnConflict_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestTable`1.OnConflict
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.OnConflict
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).OnConflict
+  nameWithType: IPostgrestTable<T>.OnConflict
+  nameWithType.vb: IPostgrestTable(Of T).OnConflict
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Or(List{Postgrest.QueryFilter})
+  name: Or(List<QueryFilter>)
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Or_List_Postgrest_QueryFilter__
+  commentId: M:Postgrest.Interfaces.IPostgrestTable`1.Or(List{Postgrest.QueryFilter})
+  name.vb: Or(List(Of QueryFilter))
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Or(List<Postgrest.QueryFilter>)
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Or(List(Of Postgrest.QueryFilter))
+  nameWithType: IPostgrestTable<T>.Or(List<QueryFilter>)
+  nameWithType.vb: IPostgrestTable(Of T).Or(List(Of QueryFilter))
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Or*
+  name: Or
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Or_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestTable`1.Or
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Or
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Or
+  nameWithType: IPostgrestTable<T>.Or
+  nameWithType.vb: IPostgrestTable(Of T).Or
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Order(System.String,Postgrest.Constants.Ordering,Postgrest.Constants.NullPosition)
+  name: Order(String, Constants.Ordering, Constants.NullPosition)
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Order_System_String_Postgrest_Constants_Ordering_Postgrest_Constants_NullPosition_
+  commentId: M:Postgrest.Interfaces.IPostgrestTable`1.Order(System.String,Postgrest.Constants.Ordering,Postgrest.Constants.NullPosition)
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Order(System.String, Postgrest.Constants.Ordering, Postgrest.Constants.NullPosition)
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Order(System.String, Postgrest.Constants.Ordering, Postgrest.Constants.NullPosition)
+  nameWithType: IPostgrestTable<T>.Order(String, Constants.Ordering, Constants.NullPosition)
+  nameWithType.vb: IPostgrestTable(Of T).Order(String, Constants.Ordering, Constants.NullPosition)
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Order(System.String,System.String,Postgrest.Constants.Ordering,Postgrest.Constants.NullPosition)
+  name: Order(String, String, Constants.Ordering, Constants.NullPosition)
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Order_System_String_System_String_Postgrest_Constants_Ordering_Postgrest_Constants_NullPosition_
+  commentId: M:Postgrest.Interfaces.IPostgrestTable`1.Order(System.String,System.String,Postgrest.Constants.Ordering,Postgrest.Constants.NullPosition)
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Order(System.String, System.String, Postgrest.Constants.Ordering, Postgrest.Constants.NullPosition)
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Order(System.String, System.String, Postgrest.Constants.Ordering, Postgrest.Constants.NullPosition)
+  nameWithType: IPostgrestTable<T>.Order(String, String, Constants.Ordering, Constants.NullPosition)
+  nameWithType.vb: IPostgrestTable(Of T).Order(String, String, Constants.Ordering, Constants.NullPosition)
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Order*
+  name: Order
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Order_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestTable`1.Order
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Order
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Order
+  nameWithType: IPostgrestTable<T>.Order
+  nameWithType.vb: IPostgrestTable(Of T).Order
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Range(System.Int32)
+  name: Range(Int32)
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Range_System_Int32_
+  commentId: M:Postgrest.Interfaces.IPostgrestTable`1.Range(System.Int32)
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Range(System.Int32)
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Range(System.Int32)
+  nameWithType: IPostgrestTable<T>.Range(Int32)
+  nameWithType.vb: IPostgrestTable(Of T).Range(Int32)
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Range(System.Int32,System.Int32)
+  name: Range(Int32, Int32)
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Range_System_Int32_System_Int32_
+  commentId: M:Postgrest.Interfaces.IPostgrestTable`1.Range(System.Int32,System.Int32)
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Range(System.Int32, System.Int32)
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Range(System.Int32, System.Int32)
+  nameWithType: IPostgrestTable<T>.Range(Int32, Int32)
+  nameWithType.vb: IPostgrestTable(Of T).Range(Int32, Int32)
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Range*
+  name: Range
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Range_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestTable`1.Range
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Range
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Range
+  nameWithType: IPostgrestTable<T>.Range
+  nameWithType.vb: IPostgrestTable(Of T).Range
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Select(System.String)
+  name: Select(String)
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Select_System_String_
+  commentId: M:Postgrest.Interfaces.IPostgrestTable`1.Select(System.String)
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Select(System.String)
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Select(System.String)
+  nameWithType: IPostgrestTable<T>.Select(String)
+  nameWithType.vb: IPostgrestTable(Of T).Select(String)
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Select*
+  name: Select
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Select_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestTable`1.Select
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Select
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Select
+  nameWithType: IPostgrestTable<T>.Select
+  nameWithType.vb: IPostgrestTable(Of T).Select
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Single(CancellationToken)
+  name: Single(CancellationToken)
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Single_CancellationToken_
+  commentId: M:Postgrest.Interfaces.IPostgrestTable`1.Single(CancellationToken)
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Single(CancellationToken)
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Single(CancellationToken)
+  nameWithType: IPostgrestTable<T>.Single(CancellationToken)
+  nameWithType.vb: IPostgrestTable(Of T).Single(CancellationToken)
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Single*
+  name: Single
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Single_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestTable`1.Single
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Single
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Single
+  nameWithType: IPostgrestTable<T>.Single
+  nameWithType.vb: IPostgrestTable(Of T).Single
+- uid: Postgrest.Interfaces.IPostgrestTable`1.TableName
+  name: TableName
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_TableName
+  commentId: P:Postgrest.Interfaces.IPostgrestTable`1.TableName
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.TableName
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).TableName
+  nameWithType: IPostgrestTable<T>.TableName
+  nameWithType.vb: IPostgrestTable(Of T).TableName
+- uid: Postgrest.Interfaces.IPostgrestTable`1.TableName*
+  name: TableName
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_TableName_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestTable`1.TableName
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.TableName
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).TableName
+  nameWithType: IPostgrestTable<T>.TableName
+  nameWithType.vb: IPostgrestTable(Of T).TableName
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Update(`0,Postgrest.QueryOptions,CancellationToken)
+  name: Update(T, QueryOptions, CancellationToken)
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Update__0_Postgrest_QueryOptions_CancellationToken_
+  commentId: M:Postgrest.Interfaces.IPostgrestTable`1.Update(`0,Postgrest.QueryOptions,CancellationToken)
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Update(T, Postgrest.QueryOptions, CancellationToken)
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Update(T, Postgrest.QueryOptions, CancellationToken)
+  nameWithType: IPostgrestTable<T>.Update(T, QueryOptions, CancellationToken)
+  nameWithType.vb: IPostgrestTable(Of T).Update(T, QueryOptions, CancellationToken)
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Update*
+  name: Update
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Update_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestTable`1.Update
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Update
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Update
+  nameWithType: IPostgrestTable<T>.Update
+  nameWithType.vb: IPostgrestTable(Of T).Update
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Upsert(`0,Postgrest.QueryOptions,CancellationToken)
+  name: Upsert(T, QueryOptions, CancellationToken)
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Upsert__0_Postgrest_QueryOptions_CancellationToken_
+  commentId: M:Postgrest.Interfaces.IPostgrestTable`1.Upsert(`0,Postgrest.QueryOptions,CancellationToken)
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Upsert(T, Postgrest.QueryOptions, CancellationToken)
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Upsert(T, Postgrest.QueryOptions, CancellationToken)
+  nameWithType: IPostgrestTable<T>.Upsert(T, QueryOptions, CancellationToken)
+  nameWithType.vb: IPostgrestTable(Of T).Upsert(T, QueryOptions, CancellationToken)
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Upsert(ICollection{`0},Postgrest.QueryOptions,CancellationToken)
+  name: Upsert(ICollection<T>, QueryOptions, CancellationToken)
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Upsert_ICollection__0__Postgrest_QueryOptions_CancellationToken_
+  commentId: M:Postgrest.Interfaces.IPostgrestTable`1.Upsert(ICollection{`0},Postgrest.QueryOptions,CancellationToken)
+  name.vb: Upsert(ICollection(Of T), QueryOptions, CancellationToken)
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Upsert(ICollection<T>, Postgrest.QueryOptions, CancellationToken)
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Upsert(ICollection(Of T), Postgrest.QueryOptions, CancellationToken)
+  nameWithType: IPostgrestTable<T>.Upsert(ICollection<T>, QueryOptions, CancellationToken)
+  nameWithType.vb: IPostgrestTable(Of T).Upsert(ICollection(Of T), QueryOptions, CancellationToken)
+- uid: Postgrest.Interfaces.IPostgrestTable`1.Upsert*
+  name: Upsert
+  href: api/Postgrest.Interfaces.IPostgrestTable-1.html#Postgrest_Interfaces_IPostgrestTable_1_Upsert_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestTable`1.Upsert
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestTable<T>.Upsert
+  fullName.vb: Postgrest.Interfaces.IPostgrestTable(Of T).Upsert
+  nameWithType: IPostgrestTable<T>.Upsert
+  nameWithType.vb: IPostgrestTable(Of T).Upsert
 - uid: Postgrest.IntRange
   name: IntRange
   href: api/Postgrest.IntRange.html
   commentId: T:Postgrest.IntRange
   fullName: Postgrest.IntRange
   nameWithType: IntRange
-- uid: Postgrest.IntRange.#ctor
-  name: IntRange()
-  href: api/Postgrest.IntRange.html#Postgrest_IntRange__ctor
-  commentId: M:Postgrest.IntRange.#ctor
-  fullName: Postgrest.IntRange.IntRange()
-  nameWithType: IntRange.IntRange()
 - uid: Postgrest.IntRange.#ctor(Postgrest.Index,Postgrest.Index)
   name: IntRange(Index, Index)
   href: api/Postgrest.IntRange.html#Postgrest_IntRange__ctor_Postgrest_Index_Postgrest_Index_
@@ -1245,6 +1856,19 @@ references:
   commentId: T:Postgrest.Models.BaseModel
   fullName: Postgrest.Models.BaseModel
   nameWithType: BaseModel
+- uid: Postgrest.Models.BaseModel.BaseUrl
+  name: BaseUrl
+  href: api/Postgrest.Models.BaseModel.html#Postgrest_Models_BaseModel_BaseUrl
+  commentId: P:Postgrest.Models.BaseModel.BaseUrl
+  fullName: Postgrest.Models.BaseModel.BaseUrl
+  nameWithType: BaseModel.BaseUrl
+- uid: Postgrest.Models.BaseModel.BaseUrl*
+  name: BaseUrl
+  href: api/Postgrest.Models.BaseModel.html#Postgrest_Models_BaseModel_BaseUrl_
+  commentId: Overload:Postgrest.Models.BaseModel.BaseUrl
+  isSpec: "True"
+  fullName: Postgrest.Models.BaseModel.BaseUrl
+  nameWithType: BaseModel.BaseUrl
 - uid: Postgrest.Models.BaseModel.Delete*
   name: Delete
   href: api/Postgrest.Models.BaseModel.html#Postgrest_Models_BaseModel_Delete_
@@ -1274,6 +1898,19 @@ references:
   isSpec: "True"
   fullName: Postgrest.Models.BaseModel.PrimaryKey
   nameWithType: BaseModel.PrimaryKey
+- uid: Postgrest.Models.BaseModel.RequestClientOptions
+  name: RequestClientOptions
+  href: api/Postgrest.Models.BaseModel.html#Postgrest_Models_BaseModel_RequestClientOptions
+  commentId: P:Postgrest.Models.BaseModel.RequestClientOptions
+  fullName: Postgrest.Models.BaseModel.RequestClientOptions
+  nameWithType: BaseModel.RequestClientOptions
+- uid: Postgrest.Models.BaseModel.RequestClientOptions*
+  name: RequestClientOptions
+  href: api/Postgrest.Models.BaseModel.html#Postgrest_Models_BaseModel_RequestClientOptions_
+  commentId: Overload:Postgrest.Models.BaseModel.RequestClientOptions
+  isSpec: "True"
+  fullName: Postgrest.Models.BaseModel.RequestClientOptions
+  nameWithType: BaseModel.RequestClientOptions
 - uid: Postgrest.Models.BaseModel.TableName
   name: TableName
   href: api/Postgrest.Models.BaseModel.html#Postgrest_Models_BaseModel_TableName
@@ -1568,12 +2205,15 @@ references:
   commentId: T:Postgrest.QueryOrderer
   fullName: Postgrest.QueryOrderer
   nameWithType: QueryOrderer
-- uid: Postgrest.QueryOrderer.#ctor(System.String,System.String,Postgrest.Constants.Ordering,Postgrest.Constants.NullPosition)
-  name: QueryOrderer(String, String, Constants.Ordering, Constants.NullPosition)
-  href: api/Postgrest.QueryOrderer.html#Postgrest_QueryOrderer__ctor_System_String_System_String_Postgrest_Constants_Ordering_Postgrest_Constants_NullPosition_
-  commentId: M:Postgrest.QueryOrderer.#ctor(System.String,System.String,Postgrest.Constants.Ordering,Postgrest.Constants.NullPosition)
-  fullName: Postgrest.QueryOrderer.QueryOrderer(System.String, System.String, Postgrest.Constants.Ordering, Postgrest.Constants.NullPosition)
-  nameWithType: QueryOrderer.QueryOrderer(String, String, Constants.Ordering, Constants.NullPosition)
+- uid: Postgrest.QueryOrderer.#ctor(System.Nullable{System.String},System.String,Postgrest.Constants.Ordering,Postgrest.Constants.NullPosition)
+  name: QueryOrderer(Nullable<String>, String, Constants.Ordering, Constants.NullPosition)
+  href: api/Postgrest.QueryOrderer.html#Postgrest_QueryOrderer__ctor_System_Nullable_System_String__System_String_Postgrest_Constants_Ordering_Postgrest_Constants_NullPosition_
+  commentId: M:Postgrest.QueryOrderer.#ctor(System.Nullable{System.String},System.String,Postgrest.Constants.Ordering,Postgrest.Constants.NullPosition)
+  name.vb: QueryOrderer(Nullable(Of String), String, Constants.Ordering, Constants.NullPosition)
+  fullName: Postgrest.QueryOrderer.QueryOrderer(System.Nullable<System.String>, System.String, Postgrest.Constants.Ordering, Postgrest.Constants.NullPosition)
+  fullName.vb: Postgrest.QueryOrderer.QueryOrderer(System.Nullable(Of System.String), System.String, Postgrest.Constants.Ordering, Postgrest.Constants.NullPosition)
+  nameWithType: QueryOrderer.QueryOrderer(Nullable<String>, String, Constants.Ordering, Constants.NullPosition)
+  nameWithType.vb: QueryOrderer.QueryOrderer(Nullable(Of String), String, Constants.Ordering, Constants.NullPosition)
 - uid: Postgrest.QueryOrderer.#ctor*
   name: QueryOrderer
   href: api/Postgrest.QueryOrderer.html#Postgrest_QueryOrderer__ctor_
@@ -1690,6 +2330,35 @@ references:
   commentId: T:Postgrest.Responses.BaseResponse
   fullName: Postgrest.Responses.BaseResponse
   nameWithType: BaseResponse
+- uid: Postgrest.Responses.BaseResponse.#ctor(Postgrest.ClientOptions,System.Nullable{HttpResponseMessage},System.Nullable{System.String})
+  name: BaseResponse(ClientOptions, Nullable<HttpResponseMessage>, Nullable<String>)
+  href: api/Postgrest.Responses.BaseResponse.html#Postgrest_Responses_BaseResponse__ctor_Postgrest_ClientOptions_System_Nullable_HttpResponseMessage__System_Nullable_System_String__
+  commentId: M:Postgrest.Responses.BaseResponse.#ctor(Postgrest.ClientOptions,System.Nullable{HttpResponseMessage},System.Nullable{System.String})
+  name.vb: BaseResponse(ClientOptions, Nullable(Of HttpResponseMessage), Nullable(Of String))
+  fullName: Postgrest.Responses.BaseResponse.BaseResponse(Postgrest.ClientOptions, System.Nullable<HttpResponseMessage>, System.Nullable<System.String>)
+  fullName.vb: Postgrest.Responses.BaseResponse.BaseResponse(Postgrest.ClientOptions, System.Nullable(Of HttpResponseMessage), System.Nullable(Of System.String))
+  nameWithType: BaseResponse.BaseResponse(ClientOptions, Nullable<HttpResponseMessage>, Nullable<String>)
+  nameWithType.vb: BaseResponse.BaseResponse(ClientOptions, Nullable(Of HttpResponseMessage), Nullable(Of String))
+- uid: Postgrest.Responses.BaseResponse.#ctor*
+  name: BaseResponse
+  href: api/Postgrest.Responses.BaseResponse.html#Postgrest_Responses_BaseResponse__ctor_
+  commentId: Overload:Postgrest.Responses.BaseResponse.#ctor
+  isSpec: "True"
+  fullName: Postgrest.Responses.BaseResponse.BaseResponse
+  nameWithType: BaseResponse.BaseResponse
+- uid: Postgrest.Responses.BaseResponse.ClientOptions
+  name: ClientOptions
+  href: api/Postgrest.Responses.BaseResponse.html#Postgrest_Responses_BaseResponse_ClientOptions
+  commentId: P:Postgrest.Responses.BaseResponse.ClientOptions
+  fullName: Postgrest.Responses.BaseResponse.ClientOptions
+  nameWithType: BaseResponse.ClientOptions
+- uid: Postgrest.Responses.BaseResponse.ClientOptions*
+  name: ClientOptions
+  href: api/Postgrest.Responses.BaseResponse.html#Postgrest_Responses_BaseResponse_ClientOptions_
+  commentId: Overload:Postgrest.Responses.BaseResponse.ClientOptions
+  isSpec: "True"
+  fullName: Postgrest.Responses.BaseResponse.ClientOptions
+  nameWithType: BaseResponse.ClientOptions
 - uid: Postgrest.Responses.BaseResponse.Content
   name: Content
   href: api/Postgrest.Responses.BaseResponse.html#Postgrest_Responses_BaseResponse_Content
@@ -1722,6 +2391,22 @@ references:
   commentId: T:Postgrest.Responses.ErrorResponse
   fullName: Postgrest.Responses.ErrorResponse
   nameWithType: ErrorResponse
+- uid: Postgrest.Responses.ErrorResponse.#ctor(Postgrest.ClientOptions,System.Nullable{HttpResponseMessage},System.Nullable{System.String})
+  name: ErrorResponse(ClientOptions, Nullable<HttpResponseMessage>, Nullable<String>)
+  href: api/Postgrest.Responses.ErrorResponse.html#Postgrest_Responses_ErrorResponse__ctor_Postgrest_ClientOptions_System_Nullable_HttpResponseMessage__System_Nullable_System_String__
+  commentId: M:Postgrest.Responses.ErrorResponse.#ctor(Postgrest.ClientOptions,System.Nullable{HttpResponseMessage},System.Nullable{System.String})
+  name.vb: ErrorResponse(ClientOptions, Nullable(Of HttpResponseMessage), Nullable(Of String))
+  fullName: Postgrest.Responses.ErrorResponse.ErrorResponse(Postgrest.ClientOptions, System.Nullable<HttpResponseMessage>, System.Nullable<System.String>)
+  fullName.vb: Postgrest.Responses.ErrorResponse.ErrorResponse(Postgrest.ClientOptions, System.Nullable(Of HttpResponseMessage), System.Nullable(Of System.String))
+  nameWithType: ErrorResponse.ErrorResponse(ClientOptions, Nullable<HttpResponseMessage>, Nullable<String>)
+  nameWithType.vb: ErrorResponse.ErrorResponse(ClientOptions, Nullable(Of HttpResponseMessage), Nullable(Of String))
+- uid: Postgrest.Responses.ErrorResponse.#ctor*
+  name: ErrorResponse
+  href: api/Postgrest.Responses.ErrorResponse.html#Postgrest_Responses_ErrorResponse__ctor_
+  commentId: Overload:Postgrest.Responses.ErrorResponse.#ctor
+  isSpec: "True"
+  fullName: Postgrest.Responses.ErrorResponse.ErrorResponse
+  nameWithType: ErrorResponse.ErrorResponse
 - uid: Postgrest.Responses.ErrorResponse.Code
   name: Code
   href: api/Postgrest.Responses.ErrorResponse.html#Postgrest_Responses_ErrorResponse_Code
@@ -1817,76 +2502,6 @@ references:
   fullName.vb: Postgrest.Responses.ModeledResponse(Of T).Models
   nameWithType: ModeledResponse<T>.Models
   nameWithType.vb: ModeledResponse(Of T).Models
-- uid: Postgrest.StatelessClient
-  name: StatelessClient
-  href: api/Postgrest.StatelessClient.html
-  commentId: T:Postgrest.StatelessClient
-  fullName: Postgrest.StatelessClient
-  nameWithType: StatelessClient
-- uid: Postgrest.StatelessClient.Rpc(System.String,Dictionary{System.String,System.Object},Postgrest.StatelessClientOptions)
-  name: Rpc(String, Dictionary<String, Object>, StatelessClientOptions)
-  href: api/Postgrest.StatelessClient.html#Postgrest_StatelessClient_Rpc_System_String_Dictionary_System_String_System_Object__Postgrest_StatelessClientOptions_
-  commentId: M:Postgrest.StatelessClient.Rpc(System.String,Dictionary{System.String,System.Object},Postgrest.StatelessClientOptions)
-  name.vb: Rpc(String, Dictionary(Of String, Object), StatelessClientOptions)
-  fullName: Postgrest.StatelessClient.Rpc(System.String, Dictionary<System.String, System.Object>, Postgrest.StatelessClientOptions)
-  fullName.vb: Postgrest.StatelessClient.Rpc(System.String, Dictionary(Of System.String, System.Object), Postgrest.StatelessClientOptions)
-  nameWithType: StatelessClient.Rpc(String, Dictionary<String, Object>, StatelessClientOptions)
-  nameWithType.vb: StatelessClient.Rpc(String, Dictionary(Of String, Object), StatelessClientOptions)
-- uid: Postgrest.StatelessClient.Rpc*
-  name: Rpc
-  href: api/Postgrest.StatelessClient.html#Postgrest_StatelessClient_Rpc_
-  commentId: Overload:Postgrest.StatelessClient.Rpc
-  isSpec: "True"
-  fullName: Postgrest.StatelessClient.Rpc
-  nameWithType: StatelessClient.Rpc
-- uid: Postgrest.StatelessClient.Table*
-  name: Table
-  href: api/Postgrest.StatelessClient.html#Postgrest_StatelessClient_Table_
-  commentId: Overload:Postgrest.StatelessClient.Table
-  isSpec: "True"
-  fullName: Postgrest.StatelessClient.Table
-  nameWithType: StatelessClient.Table
-- uid: Postgrest.StatelessClient.Table``1(Postgrest.StatelessClientOptions)
-  name: Table<T>(StatelessClientOptions)
-  href: api/Postgrest.StatelessClient.html#Postgrest_StatelessClient_Table__1_Postgrest_StatelessClientOptions_
-  commentId: M:Postgrest.StatelessClient.Table``1(Postgrest.StatelessClientOptions)
-  name.vb: Table(Of T)(StatelessClientOptions)
-  fullName: Postgrest.StatelessClient.Table<T>(Postgrest.StatelessClientOptions)
-  fullName.vb: Postgrest.StatelessClient.Table(Of T)(Postgrest.StatelessClientOptions)
-  nameWithType: StatelessClient.Table<T>(StatelessClientOptions)
-  nameWithType.vb: StatelessClient.Table(Of T)(StatelessClientOptions)
-- uid: Postgrest.StatelessClientOptions
-  name: StatelessClientOptions
-  href: api/Postgrest.StatelessClientOptions.html
-  commentId: T:Postgrest.StatelessClientOptions
-  fullName: Postgrest.StatelessClientOptions
-  nameWithType: StatelessClientOptions
-- uid: Postgrest.StatelessClientOptions.#ctor(System.String)
-  name: StatelessClientOptions(String)
-  href: api/Postgrest.StatelessClientOptions.html#Postgrest_StatelessClientOptions__ctor_System_String_
-  commentId: M:Postgrest.StatelessClientOptions.#ctor(System.String)
-  fullName: Postgrest.StatelessClientOptions.StatelessClientOptions(System.String)
-  nameWithType: StatelessClientOptions.StatelessClientOptions(String)
-- uid: Postgrest.StatelessClientOptions.#ctor*
-  name: StatelessClientOptions
-  href: api/Postgrest.StatelessClientOptions.html#Postgrest_StatelessClientOptions__ctor_
-  commentId: Overload:Postgrest.StatelessClientOptions.#ctor
-  isSpec: "True"
-  fullName: Postgrest.StatelessClientOptions.StatelessClientOptions
-  nameWithType: StatelessClientOptions.StatelessClientOptions
-- uid: Postgrest.StatelessClientOptions.BaseUrl
-  name: BaseUrl
-  href: api/Postgrest.StatelessClientOptions.html#Postgrest_StatelessClientOptions_BaseUrl
-  commentId: P:Postgrest.StatelessClientOptions.BaseUrl
-  fullName: Postgrest.StatelessClientOptions.BaseUrl
-  nameWithType: StatelessClientOptions.BaseUrl
-- uid: Postgrest.StatelessClientOptions.BaseUrl*
-  name: BaseUrl
-  href: api/Postgrest.StatelessClientOptions.html#Postgrest_StatelessClientOptions_BaseUrl_
-  commentId: Overload:Postgrest.StatelessClientOptions.BaseUrl
-  isSpec: "True"
-  fullName: Postgrest.StatelessClientOptions.BaseUrl
-  nameWithType: StatelessClientOptions.BaseUrl
 - uid: Postgrest.Table`1
   name: Table<T>
   href: api/Postgrest.Table-1.html
@@ -1896,22 +2511,14 @@ references:
   fullName.vb: Postgrest.Table(Of T)
   nameWithType: Table<T>
   nameWithType.vb: Table(Of T)
-- uid: Postgrest.Table`1.#ctor(System.String,Postgrest.ClientOptions)
-  name: Table(String, ClientOptions)
-  href: api/Postgrest.Table-1.html#Postgrest_Table_1__ctor_System_String_Postgrest_ClientOptions_
-  commentId: M:Postgrest.Table`1.#ctor(System.String,Postgrest.ClientOptions)
-  fullName: Postgrest.Table<T>.Table(System.String, Postgrest.ClientOptions)
-  fullName.vb: Postgrest.Table(Of T).Table(System.String, Postgrest.ClientOptions)
-  nameWithType: Table<T>.Table(String, ClientOptions)
-  nameWithType.vb: Table(Of T).Table(String, ClientOptions)
-- uid: Postgrest.Table`1.#ctor(System.String,Postgrest.ClientOptions,JsonSerializerSettings)
-  name: Table(String, ClientOptions, JsonSerializerSettings)
-  href: api/Postgrest.Table-1.html#Postgrest_Table_1__ctor_System_String_Postgrest_ClientOptions_JsonSerializerSettings_
-  commentId: M:Postgrest.Table`1.#ctor(System.String,Postgrest.ClientOptions,JsonSerializerSettings)
-  fullName: Postgrest.Table<T>.Table(System.String, Postgrest.ClientOptions, JsonSerializerSettings)
-  fullName.vb: Postgrest.Table(Of T).Table(System.String, Postgrest.ClientOptions, JsonSerializerSettings)
-  nameWithType: Table<T>.Table(String, ClientOptions, JsonSerializerSettings)
-  nameWithType.vb: Table(Of T).Table(String, ClientOptions, JsonSerializerSettings)
+- uid: Postgrest.Table`1.#ctor(System.String,JsonSerializerSettings,Postgrest.ClientOptions)
+  name: Table(String, JsonSerializerSettings, ClientOptions)
+  href: api/Postgrest.Table-1.html#Postgrest_Table_1__ctor_System_String_JsonSerializerSettings_Postgrest_ClientOptions_
+  commentId: M:Postgrest.Table`1.#ctor(System.String,JsonSerializerSettings,Postgrest.ClientOptions)
+  fullName: Postgrest.Table<T>.Table(System.String, JsonSerializerSettings, Postgrest.ClientOptions)
+  fullName.vb: Postgrest.Table(Of T).Table(System.String, JsonSerializerSettings, Postgrest.ClientOptions)
+  nameWithType: Table<T>.Table(String, JsonSerializerSettings, ClientOptions)
+  nameWithType.vb: Table(Of T).Table(String, JsonSerializerSettings, ClientOptions)
 - uid: Postgrest.Table`1.#ctor*
   name: Table
   href: api/Postgrest.Table-1.html#Postgrest_Table_1__ctor_
@@ -2050,6 +2657,23 @@ references:
   fullName.vb: Postgrest.Table(Of T).Filter
   nameWithType: Table<T>.Filter
   nameWithType.vb: Table(Of T).Filter
+- uid: Postgrest.Table`1.GenerateUrl
+  name: GenerateUrl()
+  href: api/Postgrest.Table-1.html#Postgrest_Table_1_GenerateUrl
+  commentId: M:Postgrest.Table`1.GenerateUrl
+  fullName: Postgrest.Table<T>.GenerateUrl()
+  fullName.vb: Postgrest.Table(Of T).GenerateUrl()
+  nameWithType: Table<T>.GenerateUrl()
+  nameWithType.vb: Table(Of T).GenerateUrl()
+- uid: Postgrest.Table`1.GenerateUrl*
+  name: GenerateUrl
+  href: api/Postgrest.Table-1.html#Postgrest_Table_1_GenerateUrl_
+  commentId: Overload:Postgrest.Table`1.GenerateUrl
+  isSpec: "True"
+  fullName: Postgrest.Table<T>.GenerateUrl
+  fullName.vb: Postgrest.Table(Of T).GenerateUrl
+  nameWithType: Table<T>.GenerateUrl
+  nameWithType.vb: Table(Of T).GenerateUrl
 - uid: Postgrest.Table`1.Get(CancellationToken)
   name: Get(CancellationToken)
   href: api/Postgrest.Table-1.html#Postgrest_Table_1_Get_CancellationToken_
@@ -2093,14 +2717,15 @@ references:
   fullName.vb: Postgrest.Table(Of T).Insert
   nameWithType: Table<T>.Insert
   nameWithType.vb: Table(Of T).Insert
-- uid: Postgrest.Table`1.Limit(System.Int32,System.String)
-  name: Limit(Int32, String)
-  href: api/Postgrest.Table-1.html#Postgrest_Table_1_Limit_System_Int32_System_String_
-  commentId: M:Postgrest.Table`1.Limit(System.Int32,System.String)
-  fullName: Postgrest.Table<T>.Limit(System.Int32, System.String)
-  fullName.vb: Postgrest.Table(Of T).Limit(System.Int32, System.String)
-  nameWithType: Table<T>.Limit(Int32, String)
-  nameWithType.vb: Table(Of T).Limit(Int32, String)
+- uid: Postgrest.Table`1.Limit(System.Int32,System.Nullable{System.String})
+  name: Limit(Int32, Nullable<String>)
+  href: api/Postgrest.Table-1.html#Postgrest_Table_1_Limit_System_Int32_System_Nullable_System_String__
+  commentId: M:Postgrest.Table`1.Limit(System.Int32,System.Nullable{System.String})
+  name.vb: Limit(Int32, Nullable(Of String))
+  fullName: Postgrest.Table<T>.Limit(System.Int32, System.Nullable<System.String>)
+  fullName.vb: Postgrest.Table(Of T).Limit(System.Int32, System.Nullable(Of System.String))
+  nameWithType: Table<T>.Limit(Int32, Nullable<String>)
+  nameWithType.vb: Table(Of T).Limit(Int32, Nullable(Of String))
 - uid: Postgrest.Table`1.Limit*
   name: Limit
   href: api/Postgrest.Table-1.html#Postgrest_Table_1_Limit_
@@ -2179,14 +2804,15 @@ references:
   fullName.vb: Postgrest.Table(Of T).Not
   nameWithType: Table<T>.Not
   nameWithType.vb: Table(Of T).Not
-- uid: Postgrest.Table`1.Offset(System.Int32,System.String)
-  name: Offset(Int32, String)
-  href: api/Postgrest.Table-1.html#Postgrest_Table_1_Offset_System_Int32_System_String_
-  commentId: M:Postgrest.Table`1.Offset(System.Int32,System.String)
-  fullName: Postgrest.Table<T>.Offset(System.Int32, System.String)
-  fullName.vb: Postgrest.Table(Of T).Offset(System.Int32, System.String)
-  nameWithType: Table<T>.Offset(Int32, String)
-  nameWithType.vb: Table(Of T).Offset(Int32, String)
+- uid: Postgrest.Table`1.Offset(System.Int32,System.Nullable{System.String})
+  name: Offset(Int32, Nullable<String>)
+  href: api/Postgrest.Table-1.html#Postgrest_Table_1_Offset_System_Int32_System_Nullable_System_String__
+  commentId: M:Postgrest.Table`1.Offset(System.Int32,System.Nullable{System.String})
+  name.vb: Offset(Int32, Nullable(Of String))
+  fullName: Postgrest.Table<T>.Offset(System.Int32, System.Nullable<System.String>)
+  fullName.vb: Postgrest.Table(Of T).Offset(System.Int32, System.Nullable(Of System.String))
+  nameWithType: Table<T>.Offset(Int32, Nullable<String>)
+  nameWithType.vb: Table(Of T).Offset(Int32, Nullable(Of String))
 - uid: Postgrest.Table`1.Offset*
   name: Offset
   href: api/Postgrest.Table-1.html#Postgrest_Table_1_Offset_
