@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>netcoreapp3.1</TargetFramework>
 		<IsPackable>false</IsPackable>
-		<ReleaseVersion>2.1.1</ReleaseVersion>
+		<ReleaseVersion>3.0.0</ReleaseVersion>
 	</PropertyGroup>
 
 	<ItemGroup>

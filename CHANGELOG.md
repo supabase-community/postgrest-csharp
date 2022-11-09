@@ -1,5 +1,15 @@
 ﻿# Changelog
 
+## 3.0.0 - 2022-11-08
+
+- Re: [#54](https://github.com/supabase-community/postgrest-csharp/pull/54) Restructure Project to support DI and enable Nullity
+	- `Client` is no longer a singleton class.
+	- `StatelessClient` has been removed as `Client` performs the same essential functions.
+	- `Table` default constructor requires reference to `JsonSerializerSettings`
+	- `BaseModel` now keeps track of `BaseUrl` and `RequestClientOptions`. These are now used in the default (and overridable) `BaseModel.Update` and `BaseModel.Delete` methods (as they previously referenced the singleton).
+	- All publicly facing classes (that offer functionality) now include an Interface.
+	- `RequestException` is no longer thrown for attempting to update a record that does not exist, instead an empty `ModeledResponse` is returned.
+
 ## 2.1.1 - 2022-10-19
 
 - Re: [#50](https://github.com/supabase-community/postgrest-csharp/issues/50) & [#51](https://github.com/supabase-community/postgrest-csharp/pull/51) Adds `shouldFilterTopRows` as constructor parameter for `ReferenceAttribute` which defaults to `true` to match current API expectations.
