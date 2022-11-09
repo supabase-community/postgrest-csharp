@@ -58,7 +58,7 @@ namespace Postgrest
         /// <summary>
         /// /// By specifying the onConflict query parameter, you can make UPSERT work on a column(s) that has a UNIQUE constraint.
         /// </summary>
-        public string OnConflict { get; set; }
+        public string? OnConflict { get; set; }
 
         public Dictionary<string, string> ToHeaders()
         {
@@ -68,7 +68,7 @@ namespace Postgrest
             if (Upsert)
             {
                 var resolverAttr = DuplicateResolution.GetAttribute<MapToAttribute>();
-                prefersHeaders.Add($"resolution={resolverAttr.Mapping}");
+                prefersHeaders.Add($"resolution={resolverAttr?.Mapping}");
             }
 
             var returnAttr = Returning.GetAttribute<MapToAttribute>();

@@ -14,11 +14,28 @@ namespace Postgrest.Models
     /// </summary>
     public abstract class BaseModel
     {
-        public virtual Task<ModeledResponse<T>> Update<T>(CancellationToken cancellationToken = default) where T : BaseModel, new() =>
-            Client.Instance.Table<T>().Update((T) this, cancellationToken: cancellationToken);
+        [JsonIgnore]
+        public virtual string? BaseUrl { get; set; }
 
-        public virtual Task Delete<T>(CancellationToken cancellationToken = default) where T : BaseModel, new() =>
-            Client.Instance.Table<T>().Delete((T) this, cancellationToken: cancellationToken);
+        [JsonIgnore]
+        public virtual ClientOptions? RequestClientOptions { get; set; }
+
+        public virtual Task<ModeledResponse<T>> Update<T>(CancellationToken cancellationToken = default) where T : BaseModel, new()
+        {
+            if (BaseUrl != null)
+                return new Client(BaseUrl, RequestClientOptions).Table<T>().Update((T)this, cancellationToken: cancellationToken);
+
+            throw new Exception("`BaseUrl` should be set in the model.");
+        }
+
+        public virtual Task Delete<T>(CancellationToken cancellationToken = default) where T : BaseModel, new()
+        {
+            if (BaseUrl != null)
+                return new Client(BaseUrl, RequestClientOptions).Table<T>().Delete((T)this, cancellationToken: cancellationToken);
+
+            throw new Exception("`BaseUrl` should be set in the model.");
+        }
+
 
         [JsonIgnore]
         public string TableName

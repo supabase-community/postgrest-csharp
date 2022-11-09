@@ -15,21 +15,17 @@ namespace Postgrest.Converters
 
         public override bool CanWrite => false;
 
-        public override object ReadJson(
-            JsonReader reader,
-            Type objectType,
-            object existingValue,
-            JsonSerializer serializer)
+        public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
         {
             if (reader.Value != null)
             {
                 var str = reader.Value.ToString();
 
                 var infinity = ParseInfinity(str);
-                
+
                 if (infinity != null)
                 {
-                    return (DateTime) infinity;
+                    return (DateTime)infinity;
                 }
 
                 var date = DateTime.Parse(str);
@@ -47,10 +43,10 @@ namespace Postgrest.Converters
                     var inner = item.ToString();
 
                     var infinity = ParseInfinity(inner);
-                    
+
                     if (infinity != null)
                     {
-                        result.Add((DateTime) infinity);
+                        result.Add((DateTime)infinity);
                     }
 
                     var date = DateTime.Parse(inner);
@@ -76,7 +72,7 @@ namespace Postgrest.Converters
             return null;
         }
 
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
             throw new NotImplementedException();
         }

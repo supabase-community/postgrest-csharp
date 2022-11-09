@@ -10,7 +10,7 @@ namespace PostgrestExample
         static async Task<int> Main(string[] args)
         {
             var url = "http://localhost:3000";
-            var client = Postgrest.Client.Initialize(url);
+            var client = new Postgrest.Client(url);
 
             // Get all Users
             var users = await client.Table<User>().Get();

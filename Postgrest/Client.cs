@@ -3,33 +3,54 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Postgrest.Attributes;
+using Postgrest.Interfaces;
 using Postgrest.Models;
 using Postgrest.Responses;
 
 namespace Postgrest
 {
     /// <summary>
-    /// A Singleton that represents a single, reusable connection to a Postgrest endpoint. Should be first called with the `Initialize()` method.
+    /// A a single, reusable connection to a Postgrest endpoint.
     /// </summary>
-    public class Client
+    public class Client : IPostgrestClient
     {
+        /// <summary>
+        /// Custom Serializer resolvers and converters that will be used for encoding and decoding Postgrest JSON responses.
+        ///
+        /// By default, Postgrest seems to use a date format that C# and Newtonsoft do not like, so this initial
+        /// configuration handles that.
+        /// </summary>
+        internal static JsonSerializerSettings SerializerSettings(ClientOptions? options = null)
+        {
+            options ??= new ClientOptions();
+
+            return new JsonSerializerSettings
+            {
+                ContractResolver = new PostgrestContractResolver(),
+                Converters =
+                {
+                    // 2020-08-28T12:01:54.763231
+                    new IsoDateTimeConverter
+                    {
+                        DateTimeStyles = options.DateTimeStyles,
+                        DateTimeFormat = ClientOptions.DateTimeFormat
+                    }
+                }
+            };
+        }
+
         /// <summary>
         /// API Base Url for subsequent calls.
         /// </summary>
         public string BaseUrl { get; private set; }
 
-        private ClientOptions options;
-
-        private static Client instance;
-
         /// <summary>
-        /// Returns the Singleton Instance of this Class.
+        /// The Options <see cref="Client"/> was initialized with.
         /// </summary>
-        public static Client Instance => instance ??= new Client();
+        public ClientOptions Options { get; private set; }
 
-        private Client()
-        {
-        }
 
         /// <summary>
         /// Should be the first call to this class to initialize a connection with a Postgrest API Server
@@ -37,18 +58,13 @@ namespace Postgrest
         /// <param name="baseUrl">Api Endpoint (ex: "http://localhost:8000"), no trailing slash required.</param>
         /// <param name="options">Optional client configuration.</param>
         /// <returns></returns>
-        public static Client Initialize(string baseUrl, ClientOptions options = null)
+        public Client(string baseUrl, ClientOptions? options = null)
         {
-            instance = new Client
-            {
-                BaseUrl = baseUrl
-            };
+            BaseUrl = baseUrl;
 
             options ??= new ClientOptions();
 
-            instance.options = options;
-
-            return instance;
+            Options = options;
         }
 
         /// <summary>
@@ -56,8 +72,8 @@ namespace Postgrest
         /// </summary>
         /// <typeparam name="T">Custom Model derived from `BaseModel`</typeparam>
         /// <returns></returns>
-        public Table<T> Table<T>() where T : BaseModel, new() =>
-            new Table<T>(BaseUrl, options, StatelessClient.SerializerSettings(options));
+        public IPostgrestTable<T> Table<T>() where T : BaseModel, new() =>
+            new Table<T>(BaseUrl, SerializerSettings(Options), Options);
 
         /// <summary>
         /// Perform a stored procedure call.
@@ -72,7 +88,7 @@ namespace Postgrest
 
             var canonicalUri = builder.Uri.ToString();
 
-            var serializerSettings = StatelessClient.SerializerSettings(options);
+            var serializerSettings = SerializerSettings(Options);
 
             // Prepare parameters
             var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(
@@ -80,10 +96,10 @@ namespace Postgrest
 
             // Prepare headers
             var headers = Helpers.PrepareRequestHeaders(HttpMethod.Post,
-                new Dictionary<string, string>(options.Headers), options);
+                new Dictionary<string, string>(Options.Headers), Options);
 
             // Send request
-            var request = Helpers.MakeRequest(HttpMethod.Post, canonicalUri, serializerSettings, data, headers);
+            var request = Helpers.MakeRequest(Options, HttpMethod.Post, canonicalUri, serializerSettings, data, headers);
             return request;
         }
     }

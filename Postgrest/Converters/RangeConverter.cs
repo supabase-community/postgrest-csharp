@@ -15,15 +15,16 @@ namespace Postgrest.Converters
             throw new NotImplementedException();
         }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
-            JsonSerializer serializer)
+        public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
         {
             return reader.Value != null ? ParseIntRange(reader.Value.ToString()) : null;
         }
 
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
-            var val = (IntRange) value;
+            if (value == null) return;
+
+            var val = (IntRange)value;
             writer.WriteValue(val.ToPostgresString());
         }
 

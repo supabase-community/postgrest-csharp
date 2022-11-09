@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Postgrest.Interfaces;
 using static Postgrest.Constants;
 
 namespace Postgrest
 {
-    public class QueryFilter
+    public class QueryFilter : IPostgrestQueryFilter
     {
         /// <summary>
         /// String value to be subsituted for a null criterion
         /// </summary>
         public const string NullVal = "null";
 
-        public string Property { get; private set; }
+        public string? Property { get; private set; }
         public Operator Op { get; private set; }
         public object Criteria { get; private set; }
 
