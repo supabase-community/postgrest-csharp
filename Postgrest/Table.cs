@@ -62,7 +62,7 @@ namespace Postgrest
         /// </summary>
         /// <param name="baseUrl">Api Endpoint (ex: "http://localhost:8000"), no trailing slash required.</param>
         /// <param name="options">Optional client configuration.</param>
-        public Table(string baseUrl, ClientOptions? options = null)
+        public Table(string baseUrl, JsonSerializerSettings serializerSettings, ClientOptions? options = null)
         {
             BaseUrl = baseUrl;
 
@@ -70,7 +70,7 @@ namespace Postgrest
 
             this.options = options;
 
-            serializerSettings = StatelessClient.SerializerSettings(options);
+            this.serializerSettings = serializerSettings;
 
             foreach (var property in typeof(T).GetProperties())
             {
@@ -83,16 +83,6 @@ namespace Postgrest
             TableName = FindTableName();
         }
 
-        /// <summary>
-        /// Constructor that specifies the serializer settings
-        /// </summary>
-        /// <param name="baseUrl"></param>
-        /// <param name="options"></param>
-        /// <param name="serializerSettings"></param>
-        public Table(string baseUrl, ClientOptions options, JsonSerializerSettings serializerSettings) : this(baseUrl, options)
-        {
-            this.serializerSettings = serializerSettings;
-        }
 
         /// <summary>
         /// Add a Filter to a query request

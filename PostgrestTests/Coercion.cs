@@ -16,10 +16,9 @@ namespace PostgrestTests
         [TestMethod]
         public async Task CanCoerceData()
         {
-            var options = new StatelessClientOptions(baseUrl);
 
             // Check against already included case (inserted in `01-dummy-data.sql`
-            var existingItem = await StatelessClient.Table<KitchenSink>(options).Single();
+            var existingItem = await new Client(baseUrl).Table<KitchenSink>().Single();
 
             if (existingItem != null)
             {
@@ -61,7 +60,7 @@ namespace PostgrestTests
             };
 
 
-            var insertedModel = await StatelessClient.Table<KitchenSink>(options).Insert(model);
+            var insertedModel = await new Client(baseUrl).Table<KitchenSink>().Insert(model);
             var actual = insertedModel.Models.First();
 
             Assert.AreEqual(model.StringValue, actual.StringValue);

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Postgrest.Attributes;
 using Postgrest.Interfaces;
 using Postgrest.Models;
 using Postgrest.Responses;
@@ -14,6 +16,31 @@ namespace Postgrest
     /// </summary>
     public class Client : IPostgrestClient
     {
+        /// <summary>
+        /// Custom Serializer resolvers and converters that will be used for encoding and decoding Postgrest JSON responses.
+        ///
+        /// By default, Postgrest seems to use a date format that C# and Newtonsoft do not like, so this initial
+        /// configuration handles that.
+        /// </summary>
+        internal static JsonSerializerSettings SerializerSettings(ClientOptions? options = null)
+        {
+            options ??= new ClientOptions();
+
+            return new JsonSerializerSettings
+            {
+                ContractResolver = new PostgrestContractResolver(),
+                Converters =
+                {
+                    // 2020-08-28T12:01:54.763231
+                    new IsoDateTimeConverter
+                    {
+                        DateTimeStyles = options.DateTimeStyles,
+                        DateTimeFormat = ClientOptions.DateTimeFormat
+                    }
+                }
+            };
+        }
+
         /// <summary>
         /// API Base Url for subsequent calls.
         /// </summary>
@@ -46,7 +73,7 @@ namespace Postgrest
         /// <typeparam name="T">Custom Model derived from `BaseModel`</typeparam>
         /// <returns></returns>
         public IPostgrestTable<T> Table<T>() where T : BaseModel, new() =>
-            new Table<T>(BaseUrl, Options, StatelessClient.SerializerSettings(Options));
+            new Table<T>(BaseUrl, SerializerSettings(Options), Options);
 
         /// <summary>
         /// Perform a stored procedure call.
@@ -61,7 +88,7 @@ namespace Postgrest
 
             var canonicalUri = builder.Uri.ToString();
 
-            var serializerSettings = StatelessClient.SerializerSettings(Options);
+            var serializerSettings = SerializerSettings(Options);
 
             // Prepare parameters
             var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(
