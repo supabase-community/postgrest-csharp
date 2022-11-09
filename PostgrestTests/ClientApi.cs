@@ -311,6 +311,7 @@ namespace PostgrestTests
             {
                 var nonExistentRecord = new User
                 {
+                    BaseUrl = baseUrl,
                     Username = "Foo",
                     Status = "Bar"
                 };
