@@ -1,5 +1,9 @@
 ﻿# Changelog
 
+## 3.0.1 - 2022-11-10
+
+- Make `SerializerSettings` publicly accessible.
+
 ## 3.0.0 - 2022-11-08
 
 - Re: [#54](https://github.com/supabase-community/postgrest-csharp/pull/54) Restructure Project to support DI and enable Nullity
