@@ -22,7 +22,7 @@ namespace Postgrest
         /// By default, Postgrest seems to use a date format that C# and Newtonsoft do not like, so this initial
         /// configuration handles that.
         /// </summary>
-        internal static JsonSerializerSettings SerializerSettings(ClientOptions? options = null)
+        public static JsonSerializerSettings SerializerSettings(ClientOptions? options = null)
         {
             options ??= new ClientOptions();
 
