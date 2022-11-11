@@ -409,6 +409,19 @@ references:
   isSpec: "True"
   fullName: Postgrest.Client.Rpc
   nameWithType: Client.Rpc
+- uid: Postgrest.Client.SerializerSettings(Postgrest.ClientOptions)
+  name: SerializerSettings(ClientOptions)
+  href: api/Postgrest.Client.html#Postgrest_Client_SerializerSettings_Postgrest_ClientOptions_
+  commentId: M:Postgrest.Client.SerializerSettings(Postgrest.ClientOptions)
+  fullName: Postgrest.Client.SerializerSettings(Postgrest.ClientOptions)
+  nameWithType: Client.SerializerSettings(ClientOptions)
+- uid: Postgrest.Client.SerializerSettings*
+  name: SerializerSettings
+  href: api/Postgrest.Client.html#Postgrest_Client_SerializerSettings_
+  commentId: Overload:Postgrest.Client.SerializerSettings
+  isSpec: "True"
+  fullName: Postgrest.Client.SerializerSettings
+  nameWithType: Client.SerializerSettings
 - uid: Postgrest.Client.Table*
   name: Table
   href: api/Postgrest.Client.html#Postgrest_Client_Table_
