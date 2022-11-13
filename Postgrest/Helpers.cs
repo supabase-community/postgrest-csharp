@@ -11,6 +11,7 @@ using System.Threading;
 using Newtonsoft.Json.Linq;
 using Postgrest.Extensions;
 using Postgrest.Models;
+using Supabase.Core.Extensions;
 
 [assembly: InternalsVisibleTo("PostgrestTests")]
 
@@ -156,7 +157,7 @@ namespace Postgrest
 
             if (!headers.ContainsKey("X-Client-Info"))
             {
-                headers.Add("X-Client-Info", Util.GetAssemblyVersion());
+                headers.Add("X-Client-Info", Supabase.Core.Util.GetAssemblyVersion(typeof(Client)));
             }
 
             return headers;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Postgrest.Attributes;
 using Postgrest.Extensions;
+using Supabase.Core.Attributes;
 
 namespace Postgrest
 {

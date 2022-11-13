@@ -51,6 +51,12 @@ namespace Postgrest
         /// </summary>
         public ClientOptions Options { get; private set; }
 
+        /// <summary>
+        /// Function that can be set to return dynamic headers.
+        /// 
+        /// Headers specified in the constructor options will ALWAYS take precendece over headers returned by this function.
+        /// </summary>
+        public Func<Dictionary<string, string>>? GetHeaders { get; set; }
 
         /// <summary>
         /// Should be the first call to this class to initialize a connection with a Postgrest API Server
@@ -72,8 +78,13 @@ namespace Postgrest
         /// </summary>
         /// <typeparam name="T">Custom Model derived from `BaseModel`</typeparam>
         /// <returns></returns>
-        public IPostgrestTable<T> Table<T>() where T : BaseModel, new() =>
-            new Table<T>(BaseUrl, SerializerSettings(Options), Options);
+        public IPostgrestTable<T> Table<T>() where T : BaseModel, new()
+        {
+            var table = new Table<T>(BaseUrl, SerializerSettings(Options), Options);
+            table.GetHeaders = GetHeaders;
+            
+            return table;
+        }
 
         /// <summary>
         /// Perform a stored procedure call.

@@ -1,12 +1,14 @@
 ﻿using Postgrest.Models;
 using Postgrest.Responses;
+using Supabase.Core.Interfaces;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Postgrest.Interfaces
 {
-    public interface IPostgrestTable<T> where T : BaseModel, new()
+    public interface IPostgrestTable<T> : IGettableHeaders
+        where T : BaseModel, new()
     {
         string BaseUrl { get; }
         string TableName { get; }

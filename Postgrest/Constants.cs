@@ -1,4 +1,5 @@
 ﻿using Postgrest.Attributes;
+using Supabase.Core.Attributes;
 
 namespace Postgrest
 {

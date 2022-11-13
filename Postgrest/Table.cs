@@ -14,6 +14,8 @@ using Postgrest.Extensions;
 using Postgrest.Interfaces;
 using Postgrest.Models;
 using Postgrest.Responses;
+using Supabase.Core.Attributes;
+using Supabase.Core.Extensions;
 using static Postgrest.Constants;
 
 namespace Postgrest
@@ -32,6 +34,13 @@ namespace Postgrest
         /// Name of the Table parsed by the Model.
         /// </summary>
         public string TableName { get; }
+
+        /// <summary>
+        /// Function that can be set to return dynamic headers.
+        /// 
+        /// Headers specified in the constructor will ALWAYS take precendece over headers returned by this function.
+        /// </summary>
+        public Func<Dictionary<string, string>>? GetHeaders { get; set; }
 
         private ClientOptions options;
         private JsonSerializerSettings serializerSettings;
@@ -872,6 +881,12 @@ namespace Postgrest
         private Task<BaseResponse> Send(HttpMethod method, object? data, Dictionary<string, string>? headers = null, CancellationToken cancellationToken = default, bool isInsert = false, bool isUpdate = false)
         {
             var requestHeaders = Helpers.PrepareRequestHeaders(method, headers, options, rangeFrom, rangeTo);
+
+            if (GetHeaders != null)
+            {
+                requestHeaders = GetHeaders().MergeLeft(requestHeaders);
+            }
+
             var preparedData = PrepareRequestData(data, isInsert, isUpdate);
             return Helpers.MakeRequest(options, method, GenerateUrl(), serializerSettings, preparedData, requestHeaders, cancellationToken);
         }
@@ -879,6 +894,12 @@ namespace Postgrest
         private Task<ModeledResponse<U>> Send<U>(HttpMethod method, object? data, Dictionary<string, string>? headers = null, CancellationToken cancellationToken = default, bool isInsert = false, bool isUpdate = false) where U : BaseModel, new()
         {
             var requestHeaders = Helpers.PrepareRequestHeaders(method, headers, options, rangeFrom, rangeTo);
+
+            if (GetHeaders != null)
+            {
+                requestHeaders = GetHeaders().MergeLeft(requestHeaders);
+            }
+
             var preparedData = PrepareRequestData(data, isInsert, isUpdate);
             return Helpers.MakeRequest<U>(options, method, GenerateUrl(), serializerSettings, preparedData, requestHeaders, cancellationToken);
         }
