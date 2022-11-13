@@ -380,6 +380,19 @@ references:
   isSpec: "True"
   fullName: Postgrest.Client.BaseUrl
   nameWithType: Client.BaseUrl
+- uid: Postgrest.Client.GetHeaders
+  name: GetHeaders
+  href: api/Postgrest.Client.html#Postgrest_Client_GetHeaders
+  commentId: P:Postgrest.Client.GetHeaders
+  fullName: Postgrest.Client.GetHeaders
+  nameWithType: Client.GetHeaders
+- uid: Postgrest.Client.GetHeaders*
+  name: GetHeaders
+  href: api/Postgrest.Client.html#Postgrest_Client_GetHeaders_
+  commentId: Overload:Postgrest.Client.GetHeaders
+  isSpec: "True"
+  fullName: Postgrest.Client.GetHeaders
+  nameWithType: Client.GetHeaders
 - uid: Postgrest.Client.Options
   name: Options
   href: api/Postgrest.Client.html#Postgrest_Client_Options
@@ -857,28 +870,6 @@ references:
   commentId: N:Postgrest.Extensions
   fullName: Postgrest.Extensions
   nameWithType: Postgrest.Extensions
-- uid: Postgrest.Extensions.DictionaryExtensions
-  name: DictionaryExtensions
-  href: api/Postgrest.Extensions.DictionaryExtensions.html
-  commentId: T:Postgrest.Extensions.DictionaryExtensions
-  fullName: Postgrest.Extensions.DictionaryExtensions
-  nameWithType: DictionaryExtensions
-- uid: Postgrest.Extensions.DictionaryExtensions.MergeLeft*
-  name: MergeLeft
-  href: api/Postgrest.Extensions.DictionaryExtensions.html#Postgrest_Extensions_DictionaryExtensions_MergeLeft_
-  commentId: Overload:Postgrest.Extensions.DictionaryExtensions.MergeLeft
-  isSpec: "True"
-  fullName: Postgrest.Extensions.DictionaryExtensions.MergeLeft
-  nameWithType: DictionaryExtensions.MergeLeft
-- uid: Postgrest.Extensions.DictionaryExtensions.MergeLeft``3(``0,IDictionary{``1,``2}[])
-  name: MergeLeft<T, TK, TV>(T, IDictionary<TK, TV>[])
-  href: api/Postgrest.Extensions.DictionaryExtensions.html#Postgrest_Extensions_DictionaryExtensions_MergeLeft__3___0_IDictionary___1___2____
-  commentId: M:Postgrest.Extensions.DictionaryExtensions.MergeLeft``3(``0,IDictionary{``1,``2}[])
-  name.vb: MergeLeft(Of T, TK, TV)(T, IDictionary(Of TK, TV)())
-  fullName: Postgrest.Extensions.DictionaryExtensions.MergeLeft<T, TK, TV>(T, IDictionary<TK, TV>[])
-  fullName.vb: Postgrest.Extensions.DictionaryExtensions.MergeLeft(Of T, TK, TV)(T, IDictionary(Of TK, TV)())
-  nameWithType: DictionaryExtensions.MergeLeft<T, TK, TV>(T, IDictionary<TK, TV>[])
-  nameWithType.vb: DictionaryExtensions.MergeLeft(Of T, TK, TV)(T, IDictionary(Of TK, TV)())
 - uid: Postgrest.Extensions.EnumExtensions
   name: EnumExtensions
   href: api/Postgrest.Extensions.EnumExtensions.html
@@ -2704,6 +2695,23 @@ references:
   fullName.vb: Postgrest.Table(Of T).Get
   nameWithType: Table<T>.Get
   nameWithType.vb: Table(Of T).Get
+- uid: Postgrest.Table`1.GetHeaders
+  name: GetHeaders
+  href: api/Postgrest.Table-1.html#Postgrest_Table_1_GetHeaders
+  commentId: P:Postgrest.Table`1.GetHeaders
+  fullName: Postgrest.Table<T>.GetHeaders
+  fullName.vb: Postgrest.Table(Of T).GetHeaders
+  nameWithType: Table<T>.GetHeaders
+  nameWithType.vb: Table(Of T).GetHeaders
+- uid: Postgrest.Table`1.GetHeaders*
+  name: GetHeaders
+  href: api/Postgrest.Table-1.html#Postgrest_Table_1_GetHeaders_
+  commentId: Overload:Postgrest.Table`1.GetHeaders
+  isSpec: "True"
+  fullName: Postgrest.Table<T>.GetHeaders
+  fullName.vb: Postgrest.Table(Of T).GetHeaders
+  nameWithType: Table<T>.GetHeaders
+  nameWithType.vb: Table(Of T).GetHeaders
 - uid: Postgrest.Table`1.Insert(`0,Postgrest.QueryOptions,CancellationToken)
   name: Insert(T, QueryOptions, CancellationToken)
   href: api/Postgrest.Table-1.html#Postgrest_Table_1_Insert__0_Postgrest_QueryOptions_CancellationToken_
@@ -3014,22 +3022,3 @@ references:
   fullName.vb: Postgrest.Table(Of T).Upsert
   nameWithType: Table<T>.Upsert
   nameWithType.vb: Table(Of T).Upsert
-- uid: Postgrest.Util
-  name: Util
-  href: api/Postgrest.Util.html
-  commentId: T:Postgrest.Util
-  fullName: Postgrest.Util
-  nameWithType: Util
-- uid: Postgrest.Util.GetAssemblyVersion
-  name: GetAssemblyVersion()
-  href: api/Postgrest.Util.html#Postgrest_Util_GetAssemblyVersion
-  commentId: M:Postgrest.Util.GetAssemblyVersion
-  fullName: Postgrest.Util.GetAssemblyVersion()
-  nameWithType: Util.GetAssemblyVersion()
-- uid: Postgrest.Util.GetAssemblyVersion*
-  name: GetAssemblyVersion
-  href: api/Postgrest.Util.html#Postgrest_Util_GetAssemblyVersion_
-  commentId: Overload:Postgrest.Util.GetAssemblyVersion
-  isSpec: "True"
-  fullName: Postgrest.Util.GetAssemblyVersion
-  nameWithType: Util.GetAssemblyVersion
