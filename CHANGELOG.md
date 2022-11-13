@@ -1,5 +1,9 @@
 ﻿# Changelog
 
+## 3.0.2 - 2022-11-12
+
+- `IPostgrestClient` and `IPostgrestAPI` now implement `IGettableHeaders`
+
 ## 3.0.1 - 2022-11-10
 
 - Make `SerializerSettings` publicly accessible.
