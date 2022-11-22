@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## 3.0.3 - 2022-11-22
+
+- `GetHeaders` is now passed to `ModeledResponse` and `BaseModel` so that the default `Update` and `Delete` methods use the latest credentials
+- `GetHeaders` is used in `Rpc` calls (re: [#39](https://github.com/supabase-community/supabase-csharp/issues/39))
+
 ## 3.0.2 - 2022-11-12
 
 - `IPostgrestClient` and `IPostgrestAPI` now implement `IGettableHeaders`
