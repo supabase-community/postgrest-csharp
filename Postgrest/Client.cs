@@ -8,6 +8,7 @@ using Postgrest.Attributes;
 using Postgrest.Interfaces;
 using Postgrest.Models;
 using Postgrest.Responses;
+using Supabase.Core.Extensions;
 
 namespace Postgrest
 {
@@ -108,6 +109,11 @@ namespace Postgrest
             // Prepare headers
             var headers = Helpers.PrepareRequestHeaders(HttpMethod.Post,
                 new Dictionary<string, string>(Options.Headers), Options);
+
+            if (GetHeaders != null)
+            {
+                headers = GetHeaders().MergeLeft(headers);
+            }
 
             // Send request
             var request = Helpers.MakeRequest(Options, HttpMethod.Post, canonicalUri, serializerSettings, data, headers);
