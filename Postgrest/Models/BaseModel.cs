@@ -44,7 +44,7 @@ namespace Postgrest.Models
 			{
 				var client = new Client(BaseUrl, RequestClientOptions);
 				client.GetHeaders = GetHeaders;
-				return client.Table<T>().Update((T)this, cancellationToken: cancellationToken);
+				return client.Table<T>().Delete((T)this, cancellationToken: cancellationToken);
 			}
 
 			throw new Exception("`BaseUrl` should be set in the model.");

@@ -1,5 +1,7 @@
 ﻿# Changelog
 
+## 3.0.4 - 2022-11-22
+
 ## 3.0.3 - 2022-11-22
 
 - `GetHeaders` is now passed to `ModeledResponse` and `BaseModel` so that the default `Update` and `Delete` methods use the latest credentials
