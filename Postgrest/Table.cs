@@ -901,7 +901,7 @@ namespace Postgrest
             }
 
             var preparedData = PrepareRequestData(data, isInsert, isUpdate);
-            return Helpers.MakeRequest<U>(options, method, GenerateUrl(), serializerSettings, preparedData, requestHeaders, cancellationToken);
+            return Helpers.MakeRequest<U>(options, method, GenerateUrl(), serializerSettings, preparedData, requestHeaders, GetHeaders, cancellationToken);
         }
 
         internal static string FindTableName(object? obj = null)

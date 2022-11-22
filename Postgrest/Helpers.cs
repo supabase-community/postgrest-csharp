@@ -41,10 +41,10 @@ namespace Postgrest
         /// <param name="serializerSettings"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public static async Task<ModeledResponse<T>> MakeRequest<T>(ClientOptions clientOptions, HttpMethod method, string url, JsonSerializerSettings serializerSettings, object? data = null, Dictionary<string, string>? headers = null, CancellationToken cancellationToken = default) where T : BaseModel, new()
+        public static async Task<ModeledResponse<T>> MakeRequest<T>(ClientOptions clientOptions, HttpMethod method, string url, JsonSerializerSettings serializerSettings, object? data = null, Dictionary<string, string>? headers = null, Func<Dictionary<string, string>>? getHeaders = null, CancellationToken cancellationToken = default) where T : BaseModel, new()
         {
             var baseResponse = await MakeRequest(clientOptions, method, url, serializerSettings, data, headers, cancellationToken);
-            return new ModeledResponse<T>(baseResponse, serializerSettings);
+            return new ModeledResponse<T>(baseResponse, serializerSettings, getHeaders);
         }
 
         /// <summary>
