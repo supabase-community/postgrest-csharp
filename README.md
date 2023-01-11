@@ -24,11 +24,11 @@ In Short:
 ```c#
 // What was:
 var client = Client.Initialize(baseUrl, options);
-var query = await client.Table<User>.Single();
+var query = await client.Table<User>().Single();
 
 // Becomes:
 var client = new Client(baseUrl, options);
-var query = await client.Table<User>.Single();
+var query = await client.Table<User>().Single();
 ```
 
 ---
