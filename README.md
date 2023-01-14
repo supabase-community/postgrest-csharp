@@ -11,24 +11,14 @@
 
 ---
 
-## BREAKING CHANGES MOVING FROM v2.x.x to v3.x.x
+## Now supporting (many) LINQ expressions!
 
-- `Client` is no longer a singleton class.
-- `StatelessClient` has been removed as `Client` performs the same essential functions.
-- `Table` default constructor requires reference to `JsonSerializerSettings`
-- `BaseModel` now keeps track of `BaseUrl` and `RequestClientOptions`. These are now used in the default (and overridable) `BaseModel.Update` and `BaseModel.Delete` methods (as they previously referenced the singleton).
-- All publicly facing classes (that offer functionality) now include an Interface.
-- `RequestException` is no longer thrown for attempting to update a record that does not exist, instead an empty `ModeledResponse` is returned.
-
-In Short:
 ```c#
-// What was:
-var client = Client.Initialize(baseUrl, options);
-var query = await client.Table<User>().Single();
-
-// Becomes:
-var client = new Client(baseUrl, options);
-var query = await client.Table<User>().Single();
+var query = await client.Table<Movie>()
+	                .Select(x => new object[] { x.Id, x.Name, x.Tags, x.ReleaseDate })
+	                .Where(x => x.Tags.Contains("Action") || x.Tags.Contains("Adventure"))
+	                .Order(x => x.ReleaseDate, Ordering.Descending)
+	                .Get();
 ```
 
 ---

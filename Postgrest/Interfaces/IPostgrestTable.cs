@@ -23,6 +23,7 @@ namespace Postgrest.Interfaces
 		Task Delete(QueryOptions? options = null, CancellationToken cancellationToken = default);
 		Task<ModeledResponse<T>> Delete(T model, QueryOptions? options = null, CancellationToken cancellationToken = default);
 		Table<T> Filter(string columnName, Constants.Operator op, object criterion);
+		Table<T> Filter(Expression<Func<T, object>> predicate, Constants.Operator op, object criterion);
 		Task<ModeledResponse<T>> Get(CancellationToken cancellationToken = default);
 		Task<ModeledResponse<T>> Insert(ICollection<T> models, QueryOptions? options = null, CancellationToken cancellationToken = default);
 		Task<ModeledResponse<T>> Insert(T model, QueryOptions? options = null, CancellationToken cancellationToken = default);

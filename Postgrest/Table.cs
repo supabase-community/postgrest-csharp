@@ -93,6 +93,28 @@ namespace Postgrest
 			TableName = FindTableName();
 		}
 
+		/// <summary>
+		/// Add a filter to a query request using a predicate to select column.
+		/// </summary>
+		/// <param name="predicate">Expects a columns from the Model to be returned</param>
+		/// <param name="op">Operation to perform.</param>
+		/// <param name="criterion">Value to filter with, must be a `string`, `List<object>`, `Dictionary<string, object>`, `FullTextSearchConfig`, or `Range`</param>
+		/// <returns></returns>
+		/// <exception cref="ArgumentException"></exception>
+		public Table<T> Filter(Expression<Func<T, object>> predicate, Operator op, object criterion)
+		{
+			var visitor = new SelectExpressionVisitor();
+			visitor.Visit(predicate);
+
+			if (visitor.Columns.Count == 0)
+				throw new ArgumentException("Expected predicate to return a reference to a Model column.");
+
+			if (visitor.Columns.Count > 1)
+				throw new ArgumentException("Only one column should be returned from the predicate.");
+
+			return Filter(visitor.Columns.First(), op, criterion);
+		}
+
 
 		/// <summary>
 		/// Add a Filter to a query request
@@ -264,7 +286,7 @@ namespace Postgrest
 		/// NOTE: If multiple orderings are required, chain this function with another call to <see cref="Order"/>.
 		/// </summary>
 		/// <param name="predicate"></param>
-		/// <param name="ordering"></param>
+		/// <param name="ordering">>Expects a columns from the Model to be returned</param>
 		/// <param name="nullPosition"></param>
 		/// <returns></returns>
 		public Table<T> Order(Expression<Func<T, object>> predicate, Ordering ordering, NullPosition nullPosition = NullPosition.First)
