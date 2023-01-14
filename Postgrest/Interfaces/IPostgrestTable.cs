@@ -1,7 +1,9 @@
 ﻿using Postgrest.Models;
 using Postgrest.Responses;
 using Supabase.Core.Interfaces;
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -38,7 +40,9 @@ namespace Postgrest.Interfaces
         Table<T> Range(int from);
         Table<T> Range(int from, int to);
         Table<T> Select(string columnQuery);
-        Task<T?> Single(CancellationToken cancellationToken = default);
+		Table<T> Select(Expression<Func<T, object[]>> predicate);
+        Table<T> Where(Expression<Func<T, bool>> predicate);
+		Task<T?> Single(CancellationToken cancellationToken = default);
         Task<ModeledResponse<T>> Update(T model, QueryOptions? options = null, CancellationToken cancellationToken = default);
         Task<ModeledResponse<T>> Upsert(ICollection<T> model, QueryOptions? options = null, CancellationToken cancellationToken = default);
         Task<ModeledResponse<T>> Upsert(T model, QueryOptions? options = null, CancellationToken cancellationToken = default);

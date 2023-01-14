@@ -89,7 +89,9 @@ CREATE TABLE public.movie_person (
 );
 
 insert into "public"."movie" ("created_at", "id", "name") values ('2022-08-20 00:29:45.400188', 1, 'Top Gun: Maverick');
-insert into "public"."movie" ("created_at", "id", "name") values ('2022-08-20 00:29:45.400188', 2, 'Mad Max: Fury Road');
+insert into "public"."movie" ("created_at", "id", "name") values ('2022-08-22 00:29:45.400188', 2, 'Mad Max: Fury Road');
+insert into "public"."movie" ("created_at", "id", "name") values ('2022-08-28 00:29:45.400188', 3, 'Guns Away');
+
 
 insert into "public"."person" ("created_at", "first_name", "id", "last_name") values ('2022-08-20 00:30:02.120528', 'Tom', 1, 'Cruise');
 insert into "public"."person" ("created_at", "first_name", "id", "last_name") values ('2022-08-20 00:30:02.120528', 'Tom', 2, 'Holland');

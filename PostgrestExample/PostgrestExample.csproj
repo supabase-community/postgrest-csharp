@@ -1,12 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <ReleaseVersion>3.0.4</ReleaseVersion>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Postgrest\Postgrest.csproj" />
-  </ItemGroup>
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<ReleaseVersion>3.0.4</ReleaseVersion>
+		<LangVersion>9.0</LangVersion>
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Postgrest\Postgrest.csproj" />
+	</ItemGroup>
 </Project>
