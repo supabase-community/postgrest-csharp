@@ -24,7 +24,7 @@ namespace Postgrest.Attributes
         /// </summary>
         public bool ShouldInsert { get; set; }
 
-        public PrimaryKeyAttribute([CallerMemberName] string? columnName = null, bool shouldInsert = true)
+        public PrimaryKeyAttribute([CallerMemberName] string? columnName = null, bool shouldInsert = false)
         {
             ColumnName = columnName!; // Either given by user or specified by runtime compiler.
             ShouldInsert = shouldInsert;
