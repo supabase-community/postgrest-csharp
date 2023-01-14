@@ -1,5 +1,6 @@
 ﻿using Postgrest.Attributes;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -99,8 +100,14 @@ namespace Postgrest.Linq
 
 			switch (node.Method.Name)
 			{
+				// Includes String.Contains and IEnumerable.Contains
 				case nameof(String.Contains):
-					Filter = new QueryFilter(column, Operator.Like, "*" + GetArgumentValues(node).First() + "*");
+
+					if (typeof(ICollection).IsAssignableFrom(node.Method.DeclaringType))
+						Filter = new QueryFilter(column, Operator.Contains, GetArgumentValues(node));
+					else
+						Filter = new QueryFilter(column, Operator.Like, "*" + GetArgumentValues(node).First() + "*");
+					
 					break;
 				default:
 					throw new NotImplementedException("Unsupported method");

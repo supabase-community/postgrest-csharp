@@ -96,6 +96,8 @@ insert into "public"."movie" ("created_at", "id", "name") values ('2022-08-28 00
 insert into "public"."person" ("created_at", "first_name", "id", "last_name") values ('2022-08-20 00:30:02.120528', 'Tom', 1, 'Cruise');
 insert into "public"."person" ("created_at", "first_name", "id", "last_name") values ('2022-08-20 00:30:02.120528', 'Tom', 2, 'Holland');
 insert into "public"."person" ("created_at", "first_name", "id", "last_name") values ('2022-08-20 00:30:33.72443', 'Bob', 3, 'Saggett');
+insert into "public"."person" ("created_at", "first_name", "id", "last_name") values ('2022-08-20 00:30:33.72443', 'Random', 4, 'Actor');
+
 
 insert into "public"."profile" ("created_at", "email", "profile_id") values ('2022-08-20 00:30:33.72443', 'tom.cruise@supabase.io', 1);
 insert into "public"."profile" ("created_at", "email", "profile_id") values ('2022-08-20 00:30:33.72443', 'tom.holland@supabase.io', 2);
@@ -104,6 +106,7 @@ insert into "public"."profile" ("created_at", "email", "profile_id") values ('20
 insert into "public"."movie_person" ("id", "movie_id", "person_id") values (1, 1, 1);
 insert into "public"."movie_person" ("id", "movie_id", "person_id") values (2, 2, 2);
 insert into "public"."movie_person" ("id", "movie_id", "person_id") values (3, 1, 3);
+insert into "public"."movie_person" ("id", "movie_id", "person_id") values (4, 3, 4);
 
 
 -- STORED FUNCTION

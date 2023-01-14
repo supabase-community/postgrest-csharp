@@ -259,7 +259,32 @@ namespace Postgrest
 		}
 
 		/// <summary>
+		/// Adds an ordering to the current query args using a predicate function.
+		/// 
+		/// NOTE: If multiple orderings are required, chain this function with another call to <see cref="Order"/>.
+		/// </summary>
+		/// <param name="predicate"></param>
+		/// <param name="ordering"></param>
+		/// <param name="nullPosition"></param>
+		/// <returns></returns>
+		public Table<T> Order(Expression<Func<T, object>> predicate, Ordering ordering, NullPosition nullPosition = NullPosition.First)
+		{
+			var visitor = new SelectExpressionVisitor();
+			visitor.Visit(predicate);
+
+			if (visitor.Columns.Count == 0)
+				throw new ArgumentException("Expected predicate to return a reference to a Model column.");
+
+			if (visitor.Columns.Count > 1)
+				throw new ArgumentException("Only one column should be returned from the predicate.");
+
+			return Order(visitor.Columns.First(), ordering, nullPosition);
+		}
+
+		/// <summary>
 		/// Adds an ordering to the current query args.
+		/// 
+		/// NOTE: If multiple orderings are required, chain this function with another call to <see cref="Order"/>.
 		/// </summary>
 		/// <param name="column">Column Name</param>
 		/// <param name="ordering"></param>
@@ -273,6 +298,8 @@ namespace Postgrest
 
 		/// <summary>
 		/// Adds an ordering to the current query args.
+		/// 
+		/// NOTE: If multiple orderings are required, chain this function with another call to <see cref="Order"/>.
 		/// </summary>
 		/// <param name="foreignTable"></param>
 		/// <param name="column"></param>
@@ -327,7 +354,7 @@ namespace Postgrest
 		/// For example: 
 		///		`Table<Movie>().Select(x => new[] { x.Id, x.Name, x.CreatedAt }).Get();`
 		/// </summary>
-		/// <param name="predicate"></param>
+		/// <param name="predicate">Expects an array of columns from the Model to be returned.</param>
 		/// <returns></returns>
 		public Table<T> Select(Expression<Func<T, object[]>> predicate)
 		{
@@ -389,6 +416,27 @@ namespace Postgrest
 		}
 
 		/// <summary>
+		/// Set an onConflict query parameter for UPSERTing on a column that has a UNIQUE constraint using a linq predicate.
+		/// </summary>
+		/// <param name="predicate">Expects a column from the model to be returned.</param>
+		/// <returns></returns>
+		public Table<T> OnConflict(Expression<Func<T, object>> predicate)
+		{
+			var visitor = new SelectExpressionVisitor();
+			visitor.Visit(predicate);
+
+			if (visitor.Columns.Count == 0)
+				throw new ArgumentException("Expected predicate to return a reference to a Model column.");
+
+			if (visitor.Columns.Count > 1)
+				throw new ArgumentException("Only one column should be returned from the predicate.");
+
+			OnConflict(visitor.Columns.First());
+
+			return this;
+		}
+
+		/// <summary>
 		/// By using the columns query parameter it’s possible to specify the payload keys that will be inserted and ignore the rest of the payload.
 		/// 
 		/// The rest of the JSON keys will be ignored.
@@ -404,6 +452,27 @@ namespace Postgrest
 				this.columns.Add(column);
 
 			return this;
+		}
+
+		/// <summary>
+		/// By using the columns query parameter it’s possible to specify the payload keys that will be inserted and ignore the rest of the payload.
+		/// 
+		/// The rest of the JSON keys will be ignored.
+		/// Using this also has the side-effect of being more efficient for Bulk Insert since PostgREST will not process the JSON and it’ll send it directly to PostgreSQL.
+		/// 
+		/// See: https://postgrest.org/en/stable/api.html#specifying-columns
+		/// </summary>
+		/// <param name="predicate"></param>
+		/// <returns></returns>
+		public Table<T> Columns(Expression<Func<T, object[]>> predicate)
+		{
+			var visitor = new SelectExpressionVisitor();
+			visitor.Visit(predicate);
+
+			if (visitor.Columns.Count == 0)
+				throw new ArgumentException("Expected predicate to return an array of references to a Model column.");
+
+			return Columns(visitor.Columns.ToArray());
 		}
 
 		/// <summary>
@@ -569,7 +638,8 @@ namespace Postgrest
 
 				var attr = type.GetAttribute<MapToAttribute>();
 
-				var headers = new Dictionary<string, string> {
+				var headers = new Dictionary<string, string>
+				{
 					{ "Prefer", $"count={attr?.Mapping}" }
 				};
 
