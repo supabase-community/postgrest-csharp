@@ -385,6 +385,9 @@ namespace Postgrest
 			var visitor = new SelectExpressionVisitor();
 			visitor.Visit(predicate);
 
+			if (visitor.Columns.Count == 0)
+				throw new ArgumentException("Unable to find column(s) to select from the given predicate, did you return an array of Model Properties?");
+
 			return Select(string.Join(",", visitor.Columns));
 		}
 
@@ -408,8 +411,10 @@ namespace Postgrest
 			var visitor = new WhereExpressionVisitor();
 			visitor.Visit(predicate);
 
-			if (visitor.Filter != null)
-				filters.Add(visitor.Filter);
+			if (visitor.Filter == null)
+				throw new ArgumentException("Unable to parse the supplied predicate, did you return a predicate where each left hand of the condition is a Model property?");
+
+			filters.Add(visitor.Filter);
 
 			return this;
 		}

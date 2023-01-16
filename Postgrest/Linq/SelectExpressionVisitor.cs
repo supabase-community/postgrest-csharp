@@ -86,7 +86,7 @@ namespace Postgrest.Linq
 					return primaryKeyAttr.ColumnName;
 			}
 
-			throw new ArgumentException(string.Format("Unknown argument '{0}' provided, does it have a Column or PrimaryKey attribute?", node.Member.Name));
+			throw new ArgumentException(string.Format("Unknown argument '{0}' provided, does it have a `Column` or `PrimaryKey` attribute?", node.Member.Name));
 		}
 	}
 }
