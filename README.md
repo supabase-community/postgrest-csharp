@@ -14,11 +14,18 @@
 ## Now supporting (many) LINQ expressions!
 
 ```c#
-var query = await client.Table<Movie>()
-	                .Select(x => new object[] { x.Id, x.Name, x.Tags, x.ReleaseDate })
-	                .Where(x => x.Tags.Contains("Action") || x.Tags.Contains("Adventure"))
-	                .Order(x => x.ReleaseDate, Ordering.Descending)
-	                .Get();
+await client.Table<Movie>()
+            .Select(x => new object[] { x.Id, x.Name, x.Tags, x.ReleaseDate })
+            .Where(x => x.Tags.Contains("Action") || x.Tags.Contains("Adventure"))
+            .Order(x => x.ReleaseDate, Ordering.Descending)
+            .Get();
+
+await client.Table<Movie>()
+            .Set(x => new KeyValuePair<object,object>(x.WatchedAt, DateTime.Now))
+            .Where(x => x.Id == "11111-22222-33333-44444")
+            // Or .Filter(x => x.Id, Operator.Equals, "11111-22222-33333-44444")
+            .Update();
+
 ```
 
 ---

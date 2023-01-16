@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## 3.1.0 - 2023-01-16
+
+- [Minor] Breaking API Change: `PrimaryKey` attribute defaults to `shouldInsert: false` as most uses will have the Database generate the primary key.
+- Merged [#60](https://github.com/supabase-community/postgrest-csharp/pull/60) which Added linq support for `Select`, `Where`, `OnConflict`, `Columns`, `Order`, `Update`, `Set`, and `Delete`
+
 ## 3.0.4 - 2022-11-22
 
 ## 3.0.3 - 2022-11-22
