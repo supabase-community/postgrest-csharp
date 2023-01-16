@@ -54,6 +54,8 @@ namespace Postgrest
 		private List<QueryOrderer> orderers = new List<QueryOrderer>();
 		private List<string> columns = new List<string>();
 
+		private Dictionary<object, object> setData = new Dictionary<object, object>();
+
 		private List<ReferenceAttribute> references = new List<ReferenceAttribute>();
 
 		private int rangeFrom = int.MinValue;
@@ -577,6 +579,54 @@ namespace Postgrest
 		}
 
 		/// <summary>
+		/// Specifies a KeyValuePair to be updated. Should be combined with filters/where clauses.
+		/// 
+		/// Can be called multiple times to set multiple values.
+		/// </summary>
+		/// <param name="keyValuePairExpression"></param>
+		/// <returns></returns>
+		/// <exception cref="ArgumentException"></exception>
+		public Table<T> Set(Expression<Func<T, KeyValuePair<object, object>>> keyValuePairExpression)
+		{
+			var visitor = new SetExpressionVisitor();
+			visitor.Visit(keyValuePairExpression);
+
+			if (visitor.Column == null || visitor.Value == null)
+				throw new ArgumentException("Expression should return a KeyValuePair with a key of a Model Property and a value.");
+
+			setData.Add(visitor.Column, visitor.Value);
+
+			return this;
+		}
+
+		/// <summary>
+		/// Calls an Update function after `Set` has been called.
+		/// </summary>
+		/// <param name="options"></param>
+		/// <param name="cancellationToken"></param>
+		/// <returns></returns>
+		/// <exception cref="ArgumentException"></exception>
+		public Task<ModeledResponse<T>> Update(QueryOptions? options = null, CancellationToken cancellationToken = default)
+		{
+			if (options == null)
+			{
+				options = new QueryOptions();
+			}
+
+			if (setData.Keys.Count == 0)
+				throw new ArgumentException("No data has been set to update, was `Set` called?");
+
+			method = new HttpMethod("PATCH");
+
+			var request = Send<T>(method, setData, options.ToHeaders(), cancellationToken, isUpdate: true);
+
+			Clear();
+
+			return request;
+
+		}
+
+		/// <summary>
 		/// Executes an UPDATE query using the defined query params on the current instance.
 		/// </summary>
 		/// <param name="model"></param>
@@ -974,6 +1024,7 @@ namespace Postgrest
 			filters.Clear();
 			orderers.Clear();
 			columns.Clear();
+			setData.Clear();
 
 			rangeFrom = int.MinValue;
 			rangeTo = int.MinValue;

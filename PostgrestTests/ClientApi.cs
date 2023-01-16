@@ -1082,7 +1082,10 @@ namespace PostgrestTests
 		{
 			var client = new Client(baseUrl);
 
-			var movies = await client.Table<Movie>().Get();
+			var movies = await client.Table<Movie>()
+				.Order(x => x.Id, Ordering.Ascending)
+				.Get();
+
 			Assert.IsTrue(movies.Models.Count > 0);
 
 			var first = movies.Models.First();
@@ -1287,6 +1290,60 @@ namespace PostgrestTests
 			{
 				return client.Table<Movie>().Columns(x => new object[] { "something", DateTime.Now }).Update(first);
 			});
+		}
+
+		[TestMethod("Linq: Update")]
+		public async Task TestLinqUpdate()
+		{
+			var client = new Client(baseUrl);
+
+			var newName = $"Top Gun (Updated By Linq) at {DateTime.Now}";
+			var movie = await client.Table<Movie>()
+				.Set(x => new KeyValuePair<object, object>(x.Name, newName))
+				.Where(x => x.Name.Contains("Top Gun"))
+				.Update();
+
+			var exists = await client.Table<Movie>()
+				.Where(x => x.Name == newName)
+				.Single();
+
+			var count = await client.Table<Movie>()
+				.Where(x => x.Name == newName)
+				.Count(CountType.Exact);
+
+			Assert.IsNotNull(exists);
+			Assert.IsTrue(count == 1);
+
+			Assert.ThrowsException<ArgumentException>(() =>
+			{
+				return client.Table<Movie>().Set(x => new KeyValuePair<object, object>(x.Name, DateTime.Now)).Update();
+			});
+
+			Assert.ThrowsException<ArgumentException>(() =>
+			{
+				return client.Table<Movie>().Set(x => new KeyValuePair<object, object>(DateTime.Now, newName)).Update();
+			});
+		}
+
+		[TestMethod("Linq: Delete")]
+		public async Task TestLinqDelete()
+		{
+			var client = new Client(baseUrl);
+
+			var newMovie = new Movie
+			{
+				Id = 18,
+				Name = "Pride and Prejudice",
+				CreatedAt = DateTime.Now
+			};
+
+			await client.Table<Movie>().Insert(newMovie);
+
+			await client.Table<Movie>().Where(x => x.Name == newMovie.Name).Delete();
+
+			var exists = await client.Table<Movie>().Where(x => x.Name == newMovie.Name).Single();
+
+			Assert.IsNull(exists);
 		}
 	}
 }
