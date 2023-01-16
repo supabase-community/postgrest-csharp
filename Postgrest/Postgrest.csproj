@@ -24,7 +24,7 @@
 	</PropertyGroup>
 	<PropertyGroup>
 		<Nullable>enable</Nullable>
-		<LangVersion>8.0</LangVersion>
+		<LangVersion>latest</LangVersion>
 		<WarningsAsErrors>CS8600;CS8602;CS8603</WarningsAsErrors>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Version)' == '' ">
@@ -35,14 +35,15 @@
 		<Version Condition=" '$(Version)' == '' ">$(VersionPrefix)</Version>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-		<LangVersion>8.0</LangVersion>
+		<LangVersion>latest</LangVersion>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-		<LangVersion>8.0</LangVersion>
+		<LangVersion>latest</LangVersion>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
 		<PackageReference Include="supabase-core" Version="0.0.2" />
+		<PackageReference Include="System.Linq.Expressions" Version="4.3.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Converters\" />

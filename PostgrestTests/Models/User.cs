@@ -9,7 +9,7 @@ namespace PostgrestTests.Models
     [Table("users")]
     public class User : BaseModel
     {
-        [PrimaryKey("username")]
+        [PrimaryKey("username", true)]
         public string Username { get; set; }
 
         [Column("data")]
