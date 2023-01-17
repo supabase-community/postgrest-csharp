@@ -12,10 +12,13 @@ namespace PostgrestTests.Models
     public class KitchenSink : BaseModel
     {
         [PrimaryKey("id", false)]
-        public string? Id { get; set; }
+        public int? Id { get; set; }
 
         [Column("string_value")]
         public string? StringValue { get; set; }
+
+        [Column("bool_value")]
+        public bool? BooleanValue { get; set; }
 
         [Column("unique_value")]
         public string? UniqueValue { get; set; }

@@ -75,6 +75,10 @@ namespace Postgrest.Linq
 			{
 				HandleNewExpression(column, op, newExpression);
 			}
+			else if (right is UnaryExpression unaryExpression)
+			{
+				HandleUnaryExpression(column, op, unaryExpression);
+			}
 
 			return node;
 		}
@@ -136,6 +140,21 @@ namespace Postgrest.Linq
 		private void HandleMemberExpression(string column, Operator op, MemberExpression memberExpression)
 		{
 			Filter = new QueryFilter(column, op, GetMemberExpressionValue(memberExpression));
+		}
+
+
+		/// <summary>
+		/// A unary expression parser (i.e. => x.Id == 1 <- where both `1` is considered unary)
+		/// </summary>
+		/// <param name="column"></param>
+		/// <param name="op"></param>
+		/// <param name="memberExpression"></param>
+		private void HandleUnaryExpression(string column, Operator op, UnaryExpression unaryExpression)
+		{
+			if (unaryExpression.Operand is ConstantExpression constantExpression)
+			{
+				HandleConstantExpression(column, op, constantExpression);
+			}
 		}
 
 		/// <summary>

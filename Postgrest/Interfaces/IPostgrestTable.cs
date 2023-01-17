@@ -47,6 +47,7 @@ namespace Postgrest.Interfaces
 		Table<T> Select(Expression<Func<T, object[]>> predicate);
 		Table<T> Where(Expression<Func<T, bool>> predicate);
 		Task<T?> Single(CancellationToken cancellationToken = default);
+		Table<T> Set(Expression<Func<T, object>> keySelector, object value);
 		Table<T> Set(Expression<Func<T, KeyValuePair<object, object>>> keyValuePairExpression);
 		Task<ModeledResponse<T>> Update(QueryOptions? options = null, CancellationToken cancellationToken = default);
 		Task<ModeledResponse<T>> Update(T model, QueryOptions? options = null, CancellationToken cancellationToken = default);

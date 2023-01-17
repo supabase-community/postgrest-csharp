@@ -9,10 +9,10 @@ using static Postgrest.Constants;
 
 namespace PostgrestTests
 {
-    [TestClass]
-    public class LinqTests
-    {
-        private static string baseUrl = "http://localhost:3000";
+	[TestClass]
+	public class LinqTests
+	{
+		private static string baseUrl = "http://localhost:3000";
 
 		[TestMethod("Linq: Select")]
 		public async Task TestLinqSelect()
@@ -212,6 +212,63 @@ namespace PostgrestTests
 
 			Assert.IsNotNull(exists);
 			Assert.IsTrue(count == 1);
+
+			var originalRecord = await client.Table<KitchenSink>().Where(x => x.Id == 1).Single();
+
+			var newRecord = await client.Table<KitchenSink>()
+				.Set(x => new KeyValuePair<object, object>(x.BooleanValue, !originalRecord.BooleanValue))
+				.Set(x => new KeyValuePair<object, object>(x.IntValue, originalRecord.IntValue + 1))
+				.Set(x => new KeyValuePair<object, object>(x.FloatValue, originalRecord.FloatValue + 1))
+				.Set(x => new KeyValuePair<object, object>(x.DoubleValue, originalRecord.DoubleValue + 1))
+				.Set(x => new KeyValuePair<object, object>(x.DateTimeValue, DateTime.Now))
+				.Set(x => new KeyValuePair<object, object>(x.ListOfStrings, new List<string>(originalRecord.ListOfStrings)
+				{
+					"updated"
+				}))
+				.Where(x => x.Id == originalRecord.Id)
+				.Update(new QueryOptions { Returning = QueryOptions.ReturnType.Representation });
+
+			var testRecord1 = newRecord.Models[0];
+
+			Assert.AreNotEqual(originalRecord.BooleanValue, testRecord1.BooleanValue);
+			Assert.AreNotEqual(originalRecord.IntValue, testRecord1.IntValue);
+			Assert.AreNotEqual(originalRecord.FloatValue, testRecord1.FloatValue);
+			Assert.AreNotEqual(originalRecord.DoubleValue, testRecord1.DoubleValue);
+			Assert.AreNotEqual(originalRecord.DateTimeValue, testRecord1.DateTimeValue);
+			CollectionAssert.AreNotEqual(originalRecord.ListOfStrings, testRecord1.ListOfStrings);
+
+
+			var newRecord2 = await client.Table<KitchenSink>()
+				.Set(x => x.BooleanValue, !testRecord1.BooleanValue)
+				.Set(x => x.IntValue, testRecord1.IntValue + 1)
+				.Set(x => x.FloatValue, testRecord1.FloatValue + 1)
+				.Set(x => x.DoubleValue, testRecord1.DoubleValue + 1)
+				.Set(x => x.DateTimeValue, DateTime.Now.AddSeconds(30))
+				.Set(x => x.ListOfStrings, new List<string>(testRecord1.ListOfStrings)
+				{
+					"updated"
+				})
+				.Where(x => x.Id == testRecord1.Id)
+				.Update(new QueryOptions { Returning = QueryOptions.ReturnType.Representation });
+
+			var testRecord2 = newRecord2.Models[0];
+
+			Assert.AreNotEqual(testRecord1.BooleanValue, testRecord2.BooleanValue);
+			Assert.AreNotEqual(testRecord1.IntValue, testRecord2.IntValue);
+			Assert.AreNotEqual(testRecord1.FloatValue, testRecord2.FloatValue);
+			Assert.AreNotEqual(testRecord1.DoubleValue, testRecord2.DoubleValue);
+			Assert.AreNotEqual(testRecord1.DateTimeValue, testRecord2.DateTimeValue);
+			CollectionAssert.AreNotEqual(testRecord1.ListOfStrings, testRecord2.ListOfStrings);
+
+			Assert.ThrowsException<ArgumentException>(() =>
+			{
+				return client.Table<Movie>().Set(x => x.Name, DateTime.Now).Update();
+			});
+
+			Assert.ThrowsException<ArgumentException>(() =>
+			{
+				return client.Table<Movie>().Set(x => DateTime.Now, newName).Update();
+			});
 
 			Assert.ThrowsException<ArgumentException>(() =>
 			{

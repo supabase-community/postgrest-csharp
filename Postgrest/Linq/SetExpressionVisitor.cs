@@ -31,6 +31,45 @@ namespace Postgrest.Linq
 		public object? Value { get; private set; }
 
 		/// <summary>
+		/// A Unary Node, delved into to represent a property on a BaseModel.
+		/// </summary>
+		/// <param name="node"></param>
+		/// <returns></returns>
+		protected override Expression VisitUnary(UnaryExpression node)
+		{
+			if (node.Operand is MemberExpression memberExpression)
+			{
+				var column = GetColumnFromMemberExpression(memberExpression);
+
+				if (column != null)
+				{
+					Column = column;
+					ExpectedType = memberExpression.Type;
+				}
+			}
+
+			return node;
+		}
+
+		/// <summary>
+		/// A Member Node, representing a property on a BaseModel.
+		/// </summary>
+		/// <param name="node"></param>
+		/// <returns></returns>
+		protected override Expression VisitMember(MemberExpression node)
+		{
+			var column = GetColumnFromMemberExpression(node);
+
+			if (column != null)
+			{
+				Column = column;
+				ExpectedType = node.Type;
+			}
+
+			return node;
+		}
+
+		/// <summary>
 		/// Called when visiting a the expected new KeyValuePair().
 		/// </summary>
 		/// <param name="node"></param>
@@ -38,24 +77,46 @@ namespace Postgrest.Linq
 		/// <exception cref="ArgumentException"></exception>
 		protected override Expression VisitNew(NewExpression node)
 		{
+			if (typeof(KeyValuePair<object, object>).IsAssignableFrom(node.Type))
+			{
+				HandleKeyValuePair(node);
+			}
+
+			return node;
+		}
+
+		private void HandleKeyValuePair(NewExpression node)
+		{
 			if (node.Arguments.Count != 2)
 				throw new ArgumentException("Unknown expression, should be a `KeyValuePair<object, object>`");
 
-			var member = node.Arguments[0] as MemberExpression;
+			var left = node.Arguments[0];
+			var right = node.Arguments[1];
 
-			if (member == null)
+			if (left is NewExpression)
+			{
+				Visit(left);
+			}
+			else if (left is MemberExpression member)
+			{
+				Column = GetColumnFromMemberExpression(member);
+				ExpectedType = member.Type;
+			}
+			else if (left is UnaryExpression unaryExpression && unaryExpression.Operand is MemberExpression unaryMemberExpression)
+			{
+				Column = GetColumnFromMemberExpression(unaryMemberExpression);
+				ExpectedType = unaryMemberExpression.Type;
+			}
+			else
+			{
 				throw new ArgumentException("Key should reference a Model Property.");
+			}
 
-			Column = GetColumnFromMemberExpression(member);
-			ExpectedType = member.Type;
-
-			var valueArgument = Expression.Lambda(node.Arguments[1]).Compile().DynamicInvoke();
+			var valueArgument = Expression.Lambda(right).Compile().DynamicInvoke();
 			Value = valueArgument;
 
-			if (!ExpectedType.IsAssignableFrom(Value.GetType()))
+			if (!ExpectedType!.IsAssignableFrom(Value.GetType()))
 				throw new ArgumentException(string.Format("Expected Value to be of Type: {0}, instead received: {1}.", ExpectedType.Name, Value.GetType().Name));
-
-			return node;
 		}
 
 		/// <summary>

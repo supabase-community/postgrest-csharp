@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Postgrest.Attributes;
 using Postgrest.Extensions;
 using Postgrest.Interfaces;
@@ -583,6 +584,31 @@ namespace Postgrest
 			return PerformInsert(model, options, cancellationToken);
 		}
 
+
+		/// <summary>
+		/// Specifies a key and value to be updated. Should be combined with filters/where clauses.
+		/// 
+		/// Can be called multiple times to set multiple values.
+		/// </summary>
+		/// <param name="keySelector"></param>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public Table<T> Set(Expression<Func<T, object>> keySelector, object value)
+		{
+			var visitor = new SetExpressionVisitor();
+			visitor.Visit(keySelector);
+
+			if (visitor.Column == null || visitor.ExpectedType == null)
+				throw new ArgumentException("Expression should return a KeyValuePair with a key of a Model Property and a value.");
+
+			if (!visitor.ExpectedType.IsAssignableFrom(value.GetType()))
+				throw new ArgumentException(string.Format("Expected Value to be of Type: {0}, instead received: {1}.", visitor.ExpectedType.Name, value.GetType().Name));
+
+			setData.Add(visitor.Column, value);
+
+			return this;
+		}
+
 		/// <summary>
 		/// Specifies a KeyValuePair to be updated. Should be combined with filters/where clauses.
 		/// 
@@ -596,7 +622,7 @@ namespace Postgrest
 			var visitor = new SetExpressionVisitor();
 			visitor.Visit(keyValuePairExpression);
 
-			if (visitor.Column == null || visitor.Value == null)
+			if (visitor.Column == null || visitor.Value == default)
 				throw new ArgumentException("Expression should return a KeyValuePair with a key of a Model Property and a value.");
 
 			setData.Add(visitor.Column, visitor.Value);
