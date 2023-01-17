@@ -21,7 +21,7 @@ await client.Table<Movie>()
             .Get();
 
 await client.Table<Movie>()
-            .Set(x => new KeyValuePair<object,object>(x.WatchedAt, DateTime.Now))
+            .Set(x => x.WatchedAt, DateTime.Now)
             .Where(x => x.Id == "11111-22222-33333-44444")
             // Or .Filter(x => x.Id, Operator.Equals, "11111-22222-33333-44444")
             .Update();
