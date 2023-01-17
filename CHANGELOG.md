@@ -1,5 +1,9 @@
 ﻿# Changelog
 
+## 3.1.1 - 2023-01-17
+
+- Fix issue from supabase-community/supabase-csharp#48 where boolean model properties would not be evaluated in predicate expressions
+
 ## 3.1.0 - 2023-01-16
 
 - [Minor] Breaking API Change: `PrimaryKey` attribute defaults to `shouldInsert: false` as most uses will have the Database generate the primary key.
