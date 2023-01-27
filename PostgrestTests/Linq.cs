@@ -98,6 +98,11 @@ namespace PostgrestTests
 
 			foreach (var q in query7.Models)
 				Assert.IsNotNull(q.DateTimeValue);
+
+			var query8 = await client.Table<KitchenSink>()
+				.Where(x => x.DateTimeValue == DateTime.Now)
+				.Get();
+
 		}
 
 		[TestMethod("Linq: OnConflict")]

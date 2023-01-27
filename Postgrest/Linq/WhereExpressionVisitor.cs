@@ -111,7 +111,7 @@ namespace Postgrest.Linq
 						Filter = new QueryFilter(column, Operator.Contains, GetArgumentValues(node));
 					else
 						Filter = new QueryFilter(column, Operator.Like, "*" + GetArgumentValues(node).First() + "*");
-					
+
 					break;
 				default:
 					throw new NotImplementedException("Unsupported method");
@@ -154,6 +154,14 @@ namespace Postgrest.Linq
 			if (unaryExpression.Operand is ConstantExpression constantExpression)
 			{
 				HandleConstantExpression(column, op, constantExpression);
+			}
+			else if (unaryExpression.Operand is MemberExpression memberExpression)
+			{
+				HandleMemberExpression(column, op, memberExpression);
+			}
+			else if (unaryExpression.Operand is NewExpression newExpression)
+			{
+				HandleNewExpression(column, op, newExpression);
 			}
 		}
 
