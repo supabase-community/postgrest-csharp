@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## 3.1.2 - 2023-01-27
+
+- Fix [#61](https://github.com/supabase-community/postgrest-csharp/issues/61) which did not correctly parse Linq `Where` when encountering a nullable type.
+- Add missing support for transforming for `== null` and `!= null`
+
 ## 3.1.1 - 2023-01-17
 
 - Fix issue from supabase-community/supabase-csharp#48 where boolean model properties would not be evaluated in predicate expressions
