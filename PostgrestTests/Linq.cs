@@ -103,6 +103,10 @@ namespace PostgrestTests
 				.Where(x => x.DateTimeValue == DateTime.Now)
 				.Get();
 
+			var query9 = await client.Table<KitchenSink>()
+				.Where(x => x.DateTimeValue == null)
+				.Get();
+
 		}
 
 		[TestMethod("Linq: OnConflict")]

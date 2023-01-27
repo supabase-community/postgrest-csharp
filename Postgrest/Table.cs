@@ -415,7 +415,13 @@ namespace Postgrest
 			if (visitor.Filter == null)
 				throw new ArgumentException("Unable to parse the supplied predicate, did you return a predicate where each left hand of the condition is a Model property?");
 
-			filters.Add(visitor.Filter);
+			if (visitor.Filter.Op == Operator.Equals && visitor.Filter.Criteria == null)
+				filters.Add(new QueryFilter(visitor.Filter.Property!, Operator.Is, QueryFilter.NullVal));
+			else if (visitor.Filter.Op == Operator.NotEqual && visitor.Filter.Criteria == null)
+				filters.Add(new QueryFilter(visitor.Filter.Property!, Operator.Not, new QueryFilter(visitor.Filter.Property!, Operator.Is, QueryFilter.NullVal)));
+			else
+				filters.Add(visitor.Filter);
+
 
 			return this;
 		}

@@ -62,7 +62,6 @@ namespace Postgrest.Linq
 			if (column == null)
 				throw new ArgumentException(string.Format("Left side of expression: '{0}' is expected to be property with a ColumnAttribute or PrimaryKeyAttribute", node.ToString()));
 
-
 			if (right is ConstantExpression rightConstant)
 			{
 				HandleConstantExpression(column, op, rightConstant);
