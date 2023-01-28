@@ -888,19 +888,19 @@ references:
   commentId: T:Postgrest.Extensions.UriExtensions
   fullName: Postgrest.Extensions.UriExtensions
   nameWithType: UriExtensions
-- uid: Postgrest.Extensions.UriExtensions.GetBaseUrl(Uri)
-  name: GetBaseUrl(Uri)
-  href: api/Postgrest.Extensions.UriExtensions.html#Postgrest_Extensions_UriExtensions_GetBaseUrl_Uri_
-  commentId: M:Postgrest.Extensions.UriExtensions.GetBaseUrl(Uri)
-  fullName: Postgrest.Extensions.UriExtensions.GetBaseUrl(Uri)
-  nameWithType: UriExtensions.GetBaseUrl(Uri)
-- uid: Postgrest.Extensions.UriExtensions.GetBaseUrl*
-  name: GetBaseUrl
-  href: api/Postgrest.Extensions.UriExtensions.html#Postgrest_Extensions_UriExtensions_GetBaseUrl_
-  commentId: Overload:Postgrest.Extensions.UriExtensions.GetBaseUrl
+- uid: Postgrest.Extensions.UriExtensions.GetInstanceUrl(Uri)
+  name: GetInstanceUrl(Uri)
+  href: api/Postgrest.Extensions.UriExtensions.html#Postgrest_Extensions_UriExtensions_GetInstanceUrl_Uri_
+  commentId: M:Postgrest.Extensions.UriExtensions.GetInstanceUrl(Uri)
+  fullName: Postgrest.Extensions.UriExtensions.GetInstanceUrl(Uri)
+  nameWithType: UriExtensions.GetInstanceUrl(Uri)
+- uid: Postgrest.Extensions.UriExtensions.GetInstanceUrl*
+  name: GetInstanceUrl
+  href: api/Postgrest.Extensions.UriExtensions.html#Postgrest_Extensions_UriExtensions_GetInstanceUrl_
+  commentId: Overload:Postgrest.Extensions.UriExtensions.GetInstanceUrl
   isSpec: "True"
-  fullName: Postgrest.Extensions.UriExtensions.GetBaseUrl
-  nameWithType: UriExtensions.GetBaseUrl
+  fullName: Postgrest.Extensions.UriExtensions.GetInstanceUrl
+  nameWithType: UriExtensions.GetInstanceUrl
 - uid: Postgrest.FullTextSearchConfig
   name: FullTextSearchConfig
   href: api/Postgrest.FullTextSearchConfig.html
