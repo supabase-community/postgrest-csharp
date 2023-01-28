@@ -56,7 +56,7 @@ namespace PostgrestTests
 		[TestMethod("will set header from options")]
 		public void TestHeadersToken()
 		{
-			var headers = Helpers.PrepareRequestHeaders(HttpMethod.Get, new Dictionary<string, string> { { "Authorization", $"Bearer token" } });
+			var headers = Postgrest.Helpers.PrepareRequestHeaders(HttpMethod.Get, new Dictionary<string, string> { { "Authorization", $"Bearer token" } });
 
 			Assert.AreEqual("Bearer token", headers["Authorization"]);
 		}

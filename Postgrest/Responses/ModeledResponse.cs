@@ -41,7 +41,7 @@ namespace Postgrest.Responses
 					{
 						foreach (var model in Models)
 						{
-							model.BaseUrl = baseResponse.ResponseMessage!.RequestMessage.RequestUri.GetBaseUrl();
+							model.BaseUrl = baseResponse.ResponseMessage!.RequestMessage.RequestUri.GetInstanceUrl().Replace(model.TableName, "").TrimEnd('/');
 							model.RequestClientOptions = ClientOptions;
 							model.GetHeaders = getHeaders;
 						}
@@ -55,7 +55,7 @@ namespace Postgrest.Responses
 
 					if (obj != null)
 					{
-						obj.BaseUrl = baseResponse.ResponseMessage!.RequestMessage.RequestUri.GetBaseUrl();
+						obj.BaseUrl = baseResponse.ResponseMessage!.RequestMessage.RequestUri.GetInstanceUrl().Replace(obj.TableName, "").TrimEnd('/');
 						obj.RequestClientOptions = ClientOptions;
 						obj.GetHeaders = getHeaders;
 
