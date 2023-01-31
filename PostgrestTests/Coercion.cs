@@ -72,7 +72,7 @@ namespace PostgrestTests
             CollectionAssert.AreEquivalent(model.ListOfDateTimes, actual.ListOfDateTimes);
             CollectionAssert.AreEquivalent(model.ListOfInts, actual.ListOfInts);
             CollectionAssert.AreEquivalent(model.ListOfFloats, actual.ListOfFloats);
-            Assert.AreEqual(model.IntRange.Start, actual.IntRange.Start);
+            Assert.AreEqual(model.IntRange.Start, actual.IntRange!.Start);
             Assert.AreEqual(model.IntRange.End, actual.IntRange.End);
             
         }

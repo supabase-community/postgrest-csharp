@@ -22,8 +22,8 @@ namespace Postgrest.Interfaces
 		Task<int> Count(Constants.CountType type, CancellationToken cancellationToken = default);
 		Task Delete(QueryOptions? options = null, CancellationToken cancellationToken = default);
 		Task<ModeledResponse<T>> Delete(T model, QueryOptions? options = null, CancellationToken cancellationToken = default);
-		Table<T> Filter(string columnName, Constants.Operator op, object criterion);
-		Table<T> Filter(Expression<Func<T, object>> predicate, Constants.Operator op, object criterion);
+		Table<T> Filter(string columnName, Constants.Operator op, object? criterion);
+		Table<T> Filter(Expression<Func<T, object>> predicate, Constants.Operator op, object? criterion);
 		Task<ModeledResponse<T>> Get(CancellationToken cancellationToken = default);
 		Task<ModeledResponse<T>> Insert(ICollection<T> models, QueryOptions? options = null, CancellationToken cancellationToken = default);
 		Task<ModeledResponse<T>> Insert(T model, QueryOptions? options = null, CancellationToken cancellationToken = default);
@@ -47,8 +47,8 @@ namespace Postgrest.Interfaces
 		Table<T> Select(Expression<Func<T, object[]>> predicate);
 		Table<T> Where(Expression<Func<T, bool>> predicate);
 		Task<T?> Single(CancellationToken cancellationToken = default);
-		Table<T> Set(Expression<Func<T, object>> keySelector, object value);
-		Table<T> Set(Expression<Func<T, KeyValuePair<object, object>>> keyValuePairExpression);
+		Table<T> Set(Expression<Func<T, object>> keySelector, object? value);
+		Table<T> Set(Expression<Func<T, KeyValuePair<object, object?>>> keyValuePairExpression);
 		Task<ModeledResponse<T>> Update(QueryOptions? options = null, CancellationToken cancellationToken = default);
 		Task<ModeledResponse<T>> Update(T model, QueryOptions? options = null, CancellationToken cancellationToken = default);
 		Task<ModeledResponse<T>> Upsert(ICollection<T> model, QueryOptions? options = null, CancellationToken cancellationToken = default);

@@ -55,7 +55,7 @@ namespace Postgrest
 		private List<QueryOrderer> orderers = new List<QueryOrderer>();
 		private List<string> columns = new List<string>();
 
-		private Dictionary<object, object> setData = new Dictionary<object, object>();
+		private Dictionary<object, object?> setData = new Dictionary<object, object?>();
 
 		private List<ReferenceAttribute> references = new List<ReferenceAttribute>();
 
@@ -104,7 +104,7 @@ namespace Postgrest
 		/// <param name="criterion">Value to filter with, must be a `string`, `List<object>`, `Dictionary<string, object>`, `FullTextSearchConfig`, or `Range`</param>
 		/// <returns></returns>
 		/// <exception cref="ArgumentException"></exception>
-		public Table<T> Filter(Expression<Func<T, object>> predicate, Operator op, object criterion)
+		public Table<T> Filter(Expression<Func<T, object>> predicate, Operator op, object? criterion)
 		{
 			var visitor = new SelectExpressionVisitor();
 			visitor.Visit(predicate);
@@ -126,7 +126,7 @@ namespace Postgrest
 		/// <param name="op">Operation to perform.</param>
 		/// <param name="criterion">Value to filter with, must be a `string`, `List<object>`, `Dictionary<string, object>`, `FullTextSearchConfig`, or `Range`</param>
 		/// <returns></returns>
-		public Table<T> Filter(string columnName, Operator op, object criterion)
+		public Table<T> Filter(string columnName, Operator op, object? criterion)
 		{
 			if (criterion == null)
 			{
@@ -599,7 +599,7 @@ namespace Postgrest
 		/// <param name="keySelector"></param>
 		/// <param name="value"></param>
 		/// <returns></returns>
-		public Table<T> Set(Expression<Func<T, object>> keySelector, object value)
+		public Table<T> Set(Expression<Func<T, object>> keySelector, object? value)
 		{
 			var visitor = new SetExpressionVisitor();
 			visitor.Visit(keySelector);
@@ -607,8 +607,15 @@ namespace Postgrest
 			if (visitor.Column == null || visitor.ExpectedType == null)
 				throw new ArgumentException("Expression should return a KeyValuePair with a key of a Model Property and a value.");
 
-			if (!visitor.ExpectedType.IsAssignableFrom(value.GetType()))
+			if (value == null)
+			{
+				if (Nullable.GetUnderlyingType(visitor.ExpectedType) == null)
+					throw new ArgumentException(string.Format("Expected Value to be of Type: {0}, instead received: {1}.", visitor.ExpectedType.Name, null));
+			}
+			else if (!visitor.ExpectedType.IsAssignableFrom(value.GetType()))
+			{
 				throw new ArgumentException(string.Format("Expected Value to be of Type: {0}, instead received: {1}.", visitor.ExpectedType.Name, value.GetType().Name));
+			}
 
 			setData.Add(visitor.Column, value);
 
@@ -623,7 +630,7 @@ namespace Postgrest
 		/// <param name="keyValuePairExpression"></param>
 		/// <returns></returns>
 		/// <exception cref="ArgumentException"></exception>
-		public Table<T> Set(Expression<Func<T, KeyValuePair<object, object>>> keyValuePairExpression)
+		public Table<T> Set(Expression<Func<T, KeyValuePair<object, object?>>> keyValuePairExpression)
 		{
 			var visitor = new SetExpressionVisitor();
 			visitor.Visit(keyValuePairExpression);

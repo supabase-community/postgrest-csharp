@@ -28,7 +28,7 @@ namespace PostgrestTests
 			Assert.IsNull(first1.Name);
 
 			var query2 = await client.Table<Movie>()
-				.Select(x => new object[] { x.Id, x.Name })
+				.Select(x => new object[] { x.Id, x.Name! })
 				.Get();
 
 			var first2 = query2.Models.First();
@@ -57,14 +57,14 @@ namespace PostgrestTests
 
 			// Test string.contains
 			var query2 = await client.Table<Movie>()
-				.Where(x => x.Name.Contains("Gun"))
+				.Where(x => x.Name!.Contains("Gun"))
 				.Get();
 
 			Assert.IsTrue(query2.Models.Count == 2);
 
 			// Test multiple conditions
 			var query3 = await client.Table<Movie>()
-				.Where(x => x.Name.Contains("Gun") && x.CreatedAt <= new DateTime(2022, 08, 23))
+				.Where(x => x.Name!.Contains("Gun") && x.CreatedAt <= new DateTime(2022, 08, 23))
 				.Get();
 
 			Assert.IsTrue(query3.Models.Count == 1);
@@ -79,21 +79,21 @@ namespace PostgrestTests
 
 			// Test Collection Contains
 			var query5 = await client.Table<KitchenSink>()
-				.Where(x => x.ListOfStrings.Contains("set"))
+				.Where(x => x.ListOfStrings!.Contains("set"))
 				.Get();
 
 			foreach (var q in query5.Models)
-				Assert.IsTrue(q.ListOfStrings.Contains("set"));
+				Assert.IsTrue(q.ListOfStrings!.Contains("set"));
 
 			var query6 = await client.Table<KitchenSink>()
-				.Where(x => x.ListOfFloats.Contains(10))
+				.Where(x => x.ListOfFloats!.Contains(10))
 				.Get();
 
 			foreach (var q in query6.Models)
-				Assert.IsTrue(q.ListOfFloats.Contains(10));
+				Assert.IsTrue(q.ListOfFloats!.Contains(10));
 
 			var query7 = await client.Table<KitchenSink>()
-				.Filter(x => x.DateTimeValue, Operator.NotEqual, null)
+				.Filter(x => x.DateTimeValue!, Operator.NotEqual, null)
 				.Get();
 
 			foreach (var q in query7.Models)
@@ -106,6 +106,16 @@ namespace PostgrestTests
 			var query9 = await client.Table<KitchenSink>()
 				.Where(x => x.DateTimeValue == null)
 				.Get();
+
+			var query10 = await client.Table<KitchenSink>()
+				.Set(x => x.BooleanValue!, true)
+				.Where(x => x.Id == 10)
+				.Update();
+
+			var query11 = await client.Table<KitchenSink>()
+				.Set(x => x.BooleanValue!, null)
+				.Where(x => x.Id == 10)
+				.Update();
 
 		}
 
@@ -127,10 +137,10 @@ namespace PostgrestTests
 			// Upserting a model.
 			var kitchenSink1 = new KitchenSink { UniqueValue = "Testing" };
 
-			var ks1 = await client.Table<KitchenSink>().OnConflict(x => x.UniqueValue).Upsert(kitchenSink1);
+			var ks1 = await client.Table<KitchenSink>().OnConflict(x => x.UniqueValue!).Upsert(kitchenSink1);
 			var uks1 = ks1.Models.First();
 			uks1.StringValue = "Testing 1";
-			var ks3 = await client.Table<KitchenSink>().OnConflict(x => x.UniqueValue).Upsert(uks1);
+			var ks3 = await client.Table<KitchenSink>().OnConflict(x => x.UniqueValue!).Upsert(uks1);
 
 			var updatedUser = response.Models.First();
 
@@ -141,7 +151,7 @@ namespace PostgrestTests
 
 			Assert.ThrowsException<ArgumentException>(() =>
 			{
-				return client.Table<KitchenSink>().OnConflict(x => new object[] { x.StringValue, x.IntValue }).Upsert(kitchenSink1);
+				return client.Table<KitchenSink>().OnConflict(x => new object[] { x.StringValue!, x.IntValue! }).Upsert(kitchenSink1);
 			});
 
 			Assert.ThrowsException<ArgumentException>(() =>
@@ -156,7 +166,7 @@ namespace PostgrestTests
 		{
 			var client = new Client(baseUrl);
 
-			var orderedResponse = await client.Table<User>().Order(x => x.Username, Ordering.Descending).Get();
+			var orderedResponse = await client.Table<User>().Order(x => x.Username!, Ordering.Descending).Get();
 			var unorderedResponse = await client.Table<User>().Get();
 
 			var supaOrderedUsers = orderedResponse.Models;
@@ -166,7 +176,7 @@ namespace PostgrestTests
 
 			Assert.ThrowsException<ArgumentException>(() =>
 			{
-				return client.Table<KitchenSink>().Order(x => new object[] { x.StringValue, x.IntValue }, Ordering.Descending).Get();
+				return client.Table<KitchenSink>().Order(x => new object[] { x.StringValue!, x.IntValue! }, Ordering.Descending).Get();
 			});
 
 			Assert.ThrowsException<ArgumentException>(() =>
@@ -189,7 +199,7 @@ namespace PostgrestTests
 			first.Name = newName;
 			first.CreatedAt = DateTime.UtcNow;
 
-			var result = await client.Table<Movie>().Columns(x => new[] { x.Name }).Update(first);
+			var result = await client.Table<Movie>().Columns(x => new[] { x.Name! }).Update(first);
 
 			Assert.AreEqual(originalDate, result.Models.First().CreatedAt);
 			Assert.AreNotEqual(originalName, result.Models.First().Name);
@@ -207,8 +217,8 @@ namespace PostgrestTests
 
 			var newName = $"Top Gun (Updated By Linq) at {DateTime.Now}";
 			var movie = await client.Table<Movie>()
-				.Set(x => new KeyValuePair<object, object>(x.Name, newName))
-				.Where(x => x.Name.Contains("Top Gun"))
+				.Set(x => new KeyValuePair<object, object>(x.Name!, newName))
+				.Where(x => x.Name!.Contains("Top Gun"))
 				.Update();
 
 			var exists = await client.Table<Movie>()
@@ -224,13 +234,15 @@ namespace PostgrestTests
 
 			var originalRecord = await client.Table<KitchenSink>().Where(x => x.Id == 1).Single();
 
+			Assert.IsNotNull(originalRecord);
+
 			var newRecord = await client.Table<KitchenSink>()
-				.Set(x => new KeyValuePair<object, object>(x.BooleanValue, !originalRecord.BooleanValue))
-				.Set(x => new KeyValuePair<object, object>(x.IntValue, originalRecord.IntValue + 1))
+				.Set(x => new KeyValuePair<object, object>(x.BooleanValue!, !originalRecord.BooleanValue!))
+				.Set(x => new KeyValuePair<object, object>(x.IntValue!, originalRecord.IntValue! + 1))
 				.Set(x => new KeyValuePair<object, object>(x.FloatValue, originalRecord.FloatValue + 1))
 				.Set(x => new KeyValuePair<object, object>(x.DoubleValue, originalRecord.DoubleValue + 1))
-				.Set(x => new KeyValuePair<object, object>(x.DateTimeValue, DateTime.Now))
-				.Set(x => new KeyValuePair<object, object>(x.ListOfStrings, new List<string>(originalRecord.ListOfStrings)
+				.Set(x => new KeyValuePair<object, object>(x.DateTimeValue!, DateTime.Now))
+				.Set(x => new KeyValuePair<object, object>(x.ListOfStrings!, new List<string>(originalRecord.ListOfStrings!)
 				{
 					"updated"
 				}))
@@ -248,12 +260,12 @@ namespace PostgrestTests
 
 
 			var newRecord2 = await client.Table<KitchenSink>()
-				.Set(x => x.BooleanValue, !testRecord1.BooleanValue)
-				.Set(x => x.IntValue, testRecord1.IntValue + 1)
+				.Set(x => x.BooleanValue!, !testRecord1.BooleanValue!)
+				.Set(x => x.IntValue!, testRecord1.IntValue! + 1)
 				.Set(x => x.FloatValue, testRecord1.FloatValue + 1)
 				.Set(x => x.DoubleValue, testRecord1.DoubleValue + 1)
-				.Set(x => x.DateTimeValue, DateTime.Now.AddSeconds(30))
-				.Set(x => x.ListOfStrings, new List<string>(testRecord1.ListOfStrings)
+				.Set(x => x.DateTimeValue!, DateTime.Now.AddSeconds(30))
+				.Set(x => x.ListOfStrings!, new List<string>(testRecord1.ListOfStrings!)
 				{
 					"updated"
 				})
@@ -271,7 +283,7 @@ namespace PostgrestTests
 
 			Assert.ThrowsException<ArgumentException>(() =>
 			{
-				return client.Table<Movie>().Set(x => x.Name, DateTime.Now).Update();
+				return client.Table<Movie>().Set(x => x.Name!, DateTime.Now).Update();
 			});
 
 			Assert.ThrowsException<ArgumentException>(() =>
@@ -281,7 +293,7 @@ namespace PostgrestTests
 
 			Assert.ThrowsException<ArgumentException>(() =>
 			{
-				return client.Table<Movie>().Set(x => new KeyValuePair<object, object>(x.Name, DateTime.Now)).Update();
+				return client.Table<Movie>().Set(x => new KeyValuePair<object, object>(x.Name!, DateTime.Now)).Update();
 			});
 
 			Assert.ThrowsException<ArgumentException>(() =>

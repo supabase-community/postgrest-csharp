@@ -11,12 +11,12 @@ namespace PostgrestTests.Models
         public int Id { get; set; }
 
         [Column("username")]
-        public string UserName { get; set; }
+        public string? UserName { get; set; }
 
         [Column("channel_id")]
-        public int ChannelId { get; set; }
+        public int? ChannelId { get; set; }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return obj is Message message &&
                    Id == message.Id;

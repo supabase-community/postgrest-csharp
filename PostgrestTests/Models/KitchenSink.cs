@@ -24,7 +24,7 @@ namespace PostgrestTests.Models
         public string? UniqueValue { get; set; }
 
         [Column("int_value")]
-        public int IntValue { get; set; }
+        public int? IntValue { get; set; }
 
         [Column("float_value")]
         public float FloatValue { get; set; }

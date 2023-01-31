@@ -7,7 +7,9 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
+		<Nullable>enable</Nullable>
 		<LangVersion>latest</LangVersion>
+		<WarningsAsErrors>CS8600;CS8602;CS8603</WarningsAsErrors>
 	</PropertyGroup>
 
 	<ItemGroup>

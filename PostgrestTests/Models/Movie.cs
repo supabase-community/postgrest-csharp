@@ -13,10 +13,10 @@ namespace PostgrestTests.Models
 		public int Id { get; set; }
 
 		[Column("name")]
-		public string Name { get; set; }
+		public string? Name { get; set; }
 
 		[Reference(typeof(Person), shouldFilterTopLevel: false)]
-		public List<Person> Persons { get; set; }
+		public List<Person>? Persons { get; set; }
 
 
 		[Column("created_at")]
@@ -30,13 +30,13 @@ namespace PostgrestTests.Models
 		public int Id { get; set; }
 
 		[Column("first_name")]
-		public string FirstName { get; set; }
+		public string? FirstName { get; set; }
 
 		[Column("last_name")]
-		public string LastName { get; set; }
+		public string? LastName { get; set; }
 
 		[Reference(typeof(Profile))]
-		public Profile Profile { get; set; }
+		public Profile? Profile { get; set; }
 
 		[Column("created_at")]
 		public DateTime CreatedAt { get; set; }
@@ -46,6 +46,6 @@ namespace PostgrestTests.Models
 	public class Profile : BaseModel
 	{
 		[Column("email")]
-		public string Email { get; set; }
+		public string? Email { get; set; }
 	}
 }

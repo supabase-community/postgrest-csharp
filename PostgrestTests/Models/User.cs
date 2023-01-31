@@ -10,22 +10,22 @@ namespace PostgrestTests.Models
     public class User : BaseModel
     {
         [PrimaryKey("username", true)]
-        public string Username { get; set; }
+        public string? Username { get; set; }
 
         [Column("data")]
-        public string Data { get; set; }
+        public string? Data { get; set; }
 
         [Column("favorite_numbers")]
-        public List<int> FavoriteNumbers { get; set; }
+        public List<int>? FavoriteNumbers { get; set; }
 
         [Column("age_range")]
-        public IntRange AgeRange { get; set; }
+        public IntRange? AgeRange { get; set; }
 
         [Column("catchphrase")]
-        public string Catchphrase { get; set; }
+        public string? Catchphrase { get; set; }
 
         [Column("status")]
-        public string Status { get; set; }
+        public string? Status { get; set; }
 
         [Column("inserted_at")]
         public DateTime InsertedAt { get; set; }
@@ -33,7 +33,7 @@ namespace PostgrestTests.Models
         [Column("updated_at")]
         public DateTime UpdatedAt { get; set; }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return obj is User user &&
                    Username == user.Username &&
