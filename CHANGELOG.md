@@ -1,5 +1,9 @@
 ﻿# Changelog
 
+## 3.1.3 - 2023-01-28
+
+- Fix [#61](https://github.com/supabase-community/postgrest-csharp/issues/61) which futher typechecks nullable values.
+
 ## 3.1.2 - 2023-01-27
 
 - Fix [#61](https://github.com/supabase-community/postgrest-csharp/issues/61) which did not correctly parse Linq `Where` when encountering a nullable type.
