@@ -74,7 +74,6 @@ Utitilizing the client is then just a matter of instantiating it and specifying 
 ```c#
 void Initialize()
 {
-    // The default client is a Singleton class that keeps options persisted through an instance
     var client = new Client("http://localhost:3000");
 
     // Get All Messages
