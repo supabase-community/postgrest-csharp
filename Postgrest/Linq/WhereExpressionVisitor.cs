@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
 using static Postgrest.Constants;
 
 namespace Postgrest.Linq
@@ -140,7 +139,6 @@ namespace Postgrest.Linq
 		{
 			Filter = new QueryFilter(column, op, GetMemberExpressionValue(memberExpression));
 		}
-
 
 		/// <summary>
 		/// A unary expression parser (i.e. => x.Id == 1 <- where both `1` is considered unary)

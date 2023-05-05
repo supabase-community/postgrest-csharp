@@ -9,16 +9,16 @@ using PostgrestTests.Models;
 namespace PostgrestTests
 {
     [TestClass]
-    public class Coercion
+    public class CoercionTests
     {
-        private static string baseUrl = "http://localhost:3000";
+        private static string _baseUrl = "http://localhost:3000";
 
         [TestMethod]
         public async Task CanCoerceData()
         {
 
             // Check against already included case (inserted in `01-dummy-data.sql`
-            var existingItem = await new Client(baseUrl).Table<KitchenSink>().Single();
+            var existingItem = await new Client(_baseUrl).Table<KitchenSink>().Single();
 
             if (existingItem != null)
             {
@@ -60,7 +60,7 @@ namespace PostgrestTests
             };
 
 
-            var insertedModel = await new Client(baseUrl).Table<KitchenSink>().Insert(model);
+            var insertedModel = await new Client(_baseUrl).Table<KitchenSink>().Insert(model);
             var actual = insertedModel.Models.First();
 
             Assert.AreEqual(model.StringValue, actual.StringValue);

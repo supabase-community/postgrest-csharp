@@ -41,6 +41,19 @@ The bulk of this library is a translation and c-sharp-ification of the [supabase
 Postgrest-csharp is _heavily_ dependent on Models deriving from `BaseModel`. To interact with the API, one must have the associated
 model specified.
 
+To use this library on the Supabase Hosted service but separately from the `supabase-csharp`, you'll need to specify your url and public key like so:
+```c#
+var auth = new Supabase.Gotrue.Client(new ClientOptions<Session>
+{
+    Url = "https://PROJECT_ID.supabase.co/auth/v1",
+    Headers = new Dictionary<string, string>
+    {
+        { "apikey", SUPABASE_PUBLIC_KEY },
+        { "Authorization", $"Bearer {SUPABASE_USER_TOKEN}" }
+    }
+})
+```
+
 Leverage `Table`,`PrimaryKey`, and `Column` attributes to specify names of classes/properties that are different from their C# Versions.
 
 ```c#

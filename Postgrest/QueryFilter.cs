@@ -9,16 +9,16 @@ namespace Postgrest
     public class QueryFilter : IPostgrestQueryFilter
     {
         /// <summary>
-        /// String value to be subsituted for a null criterion
+        /// String value to be substituted for a null criterion
         /// </summary>
         public const string NullVal = "null";
 
         public string? Property { get; private set; }
         public Operator Op { get; private set; }
-        public object Criteria { get; private set; }
+        public object? Criteria { get; private set; }
 
         /// <summary>
-        /// Contructor to use single value filtering.
+        /// Contractor to use single value filtering.
         /// </summary>
         /// <param name="property">Column name</param>
         /// <param name="op">Operation: And, Equals, GreaterThan, LessThan, GreaterThanOrEqual, LessThanOrEqual, NotEqual, Is, Adjacent, Not, Like, ILike</param>
@@ -46,7 +46,6 @@ namespace Postgrest
                 default:
                     throw new Exception("Advanced filters require a constructor with more specific arguments");
             }
-
         }
 
         /// <summary>
@@ -68,7 +67,8 @@ namespace Postgrest
                     Criteria = criteria;
                     break;
                 default:
-                    throw new Exception("List constructor must be used with filter that accepts an array of arguments.");
+                    throw new Exception(
+                        "List constructor must be used with filter that accepts an array of arguments.");
             }
         }
 
@@ -91,7 +91,8 @@ namespace Postgrest
                     Criteria = criteria;
                     break;
                 default:
-                    throw new Exception("List constructor must be used with filter that accepts an array of arguments.");
+                    throw new Exception(
+                        "List constructor must be used with filter that accepts an array of arguments.");
             }
         }
 
@@ -189,16 +190,16 @@ namespace Postgrest
     /// </summary>
     public class FullTextSearchConfig
     {
-        [JsonProperty("queryText")]
-        public string QueryText { get; private set; }
+        [JsonProperty("queryText")] public string QueryText { get; private set; }
 
-        [JsonProperty("config")]
-        public string Config { get; private set; } = "english";
+        [JsonProperty("config")] public string Config { get; private set; } = "english";
 
-        public FullTextSearchConfig(string queryText, string config)
+        public FullTextSearchConfig(string queryText, string? config)
         {
             QueryText = queryText;
-            Config = config;
+
+            if (!string.IsNullOrEmpty(config))
+                Config = config!;
         }
     }
 }

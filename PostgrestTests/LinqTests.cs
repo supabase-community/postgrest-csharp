@@ -12,12 +12,12 @@ namespace PostgrestTests
 	[TestClass]
 	public class LinqTests
 	{
-		private static string baseUrl = "http://localhost:3000";
+		private const string BaseUrl = "http://localhost:3000";
 
 		[TestMethod("Linq: Select")]
 		public async Task TestLinqSelect()
 		{
-			var client = new Client(baseUrl);
+			var client = new Client(BaseUrl);
 
 			var query1 = await client.Table<Movie>()
 				.Select(x => new object[] { x.Id })
@@ -45,7 +45,7 @@ namespace PostgrestTests
 		[TestMethod("Linq: Where")]
 		public async Task TestLinqWhere()
 		{
-			var client = new Client(baseUrl);
+			var client = new Client(BaseUrl);
 
 			var testValue = 2;
 			// Test boolean equality
@@ -99,20 +99,20 @@ namespace PostgrestTests
 			foreach (var q in query7.Models)
 				Assert.IsNotNull(q.DateTimeValue);
 
-			var query8 = await client.Table<KitchenSink>()
+			await client.Table<KitchenSink>()
 				.Where(x => x.DateTimeValue == DateTime.Now)
 				.Get();
 
-			var query9 = await client.Table<KitchenSink>()
+			await client.Table<KitchenSink>()
 				.Where(x => x.DateTimeValue == null)
 				.Get();
 
-			var query10 = await client.Table<KitchenSink>()
+			await client.Table<KitchenSink>()
 				.Set(x => x.BooleanValue!, true)
 				.Where(x => x.Id == 10)
 				.Update();
 
-			var query11 = await client.Table<KitchenSink>()
+			await client.Table<KitchenSink>()
 				.Set(x => x.BooleanValue!, null)
 				.Where(x => x.Id == 10)
 				.Update();
@@ -122,7 +122,7 @@ namespace PostgrestTests
 		[TestMethod("Linq: OnConflict")]
 		public async Task TestLinqOnConflict()
 		{
-			var client = new Client(baseUrl);
+			var client = new Client(BaseUrl);
 
 			var supaUpdated = new User
 			{
@@ -134,13 +134,13 @@ namespace PostgrestTests
 
 			var response = await client.Table<User>().Insert(supaUpdated, new QueryOptions { Upsert = true });
 
-			// Upserting a model.
-			var kitchenSink1 = new KitchenSink { UniqueValue = "Testing" };
+			// Upsert-ing a model.
+			var kitchenSink1 = new KitchenSink { Id = 2, UniqueValue = "Testing" };
 
 			var ks1 = await client.Table<KitchenSink>().OnConflict(x => x.UniqueValue!).Upsert(kitchenSink1);
 			var uks1 = ks1.Models.First();
 			uks1.StringValue = "Testing 1";
-			var ks3 = await client.Table<KitchenSink>().OnConflict(x => x.UniqueValue!).Upsert(uks1);
+			await client.Table<KitchenSink>().OnConflict(x => x.UniqueValue!).Upsert(uks1);
 
 			var updatedUser = response.Models.First();
 
@@ -164,7 +164,7 @@ namespace PostgrestTests
 		[TestMethod("Linq: Order")]
 		public async Task TestLinqOrderBy()
 		{
-			var client = new Client(baseUrl);
+			var client = new Client(BaseUrl);
 
 			var orderedResponse = await client.Table<User>().Order(x => x.Username!, Ordering.Descending).Get();
 			var unorderedResponse = await client.Table<User>().Get();
@@ -188,7 +188,7 @@ namespace PostgrestTests
 		[TestMethod("Linq: Columns")]
 		public async Task TestLinqColumns()
 		{
-			var client = new Client(baseUrl);
+			var client = new Client(BaseUrl);
 
 			var movies = await client.Table<Movie>().Get();
 			var first = movies.Models.First();
@@ -199,7 +199,7 @@ namespace PostgrestTests
 			first.Name = newName;
 			first.CreatedAt = DateTime.UtcNow;
 
-			var result = await client.Table<Movie>().Columns(x => new[] { x.Name! }).Update(first);
+			var result = await client.Table<Movie>().Columns(x => new object[] { x.Name! }).Update(first);
 
 			Assert.AreEqual(originalDate, result.Models.First().CreatedAt);
 			Assert.AreNotEqual(originalName, result.Models.First().Name);
@@ -213,11 +213,11 @@ namespace PostgrestTests
 		[TestMethod("Linq: Update")]
 		public async Task TestLinqUpdate()
 		{
-			var client = new Client(baseUrl);
+			var client = new Client(BaseUrl);
 
 			var newName = $"Top Gun (Updated By Linq) at {DateTime.Now}";
-			var movie = await client.Table<Movie>()
-				.Set(x => new KeyValuePair<object, object>(x.Name!, newName))
+			await client.Table<Movie>()
+				.Set(x => new KeyValuePair<object, object?>(x.Name!, newName))
 				.Where(x => x.Name!.Contains("Top Gun"))
 				.Update();
 
@@ -237,12 +237,12 @@ namespace PostgrestTests
 			Assert.IsNotNull(originalRecord);
 
 			var newRecord = await client.Table<KitchenSink>()
-				.Set(x => new KeyValuePair<object, object>(x.BooleanValue!, !originalRecord.BooleanValue!))
-				.Set(x => new KeyValuePair<object, object>(x.IntValue!, originalRecord.IntValue! + 1))
-				.Set(x => new KeyValuePair<object, object>(x.FloatValue, originalRecord.FloatValue + 1))
-				.Set(x => new KeyValuePair<object, object>(x.DoubleValue, originalRecord.DoubleValue + 1))
-				.Set(x => new KeyValuePair<object, object>(x.DateTimeValue!, DateTime.Now))
-				.Set(x => new KeyValuePair<object, object>(x.ListOfStrings!, new List<string>(originalRecord.ListOfStrings!)
+				.Set(x => new KeyValuePair<object, object?>(x.BooleanValue!, !originalRecord.BooleanValue!))
+				.Set(x => new KeyValuePair<object, object?>(x.IntValue!, originalRecord.IntValue! + 1))
+				.Set(x => new KeyValuePair<object, object?>(x.FloatValue, originalRecord.FloatValue + 1))
+				.Set(x => new KeyValuePair<object, object?>(x.DoubleValue, originalRecord.DoubleValue + 1))
+				.Set(x => new KeyValuePair<object, object?>(x.DateTimeValue!, DateTime.Now))
+				.Set(x => new KeyValuePair<object, object?>(x.ListOfStrings!, new List<string>(originalRecord.ListOfStrings!)
 				{
 					"updated"
 				}))
@@ -293,19 +293,19 @@ namespace PostgrestTests
 
 			Assert.ThrowsException<ArgumentException>(() =>
 			{
-				return client.Table<Movie>().Set(x => new KeyValuePair<object, object>(x.Name!, DateTime.Now)).Update();
+				return client.Table<Movie>().Set(x => new KeyValuePair<object, object?>(x.Name!, DateTime.Now)).Update();
 			});
 
 			Assert.ThrowsException<ArgumentException>(() =>
 			{
-				return client.Table<Movie>().Set(x => new KeyValuePair<object, object>(DateTime.Now, newName)).Update();
+				return client.Table<Movie>().Set(x => new KeyValuePair<object, object?>(DateTime.Now, newName)).Update();
 			});
 		}
 
 		[TestMethod("Linq: Delete")]
 		public async Task TestLinqDelete()
 		{
-			var client = new Client(baseUrl);
+			var client = new Client(BaseUrl);
 
 			var newMovie = new Movie
 			{

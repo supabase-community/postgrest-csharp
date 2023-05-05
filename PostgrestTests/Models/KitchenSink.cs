@@ -1,17 +1,17 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Postgrest;
 using Postgrest.Attributes;
 using Postgrest.Models;
 
-#nullable enable
 namespace PostgrestTests.Models
 {
     [Table("kitchen_sink")]
     public class KitchenSink : BaseModel
     {
-        [PrimaryKey("id", false)]
+        [PrimaryKey("id")]
         public int? Id { get; set; }
 
         [Column("string_value")]

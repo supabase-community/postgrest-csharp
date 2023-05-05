@@ -1,8 +1,7 @@
-﻿using Postgrest.Attributes;
-using Postgrest.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using Postgrest.Attributes;
+using Postgrest.Models;
 
 namespace PostgrestTests.Models
 {
@@ -26,7 +25,7 @@ namespace PostgrestTests.Models
 	[Table("person")]
 	public class Person : BaseModel
 	{
-		[PrimaryKey("id", false)]
+		[PrimaryKey("id")]
 		public int Id { get; set; }
 
 		[Column("first_name")]

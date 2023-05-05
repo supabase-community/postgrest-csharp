@@ -55,7 +55,7 @@ namespace Postgrest
         /// <summary>
         /// Function that can be set to return dynamic headers.
         /// 
-        /// Headers specified in the constructor options will ALWAYS take precendece over headers returned by this function.
+        /// Headers specified in the constructor options will ALWAYS take precedence over headers returned by this function.
         /// </summary>
         public Func<Dictionary<string, string>>? GetHeaders { get; set; }
 
@@ -81,9 +81,11 @@ namespace Postgrest
         /// <returns></returns>
         public IPostgrestTable<T> Table<T>() where T : BaseModel, new()
         {
-            var table = new Table<T>(BaseUrl, SerializerSettings(Options), Options);
-            table.GetHeaders = GetHeaders;
-            
+            var table = new Table<T>(BaseUrl, SerializerSettings(Options), Options)
+            {
+                GetHeaders = GetHeaders
+            };
+
             return table;
         }
 
@@ -111,9 +113,7 @@ namespace Postgrest
                 new Dictionary<string, string>(Options.Headers), Options);
 
             if (GetHeaders != null)
-            {
                 headers = GetHeaders().MergeLeft(headers);
-            }
 
             // Send request
             var request = Helpers.MakeRequest(Options, HttpMethod.Post, canonicalUri, serializerSettings, data, headers);

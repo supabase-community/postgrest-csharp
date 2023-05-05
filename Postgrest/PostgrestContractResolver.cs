@@ -4,9 +4,10 @@ using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Postgrest.Attributes;
 using Postgrest.Converters;
 
-namespace Postgrest.Attributes
+namespace Postgrest
 {
     /// <summary>
     /// A custom resolver that handles mapping column names and property names as well
@@ -14,13 +15,16 @@ namespace Postgrest.Attributes
     /// </summary>
     public class PostgrestContractResolver : DefaultContractResolver
     {
-        public bool IsUpdate { get; private set; } = false;
-        public bool IsInsert { get; private set; } = false;
+        public bool IsUpdate { get; private set; }
+        public bool IsInsert { get; private set; }
 
-        public void SetState(bool isInsert = false, bool isUpdate = false)
+        public bool IsUpsert { get; private set; }
+
+        public void SetState(bool isInsert = false, bool isUpdate = false, bool isUpsert = false)
         {
             IsUpdate = isUpdate;
             IsInsert = isInsert;
+            IsUpsert = isUpsert;
         }
 
         protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
@@ -93,7 +97,7 @@ namespace Postgrest.Attributes
             }
            
             prop.PropertyName = primaryKeyAttribute.ColumnName;
-            prop.ShouldSerialize = instance => primaryKeyAttribute.ShouldInsert;
+            prop.ShouldSerialize = instance => primaryKeyAttribute.ShouldInsert || (IsUpsert && instance != null);
             return prop;
         }
     }

@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Postgrest.Extensions;
 using Postgrest.Models;
-using Supabase.Core.Extensions;
 
 namespace Postgrest.Responses
 {
@@ -16,13 +13,10 @@ namespace Postgrest.Responses
 	/// <typeparam name="T"></typeparam>
 	public class ModeledResponse<T> : BaseResponse where T : BaseModel, new()
 	{
-		private JsonSerializerSettings SerializerSettings { get; set; }
-
-		public List<T> Models { get; private set; } = new List<T>();
+		public List<T> Models { get; } = new();
 
 		public ModeledResponse(BaseResponse baseResponse, JsonSerializerSettings serializerSettings, Func<Dictionary<string, string>>? getHeaders = null, bool shouldParse = true) : base(baseResponse.ClientOptions, baseResponse.ResponseMessage, baseResponse.Content)
 		{
-			SerializerSettings = serializerSettings;
 			Content = baseResponse.Content;
 			ResponseMessage = baseResponse.ResponseMessage;
 
@@ -37,14 +31,11 @@ namespace Postgrest.Responses
 					if (deserialized != null)
 						Models = deserialized;
 
-					if (Models != null)
+					foreach (var model in Models)
 					{
-						foreach (var model in Models)
-						{
-							model.BaseUrl = baseResponse.ResponseMessage!.RequestMessage.RequestUri.GetInstanceUrl().Replace(model.TableName, "").TrimEnd('/');
-							model.RequestClientOptions = ClientOptions;
-							model.GetHeaders = getHeaders;
-						}
+						model.BaseUrl = baseResponse.ResponseMessage!.RequestMessage.RequestUri.GetInstanceUrl().Replace(model.TableName, "").TrimEnd('/');
+						model.RequestClientOptions = ClientOptions;
+						model.GetHeaders = getHeaders;
 					}
 				}
 				else if (token is JObject)
