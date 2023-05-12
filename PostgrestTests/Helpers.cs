@@ -25,7 +25,9 @@ namespace PostgrestTests
 		internal static Client GetLocalClient()
 		{
 			var url = Environment.GetEnvironmentVariable("SUPABASE_URL");
+			if (url == null) url = "http://localhost:3000";
 			var publicKey = Environment.GetEnvironmentVariable("SUPABASE_PUBLIC_KEY");
+			if (publicKey == null) publicKey = "reallyreallyreallyreallyverysafe";
 
 			var client = new Client($"{url}/rest/v1", new ClientOptions
 			{
