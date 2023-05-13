@@ -1,13 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Postgrest.Extensions;
 
 namespace PostgrestTests
 {
     [TestClass]
-    public class Extensions
+    public class ExtensionTests
     {
         [TestMethod]
         public void UriExtensionGetBaseUri()

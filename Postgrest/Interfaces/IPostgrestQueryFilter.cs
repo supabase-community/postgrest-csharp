@@ -2,7 +2,7 @@
 {
     public interface IPostgrestQueryFilter
     {
-        object Criteria { get; }
+        object? Criteria { get; }
         Constants.Operator Op { get; }
         string? Property { get; }
     }

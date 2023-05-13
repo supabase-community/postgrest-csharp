@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
-using Newtonsoft.Json;
 using Postgrest.Extensions;
 using Postgrest.Models;
 
@@ -28,12 +28,12 @@ namespace Postgrest.Attributes
         /// <summary>
         /// Table name of model
         /// </summary>
-        public string TableName { get; private set; }
+        public string TableName { get; }
 
         /// <summary>
         /// Columns that exist on the model we will select from.
         /// </summary>
-        public List<string> Columns { get; } = new List<string>();
+        public List<string> Columns { get; } = new();
 
         /// <summary>
         /// If the performed query is an Insert or Upsert, should this value be ignored? (DEFAULT TRUE)
@@ -48,14 +48,14 @@ namespace Postgrest.Attributes
         /// <summary>
         /// If Reference should automatically be included in queries on this reference. (DEFAULT TRUE)
         /// </summary>
-        public bool IncludeInQuery { get; private set; }
+        public bool IncludeInQuery { get; }
 
         /// <summary>
         /// As to whether the query will filter top-level rows.
         /// 
         /// See: https://postgrest.org/en/stable/api.html#resource-embedding
         /// </summary>
-        public bool ShouldFilterTopLevel { get; private set; }
+        public bool ShouldFilterTopLevel { get; }
 
         /// <param name="model">Model referenced</param>
         /// <param name="includeInQuery">Should referenced be included in queries?</param>
@@ -64,11 +64,12 @@ namespace Postgrest.Attributes
         /// <param name="shouldFilterTopLevel">As to whether the query will filter top-level rows.</param>
         /// <param name="propertyName"></param>
         /// <exception cref="Exception"></exception>
-        public ReferenceAttribute(Type model, bool includeInQuery = true, bool ignoreOnInsert = true, bool ignoreOnUpdate = true, bool shouldFilterTopLevel = true, [CallerMemberName] string propertyName = "")
+        public ReferenceAttribute(Type model, bool includeInQuery = true, bool ignoreOnInsert = true,
+            bool ignoreOnUpdate = true, bool shouldFilterTopLevel = true, [CallerMemberName] string propertyName = "")
         {
             if (!IsDerivedFromBaseModel(model))
             {
-                throw new Exception("RefernceAttribute must be used with Postgrest BaseModels.");
+                throw new Exception("ReferenceAttribute must be used with Postgrest BaseModels.");
             }
 
             Model = model;
@@ -102,36 +103,17 @@ namespace Postgrest.Attributes
                     {
                         Columns.Add(pk.ColumnName);
                     }
-                    else if (item is ReferenceAttribute refAttr)
+                    else if (item is ReferenceAttribute { IncludeInQuery: true } refAttr)
                     {
-                        if (refAttr.IncludeInQuery)
-                        {
-                            if (ShouldFilterTopLevel)
-                            {
-                                Columns.Add($"{refAttr.TableName}!inner({string.Join(",", refAttr.Columns.ToArray())})");
-                            }
-                            else
-                            {
-                                Columns.Add($"{refAttr.TableName}({string.Join(",", refAttr.Columns.ToArray())})");
-                            }
-                        }
+                        Columns.Add(ShouldFilterTopLevel
+                            ? $"{refAttr.TableName}!inner({string.Join(",", refAttr.Columns.ToArray())})"
+                            : $"{refAttr.TableName}({string.Join(",", refAttr.Columns.ToArray())})");
                     }
                 }
             }
         }
-        private bool IsDerivedFromBaseModel(Type type)
-        {
-            var isDerived = false;
-            foreach (var t in type.GetInheritanceHierarchy())
-            {
-                if (t == typeof(BaseModel))
-                {
-                    isDerived = true;
-                    break;
-                }
-            }
 
-            return isDerived;
-        }
+        private bool IsDerivedFromBaseModel(Type type) =>
+            type.GetInheritanceHierarchy().Any(t => t == typeof(BaseModel));
     }
 }

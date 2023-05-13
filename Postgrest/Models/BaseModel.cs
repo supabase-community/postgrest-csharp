@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Postgrest.Attributes;
 using Postgrest.Responses;
-using Supabase.Core.Extensions;
-using Supabase.Core.Interfaces;
 
 namespace Postgrest.Models
 {

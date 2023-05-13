@@ -1,6 +1,6 @@
-﻿using Postgrest.Attributes;
+﻿using System;
+using Postgrest.Attributes;
 using Postgrest.Models;
-using System;
 
 namespace PostgrestTests.Models
 {

@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
 using static Postgrest.Constants;
+// ReSharper disable InvalidXmlDocComment
 
 namespace Postgrest.Linq
 {
@@ -54,13 +54,14 @@ namespace Postgrest.Linq
 
 			// Otherwise, the base case.
 
-			Expression left = Visit(node.Left);
-			Expression right = Visit(node.Right);
+			var left = Visit(node.Left);
+			var right = Visit(node.Right);
 
 			var column = left is MemberExpression leftMember ? GetColumnFromMemberExpression(leftMember) : null;
 
 			if (column == null)
-				throw new ArgumentException(string.Format("Left side of expression: '{0}' is expected to be property with a ColumnAttribute or PrimaryKeyAttribute", node.ToString()));
+				throw new ArgumentException(
+					$"Left side of expression: '{node}' is expected to be property with a ColumnAttribute or PrimaryKeyAttribute");
 
 			if (right is ConstantExpression rightConstant)
 			{
@@ -94,12 +95,14 @@ namespace Postgrest.Linq
 			var obj = node.Object as MemberExpression;
 
 			if (obj == null)
-				throw new ArgumentException(string.Format("Calling context '{0}' is expected to be a member of or derived from `BaseModel`", node.Object));
+				throw new ArgumentException(
+					$"Calling context '{node.Object}' is expected to be a member of or derived from `BaseModel`");
 
 			var column = GetColumnFromMemberExpression(obj);
 
 			if (column == null)
-				throw new ArgumentException(string.Format("Left side of expression: '{0}' is expected to be property with a ColumnAttribute or PrimaryKeyAttribute", node.ToString()));
+				throw new ArgumentException(
+					$"Left side of expression: '{node.ToString()}' is expected to be property with a ColumnAttribute or PrimaryKeyAttribute");
 
 			switch (node.Method.Name)
 			{
@@ -140,7 +143,6 @@ namespace Postgrest.Linq
 		{
 			Filter = new QueryFilter(column, op, GetMemberExpressionValue(memberExpression));
 		}
-
 
 		/// <summary>
 		/// A unary expression parser (i.e. => x.Id == 1 <- where both `1` is considered unary)
@@ -197,15 +199,20 @@ namespace Postgrest.Linq
 		private string GetColumnFromMemberExpression(MemberExpression node)
 		{
 			var type = node.Member.ReflectedType;
-			var prop = type.GetProperty(node.Member.Name);
-			var attrs = prop.GetCustomAttributes(true);
+			var prop = type?.GetProperty(node.Member.Name);
+			var attrs = prop?.GetCustomAttributes(true);
 
+			if (attrs == null) return node.Member.Name;
+			
 			foreach (var attr in attrs)
 			{
-				if (attr is ColumnAttribute columnAttr)
-					return columnAttr.ColumnName;
-				else if (attr is PrimaryKeyAttribute primaryKeyAttr)
-					return primaryKeyAttr.ColumnName;
+				switch (attr)
+				{
+					case ColumnAttribute columnAttr:
+						return columnAttr.ColumnName;
+					case PrimaryKeyAttribute primaryKeyAttr:
+						return primaryKeyAttr.ColumnName;
+				}
 			}
 
 			return node.Member.Name;
@@ -223,12 +230,10 @@ namespace Postgrest.Linq
 				var obj = Expression.Lambda(member.Expression).Compile().DynamicInvoke();
 				return field.GetValue(obj);
 			}
-			else
-			{
-				var lambda = Expression.Lambda(member);
-				var func = lambda.Compile();
-				return func.DynamicInvoke();
-			}
+
+			var lambda = Expression.Lambda(member);
+			var func = lambda.Compile();
+			return func.DynamicInvoke();
 		}
 
 		/// <summary>
@@ -238,7 +243,7 @@ namespace Postgrest.Linq
 		/// <returns></returns>
 		private Operator GetMappedOperator(Expression node)
 		{
-			Operator op = Operator.Equals;
+			var op = Operator.Equals;
 
 			switch (node.NodeType)
 			{

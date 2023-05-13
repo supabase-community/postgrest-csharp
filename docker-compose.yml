@@ -8,6 +8,7 @@ services:
       PGRST_DB_URI: postgres://postgres:postgres@db:5432/postgres
       PGRST_DB_SCHEMA: public, personal
       PGRST_DB_ANON_ROLE: postgres
+      PGRST_JWT_SECRET: "reallyreallyreallyreallyverysafe"
     depends_on:
       - db
   db:

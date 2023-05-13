@@ -1,34 +1,35 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Postgrest;
+using Postgrest.Converters;
 using Postgrest.Extensions;
 
 namespace PostgrestTests
 {
     [TestClass]
-    public class Converters
+    public class ConverterTests
     {
         [TestMethod("`intRange` should parse according to postgres docs")]
         public void TestIntRangeParsing()
         {
             // Test cases from 8.17.5 https://www.postgresql.org/docs/9.3/rangetypes.html
             var test1 = "[3,7)";
-            var result1 = Postgrest.Converters.RangeConverter.ParseIntRange(test1);
+            var result1 = RangeConverter.ParseIntRange(test1);
             Assert.AreEqual(3, result1.Start);
             Assert.AreEqual(6, result1.End);
 
             var test2 = "(3,7)";
-            var result2 = Postgrest.Converters.RangeConverter.ParseIntRange(test2);
+            var result2 = RangeConverter.ParseIntRange(test2);
             Assert.AreEqual(4, result2.Start);
             Assert.AreEqual(6, result2.End);
 
             var test3 = "[4,4]";
-            var result3 = Postgrest.Converters.RangeConverter.ParseIntRange(test3);
+            var result3 = RangeConverter.ParseIntRange(test3);
             Assert.AreEqual(4, result3.Start);
             Assert.AreEqual(4, result3.End);
 
             var test4 = "[4,4)";
-            var result4 = Postgrest.Converters.RangeConverter.ParseIntRange(test4);
+            var result4 = RangeConverter.ParseIntRange(test4);
             Assert.AreEqual(0, result4.Start);
             Assert.AreEqual(0, result4.End);
 
@@ -39,7 +40,7 @@ namespace PostgrestTests
         public void TestIntRangeParseInvalidFormat()
         {
             var test = "[1.2,3]";
-            Postgrest.Converters.RangeConverter.ParseIntRange(test);
+            RangeConverter.ParseIntRange(test);
         }
 
         [TestMethod("`Range` should serialize into a string postgres understands")]

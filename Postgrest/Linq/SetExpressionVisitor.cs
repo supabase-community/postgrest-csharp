@@ -1,12 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
-using Postgrest.Attributes;
+﻿using Postgrest.Attributes;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
-using System.Text;
-using static Postgrest.Constants;
 
 namespace Postgrest.Linq
 {
@@ -37,16 +32,12 @@ namespace Postgrest.Linq
 		/// <returns></returns>
 		protected override Expression VisitUnary(UnaryExpression node)
 		{
-			if (node.Operand is MemberExpression memberExpression)
-			{
-				var column = GetColumnFromMemberExpression(memberExpression);
+			if (node.Operand is not MemberExpression memberExpression) return node;
+			
+			var column = GetColumnFromMemberExpression(memberExpression);
 
-				if (column != null)
-				{
-					Column = column;
-					ExpectedType = memberExpression.Type;
-				}
-			}
+			Column = column;
+			ExpectedType = memberExpression.Type;
 
 			return node;
 		}
@@ -60,11 +51,8 @@ namespace Postgrest.Linq
 		{
 			var column = GetColumnFromMemberExpression(node);
 
-			if (column != null)
-			{
-				Column = column;
-				ExpectedType = node.Type;
-			}
+			Column = column;
+			ExpectedType = node.Type;
 
 			return node;
 		}
@@ -115,8 +103,9 @@ namespace Postgrest.Linq
 			var valueArgument = Expression.Lambda(right).Compile().DynamicInvoke();
 			Value = valueArgument;
 
-			if (!ExpectedType!.IsAssignableFrom(Value.GetType()))
-				throw new ArgumentException(string.Format("Expected Value to be of Type: {0}, instead received: {1}.", ExpectedType.Name, Value.GetType().Name));
+			if (!ExpectedType!.IsInstanceOfType(Value))
+				throw new ArgumentException(
+					$"Expected Value to be of Type: {ExpectedType.Name}, instead received: {Value.GetType().Name}.");
 		}
 
 		/// <summary>
@@ -127,18 +116,26 @@ namespace Postgrest.Linq
 		private string GetColumnFromMemberExpression(MemberExpression node)
 		{
 			var type = node.Member.ReflectedType;
-			var prop = type.GetProperty(node.Member.Name);
-			var attrs = prop.GetCustomAttributes(true);
+			var prop = type?.GetProperty(node.Member.Name);
+			var attrs = prop?.GetCustomAttributes(true);
 
+			if (attrs == null)
+				throw new ArgumentException(
+					$"Unknown argument '{node.Member.Name}' provided, does it have a Column or PrimaryKey attribute?");
+			
 			foreach (var attr in attrs)
 			{
-				if (attr is ColumnAttribute columnAttr)
-					return columnAttr.ColumnName;
-				else if (attr is PrimaryKeyAttribute primaryKeyAttr)
-					return primaryKeyAttr.ColumnName;
+				switch (attr)
+				{
+					case ColumnAttribute columnAttr:
+						return columnAttr.ColumnName;
+					case PrimaryKeyAttribute primaryKeyAttr:
+						return primaryKeyAttr.ColumnName;
+				}
 			}
 
-			throw new ArgumentException(string.Format("Unknown argument '{0}' provided, does it have a Column or PrimaryKey attribute?", node.Member.Name));
+			throw new ArgumentException(
+				$"Unknown argument '{node.Member.Name}' provided, does it have a Column or PrimaryKey attribute?");
 		}
 	}
 }
