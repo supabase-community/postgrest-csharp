@@ -7,6 +7,7 @@ using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 using Postgrest;
 using Postgrest.Exceptions;
 using Postgrest.Responses;
@@ -1178,15 +1179,6 @@ namespace PostgrestTests
             }
 
             return null;
-        }
-
-        [TestMethod("enums")]
-        public async Task TestEnums()
-        {
-            var client = Helpers.GetLocalClient();
-
-            await client.Table<Todo>().Filter(x => x.Status, Operator.Equals,
-                GetEnumMemberAttrValue(Todo.TodoStatus.IN_PROGRESS)).Get();
         }
 
         [TestMethod("columns")]

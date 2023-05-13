@@ -1073,9 +1073,7 @@ namespace Postgrest
             options ??= new QueryOptions();
 
             if (!string.IsNullOrEmpty(options.OnConflict))
-            {
                 OnConflict(options.OnConflict!);
-            }
 
             var request = Send<T>(_method, data, options.ToHeaders(), cancellationToken, isInsert: true,
                 isUpsert: options.Upsert);
@@ -1108,9 +1106,7 @@ namespace Postgrest
             var requestHeaders = Helpers.PrepareRequestHeaders(method, headers, _options, _rangeFrom, _rangeTo);
 
             if (GetHeaders != null)
-            {
                 requestHeaders = GetHeaders().MergeLeft(requestHeaders);
-            }
 
             var preparedData = PrepareRequestData(data, isInsert, isUpdate, isUpsert);
             return Helpers.MakeRequest<TU>(_options, method, GenerateUrl(), _serializerSettings, preparedData,

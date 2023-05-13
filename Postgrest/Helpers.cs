@@ -91,19 +91,17 @@ namespace Postgrest
 			var response = await Client.SendAsync(requestMessage, cancellationToken);
 			var content = await response.Content.ReadAsStringAsync();
 
-			if (!response.IsSuccessStatusCode)
+			if (response.IsSuccessStatusCode) 
+				return new BaseResponse(clientOptions, response, content);
+			
+			var exception = new PostgrestException(content)
 			{
-				var e = new PostgrestException("Request Failed")
-				{
-					Content = content,
-					Response = response,
-					StatusCode = (int)response.StatusCode
-				};
-				e.AddReason();
-				throw e;
-			}
-
-			return new BaseResponse(clientOptions, response, content);
+				Content = content,
+				Response = response,
+				StatusCode = (int)response.StatusCode
+			};
+			exception.AddReason();
+			throw exception;
 		}
 
 		/// <summary>
