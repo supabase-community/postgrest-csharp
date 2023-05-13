@@ -87,64 +87,6 @@ references:
   isSpec: "True"
   fullName: Postgrest.Attributes.ColumnAttribute.NullValueHandling
   nameWithType: ColumnAttribute.NullValueHandling
-- uid: Postgrest.Attributes.PostgrestContractResolver
-  name: PostgrestContractResolver
-  href: api/Postgrest.Attributes.PostgrestContractResolver.html
-  commentId: T:Postgrest.Attributes.PostgrestContractResolver
-  fullName: Postgrest.Attributes.PostgrestContractResolver
-  nameWithType: PostgrestContractResolver
-- uid: Postgrest.Attributes.PostgrestContractResolver.CreateProperty(MemberInfo,MemberSerialization)
-  name: CreateProperty(MemberInfo, MemberSerialization)
-  href: api/Postgrest.Attributes.PostgrestContractResolver.html#Postgrest_Attributes_PostgrestContractResolver_CreateProperty_MemberInfo_MemberSerialization_
-  commentId: M:Postgrest.Attributes.PostgrestContractResolver.CreateProperty(MemberInfo,MemberSerialization)
-  fullName: Postgrest.Attributes.PostgrestContractResolver.CreateProperty(MemberInfo, MemberSerialization)
-  nameWithType: PostgrestContractResolver.CreateProperty(MemberInfo, MemberSerialization)
-- uid: Postgrest.Attributes.PostgrestContractResolver.CreateProperty*
-  name: CreateProperty
-  href: api/Postgrest.Attributes.PostgrestContractResolver.html#Postgrest_Attributes_PostgrestContractResolver_CreateProperty_
-  commentId: Overload:Postgrest.Attributes.PostgrestContractResolver.CreateProperty
-  isSpec: "True"
-  fullName: Postgrest.Attributes.PostgrestContractResolver.CreateProperty
-  nameWithType: PostgrestContractResolver.CreateProperty
-- uid: Postgrest.Attributes.PostgrestContractResolver.IsInsert
-  name: IsInsert
-  href: api/Postgrest.Attributes.PostgrestContractResolver.html#Postgrest_Attributes_PostgrestContractResolver_IsInsert
-  commentId: P:Postgrest.Attributes.PostgrestContractResolver.IsInsert
-  fullName: Postgrest.Attributes.PostgrestContractResolver.IsInsert
-  nameWithType: PostgrestContractResolver.IsInsert
-- uid: Postgrest.Attributes.PostgrestContractResolver.IsInsert*
-  name: IsInsert
-  href: api/Postgrest.Attributes.PostgrestContractResolver.html#Postgrest_Attributes_PostgrestContractResolver_IsInsert_
-  commentId: Overload:Postgrest.Attributes.PostgrestContractResolver.IsInsert
-  isSpec: "True"
-  fullName: Postgrest.Attributes.PostgrestContractResolver.IsInsert
-  nameWithType: PostgrestContractResolver.IsInsert
-- uid: Postgrest.Attributes.PostgrestContractResolver.IsUpdate
-  name: IsUpdate
-  href: api/Postgrest.Attributes.PostgrestContractResolver.html#Postgrest_Attributes_PostgrestContractResolver_IsUpdate
-  commentId: P:Postgrest.Attributes.PostgrestContractResolver.IsUpdate
-  fullName: Postgrest.Attributes.PostgrestContractResolver.IsUpdate
-  nameWithType: PostgrestContractResolver.IsUpdate
-- uid: Postgrest.Attributes.PostgrestContractResolver.IsUpdate*
-  name: IsUpdate
-  href: api/Postgrest.Attributes.PostgrestContractResolver.html#Postgrest_Attributes_PostgrestContractResolver_IsUpdate_
-  commentId: Overload:Postgrest.Attributes.PostgrestContractResolver.IsUpdate
-  isSpec: "True"
-  fullName: Postgrest.Attributes.PostgrestContractResolver.IsUpdate
-  nameWithType: PostgrestContractResolver.IsUpdate
-- uid: Postgrest.Attributes.PostgrestContractResolver.SetState(System.Boolean,System.Boolean)
-  name: SetState(Boolean, Boolean)
-  href: api/Postgrest.Attributes.PostgrestContractResolver.html#Postgrest_Attributes_PostgrestContractResolver_SetState_System_Boolean_System_Boolean_
-  commentId: M:Postgrest.Attributes.PostgrestContractResolver.SetState(System.Boolean,System.Boolean)
-  fullName: Postgrest.Attributes.PostgrestContractResolver.SetState(System.Boolean, System.Boolean)
-  nameWithType: PostgrestContractResolver.SetState(Boolean, Boolean)
-- uid: Postgrest.Attributes.PostgrestContractResolver.SetState*
-  name: SetState
-  href: api/Postgrest.Attributes.PostgrestContractResolver.html#Postgrest_Attributes_PostgrestContractResolver_SetState_
-  commentId: Overload:Postgrest.Attributes.PostgrestContractResolver.SetState
-  isSpec: "True"
-  fullName: Postgrest.Attributes.PostgrestContractResolver.SetState
-  nameWithType: PostgrestContractResolver.SetState
 - uid: Postgrest.Attributes.PrimaryKeyAttribute
   name: PrimaryKeyAttribute
   href: api/Postgrest.Attributes.PrimaryKeyAttribute.html
@@ -864,6 +806,175 @@ references:
   isSpec: "True"
   fullName: Postgrest.Converters.IntArrayConverter.WriteJson
   nameWithType: IntArrayConverter.WriteJson
+- uid: Postgrest.Exceptions
+  name: Postgrest.Exceptions
+  href: api/Postgrest.Exceptions.html
+  commentId: N:Postgrest.Exceptions
+  fullName: Postgrest.Exceptions
+  nameWithType: Postgrest.Exceptions
+- uid: Postgrest.Exceptions.FailureHint
+  name: FailureHint
+  href: api/Postgrest.Exceptions.FailureHint.html
+  commentId: T:Postgrest.Exceptions.FailureHint
+  fullName: Postgrest.Exceptions.FailureHint
+  nameWithType: FailureHint
+- uid: Postgrest.Exceptions.FailureHint.DetectReason(Postgrest.Exceptions.PostgrestException)
+  name: DetectReason(PostgrestException)
+  href: api/Postgrest.Exceptions.FailureHint.html#Postgrest_Exceptions_FailureHint_DetectReason_Postgrest_Exceptions_PostgrestException_
+  commentId: M:Postgrest.Exceptions.FailureHint.DetectReason(Postgrest.Exceptions.PostgrestException)
+  fullName: Postgrest.Exceptions.FailureHint.DetectReason(Postgrest.Exceptions.PostgrestException)
+  nameWithType: FailureHint.DetectReason(PostgrestException)
+- uid: Postgrest.Exceptions.FailureHint.DetectReason*
+  name: DetectReason
+  href: api/Postgrest.Exceptions.FailureHint.html#Postgrest_Exceptions_FailureHint_DetectReason_
+  commentId: Overload:Postgrest.Exceptions.FailureHint.DetectReason
+  isSpec: "True"
+  fullName: Postgrest.Exceptions.FailureHint.DetectReason
+  nameWithType: FailureHint.DetectReason
+- uid: Postgrest.Exceptions.FailureHint.Reason
+  name: FailureHint.Reason
+  href: api/Postgrest.Exceptions.FailureHint.Reason.html
+  commentId: T:Postgrest.Exceptions.FailureHint.Reason
+  fullName: Postgrest.Exceptions.FailureHint.Reason
+  nameWithType: FailureHint.Reason
+- uid: Postgrest.Exceptions.FailureHint.Reason.ForeignKeyViolation
+  name: ForeignKeyViolation
+  href: api/Postgrest.Exceptions.FailureHint.Reason.html#Postgrest_Exceptions_FailureHint_Reason_ForeignKeyViolation
+  commentId: F:Postgrest.Exceptions.FailureHint.Reason.ForeignKeyViolation
+  fullName: Postgrest.Exceptions.FailureHint.Reason.ForeignKeyViolation
+  nameWithType: FailureHint.Reason.ForeignKeyViolation
+- uid: Postgrest.Exceptions.FailureHint.Reason.Internal
+  name: Internal
+  href: api/Postgrest.Exceptions.FailureHint.Reason.html#Postgrest_Exceptions_FailureHint_Reason_Internal
+  commentId: F:Postgrest.Exceptions.FailureHint.Reason.Internal
+  fullName: Postgrest.Exceptions.FailureHint.Reason.Internal
+  nameWithType: FailureHint.Reason.Internal
+- uid: Postgrest.Exceptions.FailureHint.Reason.NotAuthorized
+  name: NotAuthorized
+  href: api/Postgrest.Exceptions.FailureHint.Reason.html#Postgrest_Exceptions_FailureHint_Reason_NotAuthorized
+  commentId: F:Postgrest.Exceptions.FailureHint.Reason.NotAuthorized
+  fullName: Postgrest.Exceptions.FailureHint.Reason.NotAuthorized
+  nameWithType: FailureHint.Reason.NotAuthorized
+- uid: Postgrest.Exceptions.FailureHint.Reason.UndefinedFunction
+  name: UndefinedFunction
+  href: api/Postgrest.Exceptions.FailureHint.Reason.html#Postgrest_Exceptions_FailureHint_Reason_UndefinedFunction
+  commentId: F:Postgrest.Exceptions.FailureHint.Reason.UndefinedFunction
+  fullName: Postgrest.Exceptions.FailureHint.Reason.UndefinedFunction
+  nameWithType: FailureHint.Reason.UndefinedFunction
+- uid: Postgrest.Exceptions.FailureHint.Reason.UndefinedTable
+  name: UndefinedTable
+  href: api/Postgrest.Exceptions.FailureHint.Reason.html#Postgrest_Exceptions_FailureHint_Reason_UndefinedTable
+  commentId: F:Postgrest.Exceptions.FailureHint.Reason.UndefinedTable
+  fullName: Postgrest.Exceptions.FailureHint.Reason.UndefinedTable
+  nameWithType: FailureHint.Reason.UndefinedTable
+- uid: Postgrest.Exceptions.FailureHint.Reason.UniquenessViolation
+  name: UniquenessViolation
+  href: api/Postgrest.Exceptions.FailureHint.Reason.html#Postgrest_Exceptions_FailureHint_Reason_UniquenessViolation
+  commentId: F:Postgrest.Exceptions.FailureHint.Reason.UniquenessViolation
+  fullName: Postgrest.Exceptions.FailureHint.Reason.UniquenessViolation
+  nameWithType: FailureHint.Reason.UniquenessViolation
+- uid: Postgrest.Exceptions.FailureHint.Reason.Unknown
+  name: Unknown
+  href: api/Postgrest.Exceptions.FailureHint.Reason.html#Postgrest_Exceptions_FailureHint_Reason_Unknown
+  commentId: F:Postgrest.Exceptions.FailureHint.Reason.Unknown
+  fullName: Postgrest.Exceptions.FailureHint.Reason.Unknown
+  nameWithType: FailureHint.Reason.Unknown
+- uid: Postgrest.Exceptions.PostgrestException
+  name: PostgrestException
+  href: api/Postgrest.Exceptions.PostgrestException.html
+  commentId: T:Postgrest.Exceptions.PostgrestException
+  fullName: Postgrest.Exceptions.PostgrestException
+  nameWithType: PostgrestException
+- uid: Postgrest.Exceptions.PostgrestException.#ctor(System.Nullable{System.String})
+  name: PostgrestException(Nullable<String>)
+  href: api/Postgrest.Exceptions.PostgrestException.html#Postgrest_Exceptions_PostgrestException__ctor_System_Nullable_System_String__
+  commentId: M:Postgrest.Exceptions.PostgrestException.#ctor(System.Nullable{System.String})
+  name.vb: PostgrestException(Nullable(Of String))
+  fullName: Postgrest.Exceptions.PostgrestException.PostgrestException(System.Nullable<System.String>)
+  fullName.vb: Postgrest.Exceptions.PostgrestException.PostgrestException(System.Nullable(Of System.String))
+  nameWithType: PostgrestException.PostgrestException(Nullable<String>)
+  nameWithType.vb: PostgrestException.PostgrestException(Nullable(Of String))
+- uid: Postgrest.Exceptions.PostgrestException.#ctor(System.Nullable{System.String},System.Nullable{Exception})
+  name: PostgrestException(Nullable<String>, Nullable<Exception>)
+  href: api/Postgrest.Exceptions.PostgrestException.html#Postgrest_Exceptions_PostgrestException__ctor_System_Nullable_System_String__System_Nullable_Exception__
+  commentId: M:Postgrest.Exceptions.PostgrestException.#ctor(System.Nullable{System.String},System.Nullable{Exception})
+  name.vb: PostgrestException(Nullable(Of String), Nullable(Of Exception))
+  fullName: Postgrest.Exceptions.PostgrestException.PostgrestException(System.Nullable<System.String>, System.Nullable<Exception>)
+  fullName.vb: Postgrest.Exceptions.PostgrestException.PostgrestException(System.Nullable(Of System.String), System.Nullable(Of Exception))
+  nameWithType: PostgrestException.PostgrestException(Nullable<String>, Nullable<Exception>)
+  nameWithType.vb: PostgrestException.PostgrestException(Nullable(Of String), Nullable(Of Exception))
+- uid: Postgrest.Exceptions.PostgrestException.#ctor*
+  name: PostgrestException
+  href: api/Postgrest.Exceptions.PostgrestException.html#Postgrest_Exceptions_PostgrestException__ctor_
+  commentId: Overload:Postgrest.Exceptions.PostgrestException.#ctor
+  isSpec: "True"
+  fullName: Postgrest.Exceptions.PostgrestException.PostgrestException
+  nameWithType: PostgrestException.PostgrestException
+- uid: Postgrest.Exceptions.PostgrestException.AddReason
+  name: AddReason()
+  href: api/Postgrest.Exceptions.PostgrestException.html#Postgrest_Exceptions_PostgrestException_AddReason
+  commentId: M:Postgrest.Exceptions.PostgrestException.AddReason
+  fullName: Postgrest.Exceptions.PostgrestException.AddReason()
+  nameWithType: PostgrestException.AddReason()
+- uid: Postgrest.Exceptions.PostgrestException.AddReason*
+  name: AddReason
+  href: api/Postgrest.Exceptions.PostgrestException.html#Postgrest_Exceptions_PostgrestException_AddReason_
+  commentId: Overload:Postgrest.Exceptions.PostgrestException.AddReason
+  isSpec: "True"
+  fullName: Postgrest.Exceptions.PostgrestException.AddReason
+  nameWithType: PostgrestException.AddReason
+- uid: Postgrest.Exceptions.PostgrestException.Content
+  name: Content
+  href: api/Postgrest.Exceptions.PostgrestException.html#Postgrest_Exceptions_PostgrestException_Content
+  commentId: P:Postgrest.Exceptions.PostgrestException.Content
+  fullName: Postgrest.Exceptions.PostgrestException.Content
+  nameWithType: PostgrestException.Content
+- uid: Postgrest.Exceptions.PostgrestException.Content*
+  name: Content
+  href: api/Postgrest.Exceptions.PostgrestException.html#Postgrest_Exceptions_PostgrestException_Content_
+  commentId: Overload:Postgrest.Exceptions.PostgrestException.Content
+  isSpec: "True"
+  fullName: Postgrest.Exceptions.PostgrestException.Content
+  nameWithType: PostgrestException.Content
+- uid: Postgrest.Exceptions.PostgrestException.Reason
+  name: Reason
+  href: api/Postgrest.Exceptions.PostgrestException.html#Postgrest_Exceptions_PostgrestException_Reason
+  commentId: P:Postgrest.Exceptions.PostgrestException.Reason
+  fullName: Postgrest.Exceptions.PostgrestException.Reason
+  nameWithType: PostgrestException.Reason
+- uid: Postgrest.Exceptions.PostgrestException.Reason*
+  name: Reason
+  href: api/Postgrest.Exceptions.PostgrestException.html#Postgrest_Exceptions_PostgrestException_Reason_
+  commentId: Overload:Postgrest.Exceptions.PostgrestException.Reason
+  isSpec: "True"
+  fullName: Postgrest.Exceptions.PostgrestException.Reason
+  nameWithType: PostgrestException.Reason
+- uid: Postgrest.Exceptions.PostgrestException.Response
+  name: Response
+  href: api/Postgrest.Exceptions.PostgrestException.html#Postgrest_Exceptions_PostgrestException_Response
+  commentId: P:Postgrest.Exceptions.PostgrestException.Response
+  fullName: Postgrest.Exceptions.PostgrestException.Response
+  nameWithType: PostgrestException.Response
+- uid: Postgrest.Exceptions.PostgrestException.Response*
+  name: Response
+  href: api/Postgrest.Exceptions.PostgrestException.html#Postgrest_Exceptions_PostgrestException_Response_
+  commentId: Overload:Postgrest.Exceptions.PostgrestException.Response
+  isSpec: "True"
+  fullName: Postgrest.Exceptions.PostgrestException.Response
+  nameWithType: PostgrestException.Response
+- uid: Postgrest.Exceptions.PostgrestException.StatusCode
+  name: StatusCode
+  href: api/Postgrest.Exceptions.PostgrestException.html#Postgrest_Exceptions_PostgrestException_StatusCode
+  commentId: P:Postgrest.Exceptions.PostgrestException.StatusCode
+  fullName: Postgrest.Exceptions.PostgrestException.StatusCode
+  nameWithType: PostgrestException.StatusCode
+- uid: Postgrest.Exceptions.PostgrestException.StatusCode*
+  name: StatusCode
+  href: api/Postgrest.Exceptions.PostgrestException.html#Postgrest_Exceptions_PostgrestException_StatusCode_
+  commentId: Overload:Postgrest.Exceptions.PostgrestException.StatusCode
+  isSpec: "True"
+  fullName: Postgrest.Exceptions.PostgrestException.StatusCode
+  nameWithType: PostgrestException.StatusCode
 - uid: Postgrest.Extensions
   name: Postgrest.Extensions
   href: api/Postgrest.Extensions.html
@@ -907,12 +1018,15 @@ references:
   commentId: T:Postgrest.FullTextSearchConfig
   fullName: Postgrest.FullTextSearchConfig
   nameWithType: FullTextSearchConfig
-- uid: Postgrest.FullTextSearchConfig.#ctor(System.String,System.String)
-  name: FullTextSearchConfig(String, String)
-  href: api/Postgrest.FullTextSearchConfig.html#Postgrest_FullTextSearchConfig__ctor_System_String_System_String_
-  commentId: M:Postgrest.FullTextSearchConfig.#ctor(System.String,System.String)
-  fullName: Postgrest.FullTextSearchConfig.FullTextSearchConfig(System.String, System.String)
-  nameWithType: FullTextSearchConfig.FullTextSearchConfig(String, String)
+- uid: Postgrest.FullTextSearchConfig.#ctor(System.String,System.Nullable{System.String})
+  name: FullTextSearchConfig(String, Nullable<String>)
+  href: api/Postgrest.FullTextSearchConfig.html#Postgrest_FullTextSearchConfig__ctor_System_String_System_Nullable_System_String__
+  commentId: M:Postgrest.FullTextSearchConfig.#ctor(System.String,System.Nullable{System.String})
+  name.vb: FullTextSearchConfig(String, Nullable(Of String))
+  fullName: Postgrest.FullTextSearchConfig.FullTextSearchConfig(System.String, System.Nullable<System.String>)
+  fullName.vb: Postgrest.FullTextSearchConfig.FullTextSearchConfig(System.String, System.Nullable(Of System.String))
+  nameWithType: FullTextSearchConfig.FullTextSearchConfig(String, Nullable<String>)
+  nameWithType.vb: FullTextSearchConfig.FullTextSearchConfig(String, Nullable(Of String))
 - uid: Postgrest.FullTextSearchConfig.#ctor*
   name: FullTextSearchConfig
   href: api/Postgrest.FullTextSearchConfig.html#Postgrest_FullTextSearchConfig__ctor_
@@ -2043,6 +2157,77 @@ references:
   fullName.vb: Postgrest.Models.BaseModel.Update(Of T)(CancellationToken)
   nameWithType: BaseModel.Update<T>(CancellationToken)
   nameWithType.vb: BaseModel.Update(Of T)(CancellationToken)
+- uid: Postgrest.PostgrestContractResolver
+  name: PostgrestContractResolver
+  href: api/Postgrest.PostgrestContractResolver.html
+  commentId: T:Postgrest.PostgrestContractResolver
+  fullName: Postgrest.PostgrestContractResolver
+  nameWithType: PostgrestContractResolver
+- uid: Postgrest.PostgrestContractResolver.CreateProperty(MemberInfo,MemberSerialization)
+  name: CreateProperty(MemberInfo, MemberSerialization)
+  href: api/Postgrest.PostgrestContractResolver.html#Postgrest_PostgrestContractResolver_CreateProperty_MemberInfo_MemberSerialization_
+  commentId: M:Postgrest.PostgrestContractResolver.CreateProperty(MemberInfo,MemberSerialization)
+  fullName: Postgrest.PostgrestContractResolver.CreateProperty(MemberInfo, MemberSerialization)
+  nameWithType: PostgrestContractResolver.CreateProperty(MemberInfo, MemberSerialization)
+- uid: Postgrest.PostgrestContractResolver.CreateProperty*
+  name: CreateProperty
+  href: api/Postgrest.PostgrestContractResolver.html#Postgrest_PostgrestContractResolver_CreateProperty_
+  commentId: Overload:Postgrest.PostgrestContractResolver.CreateProperty
+  isSpec: "True"
+  fullName: Postgrest.PostgrestContractResolver.CreateProperty
+  nameWithType: PostgrestContractResolver.CreateProperty
+- uid: Postgrest.PostgrestContractResolver.IsInsert
+  name: IsInsert
+  href: api/Postgrest.PostgrestContractResolver.html#Postgrest_PostgrestContractResolver_IsInsert
+  commentId: P:Postgrest.PostgrestContractResolver.IsInsert
+  fullName: Postgrest.PostgrestContractResolver.IsInsert
+  nameWithType: PostgrestContractResolver.IsInsert
+- uid: Postgrest.PostgrestContractResolver.IsInsert*
+  name: IsInsert
+  href: api/Postgrest.PostgrestContractResolver.html#Postgrest_PostgrestContractResolver_IsInsert_
+  commentId: Overload:Postgrest.PostgrestContractResolver.IsInsert
+  isSpec: "True"
+  fullName: Postgrest.PostgrestContractResolver.IsInsert
+  nameWithType: PostgrestContractResolver.IsInsert
+- uid: Postgrest.PostgrestContractResolver.IsUpdate
+  name: IsUpdate
+  href: api/Postgrest.PostgrestContractResolver.html#Postgrest_PostgrestContractResolver_IsUpdate
+  commentId: P:Postgrest.PostgrestContractResolver.IsUpdate
+  fullName: Postgrest.PostgrestContractResolver.IsUpdate
+  nameWithType: PostgrestContractResolver.IsUpdate
+- uid: Postgrest.PostgrestContractResolver.IsUpdate*
+  name: IsUpdate
+  href: api/Postgrest.PostgrestContractResolver.html#Postgrest_PostgrestContractResolver_IsUpdate_
+  commentId: Overload:Postgrest.PostgrestContractResolver.IsUpdate
+  isSpec: "True"
+  fullName: Postgrest.PostgrestContractResolver.IsUpdate
+  nameWithType: PostgrestContractResolver.IsUpdate
+- uid: Postgrest.PostgrestContractResolver.IsUpsert
+  name: IsUpsert
+  href: api/Postgrest.PostgrestContractResolver.html#Postgrest_PostgrestContractResolver_IsUpsert
+  commentId: P:Postgrest.PostgrestContractResolver.IsUpsert
+  fullName: Postgrest.PostgrestContractResolver.IsUpsert
+  nameWithType: PostgrestContractResolver.IsUpsert
+- uid: Postgrest.PostgrestContractResolver.IsUpsert*
+  name: IsUpsert
+  href: api/Postgrest.PostgrestContractResolver.html#Postgrest_PostgrestContractResolver_IsUpsert_
+  commentId: Overload:Postgrest.PostgrestContractResolver.IsUpsert
+  isSpec: "True"
+  fullName: Postgrest.PostgrestContractResolver.IsUpsert
+  nameWithType: PostgrestContractResolver.IsUpsert
+- uid: Postgrest.PostgrestContractResolver.SetState(System.Boolean,System.Boolean,System.Boolean)
+  name: SetState(Boolean, Boolean, Boolean)
+  href: api/Postgrest.PostgrestContractResolver.html#Postgrest_PostgrestContractResolver_SetState_System_Boolean_System_Boolean_System_Boolean_
+  commentId: M:Postgrest.PostgrestContractResolver.SetState(System.Boolean,System.Boolean,System.Boolean)
+  fullName: Postgrest.PostgrestContractResolver.SetState(System.Boolean, System.Boolean, System.Boolean)
+  nameWithType: PostgrestContractResolver.SetState(Boolean, Boolean, Boolean)
+- uid: Postgrest.PostgrestContractResolver.SetState*
+  name: SetState
+  href: api/Postgrest.PostgrestContractResolver.html#Postgrest_PostgrestContractResolver_SetState_
+  commentId: Overload:Postgrest.PostgrestContractResolver.SetState
+  isSpec: "True"
+  fullName: Postgrest.PostgrestContractResolver.SetState
+  nameWithType: PostgrestContractResolver.SetState
 - uid: Postgrest.QueryFilter
   name: QueryFilter
   href: api/Postgrest.QueryFilter.html
@@ -2376,51 +2561,6 @@ references:
   isSpec: "True"
   fullName: Postgrest.QueryOrderer.Ordering
   nameWithType: QueryOrderer.Ordering
-- uid: Postgrest.RequestException
-  name: RequestException
-  href: api/Postgrest.RequestException.html
-  commentId: T:Postgrest.RequestException
-  fullName: Postgrest.RequestException
-  nameWithType: RequestException
-- uid: Postgrest.RequestException.#ctor(HttpResponseMessage,Postgrest.Responses.ErrorResponse)
-  name: RequestException(HttpResponseMessage, ErrorResponse)
-  href: api/Postgrest.RequestException.html#Postgrest_RequestException__ctor_HttpResponseMessage_Postgrest_Responses_ErrorResponse_
-  commentId: M:Postgrest.RequestException.#ctor(HttpResponseMessage,Postgrest.Responses.ErrorResponse)
-  fullName: Postgrest.RequestException.RequestException(HttpResponseMessage, Postgrest.Responses.ErrorResponse)
-  nameWithType: RequestException.RequestException(HttpResponseMessage, ErrorResponse)
-- uid: Postgrest.RequestException.#ctor*
-  name: RequestException
-  href: api/Postgrest.RequestException.html#Postgrest_RequestException__ctor_
-  commentId: Overload:Postgrest.RequestException.#ctor
-  isSpec: "True"
-  fullName: Postgrest.RequestException.RequestException
-  nameWithType: RequestException.RequestException
-- uid: Postgrest.RequestException.Error
-  name: Error
-  href: api/Postgrest.RequestException.html#Postgrest_RequestException_Error
-  commentId: P:Postgrest.RequestException.Error
-  fullName: Postgrest.RequestException.Error
-  nameWithType: RequestException.Error
-- uid: Postgrest.RequestException.Error*
-  name: Error
-  href: api/Postgrest.RequestException.html#Postgrest_RequestException_Error_
-  commentId: Overload:Postgrest.RequestException.Error
-  isSpec: "True"
-  fullName: Postgrest.RequestException.Error
-  nameWithType: RequestException.Error
-- uid: Postgrest.RequestException.Response
-  name: Response
-  href: api/Postgrest.RequestException.html#Postgrest_RequestException_Response
-  commentId: P:Postgrest.RequestException.Response
-  fullName: Postgrest.RequestException.Response
-  nameWithType: RequestException.Response
-- uid: Postgrest.RequestException.Response*
-  name: Response
-  href: api/Postgrest.RequestException.html#Postgrest_RequestException_Response_
-  commentId: Overload:Postgrest.RequestException.Response
-  isSpec: "True"
-  fullName: Postgrest.RequestException.Response
-  nameWithType: RequestException.Response
 - uid: Postgrest.Responses
   name: Postgrest.Responses
   href: api/Postgrest.Responses.html
@@ -2488,80 +2628,6 @@ references:
   isSpec: "True"
   fullName: Postgrest.Responses.BaseResponse.ResponseMessage
   nameWithType: BaseResponse.ResponseMessage
-- uid: Postgrest.Responses.ErrorResponse
-  name: ErrorResponse
-  href: api/Postgrest.Responses.ErrorResponse.html
-  commentId: T:Postgrest.Responses.ErrorResponse
-  fullName: Postgrest.Responses.ErrorResponse
-  nameWithType: ErrorResponse
-- uid: Postgrest.Responses.ErrorResponse.#ctor(Postgrest.ClientOptions,System.Nullable{HttpResponseMessage},System.Nullable{System.String})
-  name: ErrorResponse(ClientOptions, Nullable<HttpResponseMessage>, Nullable<String>)
-  href: api/Postgrest.Responses.ErrorResponse.html#Postgrest_Responses_ErrorResponse__ctor_Postgrest_ClientOptions_System_Nullable_HttpResponseMessage__System_Nullable_System_String__
-  commentId: M:Postgrest.Responses.ErrorResponse.#ctor(Postgrest.ClientOptions,System.Nullable{HttpResponseMessage},System.Nullable{System.String})
-  name.vb: ErrorResponse(ClientOptions, Nullable(Of HttpResponseMessage), Nullable(Of String))
-  fullName: Postgrest.Responses.ErrorResponse.ErrorResponse(Postgrest.ClientOptions, System.Nullable<HttpResponseMessage>, System.Nullable<System.String>)
-  fullName.vb: Postgrest.Responses.ErrorResponse.ErrorResponse(Postgrest.ClientOptions, System.Nullable(Of HttpResponseMessage), System.Nullable(Of System.String))
-  nameWithType: ErrorResponse.ErrorResponse(ClientOptions, Nullable<HttpResponseMessage>, Nullable<String>)
-  nameWithType.vb: ErrorResponse.ErrorResponse(ClientOptions, Nullable(Of HttpResponseMessage), Nullable(Of String))
-- uid: Postgrest.Responses.ErrorResponse.#ctor*
-  name: ErrorResponse
-  href: api/Postgrest.Responses.ErrorResponse.html#Postgrest_Responses_ErrorResponse__ctor_
-  commentId: Overload:Postgrest.Responses.ErrorResponse.#ctor
-  isSpec: "True"
-  fullName: Postgrest.Responses.ErrorResponse.ErrorResponse
-  nameWithType: ErrorResponse.ErrorResponse
-- uid: Postgrest.Responses.ErrorResponse.Code
-  name: Code
-  href: api/Postgrest.Responses.ErrorResponse.html#Postgrest_Responses_ErrorResponse_Code
-  commentId: P:Postgrest.Responses.ErrorResponse.Code
-  fullName: Postgrest.Responses.ErrorResponse.Code
-  nameWithType: ErrorResponse.Code
-- uid: Postgrest.Responses.ErrorResponse.Code*
-  name: Code
-  href: api/Postgrest.Responses.ErrorResponse.html#Postgrest_Responses_ErrorResponse_Code_
-  commentId: Overload:Postgrest.Responses.ErrorResponse.Code
-  isSpec: "True"
-  fullName: Postgrest.Responses.ErrorResponse.Code
-  nameWithType: ErrorResponse.Code
-- uid: Postgrest.Responses.ErrorResponse.Details
-  name: Details
-  href: api/Postgrest.Responses.ErrorResponse.html#Postgrest_Responses_ErrorResponse_Details
-  commentId: P:Postgrest.Responses.ErrorResponse.Details
-  fullName: Postgrest.Responses.ErrorResponse.Details
-  nameWithType: ErrorResponse.Details
-- uid: Postgrest.Responses.ErrorResponse.Details*
-  name: Details
-  href: api/Postgrest.Responses.ErrorResponse.html#Postgrest_Responses_ErrorResponse_Details_
-  commentId: Overload:Postgrest.Responses.ErrorResponse.Details
-  isSpec: "True"
-  fullName: Postgrest.Responses.ErrorResponse.Details
-  nameWithType: ErrorResponse.Details
-- uid: Postgrest.Responses.ErrorResponse.Hint
-  name: Hint
-  href: api/Postgrest.Responses.ErrorResponse.html#Postgrest_Responses_ErrorResponse_Hint
-  commentId: P:Postgrest.Responses.ErrorResponse.Hint
-  fullName: Postgrest.Responses.ErrorResponse.Hint
-  nameWithType: ErrorResponse.Hint
-- uid: Postgrest.Responses.ErrorResponse.Hint*
-  name: Hint
-  href: api/Postgrest.Responses.ErrorResponse.html#Postgrest_Responses_ErrorResponse_Hint_
-  commentId: Overload:Postgrest.Responses.ErrorResponse.Hint
-  isSpec: "True"
-  fullName: Postgrest.Responses.ErrorResponse.Hint
-  nameWithType: ErrorResponse.Hint
-- uid: Postgrest.Responses.ErrorResponse.Message
-  name: Message
-  href: api/Postgrest.Responses.ErrorResponse.html#Postgrest_Responses_ErrorResponse_Message
-  commentId: P:Postgrest.Responses.ErrorResponse.Message
-  fullName: Postgrest.Responses.ErrorResponse.Message
-  nameWithType: ErrorResponse.Message
-- uid: Postgrest.Responses.ErrorResponse.Message*
-  name: Message
-  href: api/Postgrest.Responses.ErrorResponse.html#Postgrest_Responses_ErrorResponse_Message_
-  commentId: Overload:Postgrest.Responses.ErrorResponse.Message
-  isSpec: "True"
-  fullName: Postgrest.Responses.ErrorResponse.Message
-  nameWithType: ErrorResponse.Message
 - uid: Postgrest.Responses.ModeledResponse`1
   name: ModeledResponse<T>
   href: api/Postgrest.Responses.ModeledResponse-1.html
