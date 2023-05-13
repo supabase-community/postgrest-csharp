@@ -866,7 +866,7 @@ namespace PostgrestTests
             var messagesResponse = await client.Table<Message>().Get();
 
             var supaFilteredMessages = filteredResponse.Models;
-            var linqFilteredMessages = messagesResponse.Models.Where(m => m.UserName!.Contains("SUPA")).ToList();
+            var linqFilteredMessages = messagesResponse.Models.Where(m => m.UserName!.Contains("SUPA", StringComparison.OrdinalIgnoreCase)).ToList();
 
             CollectionAssert.AreEqual(linqFilteredMessages, supaFilteredMessages);
         }
