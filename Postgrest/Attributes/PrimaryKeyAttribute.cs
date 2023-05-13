@@ -17,12 +17,12 @@ namespace Postgrest.Attributes
     [AttributeUsage(AttributeTargets.Property)]
     public class PrimaryKeyAttribute : Attribute
     {
-        public string ColumnName { get; set; }
+        public string ColumnName { get; }
 
         /// <summary>
         /// Would be set to false in the event that the database handles the generation of this property.
         /// </summary>
-        public bool ShouldInsert { get; set; }
+        public bool ShouldInsert { get; }
 
         public PrimaryKeyAttribute([CallerMemberName] string? columnName = null, bool shouldInsert = false)
         {
