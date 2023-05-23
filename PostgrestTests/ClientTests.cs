@@ -405,8 +405,11 @@ namespace PostgrestTests
 
             var ks1 = await client.Table<KitchenSink>().OnConflict("unique_value").Upsert(kitchenSink1);
             var uks1 = ks1.Models.First();
-            uks1.StringValue = "Testing 1";
-            await client.Table<KitchenSink>().OnConflict(x => x.UniqueValue!).Upsert(uks1);
+
+            await client.Table<KitchenSink>()
+                .OnConflict(x => x.UniqueValue!)
+                .Set(x => x.StringValue!, "Testing 1")
+                .Upsert(uks1);
 
             var updatedUser = response.Models.First();
 
@@ -866,7 +869,8 @@ namespace PostgrestTests
             var messagesResponse = await client.Table<Message>().Get();
 
             var supaFilteredMessages = filteredResponse.Models;
-            var linqFilteredMessages = messagesResponse.Models.Where(m => m.UserName!.Contains("SUPA", StringComparison.OrdinalIgnoreCase)).ToList();
+            var linqFilteredMessages = messagesResponse.Models
+                .Where(m => m.UserName!.Contains("SUPA", StringComparison.OrdinalIgnoreCase)).ToList();
 
             CollectionAssert.AreEqual(linqFilteredMessages, supaFilteredMessages);
         }

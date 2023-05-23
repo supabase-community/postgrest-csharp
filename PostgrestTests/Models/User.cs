@@ -17,6 +17,9 @@ namespace PostgrestTests.Models
 
         [Column("favorite_numbers")]
         public List<int>? FavoriteNumbers { get; set; }
+        
+        [Column("favorite_name")]
+        public string? FavoriteName { get; set; }
 
         [Column("age_range")]
         public IntRange? AgeRange { get; set; }

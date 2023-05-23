@@ -80,8 +80,8 @@ namespace PostgrestTests
             var moviePeopleModels = await client.Table<MoviePerson>().Insert(moviePeople);
             Assert.IsTrue(moviePeopleModels.Models.Count == 2);
 
-            var testRelations = await client.Table<Movie>().Where(x => x.Id == movieModel.Id).Single();
-
+            var response = await client.Table<Movie>().Where(x => x.Id == movieModel.Id).Get();
+            var testRelations = response.Model!;
             Assert.IsNotNull(testRelations);
             Assert.IsNotNull(testRelations.People.Find(x => x.Id == peopleModels.Models[0].Id));
             Assert.IsNotNull(testRelations.People.Find(x => x.Id == peopleModels.Models[1].Id));

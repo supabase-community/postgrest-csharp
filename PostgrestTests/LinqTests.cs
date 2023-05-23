@@ -122,41 +122,46 @@ namespace PostgrestTests
         {
             var client = new Client(BaseUrl);
 
-            var supaUpdated = new User
+            var model = new User
             {
                 Username = "supabot",
+                FavoriteName = "supabase",
                 AgeRange = new IntRange(3, 8),
                 Status = "OFFLINE",
                 Catchphrase = "fat cat"
             };
 
-            var response = await client.Table<User>().Insert(supaUpdated, new QueryOptions { Upsert = true });
+            var response = await client.Table<User>().Insert(model, new QueryOptions { Upsert = true });
+            Assert.AreEqual(1, response.Models.Count);
+
+            var exists = await client.Table<User>().Where(x => x.Username == "super-unique").Single();
+
+            if (exists != null)
+                await exists.Delete<User>();
 
             // Upsert-ing a model.
-            var kitchenSink1 = new KitchenSink { Id = 2, UniqueValue = "Testing" };
+            var user1 = new User { Username = "super-unique", FavoriteName = "supabase-2" };
 
-            var ks1 = await client.Table<KitchenSink>().OnConflict(x => x.UniqueValue!)
-                .Upsert(kitchenSink1);
-            var uks1 = ks1.Models.First();
-            uks1.StringValue = "Testing 1";
-            await client.Table<KitchenSink>().OnConflict(x => x.UniqueValue!).Upsert(uks1);
+            var ks1 = await client.Table<User>().OnConflict(x => x.FavoriteName!)
+                .Insert(user1);
+            var uks1 = ks1.Model!;
+            await client.Table<User>().OnConflict(x => x.FavoriteName!).Set(x => x.FavoriteName!, "supabase-3")
+                .Upsert(uks1);
 
-            var updatedUser = response.Models.First();
-
-            Assert.AreEqual(1, response.Models.Count);
-            Assert.AreEqual(supaUpdated.Username, updatedUser.Username);
-            Assert.AreEqual(supaUpdated.AgeRange, updatedUser.AgeRange);
-            Assert.AreEqual(supaUpdated.Status, updatedUser.Status);
+            var updatedUser = response.Model!;
+            Assert.AreEqual(model.Username, updatedUser.Username);
+            Assert.AreEqual(model.AgeRange, updatedUser.AgeRange);
+            Assert.AreEqual(model.Status, updatedUser.Status);
 
             Assert.ThrowsException<ArgumentException>(() =>
             {
-                return client.Table<KitchenSink>().OnConflict(x => new object[] { x.StringValue!, x.IntValue! })
-                    .Upsert(kitchenSink1);
+                return client.Table<User>().OnConflict(x => new object[] { x.Username!, x.FavoriteName! })
+                    .Upsert(user1);
             });
 
             Assert.ThrowsException<ArgumentException>(() =>
             {
-                return client.Table<KitchenSink>().OnConflict(x => "something").Upsert(kitchenSink1);
+                return client.Table<User>().OnConflict(x => "something").Upsert(user1);
             });
         }
 
