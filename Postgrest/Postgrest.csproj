@@ -1,51 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<TargetFramework>netstandard2.0</TargetFramework>
-		<PackOnBuild>true</PackOnBuild>
-		<PackageId>postgrest-csharp</PackageId>
-		<Authors>Joseph Schultz &lt;joseph@acupofjose.com&gt;</Authors>
-		<Copyright>MIT</Copyright>
-		<NeutralLanguage>en-US</NeutralLanguage>
-		<PackageLicenseUrl>https://github.com/supabase/postgrest-csharp/blob/master/LICENSE</PackageLicenseUrl>
-		<Owners>Joseph Schultz &lt;joseph@acupajoe.io&gt;</Owners>
-		<PackageProjectUrl>https://github.com/supabase/postgrest-csharp</PackageProjectUrl>
-		<Summary>Library to interact with postgREST servers</Summary>
-		<Title>postgrest-csharp</Title>
-		<Description>
-			Postgrest-csharp is written primarily as a helper library for supabase/supabase-csharp, however, it should be easy enough to use outside of the supabase ecosystem.
-
-			The bulk of this library is a translation and c-sharp-ification of the supabase/postgrest-js library.
-		</Description>
-		<PackageIconUrl>https://avatars.githubusercontent.com/u/54469796?s=200&amp;v=4</PackageIconUrl>
-		<PackageTags>supabase,postgrest</PackageTags>
-		<ReleaseVersion>3.1.3</ReleaseVersion>
-		<PackageVersion>3.1.3</PackageVersion>
-	</PropertyGroup>
-	<PropertyGroup>
-		<Nullable>enable</Nullable>
-		<LangVersion>latest</LangVersion>
-		<WarningsAsErrors>CS8600;CS8602;CS8603</WarningsAsErrors>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Version)' == '' ">
-		<VersionPrefix Condition=" '$(VersionPrefix)' == '' ">3.1.3</VersionPrefix>
-		<VersionSuffix Condition=" '$(VersionSuffix)' == '' ">
-		</VersionSuffix>
-		<Version Condition=" '$(VersionSuffix)' != '' ">$(VersionPrefix)-$(VersionSuffix)</Version>
-		<Version Condition=" '$(Version)' == '' ">$(VersionPrefix)</Version>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-		<LangVersion>latest</LangVersion>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-		<LangVersion>latest</LangVersion>
-	</PropertyGroup>
-	<ItemGroup>
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-		<PackageReference Include="supabase-core" Version="0.0.2" />
-		<PackageReference Include="System.Linq.Expressions" Version="4.3.0" />
-	</ItemGroup>
-	<ItemGroup>
-		<Folder Include="Converters\" />
-	</ItemGroup>
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <Title>postgrest-csharp</Title>
+        <PackageId>postgrest-csharp</PackageId>
+        <Authors>Joseph Schultz &lt;joseph@acupofjose.com&gt;</Authors>
+        <PackOnBuild>true</PackOnBuild>
+        <Copyright>MIT</Copyright>
+        <NeutralLanguage>en-US</NeutralLanguage>
+        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <Owners>Joseph Schultz &lt;joseph@acupajoe.io&gt;</Owners>
+        <PackageProjectUrl>https://github.com/supabase-community/postgrest-csharp</PackageProjectUrl>
+        <Summary>Library to interact with postgREST servers</Summary>
+        <Description>Postgrest-csharp is written primarily as a helper library for supabase/supabase-csharp, however, it should be easy enough to use outside of the supabase ecosystem.
+            The bulk of this library is a translation and c-sharp-ification of the supabase/postgrest-js library.
+        </Description>
+        <PackageIconUrl>https://avatars.githubusercontent.com/u/54469796?s=200&amp;v=4</PackageIconUrl>
+        <PackageTags>supabase,postgrest</PackageTags>
+        <ReleaseVersion>3.1.3</ReleaseVersion>
+        <PackageVersion>3.1.3</PackageVersion>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageIcon>icon.png</PackageIcon>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <RepositoryUrl>https://github.com/supabase-community/postgrest-csharp</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+    </PropertyGroup>
+    <PropertyGroup>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    </PropertyGroup>
+    <PropertyGroup>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    </PropertyGroup>
+    <PropertyGroup>
+        <Nullable>enable</Nullable>
+        <LangVersion>latest</LangVersion>
+        <WarningsAsErrors>CS8600;CS8602;CS8603</WarningsAsErrors>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Version)' == '' ">
+        <VersionPrefix Condition=" '$(VersionPrefix)' == '' ">3.1.3</VersionPrefix>
+        <VersionSuffix Condition=" '$(VersionSuffix)' == '' ">
+        </VersionSuffix>
+        <Version Condition=" '$(VersionSuffix)' != '' ">$(VersionPrefix)-$(VersionSuffix)</Version>
+        <Version Condition=" '$(Version)' == '' ">$(VersionPrefix)</Version>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.2"/>
+        <PackageReference Include="supabase-core" Version="0.0.2"/>
+        <PackageReference Include="System.Linq.Expressions" Version="4.3.0"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Converters\"/>
+        <None Include="..\.github\icon.png" Pack="true" Link="icon.png" PackagePath="\"/>
+        <None Include="..\README.md" Pack="true" Link="README.md" PackagePath="\"/>
+    </ItemGroup>
 </Project>

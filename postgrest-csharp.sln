@@ -15,6 +15,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{334B963C-FE86-46D0-8C20-C35799B62FA6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{DAE8230C-F8CB-41E7-B765-7647A205CFAE}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\build-documentation.yaml = .github\workflows\build-documentation.yaml
+		.github\workflows\dotnet-core.yml = .github\workflows\dotnet-core.yml
+		.github\workflows\release.yml = .github\workflows\release.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,5 +56,9 @@ Global
 		$0.StandardHeader = $2
 		$0.VersionControlPolicy = $3
 		version = 2.0.6
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{334B963C-FE86-46D0-8C20-C35799B62FA6} = {FA6C62F4-8003-441A-9E53-BB05FF4E3F04}
+		{DAE8230C-F8CB-41E7-B765-7647A205CFAE} = {334B963C-FE86-46D0-8C20-C35799B62FA6}
 	EndGlobalSection
 EndGlobal
