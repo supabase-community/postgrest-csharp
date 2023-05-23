@@ -69,7 +69,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Client.html",
-          "hash": "h99n6E4vnbZb6WpiyfNHZw=="
+          "hash": "YM7rcp7+TwK89RWf91LyqA=="
         }
       },
       "is_incremental": false,
@@ -321,7 +321,31 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Interfaces.IPostgrestClient.html",
-          "hash": "3pt86cG0xGgpL8NnM/2iqw=="
+          "hash": "GnMSYvlV+EAltJuqlSBMjg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Postgrest.Interfaces.IPostgrestDebugger.DebugEventHandler.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Postgrest.Interfaces.IPostgrestDebugger.DebugEventHandler.html",
+          "hash": "RPO9AtG6h7ipLIHJ9VWQQQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Postgrest.Interfaces.IPostgrestDebugger.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Postgrest.Interfaces.IPostgrestDebugger.html",
+          "hash": "p1bnDpREVUsTS4zIzZBu9w=="
         }
       },
       "is_incremental": false,
@@ -357,7 +381,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Interfaces.html",
-          "hash": "R0UPUo5b6B8unhaKnKJGhQ=="
+          "hash": "mPxem0mLlNp1p2+Ej9W+bg=="
         }
       },
       "is_incremental": false,
@@ -549,7 +573,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "hJDBzIt4IeLmdcIqm2dZYA=="
+          "hash": "wjyrVZmccD040mwHaGXhnA=="
         }
       },
       "is_incremental": false,
@@ -600,7 +624,7 @@
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 44,
+          "total_file_count": 46,
           "skipped_file_count": 0
         },
         "TocDocumentProcessor": {

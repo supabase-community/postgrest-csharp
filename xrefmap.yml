@@ -322,6 +322,19 @@ references:
   isSpec: "True"
   fullName: Postgrest.Client.Client
   nameWithType: Client.Client
+- uid: Postgrest.Client.AddDebugHandler(Postgrest.Interfaces.IPostgrestDebugger.DebugEventHandler)
+  name: AddDebugHandler(IPostgrestDebugger.DebugEventHandler)
+  href: api/Postgrest.Client.html#Postgrest_Client_AddDebugHandler_Postgrest_Interfaces_IPostgrestDebugger_DebugEventHandler_
+  commentId: M:Postgrest.Client.AddDebugHandler(Postgrest.Interfaces.IPostgrestDebugger.DebugEventHandler)
+  fullName: Postgrest.Client.AddDebugHandler(Postgrest.Interfaces.IPostgrestDebugger.DebugEventHandler)
+  nameWithType: Client.AddDebugHandler(IPostgrestDebugger.DebugEventHandler)
+- uid: Postgrest.Client.AddDebugHandler*
+  name: AddDebugHandler
+  href: api/Postgrest.Client.html#Postgrest_Client_AddDebugHandler_
+  commentId: Overload:Postgrest.Client.AddDebugHandler
+  isSpec: "True"
+  fullName: Postgrest.Client.AddDebugHandler
+  nameWithType: Client.AddDebugHandler
 - uid: Postgrest.Client.BaseUrl
   name: BaseUrl
   href: api/Postgrest.Client.html#Postgrest_Client_BaseUrl
@@ -335,6 +348,19 @@ references:
   isSpec: "True"
   fullName: Postgrest.Client.BaseUrl
   nameWithType: Client.BaseUrl
+- uid: Postgrest.Client.ClearDebugHandlers
+  name: ClearDebugHandlers()
+  href: api/Postgrest.Client.html#Postgrest_Client_ClearDebugHandlers
+  commentId: M:Postgrest.Client.ClearDebugHandlers
+  fullName: Postgrest.Client.ClearDebugHandlers()
+  nameWithType: Client.ClearDebugHandlers()
+- uid: Postgrest.Client.ClearDebugHandlers*
+  name: ClearDebugHandlers
+  href: api/Postgrest.Client.html#Postgrest_Client_ClearDebugHandlers_
+  commentId: Overload:Postgrest.Client.ClearDebugHandlers
+  isSpec: "True"
+  fullName: Postgrest.Client.ClearDebugHandlers
+  nameWithType: Client.ClearDebugHandlers
 - uid: Postgrest.Client.GetHeaders
   name: GetHeaders
   href: api/Postgrest.Client.html#Postgrest_Client_GetHeaders
@@ -361,6 +387,19 @@ references:
   isSpec: "True"
   fullName: Postgrest.Client.Options
   nameWithType: Client.Options
+- uid: Postgrest.Client.RemoveDebugHandler(Postgrest.Interfaces.IPostgrestDebugger.DebugEventHandler)
+  name: RemoveDebugHandler(IPostgrestDebugger.DebugEventHandler)
+  href: api/Postgrest.Client.html#Postgrest_Client_RemoveDebugHandler_Postgrest_Interfaces_IPostgrestDebugger_DebugEventHandler_
+  commentId: M:Postgrest.Client.RemoveDebugHandler(Postgrest.Interfaces.IPostgrestDebugger.DebugEventHandler)
+  fullName: Postgrest.Client.RemoveDebugHandler(Postgrest.Interfaces.IPostgrestDebugger.DebugEventHandler)
+  nameWithType: Client.RemoveDebugHandler(IPostgrestDebugger.DebugEventHandler)
+- uid: Postgrest.Client.RemoveDebugHandler*
+  name: RemoveDebugHandler
+  href: api/Postgrest.Client.html#Postgrest_Client_RemoveDebugHandler_
+  commentId: Overload:Postgrest.Client.RemoveDebugHandler
+  isSpec: "True"
+  fullName: Postgrest.Client.RemoveDebugHandler
+  nameWithType: Client.RemoveDebugHandler
 - uid: Postgrest.Client.Rpc(System.String,Dictionary{System.String,System.Object})
   name: Rpc(String, Dictionary<String, Object>)
   href: api/Postgrest.Client.html#Postgrest_Client_Rpc_System_String_Dictionary_System_String_System_Object__
@@ -1268,6 +1307,19 @@ references:
   commentId: T:Postgrest.Interfaces.IPostgrestClient
   fullName: Postgrest.Interfaces.IPostgrestClient
   nameWithType: IPostgrestClient
+- uid: Postgrest.Interfaces.IPostgrestClient.AddDebugHandler(Postgrest.Interfaces.IPostgrestDebugger.DebugEventHandler)
+  name: AddDebugHandler(IPostgrestDebugger.DebugEventHandler)
+  href: api/Postgrest.Interfaces.IPostgrestClient.html#Postgrest_Interfaces_IPostgrestClient_AddDebugHandler_Postgrest_Interfaces_IPostgrestDebugger_DebugEventHandler_
+  commentId: M:Postgrest.Interfaces.IPostgrestClient.AddDebugHandler(Postgrest.Interfaces.IPostgrestDebugger.DebugEventHandler)
+  fullName: Postgrest.Interfaces.IPostgrestClient.AddDebugHandler(Postgrest.Interfaces.IPostgrestDebugger.DebugEventHandler)
+  nameWithType: IPostgrestClient.AddDebugHandler(IPostgrestDebugger.DebugEventHandler)
+- uid: Postgrest.Interfaces.IPostgrestClient.AddDebugHandler*
+  name: AddDebugHandler
+  href: api/Postgrest.Interfaces.IPostgrestClient.html#Postgrest_Interfaces_IPostgrestClient_AddDebugHandler_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestClient.AddDebugHandler
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestClient.AddDebugHandler
+  nameWithType: IPostgrestClient.AddDebugHandler
 - uid: Postgrest.Interfaces.IPostgrestClient.BaseUrl
   name: BaseUrl
   href: api/Postgrest.Interfaces.IPostgrestClient.html#Postgrest_Interfaces_IPostgrestClient_BaseUrl
@@ -1281,6 +1333,19 @@ references:
   isSpec: "True"
   fullName: Postgrest.Interfaces.IPostgrestClient.BaseUrl
   nameWithType: IPostgrestClient.BaseUrl
+- uid: Postgrest.Interfaces.IPostgrestClient.ClearDebugHandlers
+  name: ClearDebugHandlers()
+  href: api/Postgrest.Interfaces.IPostgrestClient.html#Postgrest_Interfaces_IPostgrestClient_ClearDebugHandlers
+  commentId: M:Postgrest.Interfaces.IPostgrestClient.ClearDebugHandlers
+  fullName: Postgrest.Interfaces.IPostgrestClient.ClearDebugHandlers()
+  nameWithType: IPostgrestClient.ClearDebugHandlers()
+- uid: Postgrest.Interfaces.IPostgrestClient.ClearDebugHandlers*
+  name: ClearDebugHandlers
+  href: api/Postgrest.Interfaces.IPostgrestClient.html#Postgrest_Interfaces_IPostgrestClient_ClearDebugHandlers_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestClient.ClearDebugHandlers
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestClient.ClearDebugHandlers
+  nameWithType: IPostgrestClient.ClearDebugHandlers
 - uid: Postgrest.Interfaces.IPostgrestClient.Options
   name: Options
   href: api/Postgrest.Interfaces.IPostgrestClient.html#Postgrest_Interfaces_IPostgrestClient_Options
@@ -1294,6 +1359,19 @@ references:
   isSpec: "True"
   fullName: Postgrest.Interfaces.IPostgrestClient.Options
   nameWithType: IPostgrestClient.Options
+- uid: Postgrest.Interfaces.IPostgrestClient.RemoveDebugHandler(Postgrest.Interfaces.IPostgrestDebugger.DebugEventHandler)
+  name: RemoveDebugHandler(IPostgrestDebugger.DebugEventHandler)
+  href: api/Postgrest.Interfaces.IPostgrestClient.html#Postgrest_Interfaces_IPostgrestClient_RemoveDebugHandler_Postgrest_Interfaces_IPostgrestDebugger_DebugEventHandler_
+  commentId: M:Postgrest.Interfaces.IPostgrestClient.RemoveDebugHandler(Postgrest.Interfaces.IPostgrestDebugger.DebugEventHandler)
+  fullName: Postgrest.Interfaces.IPostgrestClient.RemoveDebugHandler(Postgrest.Interfaces.IPostgrestDebugger.DebugEventHandler)
+  nameWithType: IPostgrestClient.RemoveDebugHandler(IPostgrestDebugger.DebugEventHandler)
+- uid: Postgrest.Interfaces.IPostgrestClient.RemoveDebugHandler*
+  name: RemoveDebugHandler
+  href: api/Postgrest.Interfaces.IPostgrestClient.html#Postgrest_Interfaces_IPostgrestClient_RemoveDebugHandler_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestClient.RemoveDebugHandler
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestClient.RemoveDebugHandler
+  nameWithType: IPostgrestClient.RemoveDebugHandler
 - uid: Postgrest.Interfaces.IPostgrestClient.Rpc(System.String,Dictionary{System.String,System.Object})
   name: Rpc(String, Dictionary<String, Object>)
   href: api/Postgrest.Interfaces.IPostgrestClient.html#Postgrest_Interfaces_IPostgrestClient_Rpc_System_String_Dictionary_System_String_System_Object__
@@ -1326,6 +1404,73 @@ references:
   fullName.vb: Postgrest.Interfaces.IPostgrestClient.Table(Of T)()
   nameWithType: IPostgrestClient.Table<T>()
   nameWithType.vb: IPostgrestClient.Table(Of T)()
+- uid: Postgrest.Interfaces.IPostgrestDebugger
+  name: IPostgrestDebugger
+  href: api/Postgrest.Interfaces.IPostgrestDebugger.html
+  commentId: T:Postgrest.Interfaces.IPostgrestDebugger
+  fullName: Postgrest.Interfaces.IPostgrestDebugger
+  nameWithType: IPostgrestDebugger
+- uid: Postgrest.Interfaces.IPostgrestDebugger.AddDebugHandler(Postgrest.Interfaces.IPostgrestDebugger.DebugEventHandler)
+  name: AddDebugHandler(IPostgrestDebugger.DebugEventHandler)
+  href: api/Postgrest.Interfaces.IPostgrestDebugger.html#Postgrest_Interfaces_IPostgrestDebugger_AddDebugHandler_Postgrest_Interfaces_IPostgrestDebugger_DebugEventHandler_
+  commentId: M:Postgrest.Interfaces.IPostgrestDebugger.AddDebugHandler(Postgrest.Interfaces.IPostgrestDebugger.DebugEventHandler)
+  fullName: Postgrest.Interfaces.IPostgrestDebugger.AddDebugHandler(Postgrest.Interfaces.IPostgrestDebugger.DebugEventHandler)
+  nameWithType: IPostgrestDebugger.AddDebugHandler(IPostgrestDebugger.DebugEventHandler)
+- uid: Postgrest.Interfaces.IPostgrestDebugger.AddDebugHandler*
+  name: AddDebugHandler
+  href: api/Postgrest.Interfaces.IPostgrestDebugger.html#Postgrest_Interfaces_IPostgrestDebugger_AddDebugHandler_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestDebugger.AddDebugHandler
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestDebugger.AddDebugHandler
+  nameWithType: IPostgrestDebugger.AddDebugHandler
+- uid: Postgrest.Interfaces.IPostgrestDebugger.ClearDebugHandlers
+  name: ClearDebugHandlers()
+  href: api/Postgrest.Interfaces.IPostgrestDebugger.html#Postgrest_Interfaces_IPostgrestDebugger_ClearDebugHandlers
+  commentId: M:Postgrest.Interfaces.IPostgrestDebugger.ClearDebugHandlers
+  fullName: Postgrest.Interfaces.IPostgrestDebugger.ClearDebugHandlers()
+  nameWithType: IPostgrestDebugger.ClearDebugHandlers()
+- uid: Postgrest.Interfaces.IPostgrestDebugger.ClearDebugHandlers*
+  name: ClearDebugHandlers
+  href: api/Postgrest.Interfaces.IPostgrestDebugger.html#Postgrest_Interfaces_IPostgrestDebugger_ClearDebugHandlers_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestDebugger.ClearDebugHandlers
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestDebugger.ClearDebugHandlers
+  nameWithType: IPostgrestDebugger.ClearDebugHandlers
+- uid: Postgrest.Interfaces.IPostgrestDebugger.DebugEventHandler
+  name: IPostgrestDebugger.DebugEventHandler
+  href: api/Postgrest.Interfaces.IPostgrestDebugger.DebugEventHandler.html
+  commentId: T:Postgrest.Interfaces.IPostgrestDebugger.DebugEventHandler
+  fullName: Postgrest.Interfaces.IPostgrestDebugger.DebugEventHandler
+  nameWithType: IPostgrestDebugger.DebugEventHandler
+- uid: Postgrest.Interfaces.IPostgrestDebugger.Log(System.Nullable{System.Object},System.String,Postgrest.Exceptions.PostgrestException)
+  name: Log(Nullable<Object>, String, PostgrestException)
+  href: api/Postgrest.Interfaces.IPostgrestDebugger.html#Postgrest_Interfaces_IPostgrestDebugger_Log_System_Nullable_System_Object__System_String_Postgrest_Exceptions_PostgrestException_
+  commentId: M:Postgrest.Interfaces.IPostgrestDebugger.Log(System.Nullable{System.Object},System.String,Postgrest.Exceptions.PostgrestException)
+  name.vb: Log(Nullable(Of Object), String, PostgrestException)
+  fullName: Postgrest.Interfaces.IPostgrestDebugger.Log(System.Nullable<System.Object>, System.String, Postgrest.Exceptions.PostgrestException)
+  fullName.vb: Postgrest.Interfaces.IPostgrestDebugger.Log(System.Nullable(Of System.Object), System.String, Postgrest.Exceptions.PostgrestException)
+  nameWithType: IPostgrestDebugger.Log(Nullable<Object>, String, PostgrestException)
+  nameWithType.vb: IPostgrestDebugger.Log(Nullable(Of Object), String, PostgrestException)
+- uid: Postgrest.Interfaces.IPostgrestDebugger.Log*
+  name: Log
+  href: api/Postgrest.Interfaces.IPostgrestDebugger.html#Postgrest_Interfaces_IPostgrestDebugger_Log_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestDebugger.Log
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestDebugger.Log
+  nameWithType: IPostgrestDebugger.Log
+- uid: Postgrest.Interfaces.IPostgrestDebugger.RemoveDebugHandler(Postgrest.Interfaces.IPostgrestDebugger.DebugEventHandler)
+  name: RemoveDebugHandler(IPostgrestDebugger.DebugEventHandler)
+  href: api/Postgrest.Interfaces.IPostgrestDebugger.html#Postgrest_Interfaces_IPostgrestDebugger_RemoveDebugHandler_Postgrest_Interfaces_IPostgrestDebugger_DebugEventHandler_
+  commentId: M:Postgrest.Interfaces.IPostgrestDebugger.RemoveDebugHandler(Postgrest.Interfaces.IPostgrestDebugger.DebugEventHandler)
+  fullName: Postgrest.Interfaces.IPostgrestDebugger.RemoveDebugHandler(Postgrest.Interfaces.IPostgrestDebugger.DebugEventHandler)
+  nameWithType: IPostgrestDebugger.RemoveDebugHandler(IPostgrestDebugger.DebugEventHandler)
+- uid: Postgrest.Interfaces.IPostgrestDebugger.RemoveDebugHandler*
+  name: RemoveDebugHandler
+  href: api/Postgrest.Interfaces.IPostgrestDebugger.html#Postgrest_Interfaces_IPostgrestDebugger_RemoveDebugHandler_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestDebugger.RemoveDebugHandler
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestDebugger.RemoveDebugHandler
+  nameWithType: IPostgrestDebugger.RemoveDebugHandler
 - uid: Postgrest.Interfaces.IPostgrestQueryFilter
   name: IPostgrestQueryFilter
   href: api/Postgrest.Interfaces.IPostgrestQueryFilter.html
