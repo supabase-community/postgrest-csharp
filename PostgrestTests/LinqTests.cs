@@ -47,10 +47,9 @@ namespace PostgrestTests
         {
             var client = new Client(BaseUrl);
 
-            var testValue = 2;
             // Test boolean equality
             var query1 = await client.Table<Movie>()
-                .Where(x => x.Id == testValue)
+                .Where(x => x.Id == "ea07bd86-a507-4c68-9545-b848bfe74c90")
                 .Get();
 
             Assert.IsTrue(query1.Models.Count == 1);
@@ -314,7 +313,6 @@ namespace PostgrestTests
 
             var newMovie = new Movie
             {
-                Id = 18,
                 Name = "Pride and Prejudice",
                 CreatedAt = DateTime.Now
             };

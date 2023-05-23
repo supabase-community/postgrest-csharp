@@ -22,973 +22,979 @@ using static Postgrest.Constants;
 
 // ReSharper disable InvalidXmlDocComment
 
-namespace Postgrest
+namespace Postgrest;
+
+/// <summary>
+/// Class created from a model derived from `BaseModel` that can generate query requests to a Postgrest Endpoint.
+/// 
+/// Representative of a `USE $TABLE` command.
+/// </summary>
+/// <typeparam name="T">Model derived from `BaseModel`.</typeparam>
+public class Table<T> : IPostgrestTable<T> where T : BaseModel, new()
 {
+    public string BaseUrl { get; }
+
     /// <summary>
-    /// Class created from a model derived from `BaseModel` that can generate query requests to a Postgrest Endpoint.
-    /// 
-    /// Representative of a `USE $TABLE` command.
+    /// Name of the Table parsed by the Model.
     /// </summary>
-    /// <typeparam name="T">Model derived from `BaseModel`.</typeparam>
-    public class Table<T> : IPostgrestTable<T> where T : BaseModel, new()
+    public string TableName { get; }
+
+    /// <summary>
+    /// Function that can be set to return dynamic headers.
+    /// 
+    /// Headers specified in the constructor will ALWAYS take precedence over headers returned by this function.
+    /// </summary>
+    public Func<Dictionary<string, string>>? GetHeaders { get; set; }
+
+    private readonly ClientOptions _options;
+    private readonly JsonSerializerSettings _serializerSettings;
+
+    private HttpMethod _method = HttpMethod.Get;
+
+    #region Pending Query State
+
+    private string? _columnQuery;
+
+    private readonly List<QueryFilter> _filters = new();
+    private readonly List<QueryOrderer> _orderers = new();
+    private readonly List<string> _columns = new();
+
+    private readonly Dictionary<object, object?> _setData = new();
+
+    private readonly List<ReferenceAttribute> _references = new();
+
+    private int _rangeFrom = int.MinValue;
+    private int _rangeTo = int.MinValue;
+
+    private int _limit = int.MinValue;
+    private string? _limitForeignKey;
+
+    private int _offset = int.MinValue;
+    private string? _offsetForeignKey;
+
+    private string? _onConflict;
+
+    #endregion
+
+    /// <summary>
+    /// Typically called from the Client `new Client.Table<ModelType>`
+    /// </summary>
+    /// <param name="baseUrl">Api Endpoint (ex: "http://localhost:8000"), no trailing slash required.</param>
+    /// <param name="serializerSettings"></param>
+    /// <param name="options">Optional client configuration.</param>
+    public Table(string baseUrl, JsonSerializerSettings serializerSettings, ClientOptions? options = null)
     {
-        public string BaseUrl { get; }
+        BaseUrl = baseUrl;
 
-        /// <summary>
-        /// Name of the Table parsed by the Model.
-        /// </summary>
-        public string TableName { get; }
+        _options = options ?? new ClientOptions();
+        _serializerSettings = serializerSettings;
 
-        /// <summary>
-        /// Function that can be set to return dynamic headers.
-        /// 
-        /// Headers specified in the constructor will ALWAYS take precedence over headers returned by this function.
-        /// </summary>
-        public Func<Dictionary<string, string>>? GetHeaders { get; set; }
-
-        private readonly ClientOptions _options;
-        private readonly JsonSerializerSettings _serializerSettings;
-
-        private HttpMethod _method = HttpMethod.Get;
-
-        #region Pending Query State
-
-        private string? _columnQuery;
-
-        private readonly List<QueryFilter> _filters = new();
-        private readonly List<QueryOrderer> _orderers = new();
-        private readonly List<string> _columns = new();
-
-        private readonly Dictionary<object, object?> _setData = new();
-
-        private readonly List<ReferenceAttribute> _references = new();
-
-        private int _rangeFrom = int.MinValue;
-        private int _rangeTo = int.MinValue;
-
-        private int _limit = int.MinValue;
-        private string? _limitForeignKey;
-
-        private int _offset = int.MinValue;
-        private string? _offsetForeignKey;
-
-        private string? _onConflict;
-
-        #endregion
-
-        /// <summary>
-        /// Typically called from the Client `new Client.Table<ModelType>`
-        /// </summary>
-        /// <param name="baseUrl">Api Endpoint (ex: "http://localhost:8000"), no trailing slash required.</param>
-        /// <param name="options">Optional client configuration.</param>
-        public Table(string baseUrl, JsonSerializerSettings serializerSettings, ClientOptions? options = null)
+        foreach (var property in typeof(T).GetProperties())
         {
-            BaseUrl = baseUrl;
+            var attrs = property.GetCustomAttributes(typeof(ReferenceAttribute), true);
 
-            _options = options ?? new ClientOptions();
-            _serializerSettings = serializerSettings;
-
-            foreach (var property in typeof(T).GetProperties())
+            foreach (ReferenceAttribute attr in attrs)
             {
-                var attrs = property.GetCustomAttributes(typeof(ReferenceAttribute), true);
-
-                if (attrs.Length > 0)
-                    _references.Add((ReferenceAttribute)attrs.First());
+                attr.ParseProperties(new List<ReferenceAttribute> { attr });
+                _references.Add(attr);
             }
-
-            TableName = FindTableName();
         }
 
-        /// <summary>
-        /// Add a filter to a query request using a predicate to select column.
-        /// </summary>
-        /// <param name="predicate">Expects a columns from the Model to be returned</param>
-        /// <param name="op">Operation to perform.</param>
-        /// <param name="criterion">Value to filter with, must be a `string`, `List<object>`, `Dictionary<string, object>`, `FullTextSearchConfig`, or `Range`</param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException"></exception>
-        public Table<T> Filter(Expression<Func<T, object>> predicate, Operator op, object? criterion)
+        TableName = FindTableName();
+    }
+
+    /// <summary>
+    /// Add a filter to a query request using a predicate to select column.
+    /// </summary>
+    /// <param name="predicate">Expects a columns from the Model to be returned</param>
+    /// <param name="op">Operation to perform.</param>
+    /// <param name="criterion">Value to filter with, must be a `string`, `List<object>`, `Dictionary<string, object>`, `FullTextSearchConfig`, or `Range`</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
+    public Table<T> Filter(Expression<Func<T, object>> predicate, Operator op, object? criterion)
+    {
+        var visitor = new SelectExpressionVisitor();
+        visitor.Visit(predicate);
+
+        if (visitor.Columns.Count == 0)
+            throw new ArgumentException("Expected predicate to return a reference to a Model column.");
+
+        if (visitor.Columns.Count > 1)
+            throw new ArgumentException("Only one column should be returned from the predicate.");
+
+        return Filter(visitor.Columns.First(), op, criterion);
+    }
+
+
+    /// <summary>
+    /// Add a Filter to a query request
+    /// </summary>
+    /// <param name="columnName">Column Name in Table.</param>
+    /// <param name="op">Operation to perform.</param>
+    /// <param name="criterion">Value to filter with, must be a `string`, `List<object>`, `Dictionary<string, object>`, `FullTextSearchConfig`, or `Range`</param>
+    /// <returns></returns>
+    public Table<T> Filter(string columnName, Operator op, object? criterion)
+    {
+        if (criterion == null)
         {
-            var visitor = new SelectExpressionVisitor();
-            visitor.Visit(predicate);
-
-            if (visitor.Columns.Count == 0)
-                throw new ArgumentException("Expected predicate to return a reference to a Model column.");
-
-            if (visitor.Columns.Count > 1)
-                throw new ArgumentException("Only one column should be returned from the predicate.");
-
-            return Filter(visitor.Columns.First(), op, criterion);
-        }
-
-
-        /// <summary>
-        /// Add a Filter to a query request
-        /// </summary>
-        /// <param name="columnName">Column Name in Table.</param>
-        /// <param name="op">Operation to perform.</param>
-        /// <param name="criterion">Value to filter with, must be a `string`, `List<object>`, `Dictionary<string, object>`, `FullTextSearchConfig`, or `Range`</param>
-        /// <returns></returns>
-        public Table<T> Filter(string columnName, Operator op, object? criterion)
-        {
-            if (criterion == null)
+            switch (op)
             {
-                switch (op)
-                {
-                    case Operator.Equals:
-                    case Operator.Is:
-                        _filters.Add(new QueryFilter(columnName, Operator.Is, QueryFilter.NullVal));
-                        break;
-                    case Operator.Not:
-                    case Operator.NotEqual:
-                        _filters.Add(new QueryFilter(columnName, Operator.Not,
-                            new QueryFilter(columnName, Operator.Is, QueryFilter.NullVal)));
-                        break;
-                    default:
+                case Operator.Equals:
+                case Operator.Is:
+                    _filters.Add(new QueryFilter(columnName, Operator.Is, QueryFilter.NullVal));
+                    break;
+                case Operator.Not:
+                case Operator.NotEqual:
+                    _filters.Add(new QueryFilter(columnName, Operator.Not,
+                        new QueryFilter(columnName, Operator.Is, QueryFilter.NullVal)));
+                    break;
+                default:
                     throw new PostgrestException(
                             "NOT filters must use the `Equals`, `Is`, `Not` or `NotEqual` operators")
                         { Reason = FailureHint.Reason.InvalidArgument };
-                }
+            }
 
-                return this;
-            }
-            else if (criterion is string stringCriterion)
-            {
-                _filters.Add(new QueryFilter(columnName, op, stringCriterion));
-                return this;
-            }
-            else if (criterion is int intCriterion)
-            {
-                _filters.Add(new QueryFilter(columnName, op, intCriterion));
-                return this;
-            }
-            else if (criterion is float floatCriterion)
-            {
-                _filters.Add(new QueryFilter(columnName, op, floatCriterion));
-                return this;
-            }
-            else if (criterion is List<object> listCriteria)
-            {
-                _filters.Add(new QueryFilter(columnName, op, listCriteria));
-                return this;
-            }
-            else if (criterion is Dictionary<string, object> dictCriteria)
-            {
-                _filters.Add(new QueryFilter(columnName, op, dictCriteria));
-                return this;
-            }
-            else if (criterion is IntRange rangeCriteria)
-            {
-                _filters.Add(new QueryFilter(columnName, op, rangeCriteria));
-                return this;
-            }
-            else if (criterion is FullTextSearchConfig fullTextSearchCriteria)
-            {
-                _filters.Add(new QueryFilter(columnName, op, fullTextSearchCriteria));
-                return this;
-            }
+            return this;
+        }
+        else if (criterion is string stringCriterion)
+        {
+            _filters.Add(new QueryFilter(columnName, op, stringCriterion));
+            return this;
+        }
+        else if (criterion is int intCriterion)
+        {
+            _filters.Add(new QueryFilter(columnName, op, intCriterion));
+            return this;
+        }
+        else if (criterion is float floatCriterion)
+        {
+            _filters.Add(new QueryFilter(columnName, op, floatCriterion));
+            return this;
+        }
+        else if (criterion is List<object> listCriteria)
+        {
+            _filters.Add(new QueryFilter(columnName, op, listCriteria));
+            return this;
+        }
+        else if (criterion is Dictionary<string, object> dictCriteria)
+        {
+            _filters.Add(new QueryFilter(columnName, op, dictCriteria));
+            return this;
+        }
+        else if (criterion is IntRange rangeCriteria)
+        {
+            _filters.Add(new QueryFilter(columnName, op, rangeCriteria));
+            return this;
+        }
+        else if (criterion is FullTextSearchConfig fullTextSearchCriteria)
+        {
+            _filters.Add(new QueryFilter(columnName, op, fullTextSearchCriteria));
+            return this;
+        }
 
         throw new PostgrestException(
             "Unknown criterion type, is it of type `string`, `int`, `float`, `List`, `Dictionary<string, object>`, `FullTextSearchConfig`, or `Range`?")
         {
             Reason = FailureHint.Reason.InvalidArgument
         };
+    }
+
+    /// <summary>
+    /// Adds a NOT filter to the current query args.
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
+    public Table<T> Not(QueryFilter filter)
+    {
+        _filters.Add(new QueryFilter(Operator.Not, filter));
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a NOT filter to the current query args.
+    ///
+    /// Allows queries like:
+    /// <code>
+    /// await client.Table<User>().Not("status", Operators.Equal, "OFFLINE").Get();
+    /// </code>
+    /// </summary>
+    /// <param name="columnName"></param>
+    /// <param name="op"></param>
+    /// <param name="criterion"></param>
+    /// <returns></returns>
+    public Table<T> Not(string columnName, Operator op, string criterion) =>
+        Not(new QueryFilter(columnName, op, criterion));
+
+    /// <summary>
+    /// Adds a NOT filter to the current query args.
+    /// Allows queries like:
+    /// <code>
+    /// await client.Table<User>().Not("status", Operators.In, new List<string> {"AWAY", "OFFLINE"}).Get();
+    /// </code>
+    /// </summary>
+    /// <param name="columnName"></param>
+    /// <param name="op"></param>
+    /// <param name="criteria"></param>
+    /// <returns></returns>
+    public Table<T> Not(string columnName, Operator op, List<object> criteria) =>
+        Not(new QueryFilter(columnName, op, criteria));
+
+    /// <summary>
+    /// Adds a NOT filter to the current query args.
+    /// </summary>
+    /// <param name="columnName"></param>
+    /// <param name="op"></param>
+    /// <param name="criteria"></param>
+    /// <returns></returns>
+    public Table<T> Not(string columnName, Operator op, Dictionary<string, object> criteria) =>
+        Not(new QueryFilter(columnName, op, criteria));
+
+    /// <summary>
+    /// Adds an AND Filter to the current query args.
+    /// </summary>
+    /// <param name="filters"></param>
+    /// <returns></returns>
+    public Table<T> And(List<QueryFilter> filters)
+    {
+        _filters.Add(new QueryFilter(Operator.And, filters));
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a NOT Filter to the current query args.
+    /// </summary>
+    /// <param name="filters"></param>
+    /// <returns></returns>
+    public Table<T> Or(List<QueryFilter> filters)
+    {
+        _filters.Add(new QueryFilter(Operator.Or, filters));
+        return this;
+    }
+
+    /// <summary>
+    /// Fills in query parameters based on a given model's primary key(s).
+    /// </summary>
+    /// <param name="model">A model with a primary key column</param>
+    /// <returns></returns>
+    public Table<T> Match(T model)
+    {
+        foreach (var kvp in model.PrimaryKey)
+        {
+            _filters.Add(new QueryFilter(kvp.Key.ColumnName, Operator.Equals, kvp.Value));
         }
 
-        /// <summary>
-        /// Adds a NOT filter to the current query args.
-        /// </summary>
-        /// <param name="filter"></param>
-        /// <returns></returns>
-        public Table<T> Not(QueryFilter filter)
+        return this;
+    }
+
+    /// <summary>
+    /// Finds all rows whose columns match the specified `query` object.
+    /// </summary>
+    /// <param name="query">The object to filter with, with column names as keys mapped to their filter values.</param>
+    /// <returns></returns>
+    public Table<T> Match(Dictionary<string, string> query)
+    {
+        foreach (var param in query)
         {
-            _filters.Add(new QueryFilter(Operator.Not, filter));
-            return this;
+            _filters.Add(new QueryFilter(param.Key, Operator.Equals, param.Value));
         }
 
-        /// <summary>
-        /// Adds a NOT filter to the current query args.
-        ///
-        /// Allows queries like:
-        /// <code>
-        /// await client.Table<User>().Not("status", Operators.Equal, "OFFLINE").Get();
-        /// </code>
-        /// </summary>
-        /// <param name="columnName"></param>
-        /// <param name="op"></param>
-        /// <param name="criterion"></param>
-        /// <returns></returns>
-        public Table<T> Not(string columnName, Operator op, string criterion) =>
-            Not(new QueryFilter(columnName, op, criterion));
+        return this;
+    }
 
-        /// <summary>
-        /// Adds a NOT filter to the current query args.
-        /// Allows queries like:
-        /// <code>
-        /// await client.Table<User>().Not("status", Operators.In, new List<string> {"AWAY", "OFFLINE"}).Get();
-        /// </code>
-        /// </summary>
-        /// <param name="columnName"></param>
-        /// <param name="op"></param>
-        /// <param name="criteria"></param>
-        /// <returns></returns>
-        public Table<T> Not(string columnName, Operator op, List<object> criteria) =>
-            Not(new QueryFilter(columnName, op, criteria));
+    /// <summary>
+    /// Adds an ordering to the current query args using a predicate function.
+    /// 
+    /// NOTE: If multiple orderings are required, chain this function with another call to <see cref="Order"/>.
+    /// </summary>
+    /// <param name="predicate"></param>
+    /// <param name="ordering">>Expects a columns from the Model to be returned</param>
+    /// <param name="nullPosition"></param>
+    /// <returns></returns>
+    public Table<T> Order(Expression<Func<T, object>> predicate, Ordering ordering,
+        NullPosition nullPosition = NullPosition.First)
+    {
+        var visitor = new SelectExpressionVisitor();
+        visitor.Visit(predicate);
 
-        /// <summary>
-        /// Adds a NOT filter to the current query args.
-        /// </summary>
-        /// <param name="columnName"></param>
-        /// <param name="op"></param>
-        /// <param name="criteria"></param>
-        /// <returns></returns>
-        public Table<T> Not(string columnName, Operator op, Dictionary<string, object> criteria) =>
-            Not(new QueryFilter(columnName, op, criteria));
+        if (visitor.Columns.Count == 0)
+            throw new ArgumentException("Expected predicate to return a reference to a Model column.");
 
-        /// <summary>
-        /// Adds an AND Filter to the current query args.
-        /// </summary>
-        /// <param name="filters"></param>
-        /// <returns></returns>
-        public Table<T> And(List<QueryFilter> filters)
+        if (visitor.Columns.Count > 1)
+            throw new ArgumentException("Only one column should be returned from the predicate.");
+
+        return Order(visitor.Columns.First(), ordering, nullPosition);
+    }
+
+    /// <summary>
+    /// Adds an ordering to the current query args.
+    /// 
+    /// NOTE: If multiple orderings are required, chain this function with another call to <see cref="Order"/>.
+    /// </summary>
+    /// <param name="column">Column Name</param>
+    /// <param name="ordering"></param>
+    /// <param name="nullPosition"></param>
+    /// <returns></returns>
+    public Table<T> Order(string column, Ordering ordering, NullPosition nullPosition = NullPosition.First)
+    {
+        _orderers.Add(new QueryOrderer(null, column, ordering, nullPosition));
+        return this;
+    }
+
+    /// <summary>
+    /// Adds an ordering to the current query args.
+    /// 
+    /// NOTE: If multiple orderings are required, chain this function with another call to <see cref="Order"/>.
+    /// </summary>
+    /// <param name="foreignTable"></param>
+    /// <param name="column"></param>
+    /// <param name="ordering"></param>
+    /// <param name="nullPosition"></param>
+    /// <returns></returns>
+    public Table<T> Order(string foreignTable, string column, Ordering ordering,
+        NullPosition nullPosition = NullPosition.First)
+    {
+        _orderers.Add(new QueryOrderer(foreignTable, column, ordering, nullPosition));
+        return this;
+    }
+
+    /// <summary>
+    /// Sets a FROM range, similar to a `StartAt` query.
+    /// </summary>
+    /// <param name="from"></param>
+    /// <returns></returns>
+    public Table<T> Range(int from)
+    {
+        _rangeFrom = from;
+        return this;
+    }
+
+    /// <summary>
+    /// Sets a bounded range to the current query.
+    /// </summary>
+    /// <param name="from"></param>
+    /// <param name="to"></param>
+    /// <returns></returns>
+    public Table<T> Range(int from, int to)
+    {
+        _rangeFrom = from;
+        _rangeTo = to;
+        return this;
+    }
+
+    /// <summary>
+    /// Select columns for query. 
+    /// </summary>
+    /// <param name="columnQuery"></param>
+    /// <returns></returns>
+    public Table<T> Select(string columnQuery)
+    {
+        _method = HttpMethod.Get;
+        _columnQuery = columnQuery;
+        return this;
+    }
+
+    /// <summary>
+    /// Select columns using a predicate function.
+    /// 
+    /// For example: 
+    ///		`Table<Movie>().Select(x => new[] { x.Id, x.Name, x.CreatedAt }).Get();`
+    /// </summary>
+    /// <param name="predicate">Expects an array of columns from the Model to be returned.</param>
+    /// <returns></returns>
+    public Table<T> Select(Expression<Func<T, object[]>> predicate)
+    {
+        var visitor = new SelectExpressionVisitor();
+        visitor.Visit(predicate);
+
+        if (visitor.Columns.Count == 0)
+            throw new ArgumentException(
+                "Unable to find column(s) to select from the given predicate, did you return an array of Model Properties?");
+
+        return Select(string.Join(",", visitor.Columns));
+    }
+
+    /// <summary>
+    /// Filter a query based on a predicate function. 
+    /// 
+    /// Note: Chaining multiple <see cref="Where(Expression{Func{T, bool}})"/> calls will
+    /// be parsed as an "AND" query.
+    /// 
+    /// Examples:
+    ///		`Table<Movie>().Where(x => x.Name == "Top Gun").Get();`
+    ///		`Table<Movie>().Where(x => x.Name == "Top Gun" || x.Name == "Mad Max").Get();`
+    ///		`Table<Movie>().Where(x => x.Name.Contains("Gun")).Get();`
+    ///		`Table<Movie>().Where(x => x.CreatedAt <= new DateTime(2022, 08, 21)).Get();`
+    ///		`Table<Movie>().Where(x => x.Id > 5 && x.Name.Contains("Max")).Get();`
+    /// </summary>
+    /// <param name="predicate"></param>
+    /// <returns></returns>
+    public Table<T> Where(Expression<Func<T, bool>> predicate)
+    {
+        var visitor = new WhereExpressionVisitor();
+        visitor.Visit(predicate);
+
+        if (visitor.Filter == null)
+            throw new ArgumentException(
+                "Unable to parse the supplied predicate, did you return a predicate where each left hand of the condition is a Model property?");
+
+        if (visitor.Filter.Op == Operator.Equals && visitor.Filter.Criteria == null)
+            _filters.Add(new QueryFilter(visitor.Filter.Property!, Operator.Is, QueryFilter.NullVal));
+        else if (visitor.Filter.Op == Operator.NotEqual && visitor.Filter.Criteria == null)
+            _filters.Add(new QueryFilter(visitor.Filter.Property!, Operator.Not,
+                new QueryFilter(visitor.Filter.Property!, Operator.Is, QueryFilter.NullVal)));
+        else
+            _filters.Add(visitor.Filter);
+
+
+        return this;
+    }
+
+
+    /// <summary>
+    /// Sets a limit with an optional foreign table reference. 
+    /// </summary>
+    /// <param name="limit"></param>
+    /// <param name="foreignTableName"></param>
+    /// <returns></returns>
+    public Table<T> Limit(int limit, string? foreignTableName = null)
+    {
+        _limit = limit;
+        _limitForeignKey = foreignTableName;
+        return this;
+    }
+
+    /// <summary>
+    /// By specifying the onConflict query parameter, you can make UPSERT work on a column(s) that has a UNIQUE constraint.
+    /// </summary>
+    /// <param name="columnName"></param>
+    /// <returns></returns>
+    public Table<T> OnConflict(string columnName)
+    {
+        _onConflict = columnName;
+        return this;
+    }
+
+    /// <summary>
+    /// Set an onConflict query parameter for UPSERTing on a column that has a UNIQUE constraint using a linq predicate.
+    /// </summary>
+    /// <param name="predicate">Expects a column from the model to be returned.</param>
+    /// <returns></returns>
+    public Table<T> OnConflict(Expression<Func<T, object>> predicate)
+    {
+        var visitor = new SelectExpressionVisitor();
+        visitor.Visit(predicate);
+
+        if (visitor.Columns.Count == 0)
+            throw new ArgumentException("Expected predicate to return a reference to a Model column.");
+
+        if (visitor.Columns.Count > 1)
+            throw new ArgumentException("Only one column should be returned from the predicate.");
+
+        OnConflict(visitor.Columns.First());
+
+        return this;
+    }
+
+    /// <summary>
+    /// By using the columns query parameter it’s possible to specify the payload keys that will be inserted and ignore the rest of the payload.
+    /// 
+    /// The rest of the JSON keys will be ignored.
+    /// Using this also has the side-effect of being more efficient for Bulk Insert since PostgREST will not process the JSON and it’ll send it directly to PostgreSQL.
+    /// 
+    /// See: https://postgrest.org/en/stable/api.html#specifying-columns
+    /// </summary>
+    /// <param name="columns"></param>
+    /// <returns></returns>
+    public Table<T> Columns(string[] columns)
+    {
+        foreach (var column in columns)
+            _columns.Add(column);
+
+        return this;
+    }
+
+    /// <summary>
+    /// By using the columns query parameter it’s possible to specify the payload keys that will be inserted and ignore the rest of the payload.
+    /// 
+    /// The rest of the JSON keys will be ignored.
+    /// Using this also has the side-effect of being more efficient for Bulk Insert since PostgREST will not process the JSON and it’ll send it directly to PostgreSQL.
+    /// 
+    /// See: https://postgrest.org/en/stable/api.html#specifying-columns
+    /// </summary>
+    /// <param name="predicate"></param>
+    /// <returns></returns>
+    public Table<T> Columns(Expression<Func<T, object[]>> predicate)
+    {
+        var visitor = new SelectExpressionVisitor();
+        visitor.Visit(predicate);
+
+        if (visitor.Columns.Count == 0)
+            throw new ArgumentException("Expected predicate to return an array of references to a Model column.");
+
+        return Columns(visitor.Columns.ToArray());
+    }
+
+    /// <summary>
+    /// Sets an offset with an optional foreign table reference.
+    /// </summary>
+    /// <param name="offset"></param>
+    /// <param name="foreignTableName"></param>
+    /// <returns></returns>
+    public Table<T> Offset(int offset, string? foreignTableName = null)
+    {
+        _offset = offset;
+        _offsetForeignKey = foreignTableName;
+        return this;
+    }
+
+    /// <summary>
+    /// Executes an INSERT query using the defined query params on the current instance.
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="options"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>A typed model response from the database.</returns>
+    public Task<ModeledResponse<T>> Insert(T model, QueryOptions? options = null,
+        CancellationToken cancellationToken = default) => PerformInsert(model, options, cancellationToken);
+
+    /// <summary>
+    /// Executes a BULK INSERT query using the defined query params on the current instance.
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="options"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>A typed model response from the database.</returns>
+    public Task<ModeledResponse<T>> Insert(ICollection<T> models, QueryOptions? options = null,
+        CancellationToken cancellationToken = default) => PerformInsert(models, options, cancellationToken);
+
+    /// <summary>
+    /// Executes an UPSERT query using the defined query params on the current instance.
+    /// 
+    /// By default the new record is returned. Set QueryOptions.ReturnType to Minimal if you don't need this value.
+    /// By specifying the QueryOptions.OnConflict parameter, you can make UPSERT work on a column(s) that has a UNIQUE constraint.
+    /// QueryOptions.DuplicateResolution.IgnoreDuplicates Specifies if duplicate rows should be ignored and not inserted.
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="options"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public Task<ModeledResponse<T>> Upsert(T model, QueryOptions? options = null,
+        CancellationToken cancellationToken = default)
+    {
+        options ??= new QueryOptions();
+
+        // Enforce Upsert
+        options.Upsert = true;
+
+        return PerformInsert(model, options, cancellationToken);
+    }
+
+    /// <summary>
+    /// Executes an UPSERT query using the defined query params on the current instance.
+    ///
+    /// By default the new record is returned. Set QueryOptions.ReturnType to Minimal if you don't need this value.
+    /// By specifying the QueryOptions.OnConflict parameter, you can make UPSERT work on a column(s) that has a UNIQUE constraint.
+    /// QueryOptions.DuplicateResolution.IgnoreDuplicates Specifies if duplicate rows should be ignored and not inserted.
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="options"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public Task<ModeledResponse<T>> Upsert(ICollection<T> model, QueryOptions? options = null,
+        CancellationToken cancellationToken = default)
+    {
+        options ??= new QueryOptions();
+
+        // Enforce Upsert
+        options.Upsert = true;
+
+        return PerformInsert(model, options, cancellationToken);
+    }
+
+
+    /// <summary>
+    /// Specifies a key and value to be updated. Should be combined with filters/where clauses.
+    /// 
+    /// Can be called multiple times to set multiple values.
+    /// </summary>
+    /// <param name="keySelector"></param>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public Table<T> Set(Expression<Func<T, object>> keySelector, object? value)
+    {
+        var visitor = new SetExpressionVisitor();
+        visitor.Visit(keySelector);
+
+        if (visitor.Column == null || visitor.ExpectedType == null)
+            throw new ArgumentException(
+                "Expression should return a KeyValuePair with a key of a Model Property and a value.");
+
+        if (value == null)
         {
-            this._filters.Add(new QueryFilter(Operator.And, filters));
-            return this;
-        }
-
-        /// <summary>
-        /// Adds a NOT Filter to the current query args.
-        /// </summary>
-        /// <param name="filters"></param>
-        /// <returns></returns>
-        public Table<T> Or(List<QueryFilter> filters)
-        {
-            this._filters.Add(new QueryFilter(Operator.Or, filters));
-            return this;
-        }
-
-        /// <summary>
-        /// Fills in query parameters based on a given model's primary key(s).
-        /// </summary>
-        /// <param name="model">A model with a primary key column</param>
-        /// <returns></returns>
-        public Table<T> Match(T model)
-        {
-            foreach (var kvp in model.PrimaryKey)
-            {
-                _filters.Add(new QueryFilter(kvp.Key.ColumnName, Operator.Equals, kvp.Value));
-            }
-
-            return this;
-        }
-
-        /// <summary>
-        /// Finds all rows whose columns match the specified `query` object.
-        /// </summary>
-        /// <param name="query">The object to filter with, with column names as keys mapped to their filter values.</param>
-        /// <returns></returns>
-        public Table<T> Match(Dictionary<string, string> query)
-        {
-            foreach (var param in query)
-            {
-                _filters.Add(new QueryFilter(param.Key, Operator.Equals, param.Value));
-            }
-
-            return this;
-        }
-
-        /// <summary>
-        /// Adds an ordering to the current query args using a predicate function.
-        /// 
-        /// NOTE: If multiple orderings are required, chain this function with another call to <see cref="Order"/>.
-        /// </summary>
-        /// <param name="predicate"></param>
-        /// <param name="ordering">>Expects a columns from the Model to be returned</param>
-        /// <param name="nullPosition"></param>
-        /// <returns></returns>
-        public Table<T> Order(Expression<Func<T, object>> predicate, Ordering ordering,
-            NullPosition nullPosition = NullPosition.First)
-        {
-            var visitor = new SelectExpressionVisitor();
-            visitor.Visit(predicate);
-
-            if (visitor.Columns.Count == 0)
-                throw new ArgumentException("Expected predicate to return a reference to a Model column.");
-
-            if (visitor.Columns.Count > 1)
-                throw new ArgumentException("Only one column should be returned from the predicate.");
-
-            return Order(visitor.Columns.First(), ordering, nullPosition);
-        }
-
-        /// <summary>
-        /// Adds an ordering to the current query args.
-        /// 
-        /// NOTE: If multiple orderings are required, chain this function with another call to <see cref="Order"/>.
-        /// </summary>
-        /// <param name="column">Column Name</param>
-        /// <param name="ordering"></param>
-        /// <param name="nullPosition"></param>
-        /// <returns></returns>
-        public Table<T> Order(string column, Ordering ordering, NullPosition nullPosition = NullPosition.First)
-        {
-            _orderers.Add(new QueryOrderer(null, column, ordering, nullPosition));
-            return this;
-        }
-
-        /// <summary>
-        /// Adds an ordering to the current query args.
-        /// 
-        /// NOTE: If multiple orderings are required, chain this function with another call to <see cref="Order"/>.
-        /// </summary>
-        /// <param name="foreignTable"></param>
-        /// <param name="column"></param>
-        /// <param name="ordering"></param>
-        /// <param name="nullPosition"></param>
-        /// <returns></returns>
-        public Table<T> Order(string foreignTable, string column, Ordering ordering,
-            NullPosition nullPosition = NullPosition.First)
-        {
-            _orderers.Add(new QueryOrderer(foreignTable, column, ordering, nullPosition));
-            return this;
-        }
-
-        /// <summary>
-        /// Sets a FROM range, similar to a `StartAt` query.
-        /// </summary>
-        /// <param name="from"></param>
-        /// <returns></returns>
-        public Table<T> Range(int from)
-        {
-            _rangeFrom = from;
-            return this;
-        }
-
-        /// <summary>
-        /// Sets a bounded range to the current query.
-        /// </summary>
-        /// <param name="from"></param>
-        /// <param name="to"></param>
-        /// <returns></returns>
-        public Table<T> Range(int from, int to)
-        {
-            _rangeFrom = from;
-            _rangeTo = to;
-            return this;
-        }
-
-        /// <summary>
-        /// Select columns for query. 
-        /// </summary>
-        /// <param name="columnQuery"></param>
-        /// <returns></returns>
-        public Table<T> Select(string columnQuery)
-        {
-            _method = HttpMethod.Get;
-            this._columnQuery = columnQuery;
-            return this;
-        }
-
-        /// <summary>
-        /// Select columns using a predicate function.
-        /// 
-        /// For example: 
-        ///		`Table<Movie>().Select(x => new[] { x.Id, x.Name, x.CreatedAt }).Get();`
-        /// </summary>
-        /// <param name="predicate">Expects an array of columns from the Model to be returned.</param>
-        /// <returns></returns>
-        public Table<T> Select(Expression<Func<T, object[]>> predicate)
-        {
-            var visitor = new SelectExpressionVisitor();
-            visitor.Visit(predicate);
-
-            if (visitor.Columns.Count == 0)
+            if (Nullable.GetUnderlyingType(visitor.ExpectedType) == null)
                 throw new ArgumentException(
-                    "Unable to find column(s) to select from the given predicate, did you return an array of Model Properties?");
-
-            return Select(string.Join(",", visitor.Columns));
+                    $"Expected Value to be of Type: {visitor.ExpectedType.Name}, instead received: {null}.");
+        }
+        else if (!visitor.ExpectedType.IsInstanceOfType(value))
+        {
+            throw new ArgumentException(string.Format("Expected Value to be of Type: {0}, instead received: {1}.",
+                visitor.ExpectedType.Name, value.GetType().Name));
         }
 
-        /// <summary>
-        /// Filter a query based on a predicate function. 
-        /// 
-        /// Note: Chaining multiple <see cref="Where(Expression{Func{T, bool}})"/> calls will
-        /// be parsed as an "AND" query.
-        /// 
-        /// Examples:
-        ///		`Table<Movie>().Where(x => x.Name == "Top Gun").Get();`
-        ///		`Table<Movie>().Where(x => x.Name == "Top Gun" || x.Name == "Mad Max").Get();`
-        ///		`Table<Movie>().Where(x => x.Name.Contains("Gun")).Get();`
-        ///		`Table<Movie>().Where(x => x.CreatedAt <= new DateTime(2022, 08, 21)).Get();`
-        ///		`Table<Movie>().Where(x => x.Id > 5 && x.Name.Contains("Max")).Get();`
-        /// </summary>
-        /// <param name="predicate"></param>
-        /// <returns></returns>
-        public Table<T> Where(Expression<Func<T, bool>> predicate)
+        _setData.Add(visitor.Column, value);
+
+        return this;
+    }
+
+    /// <summary>
+    /// Specifies a KeyValuePair to be updated. Should be combined with filters/where clauses.
+    /// 
+    /// Can be called multiple times to set multiple values.
+    /// </summary>
+    /// <param name="keyValuePairExpression"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
+    public Table<T> Set(Expression<Func<T, KeyValuePair<object, object?>>> keyValuePairExpression)
+    {
+        var visitor = new SetExpressionVisitor();
+        visitor.Visit(keyValuePairExpression);
+
+        if (visitor.Column == null || visitor.Value == default)
+            throw new ArgumentException(
+                "Expression should return a KeyValuePair with a key of a Model Property and a value.");
+
+        _setData.Add(visitor.Column, visitor.Value);
+
+        return this;
+    }
+
+    /// <summary>
+    /// Calls an Update function after `Set` has been called.
+    /// </summary>
+    /// <param name="options"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
+    public Task<ModeledResponse<T>> Update(QueryOptions? options = null,
+        CancellationToken cancellationToken = default)
+    {
+        options ??= new QueryOptions();
+
+        if (_setData.Keys.Count == 0)
+            throw new ArgumentException("No data has been set to update, was `Set` called?");
+
+        _method = new HttpMethod("PATCH");
+
+        var request = Send<T>(_method, _setData, options.ToHeaders(), cancellationToken, isUpdate: true);
+
+        Clear();
+
+        return request;
+    }
+
+    /// <summary>
+    /// Executes an UPDATE query using the defined query params on the current instance.
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>A typed response from the database.</returns>
+    public Task<ModeledResponse<T>> Update(T model, QueryOptions? options = null,
+        CancellationToken cancellationToken = default)
+    {
+        options ??= new QueryOptions();
+
+        _method = new HttpMethod("PATCH");
+
+        Match(model);
+
+        var request = Send<T>(_method, model, options.ToHeaders(), cancellationToken, isUpdate: true);
+
+        Clear();
+
+        return request;
+    }
+
+    /// <summary>
+    /// Executes a delete request using the defined query params on the current instance.
+    /// </summary>
+    /// <returns></returns>
+    public Task Delete(QueryOptions? options = null, CancellationToken cancellationToken = default)
+    {
+        options ??= new QueryOptions();
+
+        _method = HttpMethod.Delete;
+
+        var request = Send(_method, null, options.ToHeaders(), cancellationToken);
+
+        Clear();
+
+        return request;
+    }
+
+    /// <summary>
+    /// Executes a delete request using the model's primary key as the filter for the request.
+    /// </summary>
+    /// <param name="model"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public Task<ModeledResponse<T>> Delete(T model, QueryOptions? options = null,
+        CancellationToken cancellationToken = default)
+    {
+        options ??= new QueryOptions();
+
+        _method = HttpMethod.Delete;
+
+        Match(model);
+
+        var request = Send<T>(_method, null, options.ToHeaders(), cancellationToken);
+        Clear();
+        return request;
+    }
+
+    /// <summary>
+    /// Returns ONLY a count from the specified query.
+    ///
+    /// See: https://postgrest.org/en/v7.0.0/api.html?highlight=count
+    /// </summary>
+    /// <param name="type">The kind of count.</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public async Task<int> Count(CountType type, CancellationToken cancellationToken = default)
+    {
+        _method = HttpMethod.Head;
+
+        var attr = type.GetAttribute<MapToAttribute>();
+
+        var headers = new Dictionary<string, string>
         {
-            var visitor = new WhereExpressionVisitor();
-            visitor.Visit(predicate);
+            { "Prefer", $"count={attr?.Mapping}" }
+        };
 
-            if (visitor.Filter == null)
-                throw new ArgumentException(
-                    "Unable to parse the supplied predicate, did you return a predicate where each left hand of the condition is a Model property?");
+        var request = Send(_method, null, headers, cancellationToken);
+        Clear();
 
-            if (visitor.Filter.Op == Operator.Equals && visitor.Filter.Criteria == null)
-                _filters.Add(new QueryFilter(visitor.Filter.Property!, Operator.Is, QueryFilter.NullVal));
-            else if (visitor.Filter.Op == Operator.NotEqual && visitor.Filter.Criteria == null)
-                _filters.Add(new QueryFilter(visitor.Filter.Property!, Operator.Not,
-                    new QueryFilter(visitor.Filter.Property!, Operator.Is, QueryFilter.NullVal)));
-            else
-                _filters.Add(visitor.Filter);
+        var response = await request;
+        var countStr = response.ResponseMessage?.Content.Headers.GetValues("Content-Range").FirstOrDefault();
 
+        // Returns X-Y/COUNT [0-3/4]
+        return int.Parse(countStr?.Split('/')[1] ?? throw new InvalidOperationException());
+    }
 
-            return this;
+    /// <summary>
+    /// Executes a query that expects to have a single object returned, rather than returning list of models
+    /// it will return a single model.
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public async Task<T?> Single(CancellationToken cancellationToken = default)
+    {
+        _method = HttpMethod.Get;
+        var headers = new Dictionary<string, string>
+        {
+            { "Accept", "application/vnd.pgrst.object+json" },
+            { "Prefer", "return=representation" }
+        };
+
+        var request = Send<T>(_method, null, headers, cancellationToken);
+
+        Clear();
+
+        try
+        {
+            var result = await request;
+            return result.Models.FirstOrDefault();
+        }
+        catch (PostgrestException e)
+        {
+            if (e.Response!.StatusCode == System.Net.HttpStatusCode.NotAcceptable)
+                return null;
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// Executes the query using the defined filters on the current instance.
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public Task<ModeledResponse<T>> Get(CancellationToken cancellationToken = default)
+    {
+        var request = Send<T>(_method, null, null, cancellationToken);
+        Clear();
+        return request;
+    }
+
+    /// <summary>
+    /// Generates the encoded URL with defined query parameters that will be sent to the Postgrest API.
+    /// </summary>
+    /// <returns></returns>
+    public string GenerateUrl()
+    {
+        var builder = new UriBuilder($"{BaseUrl}/{TableName}");
+        var query = HttpUtility.ParseQueryString(builder.Query);
+
+        foreach (var param in _options.QueryParams)
+            query.Add(param.Key, param.Value);
+
+        if (_options.Headers.TryGetValue("apikey", out var header))
+            query.Add("apikey", header);
+
+        if (_columns.Count > 0)
+            query["columns"] = string.Join(",", _columns);
+
+        foreach (var parsedFilter in _filters.Select(PrepareFilter))
+            query.Add(parsedFilter.Key, parsedFilter.Value);
+
+        foreach (var orderer in _orderers)
+        {
+            var nullPosAttr = orderer.NullPosition.GetAttribute<MapToAttribute>();
+            var orderingAttr = orderer.Ordering.GetAttribute<MapToAttribute>();
+
+            if (nullPosAttr == null || orderingAttr == null) continue;
+
+            var key = !string.IsNullOrEmpty(orderer.ForeignTable) ? $"{orderer.ForeignTable}.order" : "order";
+            query.Add(key, $"{orderer.Column}.{orderingAttr.Mapping}.{nullPosAttr.Mapping}");
         }
 
+        if (!string.IsNullOrEmpty(_columnQuery))
+            query["select"] = Regex.Replace(_columnQuery!, @"\s", "");
 
-        /// <summary>
-        /// Sets a limit with an optional foreign table reference. 
-        /// </summary>
-        /// <param name="limit"></param>
-        /// <param name="foreignTableName"></param>
-        /// <returns></returns>
-        public Table<T> Limit(int limit, string? foreignTableName = null)
+        if (_references.Count > 0)
         {
-            this._limit = limit;
-            this._limitForeignKey = foreignTableName;
-            return this;
-        }
+            query["select"] ??= "*";
 
-        /// <summary>
-        /// By specifying the onConflict query parameter, you can make UPSERT work on a column(s) that has a UNIQUE constraint.
-        /// </summary>
-        /// <param name="columnName"></param>
-        /// <returns></returns>
-        public Table<T> OnConflict(string columnName)
-        {
-            _onConflict = columnName;
-            return this;
-        }
-
-        /// <summary>
-        /// Set an onConflict query parameter for UPSERTing on a column that has a UNIQUE constraint using a linq predicate.
-        /// </summary>
-        /// <param name="predicate">Expects a column from the model to be returned.</param>
-        /// <returns></returns>
-        public Table<T> OnConflict(Expression<Func<T, object>> predicate)
-        {
-            var visitor = new SelectExpressionVisitor();
-            visitor.Visit(predicate);
-
-            if (visitor.Columns.Count == 0)
-                throw new ArgumentException("Expected predicate to return a reference to a Model column.");
-
-            if (visitor.Columns.Count > 1)
-                throw new ArgumentException("Only one column should be returned from the predicate.");
-
-            OnConflict(visitor.Columns.First());
-
-            return this;
-        }
-
-        /// <summary>
-        /// By using the columns query parameter it’s possible to specify the payload keys that will be inserted and ignore the rest of the payload.
-        /// 
-        /// The rest of the JSON keys will be ignored.
-        /// Using this also has the side-effect of being more efficient for Bulk Insert since PostgREST will not process the JSON and it’ll send it directly to PostgreSQL.
-        /// 
-        /// See: https://postgrest.org/en/stable/api.html#specifying-columns
-        /// </summary>
-        /// <param name="columns"></param>
-        /// <returns></returns>
-        public Table<T> Columns(string[] columns)
-        {
-            foreach (var column in columns)
-                this._columns.Add(column);
-
-            return this;
-        }
-
-        /// <summary>
-        /// By using the columns query parameter it’s possible to specify the payload keys that will be inserted and ignore the rest of the payload.
-        /// 
-        /// The rest of the JSON keys will be ignored.
-        /// Using this also has the side-effect of being more efficient for Bulk Insert since PostgREST will not process the JSON and it’ll send it directly to PostgreSQL.
-        /// 
-        /// See: https://postgrest.org/en/stable/api.html#specifying-columns
-        /// </summary>
-        /// <param name="predicate"></param>
-        /// <returns></returns>
-        public Table<T> Columns(Expression<Func<T, object[]>> predicate)
-        {
-            var visitor = new SelectExpressionVisitor();
-            visitor.Visit(predicate);
-
-            if (visitor.Columns.Count == 0)
-                throw new ArgumentException("Expected predicate to return an array of references to a Model column.");
-
-            return Columns(visitor.Columns.ToArray());
-        }
-
-        /// <summary>
-        /// Sets an offset with an optional foreign table reference.
-        /// </summary>
-        /// <param name="offset"></param>
-        /// <param name="foreignTableName"></param>
-        /// <returns></returns>
-        public Table<T> Offset(int offset, string? foreignTableName = null)
-        {
-            this._offset = offset;
-            this._offsetForeignKey = foreignTableName;
-            return this;
-        }
-
-        /// <summary>
-        /// Executes an INSERT query using the defined query params on the current instance.
-        /// </summary>
-        /// <param name="model"></param>
-        /// <param name="options"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns>A typed model response from the database.</returns>
-        public Task<ModeledResponse<T>> Insert(T model, QueryOptions? options = null,
-            CancellationToken cancellationToken = default) => PerformInsert(model, options, cancellationToken);
-
-        /// <summary>
-        /// Executes a BULK INSERT query using the defined query params on the current instance.
-        /// </summary>
-        /// <param name="model"></param>
-        /// <param name="options"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns>A typed model response from the database.</returns>
-        public Task<ModeledResponse<T>> Insert(ICollection<T> models, QueryOptions? options = null,
-            CancellationToken cancellationToken = default) => PerformInsert(models, options, cancellationToken);
-
-        /// <summary>
-        /// Executes an UPSERT query using the defined query params on the current instance.
-        /// 
-        /// By default the new record is returned. Set QueryOptions.ReturnType to Minimal if you don't need this value.
-        /// By specifying the QueryOptions.OnConflict parameter, you can make UPSERT work on a column(s) that has a UNIQUE constraint.
-        /// QueryOptions.DuplicateResolution.IgnoreDuplicates Specifies if duplicate rows should be ignored and not inserted.
-        /// </summary>
-        /// <param name="model"></param>
-        /// <param name="options"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public Task<ModeledResponse<T>> Upsert(T model, QueryOptions? options = null,
-            CancellationToken cancellationToken = default)
-        {
-            options ??= new QueryOptions();
-
-            // Enforce Upsert
-            options.Upsert = true;
-
-            return PerformInsert(model, options, cancellationToken);
-        }
-
-        /// <summary>
-        /// Executes an UPSERT query using the defined query params on the current instance.
-        ///
-        /// By default the new record is returned. Set QueryOptions.ReturnType to Minimal if you don't need this value.
-        /// By specifying the QueryOptions.OnConflict parameter, you can make UPSERT work on a column(s) that has a UNIQUE constraint.
-        /// QueryOptions.DuplicateResolution.IgnoreDuplicates Specifies if duplicate rows should be ignored and not inserted.
-        /// </summary>
-        /// <param name="model"></param>
-        /// <param name="options"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public Task<ModeledResponse<T>> Upsert(ICollection<T> model, QueryOptions? options = null,
-            CancellationToken cancellationToken = default)
-        {
-            options ??= new QueryOptions();
-
-            // Enforce Upsert
-            options.Upsert = true;
-
-            return PerformInsert(model, options, cancellationToken);
-        }
-
-
-        /// <summary>
-        /// Specifies a key and value to be updated. Should be combined with filters/where clauses.
-        /// 
-        /// Can be called multiple times to set multiple values.
-        /// </summary>
-        /// <param name="keySelector"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public Table<T> Set(Expression<Func<T, object>> keySelector, object? value)
-        {
-            var visitor = new SetExpressionVisitor();
-            visitor.Visit(keySelector);
-
-            if (visitor.Column == null || visitor.ExpectedType == null)
-                throw new ArgumentException(
-                    "Expression should return a KeyValuePair with a key of a Model Property and a value.");
-
-            if (value == null)
+            foreach (var reference in _references)
             {
-                if (Nullable.GetUnderlyingType(visitor.ExpectedType) == null)
-                    throw new ArgumentException(
-                        $"Expected Value to be of Type: {visitor.ExpectedType.Name}, instead received: {null}.");
-            }
-            else if (!visitor.ExpectedType.IsInstanceOfType(value))
-            {
-                throw new ArgumentException(string.Format("Expected Value to be of Type: {0}, instead received: {1}.",
-                    visitor.ExpectedType.Name, value.GetType().Name));
-            }
+                if ((_method == HttpMethod.Get && !reference.IncludeInQuery) ||
+                    (_method == HttpMethod.Post && reference.IgnoreOnInsert) ||
+                    (_method == HttpMethod.Post && reference.IgnoreOnUpdate)) continue;
 
-            _setData.Add(visitor.Column, value);
+                var columns = string.Join(",", reference.Columns.ToArray());
 
-            return this;
-        }
-
-        /// <summary>
-        /// Specifies a KeyValuePair to be updated. Should be combined with filters/where clauses.
-        /// 
-        /// Can be called multiple times to set multiple values.
-        /// </summary>
-        /// <param name="keyValuePairExpression"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException"></exception>
-        public Table<T> Set(Expression<Func<T, KeyValuePair<object, object?>>> keyValuePairExpression)
-        {
-            var visitor = new SetExpressionVisitor();
-            visitor.Visit(keyValuePairExpression);
-
-            if (visitor.Column == null || visitor.Value == default)
-                throw new ArgumentException(
-                    "Expression should return a KeyValuePair with a key of a Model Property and a value.");
-
-            _setData.Add(visitor.Column, visitor.Value);
-
-            return this;
-        }
-
-        /// <summary>
-        /// Calls an Update function after `Set` has been called.
-        /// </summary>
-        /// <param name="options"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException"></exception>
-        public Task<ModeledResponse<T>> Update(QueryOptions? options = null,
-            CancellationToken cancellationToken = default)
-        {
-            options ??= new QueryOptions();
-
-            if (_setData.Keys.Count == 0)
-                throw new ArgumentException("No data has been set to update, was `Set` called?");
-
-            _method = new HttpMethod("PATCH");
-
-            var request = Send<T>(_method, _setData, options.ToHeaders(), cancellationToken, isUpdate: true);
-
-            Clear();
-
-            return request;
-        }
-
-        /// <summary>
-        /// Executes an UPDATE query using the defined query params on the current instance.
-        /// </summary>
-        /// <param name="model"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns>A typed response from the database.</returns>
-        public Task<ModeledResponse<T>> Update(T model, QueryOptions? options = null,
-            CancellationToken cancellationToken = default)
-        {
-            options ??= new QueryOptions();
-
-            _method = new HttpMethod("PATCH");
-
-            Match(model);
-
-            var request = Send<T>(_method, model, options.ToHeaders(), cancellationToken, isUpdate: true);
-
-            Clear();
-
-            return request;
-        }
-
-        /// <summary>
-        /// Executes a delete request using the defined query params on the current instance.
-        /// </summary>
-        /// <returns></returns>
-        public Task Delete(QueryOptions? options = null, CancellationToken cancellationToken = default)
-        {
-            options ??= new QueryOptions();
-
-            _method = HttpMethod.Delete;
-
-            var request = Send(_method, null, options.ToHeaders(), cancellationToken);
-
-            Clear();
-
-            return request;
-        }
-
-        /// <summary>
-        /// Executes a delete request using the model's primary key as the filter for the request.
-        /// </summary>
-        /// <param name="model"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public Task<ModeledResponse<T>> Delete(T model, QueryOptions? options = null,
-            CancellationToken cancellationToken = default)
-        {
-            options ??= new QueryOptions();
-
-            _method = HttpMethod.Delete;
-
-            Match(model);
-
-            var request = Send<T>(_method, null, options.ToHeaders(), cancellationToken);
-            Clear();
-            return request;
-        }
-
-        /// <summary>
-        /// Returns ONLY a count from the specified query.
-        ///
-        /// See: https://postgrest.org/en/v7.0.0/api.html?highlight=count
-        /// </summary>
-        /// <param name="type">The kind of count.</param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public async Task<int> Count(CountType type, CancellationToken cancellationToken = default)
-        {
-            _method = HttpMethod.Head;
-
-            var attr = type.GetAttribute<MapToAttribute>();
-
-            var headers = new Dictionary<string, string>
-            {
-                { "Prefer", $"count={attr?.Mapping}" }
-            };
-
-            var request = Send(_method, null, headers, cancellationToken);
-            Clear();
-
-            var response = await request;
-            var countStr = response.ResponseMessage?.Content.Headers.GetValues("Content-Range").FirstOrDefault();
-
-            // Returns X-Y/COUNT [0-3/4]
-            return int.Parse(countStr?.Split('/')[1] ?? throw new InvalidOperationException());
-        }
-
-        /// <summary>
-        /// Executes a query that expects to have a single object returned, rather than returning list of models
-        /// it will return a single model.
-        /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public async Task<T?> Single(CancellationToken cancellationToken = default)
-        {
-            _method = HttpMethod.Get;
-            var headers = new Dictionary<string, string>
-            {
-                { "Accept", "application/vnd.pgrst.object+json" },
-                { "Prefer", "return=representation" }
-            };
-
-            var request = Send<T>(_method, null, headers, cancellationToken);
-
-            Clear();
-
-            try
-            {
-                var result = await request;
-                return result.Models.FirstOrDefault();
-            }
-            catch (PostgrestException e)
-            {
-                if (e.Response!.StatusCode == System.Net.HttpStatusCode.NotAcceptable)
-                    return null;
+                if (reference.ShouldFilterTopLevel)
+                    query["select"] += $",{reference.TableName}!inner({columns})";
                 else
-                    throw;
+                    query["select"] += $",{reference.TableName}({columns})";
             }
         }
 
-        /// <summary>
-        /// Executes the query using the defined filters on the current instance.
-        /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public Task<ModeledResponse<T>> Get(CancellationToken cancellationToken = default)
+        if (!string.IsNullOrEmpty(_onConflict))
+            query["on_conflict"] = _onConflict;
+
+        if (_limit != int.MinValue)
         {
-            var request = Send<T>(_method, null, null, cancellationToken);
-            Clear();
-            return request;
+            var key = _limitForeignKey != null ? $"{_limitForeignKey}.limit" : "limit";
+            query[key] = _limit.ToString();
         }
 
-        /// <summary>
-        /// Generates the encoded URL with defined query parameters that will be sent to the Postgrest API.
-        /// </summary>
-        /// <returns></returns>
-        public string GenerateUrl()
+        if (_offset != int.MinValue)
         {
-            var builder = new UriBuilder($"{BaseUrl}/{TableName}");
-            var query = HttpUtility.ParseQueryString(builder.Query);
+            var key = _offsetForeignKey != null ? $"{_offsetForeignKey}.offset" : "offset";
+            query[key] = _offset.ToString();
+        }
 
-            foreach (var param in _options.QueryParams)
-                query.Add(param.Key, param.Value);
+        builder.Query = query.ToString();
+        return builder.Uri.ToString();
+    }
 
-            if (_options.Headers.TryGetValue("apikey", out var header))
-                query.Add("apikey", header);
+    /// <summary>
+    /// Transforms an object into a string mapped list/dictionary using `JsonSerializerSettings`.
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    private object? PrepareRequestData(object? data, bool isInsert = false, bool isUpdate = false,
+        bool isUpsert = false)
+    {
+        if (data == null) return new Dictionary<string, string>();
 
-            if (_columns.Count > 0)
-                query["columns"] = string.Join(",", _columns);
+        // Specified in constructor;
+        var resolver = (PostgrestContractResolver)_serializerSettings.ContractResolver!;
 
-            foreach (var parsedFilter in _filters.Select(PrepareFilter))
-                query.Add(parsedFilter.Key, parsedFilter.Value);
+        resolver.SetState(isInsert, isUpdate, isUpsert);
 
-            foreach (var orderer in _orderers)
-            {
-                var nullPosAttr = orderer.NullPosition.GetAttribute<MapToAttribute>();
-                var orderingAttr = orderer.Ordering.GetAttribute<MapToAttribute>();
+        var serialized = JsonConvert.SerializeObject(data, _serializerSettings);
 
-                if (nullPosAttr == null || orderingAttr == null) continue;
+        resolver.SetState();
 
-                var key = !string.IsNullOrEmpty(orderer.ForeignTable) ? $"{orderer.ForeignTable}.order" : "order";
-                query.Add(key, $"{orderer.Column}.{orderingAttr.Mapping}.{nullPosAttr.Mapping}");
-            }
+        // Check if data is a Collection for the Insert Bulk case
+        if (data is ICollection<T>)
+            return JsonConvert.DeserializeObject<List<object>>(serialized, _serializerSettings);
 
-            if (!string.IsNullOrEmpty(_columnQuery))
-                query["select"] = Regex.Replace(_columnQuery!, @"\s", "");
+        return JsonConvert.DeserializeObject<Dictionary<string, object>>(serialized, _serializerSettings);
+    }
 
-            if (_references.Count > 0)
-            {
-                query["select"] ??= "*";
+    /// <summary>
+    /// Transforms the defined filters into the expected Postgrest format.
+    ///
+    /// See: http://postgrest.org/en/v7.0.0/api.html#operators
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
+    internal KeyValuePair<string, string> PrepareFilter(QueryFilter filter)
+    {
+        var asAttribute = filter.Op.GetAttribute<MapToAttribute>();
+        var strBuilder = new StringBuilder();
 
-                foreach (var reference in _references)
+        if (asAttribute == null)
+            return new KeyValuePair<string, string>();
+
+        switch (filter.Op)
+        {
+            case Operator.Or:
+            case Operator.And:
+                if (filter.Criteria is List<QueryFilter> subFilters)
                 {
-                    if (reference.IncludeInQuery)
-                    {
-                        var columns = string.Join(",", reference.Columns.ToArray());
+                    var list = new List<KeyValuePair<string, string>>();
+                    foreach (var subFilter in subFilters)
+                        list.Add(PrepareFilter(subFilter));
 
-                        if (reference.ShouldFilterTopLevel)
-                            query["select"] = query["select"] + $",{reference.TableName}!inner({columns})";
-                        else
-                            query["select"] = query["select"] + $",{reference.TableName}({columns})";
-                    }
+                    foreach (var preppedFilter in list)
+                        strBuilder.Append($"{preppedFilter.Key}.{preppedFilter.Value},");
+
+                    return new KeyValuePair<string, string>(asAttribute.Mapping,
+                        $"({strBuilder.ToString().Trim(',')})");
                 }
-            }
 
-            if (!string.IsNullOrEmpty(_onConflict))
-                query["on_conflict"] = _onConflict;
+                break;
+            case Operator.Not:
+                if (filter.Criteria is QueryFilter notFilter)
+                {
+                    var prepped = PrepareFilter(notFilter);
+                    return new KeyValuePair<string, string>(prepped.Key, $"not.{prepped.Value}");
+                }
 
-            if (_limit != int.MinValue)
-            {
-                var key = _limitForeignKey != null ? $"{_limitForeignKey}.limit" : "limit";
-                query[key] = _limit.ToString();
-            }
+                break;
+            case Operator.Like:
+            case Operator.ILike:
+                if (filter.Criteria is string likeCriteria && filter.Property != null)
+                {
+                    return new KeyValuePair<string, string>(filter.Property,
+                        $"{asAttribute.Mapping}.{likeCriteria.Replace("%", "*")}");
+                }
 
-            if (_offset != int.MinValue)
-            {
-                var key = _offsetForeignKey != null ? $"{_offsetForeignKey}.offset" : "offset";
-                query[key] = _offset.ToString();
-            }
+                break;
+            case Operator.In:
+                if (filter.Criteria is List<object> inCriteria && filter.Property != null)
+                {
+                    foreach (var item in inCriteria)
+                        strBuilder.Append($"\"{item}\",");
 
-            builder.Query = query.ToString();
-            return builder.Uri.ToString();
-        }
+                    return new KeyValuePair<string, string>(filter.Property,
+                        $"{asAttribute.Mapping}.({strBuilder.ToString().Trim(',')})");
+                }
+                else if (filter.Criteria is Dictionary<string, object> dictCriteria && filter.Property != null)
+                {
+                    return new KeyValuePair<string, string>(filter.Property,
+                        $"{asAttribute.Mapping}.{JsonConvert.SerializeObject(dictCriteria)}");
+                }
 
-        /// <summary>
-        /// Transforms an object into a string mapped list/dictionary using `JsonSerializerSettings`.
-        /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        private object? PrepareRequestData(object? data, bool isInsert = false, bool isUpdate = false,
-            bool isUpsert = false)
-        {
-            if (data == null) return new Dictionary<string, string>();
-
-            // Specified in constructor;
-            var resolver = (PostgrestContractResolver)_serializerSettings.ContractResolver!;
-
-            resolver.SetState(isInsert, isUpdate, isUpsert);
-
-            var serialized = JsonConvert.SerializeObject(data, _serializerSettings);
-
-            resolver.SetState();
-
-            // Check if data is a Collection for the Insert Bulk case
-            if (data is ICollection<T>)
-                return JsonConvert.DeserializeObject<List<object>>(serialized, _serializerSettings);
-            else
-                return JsonConvert.DeserializeObject<Dictionary<string, object>>(serialized, _serializerSettings);
-        }
-
-        /// <summary>
-        /// Transforms the defined filters into the expected Postgrest format.
-        ///
-        /// See: http://postgrest.org/en/v7.0.0/api.html#operators
-        /// </summary>
-        /// <param name="filter"></param>
-        /// <returns></returns>
-        internal KeyValuePair<string, string> PrepareFilter(QueryFilter filter)
-        {
-            var asAttribute = filter.Op.GetAttribute<MapToAttribute>();
-            var strBuilder = new StringBuilder();
-
-            if (asAttribute == null)
-                return new KeyValuePair<string, string>();
-
-            switch (filter.Op)
-            {
-                case Operator.Or:
-                case Operator.And:
-                    if (filter.Criteria is List<QueryFilter> subFilters)
-                    {
-                        var list = new List<KeyValuePair<string, string>>();
-                        foreach (var subFilter in subFilters)
-                            list.Add(PrepareFilter(subFilter));
-
-                        foreach (var preppedFilter in list)
-                            strBuilder.Append($"{preppedFilter.Key}.{preppedFilter.Value},");
-
-                        return new KeyValuePair<string, string>(asAttribute.Mapping,
-                            $"({strBuilder.ToString().Trim(',')})");
-                    }
-
-                    break;
-                case Operator.Not:
-                    if (filter.Criteria is QueryFilter notFilter)
-                    {
-                        var prepped = PrepareFilter(notFilter);
-                        return new KeyValuePair<string, string>(prepped.Key, $"not.{prepped.Value}");
-                    }
-
-                    break;
-                case Operator.Like:
-                case Operator.ILike:
-                    if (filter.Criteria is string likeCriteria && filter.Property != null)
-                    {
-                        return new KeyValuePair<string, string>(filter.Property,
-                            $"{asAttribute.Mapping}.{likeCriteria.Replace("%", "*")}");
-                    }
-
-                    break;
-                case Operator.In:
-                    if (filter.Criteria is List<object> inCriteria && filter.Property != null)
-                    {
-                        foreach (var item in inCriteria)
-                            strBuilder.Append($"\"{item}\",");
-
-                        return new KeyValuePair<string, string>(filter.Property,
-                            $"{asAttribute.Mapping}.({strBuilder.ToString().Trim(',')})");
-                    }
-                    else if (filter.Criteria is Dictionary<string, object> dictCriteria && filter.Property != null)
-                    {
-                        return new KeyValuePair<string, string>(filter.Property,
-                            $"{asAttribute.Mapping}.{JsonConvert.SerializeObject(dictCriteria)}");
-                    }
-
-                    break;
-                case Operator.Contains:
-                case Operator.ContainedIn:
-                case Operator.Overlap:
-                    if (filter.Criteria is List<object> listCriteria && filter.Property != null)
+                break;
+            case Operator.Contains:
+            case Operator.ContainedIn:
+            case Operator.Overlap:
+                switch (filter.Criteria)
+                {
+                    case List<object> listCriteria when filter.Property != null:
                     {
                         foreach (var item in listCriteria)
                             strBuilder.Append($"{item},");
@@ -996,139 +1002,135 @@ namespace Postgrest
                         return new KeyValuePair<string, string>(filter.Property,
                             $"{asAttribute.Mapping}.{{{strBuilder.ToString().Trim(',')}}}");
                     }
-                    else if (filter.Criteria is Dictionary<string, object> dictCriteria && filter.Property != null)
-                    {
+                    case Dictionary<string, object> dictCriteria when filter.Property != null:
                         return new KeyValuePair<string, string>(filter.Property,
                             $"{asAttribute.Mapping}.{JsonConvert.SerializeObject(dictCriteria)}");
-                    }
-                    else if (filter.Criteria is IntRange rangeCriteria && filter.Property != null)
-                    {
+                    case IntRange rangeCriteria when filter.Property != null:
                         return new KeyValuePair<string, string>(filter.Property,
                             $"{asAttribute.Mapping}.{rangeCriteria.ToPostgresString()}");
-                    }
+                }
 
-                    break;
-                case Operator.StrictlyLeft:
-                case Operator.StrictlyRight:
-                case Operator.NotRightOf:
-                case Operator.NotLeftOf:
-                case Operator.Adjacent:
-                    if (filter.Criteria is IntRange rangeCriterion && filter.Property != null)
-                    {
-                        return new KeyValuePair<string, string>(filter.Property,
-                            $"{asAttribute.Mapping}.{rangeCriterion.ToPostgresString()}");
-                    }
+                break;
+            case Operator.StrictlyLeft:
+            case Operator.StrictlyRight:
+            case Operator.NotRightOf:
+            case Operator.NotLeftOf:
+            case Operator.Adjacent:
+                if (filter.Criteria is IntRange rangeCriterion && filter.Property != null)
+                {
+                    return new KeyValuePair<string, string>(filter.Property,
+                        $"{asAttribute.Mapping}.{rangeCriterion.ToPostgresString()}");
+                }
 
-                    break;
-                case Operator.FTS:
-                case Operator.PHFTS:
-                case Operator.PLFTS:
-                case Operator.WFTS:
-                    if (filter.Criteria is FullTextSearchConfig searchConfig && filter.Property != null)
-                    {
-                        return new KeyValuePair<string, string>(filter.Property,
-                            $"{asAttribute.Mapping}({searchConfig.Config}).{searchConfig.QueryText}");
-                    }
+                break;
+            case Operator.FTS:
+            case Operator.PHFTS:
+            case Operator.PLFTS:
+            case Operator.WFTS:
+                if (filter.Criteria is FullTextSearchConfig searchConfig && filter.Property != null)
+                {
+                    return new KeyValuePair<string, string>(filter.Property,
+                        $"{asAttribute.Mapping}({searchConfig.Config}).{searchConfig.QueryText}");
+                }
 
-                    break;
-                default:
-                    return new KeyValuePair<string, string>(filter.Property ?? "",
-                        $"{asAttribute.Mapping}.{filter.Criteria}");
-            }
-
-            return new KeyValuePair<string, string>();
+                break;
+            default:
+                return new KeyValuePair<string, string>(filter.Property ?? "",
+                    $"{asAttribute.Mapping}.{filter.Criteria}");
         }
 
-        /// <summary>
-        /// Clears currently defined query values.
-        /// </summary>
-        public void Clear()
+        return new KeyValuePair<string, string>();
+    }
+
+    /// <summary>
+    /// Clears currently defined query values.
+    /// </summary>
+    public void Clear()
+    {
+        _columnQuery = null;
+
+        _filters.Clear();
+        _orderers.Clear();
+        _columns.Clear();
+        _setData.Clear();
+
+        _rangeFrom = int.MinValue;
+        _rangeTo = int.MinValue;
+
+        _limit = int.MinValue;
+        _limitForeignKey = null;
+
+        _offset = int.MinValue;
+        _offsetForeignKey = null;
+
+        _onConflict = null;
+    }
+
+
+    /// <summary>
+    /// Performs an INSERT Request.
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="options"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    private Task<ModeledResponse<T>> PerformInsert(object data, QueryOptions? options = null,
+        CancellationToken cancellationToken = default)
+    {
+        _method = HttpMethod.Post;
+        options ??= new QueryOptions();
+
+        if (!string.IsNullOrEmpty(options.OnConflict))
+            OnConflict(options.OnConflict!);
+
+        var request = Send<T>(_method, data, options.ToHeaders(), cancellationToken, isInsert: true,
+            isUpsert: options.Upsert);
+
+        Clear();
+
+        return request;
+    }
+
+    private Task<BaseResponse> Send(HttpMethod method, object? data, Dictionary<string, string>? headers = null,
+        CancellationToken cancellationToken = default, bool isInsert = false, bool isUpdate = false,
+        bool isUpsert = false)
+    {
+        var requestHeaders = Helpers.PrepareRequestHeaders(method, headers, _options, _rangeFrom, _rangeTo);
+
+        if (GetHeaders != null)
         {
-            _columnQuery = null;
-
-            _filters.Clear();
-            _orderers.Clear();
-            _columns.Clear();
-            _setData.Clear();
-
-            _rangeFrom = int.MinValue;
-            _rangeTo = int.MinValue;
-
-            _limit = int.MinValue;
-            _limitForeignKey = null;
-
-            _offset = int.MinValue;
-            _offsetForeignKey = null;
-
-            _onConflict = null;
+            requestHeaders = GetHeaders().MergeLeft(requestHeaders);
         }
 
+        var preparedData = PrepareRequestData(data, isInsert, isUpdate, isUpsert);
+        return Helpers.MakeRequest(_options, method, GenerateUrl(), _serializerSettings, preparedData,
+            requestHeaders, cancellationToken);
+    }
 
-        /// <summary>
-        /// Performs an INSERT Request.
-        /// </summary>
-        /// <param name="data"></param>
-        /// <param name="options"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        private Task<ModeledResponse<T>> PerformInsert(object data, QueryOptions? options = null,
-            CancellationToken cancellationToken = default)
+    private Task<ModeledResponse<TU>> Send<TU>(HttpMethod method, object? data,
+        Dictionary<string, string>? headers = null, CancellationToken cancellationToken = default,
+        bool isInsert = false, bool isUpdate = false, bool isUpsert = false) where TU : BaseModel, new()
+    {
+        var requestHeaders = Helpers.PrepareRequestHeaders(method, headers, _options, _rangeFrom, _rangeTo);
+
+        if (GetHeaders != null)
+            requestHeaders = GetHeaders().MergeLeft(requestHeaders);
+
+        var preparedData = PrepareRequestData(data, isInsert, isUpdate, isUpsert);
+        return Helpers.MakeRequest<TU>(_options, method, GenerateUrl(), _serializerSettings, preparedData,
+            requestHeaders, GetHeaders, cancellationToken);
+    }
+
+    private static string FindTableName(object? obj = null)
+    {
+        var type = obj == null ? typeof(T) : obj is Type t ? t : obj.GetType();
+        var attr = Attribute.GetCustomAttribute(type, typeof(TableAttribute));
+
+        if (attr is TableAttribute tableAttr)
         {
-            _method = HttpMethod.Post;
-            options ??= new QueryOptions();
-
-            if (!string.IsNullOrEmpty(options.OnConflict))
-                OnConflict(options.OnConflict!);
-
-            var request = Send<T>(_method, data, options.ToHeaders(), cancellationToken, isInsert: true,
-                isUpsert: options.Upsert);
-
-            Clear();
-
-            return request;
+            return tableAttr.Name;
         }
 
-        private Task<BaseResponse> Send(HttpMethod method, object? data, Dictionary<string, string>? headers = null,
-            CancellationToken cancellationToken = default, bool isInsert = false, bool isUpdate = false,
-            bool isUpsert = false)
-        {
-            var requestHeaders = Helpers.PrepareRequestHeaders(method, headers, _options, _rangeFrom, _rangeTo);
-
-            if (GetHeaders != null)
-            {
-                requestHeaders = GetHeaders().MergeLeft(requestHeaders);
-            }
-
-            var preparedData = PrepareRequestData(data, isInsert, isUpdate, isUpsert);
-            return Helpers.MakeRequest(_options, method, GenerateUrl(), _serializerSettings, preparedData,
-                requestHeaders, cancellationToken);
-        }
-
-        private Task<ModeledResponse<TU>> Send<TU>(HttpMethod method, object? data,
-            Dictionary<string, string>? headers = null, CancellationToken cancellationToken = default,
-            bool isInsert = false, bool isUpdate = false, bool isUpsert = false) where TU : BaseModel, new()
-        {
-            var requestHeaders = Helpers.PrepareRequestHeaders(method, headers, _options, _rangeFrom, _rangeTo);
-
-            if (GetHeaders != null)
-                requestHeaders = GetHeaders().MergeLeft(requestHeaders);
-
-            var preparedData = PrepareRequestData(data, isInsert, isUpdate, isUpsert);
-            return Helpers.MakeRequest<TU>(_options, method, GenerateUrl(), _serializerSettings, preparedData,
-                requestHeaders, GetHeaders, cancellationToken);
-        }
-
-        private static string FindTableName(object? obj = null)
-        {
-            var type = obj == null ? typeof(T) : obj is Type t ? t : obj.GetType();
-            var attr = Attribute.GetCustomAttribute(type, typeof(TableAttribute));
-
-            if (attr is TableAttribute tableAttr)
-            {
-                return tableAttr.Name;
-            }
-
-            return type.Name;
-        }
+        return type.Name;
     }
 }

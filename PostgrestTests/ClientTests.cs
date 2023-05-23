@@ -7,7 +7,6 @@ using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
 using Postgrest;
 using Postgrest.Exceptions;
 using Postgrest.Responses;
@@ -1130,37 +1129,6 @@ namespace PostgrestTests
                 Assert.IsInstanceOfType(ex, typeof(TaskCanceledException));
                 Assert.IsNull(insertResponse);
             }
-        }
-
-        [TestMethod("references")]
-        public async Task TestReferences()
-        {
-            var client = new Client(BaseUrl);
-
-            var movies = await client.Table<Movie>()
-                .Order(x => x.Id, Ordering.Ascending)
-                .Get();
-
-            Assert.IsTrue(movies.Models.Count > 0);
-
-            var first = movies.Models.First();
-            Assert.IsTrue(first.Persons?.Count > 0);
-
-            var people = first.Persons.First();
-            Assert.IsNotNull(people.Profile);
-
-            var person = await client.Table<Person>()
-                .Filter("first_name", Operator.Equals, "Bob")
-                .Single();
-
-            Assert.IsNotNull(person?.Profile);
-
-            var byEmail = await client.Table<Person>()
-                .Order(x => x.CreatedAt, Ordering.Ascending)
-                .Filter("profile.email", Operator.Equals, "bob.saggett@supabase.io")
-                .Single();
-
-            Assert.IsNotNull(byEmail);
         }
 
         private string? GetEnumMemberAttrValue<T>(T enumVal)

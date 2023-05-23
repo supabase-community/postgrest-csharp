@@ -1,0 +1,54 @@
+﻿using System;
+using System.Collections.Generic;
+using Postgrest.Attributes;
+using Postgrest.Models;
+
+namespace PostgrestTests.Models;
+
+[Table("movie")]
+public class Movie : BaseModel
+{
+    [PrimaryKey("id", false)] public string Id { get; set; }
+
+    [Column("name")] public string? Name { get; set; }
+
+    [Reference(typeof(Person), shouldFilterTopLevel: false)]
+    public List<Person> People { get; set; } = new();
+
+    [Column("created_at")] public DateTime CreatedAt { get; set; }
+}
+
+[Table("person")]
+public class Person : BaseModel
+{
+    [PrimaryKey("id")] public string Id { get; set; }
+
+    [Reference(typeof(Movie))] public List<Movie> Movies { get; set; } = new();
+
+    [Reference(typeof(Profile))]
+    public Profile? Profile { get; set; }
+
+    [Column("first_name")] public string? FirstName { get; set; }
+
+    [Column("last_name")] public string? LastName { get; set; }
+
+    [Column("created_at")] public DateTime CreatedAt { get; set; }
+}
+
+[Table("profile")]
+public class Profile : BaseModel
+{
+    [PrimaryKey("person_id", true)] public string PersonId { get; set; }
+
+    [Reference(typeof(Person))] public Person? Person { get; set; }
+    [Column("email")] public string? Email { get; set; }
+
+    [Column("created_at")] public DateTime CreatedAt { get; set; }
+}
+
+[Table("movie_person")]
+public class MoviePerson : BaseModel
+{
+    [Column("movie_id")] public string? MovieId { get; set; }
+    [Column("person_id")] public string? PersonId { get; set; }
+}
