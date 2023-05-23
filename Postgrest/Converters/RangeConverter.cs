@@ -35,9 +35,7 @@ namespace Postgrest.Converters
             var matches = Regex.Matches(value, pattern);
 
             if (matches.Count <= 0)
-            {
-                throw new Exception("Unknown Range format.");
-            }
+            throw new PostgrestException("Unknown Range format.") { Reason = FailureHint.Reason.InvalidArgument };
 
             var groups = matches[0].Groups;
             var isInclusiveLower = groups[1].Value == "[";

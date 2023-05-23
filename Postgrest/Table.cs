@@ -145,7 +145,9 @@ namespace Postgrest
                             new QueryFilter(columnName, Operator.Is, QueryFilter.NullVal)));
                         break;
                     default:
-                        throw new Exception("NOT filters must use the `Equals`, `Is`, `Not` or `NotEqual` operators");
+                    throw new PostgrestException(
+                            "NOT filters must use the `Equals`, `Is`, `Not` or `NotEqual` operators")
+                        { Reason = FailureHint.Reason.InvalidArgument };
                 }
 
                 return this;
@@ -186,8 +188,11 @@ namespace Postgrest
                 return this;
             }
 
-            throw new Exception(
-                "Unknown criterion type, is it of type `string`, `int`, `float`, `List`, `Dictionary<string, object>`, `FullTextSearchConfig`, or `Range`?");
+        throw new PostgrestException(
+            "Unknown criterion type, is it of type `string`, `int`, `float`, `List`, `Dictionary<string, object>`, `FullTextSearchConfig`, or `Range`?")
+        {
+            Reason = FailureHint.Reason.InvalidArgument
+        };
         }
 
         /// <summary>

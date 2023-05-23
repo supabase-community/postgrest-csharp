@@ -69,7 +69,8 @@ namespace Postgrest.Attributes
         {
             if (!IsDerivedFromBaseModel(model))
             {
-                throw new Exception("ReferenceAttribute must be used with Postgrest BaseModels.");
+            throw new PostgrestException("ReferenceAttribute must be used with Postgrest BaseModels.")
+                { Reason = FailureHint.Reason.InvalidArgument };
             }
 
             Model = model;

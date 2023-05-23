@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Postgrest;
 using Postgrest.Converters;
+using Postgrest.Exceptions;
 using Postgrest.Extensions;
 
 namespace PostgrestTests
@@ -36,7 +37,7 @@ namespace PostgrestTests
         }
 
         [TestMethod("`intrange` should only accept integers for parsing")]
-        [ExpectedException(typeof(Exception))]
+        [ExpectedException(typeof(PostgrestException))]
         public void TestIntRangeParseInvalidFormat()
         {
             var test = "[1.2,3]";
