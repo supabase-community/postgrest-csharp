@@ -45,12 +45,31 @@ public class Client : IPostgrestClient
     /// <summary>
     /// API Base Url for subsequent calls.
     /// </summary>
-    public string BaseUrl { get; private set; }
+    public string BaseUrl { get; }
 
     /// <summary>
     /// The Options <see cref="Client"/> was initialized with.
     /// </summary>
-    public ClientOptions Options { get; private set; }
+    public ClientOptions Options { get; }
+
+    /// <summary>
+    /// Adds a debug handler
+    /// </summary>
+    /// <param name="handler"></param>
+    public void AddDebugHandler(IPostgrestDebugger.DebugEventHandler handler) =>
+        Debugger.Instance.AddDebugHandler(handler);
+
+    /// <summary>
+    /// Removes a debug handler
+    /// </summary>
+    /// <param name="handler"></param>
+    public void RemoveDebugHandler(IPostgrestDebugger.DebugEventHandler handler) =>
+        Debugger.Instance.RemoveDebugHandler(handler);
+
+    /// <summary>
+    /// Clears debug handlers
+    /// </summary>
+    public void ClearDebugHandlers() => Debugger.Instance.ClearDebugHandlers();
 
     /// <summary>
     /// Function that can be set to return dynamic headers.
@@ -68,10 +87,7 @@ public class Client : IPostgrestClient
     public Client(string baseUrl, ClientOptions? options = null)
     {
         BaseUrl = baseUrl;
-
-        options ??= new ClientOptions();
-
-        Options = options;
+        Options = options ?? new ClientOptions();
     }
 
     /// <summary>
@@ -79,15 +95,12 @@ public class Client : IPostgrestClient
     /// </summary>
     /// <typeparam name="T">Custom Model derived from `BaseModel`</typeparam>
     /// <returns></returns>
-    public IPostgrestTable<T> Table<T>() where T : BaseModel, new()
-    {
-        var table = new Table<T>(BaseUrl, SerializerSettings(Options), Options)
+    public IPostgrestTable<T> Table<T>() where T : BaseModel, new() =>
+        new Table<T>(BaseUrl, SerializerSettings(Options), Options)
         {
             GetHeaders = GetHeaders
         };
 
-        return table;
-    }
 
     /// <summary>
     /// Perform a stored procedure call.

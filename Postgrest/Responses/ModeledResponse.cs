@@ -15,7 +15,7 @@ namespace Postgrest.Responses;
 public class ModeledResponse<T> : BaseResponse where T : BaseModel, new()
 {
     public T? Model => Models.FirstOrDefault();
-    
+
     public List<T> Models { get; } = new();
 
     public ModeledResponse(BaseResponse baseResponse, JsonSerializerSettings serializerSettings,
@@ -68,5 +68,7 @@ public class ModeledResponse<T> : BaseResponse where T : BaseModel, new()
                 break;
             }
         }
+
+        Debugger.Instance.Log(this, $"Parsed Models <{typeof(T).Name}>:\n\t{JsonConvert.SerializeObject(Models)}\n");
     }
 }

@@ -53,13 +53,13 @@
         <LangVersion>latest</LangVersion>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.2"/>
-        <PackageReference Include="supabase-core" Version="0.0.2"/>
-        <PackageReference Include="System.Linq.Expressions" Version="4.3.0"/>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+        <PackageReference Include="supabase-core" Version="0.0.2" />
+        <PackageReference Include="System.Linq.Expressions" Version="4.3.0" />
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="Converters\"/>
-        <None Include="..\.github\icon.png" Pack="true" Link="icon.png" PackagePath="\"/>
-        <None Include="..\README.md" Pack="true" Link="README.md" PackagePath="\"/>
+        <Folder Include="Converters\" />
+        <None Include="..\.github\icon.png" Pack="true" Link="icon.png" PackagePath="\" />
+        <None Include="..\README.md" Pack="true" Link="README.md" PackagePath="\" />
     </ItemGroup>
 </Project>

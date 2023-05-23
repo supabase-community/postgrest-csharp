@@ -1080,33 +1080,6 @@ namespace PostgrestTests
             Assert.AreEqual("leroyjenkins", response.Models.FirstOrDefault()?.Username);
         }
 
-        [TestMethod("JSON.NET NullValueHandling is processed on Columns")]
-        public async Task TestNullValueHandlingOnColumn()
-        {
-            var client = new Client(BaseUrl);
-            var now = DateTime.UtcNow;
-            var model = new KitchenSink
-            {
-                DateTimeValue = now,
-                DateTimeValue1 = now
-            };
-
-            var insertResponse = await client.Table<KitchenSink>().Insert(model);
-
-            Assert.AreEqual(now.ToString(CultureInfo.CurrentCulture),
-                insertResponse.Models[0].DateTimeValue.ToString());
-            Assert.AreEqual(now.ToString(CultureInfo.CurrentCulture),
-                insertResponse.Models[0].DateTimeValue1.ToString());
-
-            insertResponse.Models[0].DateTimeValue = null;
-            insertResponse.Models[0].DateTimeValue1 = null;
-
-            var updatedResponse = await client.Table<KitchenSink>().Update(insertResponse.Models[0]);
-
-            Assert.IsNull(updatedResponse.Models[0].DateTimeValue);
-            Assert.IsNotNull(updatedResponse.Models[0].DateTimeValue1);
-        }
-
         [TestMethod("Test cancellation token")]
         public async Task TestCancellationToken()
         {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -79,7 +80,8 @@ public class CoercionTests
     public async Task CanCoerceGuids()
     {
         var client = new Client(BaseUrl);
-        var model = new KitchenSink() { };
+        client.AddDebugHandler((_, message, _) => Console.WriteLine(message));
+        var model = new KitchenSink();
 
         var inserted = await client.Table<KitchenSink>().Insert(model);
         Assert.IsNotNull(inserted.Model);
