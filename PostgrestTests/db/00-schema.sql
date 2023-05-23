@@ -60,7 +60,8 @@ create table "public"."kitchen_sink" (
   "list_of_datetimes" DATE [ ] null,
   "list_of_ints" INT [ ] null,
   "list_of_floats" FLOAT [ ] null,
-  "int_range" INT4RANGE null
+  "int_range" INT4RANGE null,
+  "uuidv4" uuid null
 );
 
 CREATE TABLE public.movie (

@@ -272,15 +272,15 @@ namespace PostgrestTests
                 { Operator.Or, $"or={exp}" },
             };
 
-            var subfilters = new List<QueryFilter>
+            var filters = new List<QueryFilter>
             {
-                new QueryFilter("a", Operator.GreaterThanOrEqual, "0"),
-                new QueryFilter("a", Operator.LessThanOrEqual, "100")
+                new("a", Operator.GreaterThanOrEqual, "0"),
+                new("a", Operator.LessThanOrEqual, "100")
             };
 
             foreach (var pair in dict)
             {
-                var filter = new QueryFilter(pair.Key, subfilters);
+                var filter = new QueryFilter(pair.Key, filters);
                 var result = (client.Table<User>() as Table<User>)!.PrepareFilter(filter);
                 Assert.AreEqual(pair.Value, $"{result.Key}={result.Value}");
             }
@@ -382,7 +382,7 @@ namespace PostgrestTests
         {
             var client = new Client(BaseUrl);
 
-            var supaUpdated = new User
+            var model = new User
             {
                 Username = "supabot",
                 AgeRange = new IntRange(3, 8),
@@ -390,12 +390,12 @@ namespace PostgrestTests
                 Catchphrase = "fat cat"
             };
 
-            var insertOptions = new QueryOptions
+            var options = new QueryOptions
             {
                 Upsert = true
             };
 
-            var response = await client.Table<User>().Insert(supaUpdated, insertOptions);
+            var response = await client.Table<User>().Insert(model, options);
 
             var kitchenSink1 = new KitchenSink
             {
@@ -411,9 +411,9 @@ namespace PostgrestTests
             var updatedUser = response.Models.First();
 
             Assert.AreEqual(1, response.Models.Count);
-            Assert.AreEqual(supaUpdated.Username, updatedUser.Username);
-            Assert.AreEqual(supaUpdated.AgeRange, updatedUser.AgeRange);
-            Assert.AreEqual(supaUpdated.Status, updatedUser.Status);
+            Assert.AreEqual(model.Username, updatedUser.Username);
+            Assert.AreEqual(model.AgeRange, updatedUser.AgeRange);
+            Assert.AreEqual(model.Status, updatedUser.Status);
 
             await client.Table<Message>().Get();
         }

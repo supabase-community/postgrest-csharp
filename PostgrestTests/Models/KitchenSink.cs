@@ -11,7 +11,7 @@ namespace PostgrestTests.Models
     [Table("kitchen_sink")]
     public class KitchenSink : BaseModel
     {
-        [PrimaryKey("id")]
+        [PrimaryKey("id", false)]
         public int? Id { get; set; }
 
         [Column("string_value")]
@@ -58,5 +58,8 @@ namespace PostgrestTests.Models
 
         [Column("int_range")]
         public IntRange? IntRange { get; set; }
+        
+        [Column("uuidv4")]
+        public Guid? Uuidv4 { get; set; }
     }
 }
