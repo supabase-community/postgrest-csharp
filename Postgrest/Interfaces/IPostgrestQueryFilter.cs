@@ -1,9 +1,8 @@
-﻿namespace Postgrest.Interfaces
+﻿namespace Postgrest.Interfaces;
+
+public interface IPostgrestQueryFilter
 {
-    public interface IPostgrestQueryFilter
-    {
-        object? Criteria { get; }
-        Constants.Operator Op { get; }
-        string? Property { get; }
-    }
+    object? Criteria { get; }
+    Constants.Operator Op { get; }
+    string? Property { get; }
 }

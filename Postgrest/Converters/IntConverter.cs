@@ -2,28 +2,27 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Postgrest.Converters
+namespace Postgrest.Converters;
+
+public class IntArrayConverter : JsonConverter
 {
-    public class IntArrayConverter : JsonConverter
+    public override bool CanConvert(Type objectType)
     {
-        public override bool CanConvert(Type objectType)
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
+    }
 
-        public override bool CanRead => false;
+    public override bool CanRead => false;
 
-        public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
-        {
-            throw new NotImplementedException();
-        }
+    public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+    {
+        throw new NotImplementedException();
+    }
 
-        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+    public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+    {
+        if (value is List<int> list)
         {
-            if (value is List<int> list)
-            {
-                writer.WriteValue($"{{{string.Join(",", list)}}}");
-            }
+            writer.WriteValue($"{{{string.Join(",", list)}}}");
         }
     }
 }
