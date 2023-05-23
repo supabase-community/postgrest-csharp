@@ -167,6 +167,19 @@ references:
   isSpec: "True"
   fullName: Postgrest.Attributes.ReferenceAttribute.Columns
   nameWithType: ReferenceAttribute.Columns
+- uid: Postgrest.Attributes.ReferenceAttribute.Equals(System.Object)
+  name: Equals(Object)
+  href: api/Postgrest.Attributes.ReferenceAttribute.html#Postgrest_Attributes_ReferenceAttribute_Equals_System_Object_
+  commentId: M:Postgrest.Attributes.ReferenceAttribute.Equals(System.Object)
+  fullName: Postgrest.Attributes.ReferenceAttribute.Equals(System.Object)
+  nameWithType: ReferenceAttribute.Equals(Object)
+- uid: Postgrest.Attributes.ReferenceAttribute.Equals*
+  name: Equals
+  href: api/Postgrest.Attributes.ReferenceAttribute.html#Postgrest_Attributes_ReferenceAttribute_Equals_
+  commentId: Overload:Postgrest.Attributes.ReferenceAttribute.Equals
+  isSpec: "True"
+  fullName: Postgrest.Attributes.ReferenceAttribute.Equals
+  nameWithType: ReferenceAttribute.Equals
 - uid: Postgrest.Attributes.ReferenceAttribute.IgnoreOnInsert
   name: IgnoreOnInsert
   href: api/Postgrest.Attributes.ReferenceAttribute.html#Postgrest_Attributes_ReferenceAttribute_IgnoreOnInsert
@@ -849,6 +862,12 @@ references:
   commentId: F:Postgrest.Exceptions.FailureHint.Reason.Internal
   fullName: Postgrest.Exceptions.FailureHint.Reason.Internal
   nameWithType: FailureHint.Reason.Internal
+- uid: Postgrest.Exceptions.FailureHint.Reason.InvalidArgument
+  name: InvalidArgument
+  href: api/Postgrest.Exceptions.FailureHint.Reason.html#Postgrest_Exceptions_FailureHint_Reason_InvalidArgument
+  commentId: F:Postgrest.Exceptions.FailureHint.Reason.InvalidArgument
+  fullName: Postgrest.Exceptions.FailureHint.Reason.InvalidArgument
+  nameWithType: FailureHint.Reason.InvalidArgument
 - uid: Postgrest.Exceptions.FailureHint.Reason.NotAuthorized
   name: NotAuthorized
   href: api/Postgrest.Exceptions.FailureHint.Reason.html#Postgrest_Exceptions_FailureHint_Reason_NotAuthorized
@@ -2655,6 +2674,23 @@ references:
   fullName.vb: Postgrest.Responses.ModeledResponse(Of T).ModeledResponse
   nameWithType: ModeledResponse<T>.ModeledResponse
   nameWithType.vb: ModeledResponse(Of T).ModeledResponse
+- uid: Postgrest.Responses.ModeledResponse`1.Model
+  name: Model
+  href: api/Postgrest.Responses.ModeledResponse-1.html#Postgrest_Responses_ModeledResponse_1_Model
+  commentId: P:Postgrest.Responses.ModeledResponse`1.Model
+  fullName: Postgrest.Responses.ModeledResponse<T>.Model
+  fullName.vb: Postgrest.Responses.ModeledResponse(Of T).Model
+  nameWithType: ModeledResponse<T>.Model
+  nameWithType.vb: ModeledResponse(Of T).Model
+- uid: Postgrest.Responses.ModeledResponse`1.Model*
+  name: Model
+  href: api/Postgrest.Responses.ModeledResponse-1.html#Postgrest_Responses_ModeledResponse_1_Model_
+  commentId: Overload:Postgrest.Responses.ModeledResponse`1.Model
+  isSpec: "True"
+  fullName: Postgrest.Responses.ModeledResponse<T>.Model
+  fullName.vb: Postgrest.Responses.ModeledResponse(Of T).Model
+  nameWithType: ModeledResponse<T>.Model
+  nameWithType.vb: ModeledResponse(Of T).Model
 - uid: Postgrest.Responses.ModeledResponse`1.Models
   name: Models
   href: api/Postgrest.Responses.ModeledResponse-1.html#Postgrest_Responses_ModeledResponse_1_Models
