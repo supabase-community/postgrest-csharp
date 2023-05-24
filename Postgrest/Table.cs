@@ -20,6 +20,7 @@ using Supabase.Core.Attributes;
 using Supabase.Core.Extensions;
 using static Postgrest.Constants;
 
+#pragma warning disable CS1570
 // ReSharper disable InvalidXmlDocComment
 
 namespace Postgrest;
@@ -304,7 +305,7 @@ public class Table<T> : IPostgrestTable<T> where T : BaseModel, new()
     /// <summary>
     /// Adds an ordering to the current query args using a predicate function.
     /// 
-    /// NOTE: If multiple orderings are required, chain this function with another call to <see cref="Order"/>.
+    /// NOTE: If multiple orderings are required, chain this function with another call to <see cref="Order(Expression{Func{T,object}},Ordering,NullPosition)"/>.
     /// </summary>
     /// <param name="predicate"></param>
     /// <param name="ordering">>Expects a columns from the Model to be returned</param>
@@ -328,7 +329,7 @@ public class Table<T> : IPostgrestTable<T> where T : BaseModel, new()
     /// <summary>
     /// Adds an ordering to the current query args.
     /// 
-    /// NOTE: If multiple orderings are required, chain this function with another call to <see cref="Order"/>.
+    /// NOTE: If multiple orderings are required, chain this function with another call to <see cref="Order(Expression{Func{T,object}},Ordering,NullPosition)"/>.
     /// </summary>
     /// <param name="column">Column Name</param>
     /// <param name="ordering"></param>
@@ -343,7 +344,7 @@ public class Table<T> : IPostgrestTable<T> where T : BaseModel, new()
     /// <summary>
     /// Adds an ordering to the current query args.
     /// 
-    /// NOTE: If multiple orderings are required, chain this function with another call to <see cref="Order"/>.
+    /// NOTE: If multiple orderings are required, chain this function with another call to <see cref="Order(Expression{Func{T,object}},Ordering,NullPosition)"/>.
     /// </summary>
     /// <param name="foreignTable"></param>
     /// <param name="column"></param>
@@ -560,7 +561,7 @@ public class Table<T> : IPostgrestTable<T> where T : BaseModel, new()
     /// <summary>
     /// Executes a BULK INSERT query using the defined query params on the current instance.
     /// </summary>
-    /// <param name="model"></param>
+    /// <param name="models"></param>
     /// <param name="options"></param>
     /// <param name="cancellationToken"></param>
     /// <returns>A typed model response from the database.</returns>
@@ -696,6 +697,7 @@ public class Table<T> : IPostgrestTable<T> where T : BaseModel, new()
     /// Executes an UPDATE query using the defined query params on the current instance.
     /// </summary>
     /// <param name="model"></param>
+    /// <param name="options"></param>
     /// <param name="cancellationToken"></param>
     /// <returns>A typed response from the database.</returns>
     public Task<ModeledResponse<T>> Update(T model, QueryOptions? options = null,
@@ -735,6 +737,7 @@ public class Table<T> : IPostgrestTable<T> where T : BaseModel, new()
     /// Executes a delete request using the model's primary key as the filter for the request.
     /// </summary>
     /// <param name="model"></param>
+    /// <param name="options"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public Task<ModeledResponse<T>> Delete(T model, QueryOptions? options = null,
@@ -901,6 +904,9 @@ public class Table<T> : IPostgrestTable<T> where T : BaseModel, new()
     /// Transforms an object into a string mapped list/dictionary using `JsonSerializerSettings`.
     /// </summary>
     /// <param name="data"></param>
+    /// <param name="isInsert"></param>
+    /// <param name="isUpdate"></param>
+    /// <param name="isUpsert"></param>
     /// <returns></returns>
     private object? PrepareRequestData(object? data, bool isInsert = false, bool isUpdate = false,
         bool isUpsert = false)
@@ -1102,9 +1108,15 @@ public class Table<T> : IPostgrestTable<T> where T : BaseModel, new()
             requestHeaders = GetHeaders().MergeLeft(requestHeaders);
         }
 
+        var url = GenerateUrl();
         var preparedData = PrepareRequestData(data, isInsert, isUpdate, isUpsert);
-        return Helpers.MakeRequest(_options, method, GenerateUrl(), _serializerSettings, preparedData,
-            requestHeaders, cancellationToken);
+        
+        Debugger.Instance.Log(this, $"Request [{method}] at {DateTime.Now.ToLocalTime()}\n" +
+                                    $"Headers:\n\t{JsonConvert.SerializeObject(requestHeaders)}\n" +
+                                    $"Data:\n\t{JsonConvert.SerializeObject(preparedData)}");
+        
+        return Helpers.MakeRequest(_options, method, url, _serializerSettings, preparedData, requestHeaders,
+            cancellationToken);
     }
 
     private Task<ModeledResponse<TU>> Send<TU>(HttpMethod method, object? data,
@@ -1116,9 +1128,15 @@ public class Table<T> : IPostgrestTable<T> where T : BaseModel, new()
         if (GetHeaders != null)
             requestHeaders = GetHeaders().MergeLeft(requestHeaders);
 
+        var url = GenerateUrl();
         var preparedData = PrepareRequestData(data, isInsert, isUpdate, isUpsert);
-        return Helpers.MakeRequest<TU>(_options, method, GenerateUrl(), _serializerSettings, preparedData,
-            requestHeaders, GetHeaders, cancellationToken);
+
+        Debugger.Instance.Log(this, $"Request [{method}] at {DateTime.Now.ToLocalTime()}\n" +
+                                    $"Headers:\n\t{JsonConvert.SerializeObject(requestHeaders)}\n" +
+                                    $"Data:\n\t{JsonConvert.SerializeObject(preparedData)}");
+
+        return Helpers.MakeRequest<TU>(_options, method, url, _serializerSettings, preparedData, requestHeaders,
+            GetHeaders, cancellationToken);
     }
 
     private static string FindTableName(object? obj = null)

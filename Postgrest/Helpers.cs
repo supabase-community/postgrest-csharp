@@ -93,15 +93,9 @@ internal static class Helpers
                 requestMessage.Headers.TryAddWithoutValidation(kvp.Key, kvp.Value);
             }
         }
-
-        Debugger.Instance.Log(null,
-            $"[{method.Method} request sent at {DateTime.Now.ToLocalTime()}]\nUrl: {builder.Uri}\nHeaders:\n\t{JsonConvert.SerializeObject(requestMessage.Headers)}\nData:\n\t{requestMessage.Content.ReadAsStringAsync().Result}");
-
+        
         var response = await Client.SendAsync(requestMessage, cancellationToken);
         var content = await response.Content.ReadAsStringAsync();
-
-        Debugger.Instance.Log(null,
-            $"Response [{response.StatusCode}]\nHeaders:\n\t{JsonConvert.SerializeObject(response.Headers)}\nContent:\n\t{content}");
 
         if (response.IsSuccessStatusCode)
             return new BaseResponse(clientOptions, response, content);

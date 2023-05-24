@@ -15,7 +15,14 @@ internal class Debugger
     /// <summary>
     /// Returns the Singleton Instance.
     /// </summary>
-    public static Debugger Instance => _instance ??= new Debugger();
+    public static Debugger Instance
+    {
+        get
+        {
+            _instance ??= new Debugger();
+            return _instance;
+        }
+    }
 
     private Debugger()
     {

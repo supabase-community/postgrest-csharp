@@ -399,7 +399,7 @@ namespace PostgrestTests
 
             var kitchenSink1 = new KitchenSink
             {
-                Id = 2,
+                Id = Guid.NewGuid(),
                 UniqueValue = "Testing"
             };
 
@@ -964,7 +964,7 @@ namespace PostgrestTests
         {
             var client = new Client(BaseUrl);
 
-            var response = await client.Table<User>().Select("username, status").Get();
+            var response = await client.Table<User>().Select("username,status").Get();
             foreach (var user in response.Models)
             {
                 Assert.IsNotNull(user.Username);

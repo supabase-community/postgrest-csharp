@@ -108,12 +108,10 @@ namespace PostgrestTests
 
             await client.Table<KitchenSink>()
                 .Set(x => x.BooleanValue!, true)
-                .Where(x => x.Id == 10)
                 .Update();
 
             await client.Table<KitchenSink>()
-                .Set(x => x.BooleanValue!, null)
-                .Where(x => x.Id == 10)
+                .Set(x => x.BooleanValue, true)
                 .Update();
         }
 
@@ -140,7 +138,7 @@ namespace PostgrestTests
                 await exists.Delete<User>();
 
             // Upsert-ing a model.
-            var user1 = new User { Username = "super-unique", FavoriteName = "supabase-2" };
+            var user1 = new User { Username = "super-unique", Status = "ONLINE", FavoriteName = "supabase-2" };
 
             var ks1 = await client.Table<User>().OnConflict(x => x.FavoriteName!)
                 .Insert(user1);
@@ -238,10 +236,12 @@ namespace PostgrestTests
             Assert.IsNotNull(exists);
             Assert.IsTrue(count == 1);
 
-            var originalRecord = await client.Table<KitchenSink>().Where(x => x.Id == 1).Single();
+            var originalRecord = await client.Table<KitchenSink>()
+                .Where(x => x.Id! == new Guid("f3ff356d-5803-43a7-b125-ba10cf10fdcd"))
+                .Single();
 
             Assert.IsNotNull(originalRecord);
-
+            
             var newRecord = await client.Table<KitchenSink>()
                 .Set(x => new KeyValuePair<object, object?>(x.BooleanValue!, !originalRecord.BooleanValue!))
                 .Set(x => new KeyValuePair<object, object?>(x.IntValue!, originalRecord.IntValue! + 1))

@@ -20,7 +20,9 @@ VALUES ('supabot', 'ONLINE', '[1,2)'::int4range),
        ('dragarcia', 'ONLINE', '[20,30)'::int4range),
        ('leroyjenkins', 'ONLINE', '[20,40)'::int4range);
 
-INSERT INTO public.kitchen_sink (string_value,
+INSERT INTO public.kitchen_sink (id,
+                                 string_value,
+                                 bool_value,
                                  int_value,
                                  float_value,
                                  double_value,
@@ -34,7 +36,9 @@ INSERT INTO public.kitchen_sink (string_value,
                                  list_of_floats,
                                  int_range)
 
-VALUES ('Im the Kitchen Sink!',
+VALUES ('f3ff356d-5803-43a7-b125-ba10cf10fdcd',
+        'Im the Kitchen Sink!',
+        false,
         99999,
         '99999.0'::float4,
         '99999.0'::float8,

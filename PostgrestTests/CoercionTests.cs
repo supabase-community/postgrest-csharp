@@ -38,7 +38,7 @@ public class CoercionTests
         var dateTimeValue = DateTime.UtcNow;
         var listOfStrings = new List<string> { "test", "1", "2", "3" };
         var listOfDateTime = new List<DateTime>
-            { new DateTime(2021, 12, 10), new DateTime(2021, 12, 11), new DateTime(2021, 12, 12) };
+            { new(2021, 12, 10), new(2021, 12, 11), new(2021, 12, 12) };
         var listOfInts = new List<int> { 1, 2, 3 };
         var listOfFloats = new List<float> { 1.1f, 1.2f, 1.3f };
         var intRange = new IntRange(0, 1);

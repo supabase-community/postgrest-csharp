@@ -69,6 +69,9 @@ public class ModeledResponse<T> : BaseResponse where T : BaseModel, new()
             }
         }
 
-        Debugger.Instance.Log(this, $"Parsed Models <{typeof(T).Name}>:\n\t{JsonConvert.SerializeObject(Models)}\n");
+        Debugger.Instance.Log(this,
+            $"Response: [{baseResponse.ResponseMessage?.StatusCode}]\n" +
+            $"Parsed Models <{typeof(T).Name}>:\n\t{JsonConvert.SerializeObject(Models)}\n"
+        );
     }
 }
