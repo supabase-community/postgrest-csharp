@@ -2340,45 +2340,6 @@ references:
   isSpec: "True"
   fullName: Postgrest.PostgrestContractResolver.CreateProperty
   nameWithType: PostgrestContractResolver.CreateProperty
-- uid: Postgrest.PostgrestContractResolver.IsInsert
-  name: IsInsert
-  href: api/Postgrest.PostgrestContractResolver.html#Postgrest_PostgrestContractResolver_IsInsert
-  commentId: P:Postgrest.PostgrestContractResolver.IsInsert
-  fullName: Postgrest.PostgrestContractResolver.IsInsert
-  nameWithType: PostgrestContractResolver.IsInsert
-- uid: Postgrest.PostgrestContractResolver.IsInsert*
-  name: IsInsert
-  href: api/Postgrest.PostgrestContractResolver.html#Postgrest_PostgrestContractResolver_IsInsert_
-  commentId: Overload:Postgrest.PostgrestContractResolver.IsInsert
-  isSpec: "True"
-  fullName: Postgrest.PostgrestContractResolver.IsInsert
-  nameWithType: PostgrestContractResolver.IsInsert
-- uid: Postgrest.PostgrestContractResolver.IsUpdate
-  name: IsUpdate
-  href: api/Postgrest.PostgrestContractResolver.html#Postgrest_PostgrestContractResolver_IsUpdate
-  commentId: P:Postgrest.PostgrestContractResolver.IsUpdate
-  fullName: Postgrest.PostgrestContractResolver.IsUpdate
-  nameWithType: PostgrestContractResolver.IsUpdate
-- uid: Postgrest.PostgrestContractResolver.IsUpdate*
-  name: IsUpdate
-  href: api/Postgrest.PostgrestContractResolver.html#Postgrest_PostgrestContractResolver_IsUpdate_
-  commentId: Overload:Postgrest.PostgrestContractResolver.IsUpdate
-  isSpec: "True"
-  fullName: Postgrest.PostgrestContractResolver.IsUpdate
-  nameWithType: PostgrestContractResolver.IsUpdate
-- uid: Postgrest.PostgrestContractResolver.IsUpsert
-  name: IsUpsert
-  href: api/Postgrest.PostgrestContractResolver.html#Postgrest_PostgrestContractResolver_IsUpsert
-  commentId: P:Postgrest.PostgrestContractResolver.IsUpsert
-  fullName: Postgrest.PostgrestContractResolver.IsUpsert
-  nameWithType: PostgrestContractResolver.IsUpsert
-- uid: Postgrest.PostgrestContractResolver.IsUpsert*
-  name: IsUpsert
-  href: api/Postgrest.PostgrestContractResolver.html#Postgrest_PostgrestContractResolver_IsUpsert_
-  commentId: Overload:Postgrest.PostgrestContractResolver.IsUpsert
-  isSpec: "True"
-  fullName: Postgrest.PostgrestContractResolver.IsUpsert
-  nameWithType: PostgrestContractResolver.IsUpsert
 - uid: Postgrest.PostgrestContractResolver.SetState(System.Boolean,System.Boolean,System.Boolean)
   name: SetState(Boolean, Boolean, Boolean)
   href: api/Postgrest.PostgrestContractResolver.html#Postgrest_PostgrestContractResolver_SetState_System_Boolean_System_Boolean_System_Boolean_
