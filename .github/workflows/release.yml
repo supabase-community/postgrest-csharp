@@ -26,8 +26,8 @@ jobs:
       - name: Install dependencies
         run: dotnet restore
 
-      - name: Build Realtime
-        run: dotnet build ./Realtime/Realtime.csproj --configuration Release --no-restore
+      - name: Build Postgrest
+        run: dotnet build ./Postgrest/Postgrest.csproj --configuration Release --no-restore
 
       # Publish
       - name: publish on version change
