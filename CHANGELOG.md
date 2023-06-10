@@ -1,5 +1,9 @@
 ﻿# Changelog
 
+## 3.2.2 - 2023-06-10
+
+- Uses new assembly name of `Supabase.Core`
+
 ## 3.2.1 - 2023-06-10
 
 - Changes Assembly output to be `Supabase.Postgrest`
