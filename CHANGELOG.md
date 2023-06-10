@@ -1,5 +1,9 @@
 ﻿# Changelog
 
+## 3.2.1 - 2023-06-10
+
+- Changes Assembly output to be `Supabase.Postgrest`
+
 ## 3.2.0 - 2023-05-23
 
 - General codebase and QOL improvements. Exceptions are generally thrown through `PostgrestException` now instead
