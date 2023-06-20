@@ -400,15 +400,15 @@ references:
   isSpec: "True"
   fullName: Postgrest.Client.RemoveDebugHandler
   nameWithType: Client.RemoveDebugHandler
-- uid: Postgrest.Client.Rpc(System.String,Dictionary{System.String,System.Object})
-  name: Rpc(String, Dictionary<String, Object>)
-  href: api/Postgrest.Client.html#Postgrest_Client_Rpc_System_String_Dictionary_System_String_System_Object__
-  commentId: M:Postgrest.Client.Rpc(System.String,Dictionary{System.String,System.Object})
-  name.vb: Rpc(String, Dictionary(Of String, Object))
-  fullName: Postgrest.Client.Rpc(System.String, Dictionary<System.String, System.Object>)
-  fullName.vb: Postgrest.Client.Rpc(System.String, Dictionary(Of System.String, System.Object))
-  nameWithType: Client.Rpc(String, Dictionary<String, Object>)
-  nameWithType.vb: Client.Rpc(String, Dictionary(Of String, Object))
+- uid: Postgrest.Client.Rpc(System.String,System.Nullable{Dictionary{System.String,System.Object}})
+  name: Rpc(String, Nullable<Dictionary<String, Object>>)
+  href: api/Postgrest.Client.html#Postgrest_Client_Rpc_System_String_System_Nullable_Dictionary_System_String_System_Object___
+  commentId: M:Postgrest.Client.Rpc(System.String,System.Nullable{Dictionary{System.String,System.Object}})
+  name.vb: Rpc(String, Nullable(Of Dictionary(Of String, Object)))
+  fullName: Postgrest.Client.Rpc(System.String, System.Nullable<Dictionary<System.String, System.Object>>)
+  fullName.vb: Postgrest.Client.Rpc(System.String, System.Nullable(Of Dictionary(Of System.String, System.Object)))
+  nameWithType: Client.Rpc(String, Nullable<Dictionary<String, Object>>)
+  nameWithType.vb: Client.Rpc(String, Nullable(Of Dictionary(Of String, Object)))
 - uid: Postgrest.Client.Rpc*
   name: Rpc
   href: api/Postgrest.Client.html#Postgrest_Client_Rpc_
