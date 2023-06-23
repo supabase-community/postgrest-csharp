@@ -5,73 +5,73 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Postgrest.Extensions;
 using Postgrest.Models;
-
-namespace Postgrest.Responses;
-
-/// <summary>
-/// A representation of a successful Postgrest response that transforms the string response into a C# Modelled response.
-/// </summary>
-/// <typeparam name="T"></typeparam>
-public class ModeledResponse<T> : BaseResponse where T : BaseModel, new()
+namespace Postgrest.Responses
 {
-    public T? Model => Models.FirstOrDefault();
 
-    public List<T> Models { get; } = new();
+	/// <summary>
+	/// A representation of a successful Postgrest response that transforms the string response into a C# Modelled response.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	public class ModeledResponse<T> : BaseResponse where T : BaseModel, new()
+	{
+		/// <summary>
+		/// The first model in the response.
+		/// </summary>
+		public T? Model => Models.FirstOrDefault();
 
-    public ModeledResponse(BaseResponse baseResponse, JsonSerializerSettings serializerSettings,
-        Func<Dictionary<string, string>>? getHeaders = null, bool shouldParse = true) : base(baseResponse.ClientOptions,
-        baseResponse.ResponseMessage, baseResponse.Content)
-    {
-        Content = baseResponse.Content;
-        ResponseMessage = baseResponse.ResponseMessage;
+		/// <summary>
+		/// A list of models in the response.
+		/// </summary>
+		public List<T> Models { get; } = new();
 
-        if (!shouldParse || string.IsNullOrEmpty(Content)) return;
-        var token = JToken.Parse(Content!);
+		/// <inheritdoc />
+		public ModeledResponse(BaseResponse baseResponse, JsonSerializerSettings serializerSettings, Func<Dictionary<string, string>>? getHeaders = null, bool shouldParse = true) : base(baseResponse.ClientOptions, baseResponse.ResponseMessage, baseResponse.Content)
+		{
+			Content = baseResponse.Content;
+			ResponseMessage = baseResponse.ResponseMessage;
 
-        switch (token)
-        {
-            // A List of models has been returned
-            case JArray:
-            {
-                var deserialized = JsonConvert.DeserializeObject<List<T>>(Content!, serializerSettings);
+			if (!shouldParse || string.IsNullOrEmpty(Content)) return;
 
-                if (deserialized != null)
-                    Models = deserialized;
+			var token = JToken.Parse(Content!);
 
-                foreach (var model in Models)
-                {
-                    model.BaseUrl = baseResponse.ResponseMessage!.RequestMessage.RequestUri.GetInstanceUrl()
-                        .Replace(model.TableName, "").TrimEnd('/');
-                    model.RequestClientOptions = ClientOptions;
-                    model.GetHeaders = getHeaders;
-                }
+			switch (token)
+			{
+				// A List of models has been returned
+				case JArray: {
+					var deserialized = JsonConvert.DeserializeObject<List<T>>(Content!, serializerSettings);
 
-                break;
-            }
-            // A single model has been returned
-            case JObject:
-            {
-                Models.Clear();
+					if (deserialized != null)
+						Models = deserialized;
 
-                var obj = JsonConvert.DeserializeObject<T>(Content!, serializerSettings);
+					foreach (var model in Models)
+					{
+						model.BaseUrl = baseResponse.ResponseMessage!.RequestMessage.RequestUri.GetInstanceUrl().Replace(model.TableName, "").TrimEnd('/');
+						model.RequestClientOptions = ClientOptions;
+						model.GetHeaders = getHeaders;
+					}
 
-                if (obj != null)
-                {
-                    obj.BaseUrl = baseResponse.ResponseMessage!.RequestMessage.RequestUri.GetInstanceUrl()
-                        .Replace(obj.TableName, "").TrimEnd('/');
-                    obj.RequestClientOptions = ClientOptions;
-                    obj.GetHeaders = getHeaders;
+					break;
+				}
+				// A single model has been returned
+				case JObject: {
+					Models.Clear();
 
-                    Models.Add(obj);
-                }
+					var obj = JsonConvert.DeserializeObject<T>(Content!, serializerSettings);
 
-                break;
-            }
-        }
+					if (obj != null)
+					{
+						obj.BaseUrl = baseResponse.ResponseMessage!.RequestMessage.RequestUri.GetInstanceUrl().Replace(obj.TableName, "").TrimEnd('/');
+						obj.RequestClientOptions = ClientOptions;
+						obj.GetHeaders = getHeaders;
 
-        Debugger.Instance.Log(this,
-            $"Response: [{baseResponse.ResponseMessage?.StatusCode}]\n" +
-            $"Parsed Models <{typeof(T).Name}>:\n\t{JsonConvert.SerializeObject(Models)}\n"
-        );
-    }
+						Models.Add(obj);
+					}
+
+					break;
+				}
+			}
+
+			Debugger.Instance.Log(this, $"Response: [{baseResponse.ResponseMessage?.StatusCode}]\n" + $"Parsed Models <{typeof(T).Name}>:\n\t{JsonConvert.SerializeObject(Models)}\n");
+		}
+	}
 }

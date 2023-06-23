@@ -3,77 +3,83 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-
-namespace Postgrest.Converters;
-
-public class DateTimeConverter : JsonConverter
+namespace Postgrest.Converters
 {
-    public override bool CanConvert(Type objectType)
-    {
-        throw new NotImplementedException();
-    }
 
-    public override bool CanWrite => false;
+	/// <inheritdoc />
+	public class DateTimeConverter : JsonConverter
+	{
+		/// <inheritdoc />
+		public override bool CanConvert(Type objectType)
+		{
+			throw new NotImplementedException();
+		}
 
-    public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
-    {
-        if (reader.Value != null)
-        {
-            var str = reader.Value.ToString();
+		/// <inheritdoc />
+		public override bool CanWrite => false;
 
-            var infinity = ParseInfinity(str);
+		/// <inheritdoc />
+		public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+		{
+			if (reader.Value != null)
+			{
+				var str = reader.Value.ToString();
 
-            if (infinity != null)
-            {
-                return (DateTime)infinity;
-            }
+				var infinity = ParseInfinity(str);
 
-            var date = DateTime.Parse(str);
-            return date;
-        }
+				if (infinity != null)
+				{
+					return (DateTime)infinity;
+				}
 
-        var result = new List<DateTime>();
+				var date = DateTime.Parse(str);
+				return date;
+			}
 
-        try
-        {
-            var jo = JArray.Load(reader);
+			var result = new List<DateTime>();
 
-            foreach (var item in jo.ToArray())
-            {
-                var inner = item.ToString();
+			try
+			{
+				var jo = JArray.Load(reader);
 
-                var infinity = ParseInfinity(inner);
+				foreach (var item in jo.ToArray())
+				{
+					var inner = item.ToString();
 
-                if (infinity != null)
-                {
-                    result.Add((DateTime)infinity);
-                }
+					var infinity = ParseInfinity(inner);
 
-                var date = DateTime.Parse(inner);
-                result.Add(date);
-            }
-        }
-        catch (JsonReaderException)
-        {
-            return null;
-        }
+					if (infinity != null)
+					{
+						result.Add((DateTime)infinity);
+					}
+
+					var date = DateTime.Parse(inner);
+					result.Add(date);
+				}
+			}
+			catch (JsonReaderException)
+			{
+				return null;
+			}
 
 
-        return result;
-    }
+			return result;
+		}
 
-    private static DateTime? ParseInfinity(string input)
-    {
-        if (input.Contains("infinity"))
-        {
-            return input.Contains("-") ? DateTime.MinValue : DateTime.MaxValue;
-        }
+		private static DateTime? ParseInfinity(string input)
+		{
+			if (input.Contains("infinity"))
+			{
+				return input.Contains("-") ? DateTime.MinValue : DateTime.MaxValue;
+			}
 
-        return null;
-    }
+			return null;
+		}
 
-    public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
-    {
-        throw new NotImplementedException();
-    }
+		/// <inheritdoc />
+		public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }
