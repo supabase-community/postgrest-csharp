@@ -1,8 +1,10 @@
-﻿namespace Postgrest.Interfaces;
-
-public interface IPostgrestQueryFilter
+﻿#pragma warning disable CS1591
+namespace Postgrest.Interfaces
 {
-    object? Criteria { get; }
-    Constants.Operator Op { get; }
-    string? Property { get; }
+	public interface IPostgrestQueryFilter
+	{
+		object? Criteria { get; }
+		Constants.Operator Op { get; }
+		string? Property { get; }
+	}
 }
