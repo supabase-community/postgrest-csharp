@@ -3,7 +3,6 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Postgrest.Exceptions;
 using Postgrest.Extensions;
-
 namespace Postgrest.Converters
 {
 

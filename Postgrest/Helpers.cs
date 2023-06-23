@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using Newtonsoft.Json;
-using Postgrest.Responses;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using Newtonsoft.Json.Linq;
-using Postgrest.Models;
-using Supabase.Core.Extensions;
 using Postgrest.Exceptions;
-
+using Postgrest.Models;
+using Postgrest.Responses;
+using Supabase.Core;
+using Supabase.Core.Extensions;
 [assembly: InternalsVisibleTo("PostgrestTests")]
 
 namespace Postgrest
@@ -137,7 +137,7 @@ namespace Postgrest
 
 			if (!headers.ContainsKey("X-Client-Info"))
 			{
-				headers.Add("X-Client-Info", Supabase.Core.Util.GetAssemblyVersion(typeof(Client)));
+				headers.Add("X-Client-Info", Util.GetAssemblyVersion(typeof(Client)));
 			}
 
 			return headers;

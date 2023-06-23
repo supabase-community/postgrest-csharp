@@ -8,7 +8,6 @@ using Postgrest.Interfaces;
 using Postgrest.Models;
 using Postgrest.Responses;
 using Supabase.Core.Extensions;
-
 namespace Postgrest
 {
 	/// <inheritdoc />
