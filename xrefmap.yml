@@ -451,12 +451,12 @@ references:
   commentId: T:Postgrest.ClientOptions
   fullName: Postgrest.ClientOptions
   nameWithType: ClientOptions
-- uid: Postgrest.ClientOptions.DateTimeFormat
-  name: DateTimeFormat
-  href: api/Postgrest.ClientOptions.html#Postgrest_ClientOptions_DateTimeFormat
-  commentId: F:Postgrest.ClientOptions.DateTimeFormat
-  fullName: Postgrest.ClientOptions.DateTimeFormat
-  nameWithType: ClientOptions.DateTimeFormat
+- uid: Postgrest.ClientOptions.DATE_TIME_FORMAT
+  name: DATE_TIME_FORMAT
+  href: api/Postgrest.ClientOptions.html#Postgrest_ClientOptions_DATE_TIME_FORMAT
+  commentId: F:Postgrest.ClientOptions.DATE_TIME_FORMAT
+  fullName: Postgrest.ClientOptions.DATE_TIME_FORMAT
+  nameWithType: ClientOptions.DATE_TIME_FORMAT
 - uid: Postgrest.ClientOptions.DateTimeStyles
   name: DateTimeStyles
   href: api/Postgrest.ClientOptions.html#Postgrest_ClientOptions_DateTimeStyles
