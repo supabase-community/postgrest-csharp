@@ -2,6 +2,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
+        <LangVersion>9.0</LangVersion>
+        <WarningsAsErrors>CS8600;CS8602;CS8603</WarningsAsErrors>
+        <Nullable>enable</Nullable>
         <Title>postgrest-csharp</Title>
         <PackageId>postgrest-csharp</PackageId>
         <Authors>Joseph Schultz &lt;joseph@acupofjose.com&gt;</Authors>
@@ -26,19 +29,11 @@
         <RepositoryUrl>https://github.com/supabase-community/postgrest-csharp</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <AssemblyName>Supabase.Postgrest</AssemblyName>
-    </PropertyGroup>
-    <PropertyGroup>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    </PropertyGroup>
-    <PropertyGroup>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
-    <PropertyGroup>
-        <Nullable>enable</Nullable>
-        <LangVersion>latest</LangVersion>
-        <WarningsAsErrors>CS8600;CS8602;CS8603</WarningsAsErrors>
-    </PropertyGroup>
+
     <PropertyGroup Condition=" '$(Version)' == '' ">
         <VersionPrefix Condition=" '$(VersionPrefix)' == '' ">3.2.2</VersionPrefix>
         <VersionSuffix Condition=" '$(VersionSuffix)' == '' ">
@@ -46,12 +41,7 @@
         <Version Condition=" '$(VersionSuffix)' != '' ">$(VersionPrefix)-$(VersionSuffix)</Version>
         <Version Condition=" '$(Version)' == '' ">$(VersionPrefix)</Version>
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-        <LangVersion>latest</LangVersion>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-        <LangVersion>latest</LangVersion>
-    </PropertyGroup>
+    
     <ItemGroup>
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <PackageReference Include="supabase-core" Version="0.0.3" />

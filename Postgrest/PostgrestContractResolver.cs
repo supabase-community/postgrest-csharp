@@ -6,101 +6,105 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Postgrest.Attributes;
 using Postgrest.Converters;
-
-namespace Postgrest;
-
-/// <summary>
-/// A custom resolver that handles mapping column names and property names as well
-/// as handling the conversion of Postgrest Ranges to a C# `Range`.
-/// </summary>
-public class PostgrestContractResolver : DefaultContractResolver
+namespace Postgrest
 {
-    private bool IsUpdate { get; set; }
-    private bool IsInsert { get; set; }
-    private bool IsUpsert { get; set; }
 
-    public void SetState(bool isInsert = false, bool isUpdate = false, bool isUpsert = false)
-    {
-        IsUpdate = isUpdate;
-        IsInsert = isInsert;
-        IsUpsert = isUpsert;
-    }
+	/// <summary>
+	/// A custom resolver that handles mapping column names and property names as well
+	/// as handling the conversion of Postgrest Ranges to a C# `Range`.
+	/// </summary>
+	public class PostgrestContractResolver : DefaultContractResolver
+	{
+		private bool IsUpdate { get; set; }
+		private bool IsInsert { get; set; }
+		private bool IsUpsert { get; set; }
 
-    /// <inheritdoc />
-    protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
-    {
-        JsonProperty prop = base.CreateProperty(member, memberSerialization);
+		/// <summary>
+		/// Sets the state of the contract resolver to either insert, update, or upsert.
+		/// </summary>
+		/// <param name="isInsert"></param>
+		/// <param name="isUpdate"></param>
+		/// <param name="isUpsert"></param>
+		public void SetState(bool isInsert = false, bool isUpdate = false, bool isUpsert = false)
+		{
+			IsUpdate = isUpdate;
+			IsInsert = isInsert;
+			IsUpsert = isUpsert;
+		}
 
-        // Handle non-primitive conversions from a Postgres type to C#
-        if (prop.PropertyType == typeof(IntRange))
-        {
-            prop.Converter = new RangeConverter();
-        }
-        else if (prop.PropertyType != null && (prop.PropertyType == typeof(DateTime) ||
-                                               Nullable.GetUnderlyingType(prop.PropertyType) == typeof(DateTime)))
-        {
-            prop.Converter = new DateTimeConverter();
-        }
-        else if (prop.PropertyType == typeof(List<int>))
-        {
-            prop.Converter = new IntArrayConverter();
-        }
-        else if (prop.PropertyType != null && (prop.PropertyType == typeof(List<DateTime>) ||
-                                               Nullable.GetUnderlyingType(prop.PropertyType) ==
-                                               typeof(List<DateTime>)))
-        {
-            prop.Converter = new DateTimeConverter();
-        }
+		/// <inheritdoc />
+		protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
+		{
+			JsonProperty prop = base.CreateProperty(member, memberSerialization);
 
-        // Dynamically set the name of the key we are serializing/deserializing from the model.
-        if (!member.CustomAttributes.Any())
-        {
-            return prop;
-        }
+			// Handle non-primitive conversions from a Postgres type to C#
+			if (prop.PropertyType == typeof(IntRange))
+			{
+				prop.Converter = new RangeConverter();
+			}
+			else if (prop.PropertyType != null && (prop.PropertyType == typeof(DateTime) || Nullable.GetUnderlyingType(prop.PropertyType) == typeof(DateTime)))
+			{
+				prop.Converter = new DateTimeConverter();
+			}
+			else if (prop.PropertyType == typeof(List<int>))
+			{
+				prop.Converter = new IntArrayConverter();
+			}
+			else if (prop.PropertyType != null && (prop.PropertyType == typeof(List<DateTime>) || Nullable.GetUnderlyingType(prop.PropertyType) == typeof(List<DateTime>)))
+			{
+				prop.Converter = new DateTimeConverter();
+			}
 
-        var columnAttribute = member.GetCustomAttribute<ColumnAttribute>();
+			// Dynamically set the name of the key we are serializing/deserializing from the model.
+			if (!member.CustomAttributes.Any())
+			{
+				return prop;
+			}
 
-        if (columnAttribute != null)
-        {
-            prop.PropertyName = columnAttribute.ColumnName;
-            prop.NullValueHandling = columnAttribute.NullValueHandling;
+			var columnAttribute = member.GetCustomAttribute<ColumnAttribute>();
 
-            if (IsInsert && columnAttribute.IgnoreOnInsert)
-                prop.Ignored = true;
+			if (columnAttribute != null)
+			{
+				prop.PropertyName = columnAttribute.ColumnName;
+				prop.NullValueHandling = columnAttribute.NullValueHandling;
 
-            if (IsUpdate && columnAttribute.IgnoreOnUpdate)
-                prop.Ignored = true;
-            
-            if ((IsUpsert && columnAttribute.IgnoreOnUpdate) || (IsUpsert && columnAttribute.IgnoreOnInsert))
-                prop.Ignored = true;
+				if (IsInsert && columnAttribute.IgnoreOnInsert)
+					prop.Ignored = true;
 
-            return prop;
-        }
+				if (IsUpdate && columnAttribute.IgnoreOnUpdate)
+					prop.Ignored = true;
 
-        var referenceAttr = member.GetCustomAttribute<ReferenceAttribute>();
+				if ((IsUpsert && columnAttribute.IgnoreOnUpdate) || (IsUpsert && columnAttribute.IgnoreOnInsert))
+					prop.Ignored = true;
 
-        if (referenceAttr != null)
-        {
-            prop.PropertyName = referenceAttr.TableName;
+				return prop;
+			}
 
-            if (IsInsert && referenceAttr.IgnoreOnInsert)
-                prop.Ignored = true;
+			var referenceAttr = member.GetCustomAttribute<ReferenceAttribute>();
 
-            if (IsUpdate && referenceAttr.IgnoreOnUpdate)
-                prop.Ignored = true;
+			if (referenceAttr != null)
+			{
+				prop.PropertyName = referenceAttr.TableName;
 
-            if ((IsUpsert && referenceAttr.IgnoreOnUpdate) || (IsUpsert && referenceAttr.IgnoreOnInsert))
-                prop.Ignored = true;
+				if (IsInsert && referenceAttr.IgnoreOnInsert)
+					prop.Ignored = true;
 
-            return prop;
-        }
+				if (IsUpdate && referenceAttr.IgnoreOnUpdate)
+					prop.Ignored = true;
 
-        var primaryKeyAttribute = member.GetCustomAttribute<PrimaryKeyAttribute>();
-        if (primaryKeyAttribute == null)
-            return prop;
+				if ((IsUpsert && referenceAttr.IgnoreOnUpdate) || (IsUpsert && referenceAttr.IgnoreOnInsert))
+					prop.Ignored = true;
 
-        prop.PropertyName = primaryKeyAttribute.ColumnName;
-        prop.ShouldSerialize = instance => primaryKeyAttribute.ShouldInsert || (IsUpsert && instance != null);
-        return prop;
-    }
+				return prop;
+			}
+
+			var primaryKeyAttribute = member.GetCustomAttribute<PrimaryKeyAttribute>();
+			if (primaryKeyAttribute == null)
+				return prop;
+
+			prop.PropertyName = primaryKeyAttribute.ColumnName;
+			prop.ShouldSerialize = instance => primaryKeyAttribute.ShouldInsert || (IsUpsert && instance != null);
+			return prop;
+		}
+	}
 }

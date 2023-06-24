@@ -2,94 +2,96 @@
 using System.Collections.Generic;
 using Postgrest.Extensions;
 using Supabase.Core.Attributes;
-
-namespace Postgrest;
-
-public class QueryOptions
+#pragma warning disable CS1591
+namespace Postgrest
 {
-    public enum ReturnType
-    {
-        [MapTo("minimal")]
-        Minimal,
-        [MapTo("representation")]
-        Representation
-    };
 
-    public enum CountType
-    {
-        [MapTo("none")]
-        None,
-        [MapTo("exact")]
-        Exact,
-        [MapTo("planned")]
-        Planned,
-        [MapTo("estimated")]
-        Estimated
-    };
+	public class QueryOptions
+	{
+		public enum ReturnType
+		{
+			[MapTo("minimal")]
+			Minimal,
+			[MapTo("representation")]
+			Representation
+		};
 
-    public enum DuplicateResolutionType
-    {
-        [MapTo("merge-duplicates")]
-        MergeDuplicates,
-        [MapTo("ignore-duplicates")]
-        IgnoreDuplicates
-    }
+		public enum CountType
+		{
+			[MapTo("none")]
+			None,
+			[MapTo("exact")]
+			Exact,
+			[MapTo("planned")]
+			Planned,
+			[MapTo("estimated")]
+			Estimated
+		};
 
-    /// <summary>
-    /// By default the new record is returned. Set this to 'Minimal' if you don't need this value.
-    /// </summary>
-    public ReturnType Returning { get; set; } = ReturnType.Representation;
+		public enum DuplicateResolutionType
+		{
+			[MapTo("merge-duplicates")]
+			MergeDuplicates,
+			[MapTo("ignore-duplicates")]
+			IgnoreDuplicates
+		}
 
-    /// <summary>
-    /// Specifies if duplicate rows should be ignored and not inserted.
-    /// </summary>
-    public DuplicateResolutionType DuplicateResolution { get; set; } = DuplicateResolutionType.MergeDuplicates;
+		/// <summary>
+		/// By default the new record is returned. Set this to 'Minimal' if you don't need this value.
+		/// </summary>
+		public ReturnType Returning { get; set; } = ReturnType.Representation;
 
-    /// <summary>
-    /// Count algorithm to use to count rows in a table.
-    /// </summary>
-    public CountType Count { get; set; } = CountType.None;
+		/// <summary>
+		/// Specifies if duplicate rows should be ignored and not inserted.
+		/// </summary>
+		public DuplicateResolutionType DuplicateResolution { get; set; } = DuplicateResolutionType.MergeDuplicates;
 
-    /// <summary>
-    /// If the record should be upserted
-    /// </summary>
-    public bool Upsert { get; set; }
+		/// <summary>
+		/// Count algorithm to use to count rows in a table.
+		/// </summary>
+		public CountType Count { get; set; } = CountType.None;
 
-    /// <summary>
-    /// /// By specifying the onConflict query parameter, you can make UPSERT work on a column(s) that has a UNIQUE constraint.
-    /// </summary>
-    public string? OnConflict { get; set; }
+		/// <summary>
+		/// If the record should be upserted
+		/// </summary>
+		public bool Upsert { get; set; }
 
-    public Dictionary<string, string> ToHeaders()
-    {
-        var headers = new Dictionary<string, string>();
-        var prefersHeaders = new List<string>();
+		/// <summary>
+		/// /// By specifying the onConflict query parameter, you can make UPSERT work on a column(s) that has a UNIQUE constraint.
+		/// </summary>
+		public string? OnConflict { get; set; }
 
-        if (Upsert)
-        {
-            var resolverAttr = DuplicateResolution.GetAttribute<MapToAttribute>();
-            prefersHeaders.Add($"resolution={resolverAttr?.Mapping}");
-        }
+		public Dictionary<string, string> ToHeaders()
+		{
+			var headers = new Dictionary<string, string>();
+			var prefersHeaders = new List<string>();
 
-        var returnAttr = Returning.GetAttribute<MapToAttribute>();
-        if (returnAttr != null)
-        {
-            prefersHeaders.Add($"return={returnAttr.Mapping}");
-        }
+			if (Upsert)
+			{
+				var resolverAttr = DuplicateResolution.GetAttribute<MapToAttribute>();
+				prefersHeaders.Add($"resolution={resolverAttr?.Mapping}");
+			}
 
-        var countAttr = Count.GetAttribute<MapToAttribute>();
-        if (Count != CountType.None && countAttr != null)
-        {
-            prefersHeaders.Add($"count={countAttr.Mapping}");
-        }
+			var returnAttr = Returning.GetAttribute<MapToAttribute>();
+			if (returnAttr != null)
+			{
+				prefersHeaders.Add($"return={returnAttr.Mapping}");
+			}
 
-        headers.Add("Prefer", String.Join(",", prefersHeaders.ToArray()));
+			var countAttr = Count.GetAttribute<MapToAttribute>();
+			if (Count != CountType.None && countAttr != null)
+			{
+				prefersHeaders.Add($"count={countAttr.Mapping}");
+			}
 
-        if (Returning == ReturnType.Minimal)
-        {
-            headers.Add("Accept", "*/*");
-        }
+			headers.Add("Prefer", String.Join(",", prefersHeaders.ToArray()));
 
-        return headers;
-    }
+			if (Returning == ReturnType.Minimal)
+			{
+				headers.Add("Accept", "*/*");
+			}
+
+			return headers;
+		}
+	}
 }

@@ -4,134 +4,110 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Postgrest.Attributes;
 using Postgrest.Interfaces;
 using Postgrest.Models;
 using Postgrest.Responses;
 using Supabase.Core.Extensions;
-
-namespace Postgrest;
-
-/// <summary>
-/// A a single, reusable connection to a Postgrest endpoint.
-/// </summary>
-public class Client : IPostgrestClient
+namespace Postgrest
 {
-	/// <summary>
-	/// Custom Serializer resolvers and converters that will be used for encoding and decoding Postgrest JSON responses.
-	///
-	/// By default, Postgrest seems to use a date format that C# and Newtonsoft do not like, so this initial
-	/// configuration handles that.
-	/// </summary>
-	public static JsonSerializerSettings SerializerSettings(ClientOptions? options = null)
+	/// <inheritdoc />
+	public class Client : IPostgrestClient
 	{
-		options ??= new ClientOptions();
-
-		return new JsonSerializerSettings
+		/// <summary>
+		/// Custom Serializer resolvers and converters that will be used for encoding and decoding Postgrest JSON responses.
+		///
+		/// By default, Postgrest seems to use a date format that C# and Newtonsoft do not like, so this initial
+		/// configuration handles that.
+		/// </summary>
+		public static JsonSerializerSettings SerializerSettings(ClientOptions? options = null)
 		{
-			ContractResolver = new PostgrestContractResolver(),
-			Converters =
+			options ??= new ClientOptions();
+
+			return new JsonSerializerSettings
 			{
-				// 2020-08-28T12:01:54.763231
-				new IsoDateTimeConverter
+				ContractResolver = new PostgrestContractResolver(),
+				Converters =
 				{
-					DateTimeStyles = options.DateTimeStyles,
-					DateTimeFormat = ClientOptions.DateTimeFormat
+					// 2020-08-28T12:01:54.763231
+					new IsoDateTimeConverter
+					{
+						DateTimeStyles = options.DateTimeStyles,
+						DateTimeFormat = ClientOptions.DATE_TIME_FORMAT
+					}
 				}
-			}
-		};
-	}
+			};
+		}
 
-	/// <summary>
-	/// API Base Url for subsequent calls.
-	/// </summary>
-	public string BaseUrl { get; }
 
-	/// <summary>
-	/// The Options <see cref="Client"/> was initialized with.
-	/// </summary>
-	public ClientOptions Options { get; }
+		/// <inheritdoc />
+		public string BaseUrl { get; }
 
-	/// <summary>
-	/// Adds a debug handler
-	/// </summary>
-	/// <param name="handler"></param>
-	public void AddDebugHandler(IPostgrestDebugger.DebugEventHandler handler) =>
-		Debugger.Instance.AddDebugHandler(handler);
+		/// <inheritdoc />
+		public ClientOptions Options { get; }
+		
+		/// <inheritdoc />
+		public void AddDebugHandler(IPostgrestDebugger.DebugEventHandler handler) =>
+			Debugger.Instance.AddDebugHandler(handler);
+		
+		/// <inheritdoc />
+		public void RemoveDebugHandler(IPostgrestDebugger.DebugEventHandler handler) =>
+			Debugger.Instance.RemoveDebugHandler(handler);
+		
+		/// <inheritdoc />
+		public void ClearDebugHandlers() => Debugger.Instance.ClearDebugHandlers();
 
-	/// <summary>
-	/// Removes a debug handler
-	/// </summary>
-	/// <param name="handler"></param>
-	public void RemoveDebugHandler(IPostgrestDebugger.DebugEventHandler handler) =>
-		Debugger.Instance.RemoveDebugHandler(handler);
+		/// <summary>
+		/// Function that can be set to return dynamic headers.
+		/// 
+		/// Headers specified in the constructor options will ALWAYS take precedence over headers returned by this function.
+		/// </summary>
+		public Func<Dictionary<string, string>>? GetHeaders { get; set; }
 
-	/// <summary>
-	/// Clears debug handlers
-	/// </summary>
-	public void ClearDebugHandlers() => Debugger.Instance.ClearDebugHandlers();
-
-	/// <summary>
-	/// Function that can be set to return dynamic headers.
-	/// 
-	/// Headers specified in the constructor options will ALWAYS take precedence over headers returned by this function.
-	/// </summary>
-	public Func<Dictionary<string, string>>? GetHeaders { get; set; }
-
-	/// <summary>
-	/// Should be the first call to this class to initialize a connection with a Postgrest API Server
-	/// </summary>
-	/// <param name="baseUrl">Api Endpoint (ex: "http://localhost:8000"), no trailing slash required.</param>
-	/// <param name="options">Optional client configuration.</param>
-	/// <returns></returns>
-	public Client(string baseUrl, ClientOptions? options = null)
-	{
-		BaseUrl = baseUrl;
-		Options = options ?? new ClientOptions();
-	}
-
-	/// <summary>
-	/// Returns a Table Query Builder instance for a defined model - representative of `USE $TABLE`
-	/// </summary>
-	/// <typeparam name="T">Custom Model derived from `BaseModel`</typeparam>
-	/// <returns></returns>
-	public IPostgrestTable<T> Table<T>() where T : BaseModel, new() =>
-		new Table<T>(BaseUrl, SerializerSettings(Options), Options)
+		/// <summary>
+		/// Should be the first call to this class to initialize a connection with a Postgrest API Server
+		/// </summary>
+		/// <param name="baseUrl">Api Endpoint (ex: "http://localhost:8000"), no trailing slash required.</param>
+		/// <param name="options">Optional client configuration.</param>
+		/// <returns></returns>
+		public Client(string baseUrl, ClientOptions? options = null)
 		{
-			GetHeaders = GetHeaders
-		};
+			BaseUrl = baseUrl;
+			Options = options ?? new ClientOptions();
+		}
 
 
-	/// <summary>
-	/// Perform a stored procedure call.
-	/// </summary>
-	/// <param name="procedureName">The function name to call</param>
-	/// <param name="parameters">The parameters to pass to the function call</param>
-	/// <returns></returns>
-	public Task<BaseResponse> Rpc(string procedureName, Dictionary<string, object>? parameters = null)
-	{
-		// Build Uri
-		var builder = new UriBuilder($"{BaseUrl}/rpc/{procedureName}");
+		/// <inheritdoc />
+		public IPostgrestTable<T> Table<T>() where T : BaseModel, new() =>
+			new Table<T>(BaseUrl, SerializerSettings(Options), Options)
+			{
+				GetHeaders = GetHeaders
+			};
 
-		var canonicalUri = builder.Uri.ToString();
 
-		var serializerSettings = SerializerSettings(Options);
+		/// <inheritdoc />
+		public Task<BaseResponse> Rpc(string procedureName, Dictionary<string, object>? parameters = null)
+		{
+			// Build Uri
+			var builder = new UriBuilder($"{BaseUrl}/rpc/{procedureName}");
 
-		// Prepare parameters
-		Dictionary<string, string>? data = null;
-		if (parameters != null)
-			data = JsonConvert.DeserializeObject<Dictionary<string, string>>(
-				JsonConvert.SerializeObject(parameters, serializerSettings));
+			var canonicalUri = builder.Uri.ToString();
 
-		// Prepare headers
-		var headers = Helpers.PrepareRequestHeaders(HttpMethod.Post,
-			new Dictionary<string, string>(Options.Headers), Options);
+			var serializerSettings = SerializerSettings(Options);
 
-		if (GetHeaders != null)
-			headers = GetHeaders().MergeLeft(headers);
+			// Prepare parameters
+			Dictionary<string, string>? data = null;
+			if (parameters != null)
+				data = JsonConvert.DeserializeObject<Dictionary<string, string>>(JsonConvert.SerializeObject(parameters, serializerSettings));
 
-		// Send request
-		var request = Helpers.MakeRequest(Options, HttpMethod.Post, canonicalUri, serializerSettings, data, headers);
-		return request;
+			// Prepare headers
+			var headers = Helpers.PrepareRequestHeaders(HttpMethod.Post, new Dictionary<string, string>(Options.Headers), Options);
+
+			if (GetHeaders != null)
+				headers = GetHeaders().MergeLeft(headers);
+
+			// Send request
+			var request = Helpers.MakeRequest(Options, HttpMethod.Post, canonicalUri, serializerSettings, data, headers);
+			return request;
+		}
 	}
 }
