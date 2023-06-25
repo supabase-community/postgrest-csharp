@@ -1,5 +1,12 @@
 ﻿# Changelog
 
+## 3.2.3 - 2023-06-25
+
+- [#69](https://github.com/supabase-community/postgrest-csharp/pull/69) Locks language version to C#9
+- [#68](https://github.com/supabase-community/postgrest-csharp/pull/68) Makes RPC parameters optional
+
+Thanks [@wiverson](https://github.com/wiverson) for the work in this release!
+
 ## 3.2.2 - 2023-06-10
 
 - Uses new assembly name of `Supabase.Core`
@@ -11,7 +18,7 @@
 ## 3.2.0 - 2023-05-23
 
 - General codebase and QOL improvements. Exceptions are generally thrown through `PostgrestException` now instead
-of `Exception`. A `FailureHint.Reason` is provided with failures if possible to parse.
+  of `Exception`. A `FailureHint.Reason` is provided with failures if possible to parse.
 - `AddDebugListener` is now available on the client to help with debugging
 - Merges [#65](https://github.com/supabase-community/postgrest-csharp/pull/65) Cleanup + Add better exception handling
 - Merges [#66](https://github.com/supabase-community/postgrest-csharp/pull/66) Local test Fixes
@@ -20,7 +27,7 @@ of `Exception`. A `FailureHint.Reason` is provided with failures if possible to 
 
 ## 3.1.3 - 2023-01-28
 
-- Fix [#61](https://github.com/supabase-community/postgrest-csharp/issues/61) which futher typechecks nullable values.
+- Fix [#61](https://github.com/supabase-community/postgrest-csharp/issues/61) which further typechecks nullable values.
 
 ## 3.1.2 - 2023-01-27
 
@@ -72,6 +79,7 @@ of `Exception`. A `FailureHint.Reason` is provided with failures if possible to 
 ## 2.1.1 - 2022-10-19
 
 -
+
 Re: [#50](https://github.com/supabase-community/postgrest-csharp/issues/50) & [#51](https://github.com/supabase-community/postgrest-csharp/pull/51)
 Adds `shouldFilterTopRows` as constructor parameter for `ReferenceAttribute` which defaults to `true` to match current
 API expectations.
