@@ -43,7 +43,7 @@ namespace Postgrest.Models
 		public virtual Task Delete<T>(CancellationToken cancellationToken = default) where T : BaseModel, new()
 		{
 			if (BaseUrl == null)
-				throw new PostgrestException("`BaseUrl` should be set in the model.") { Reason = FailureHint.Reason.Internal };
+				throw new PostgrestException("`BaseUrl` should be set in the model.") { Reason = FailureHint.Reason.ServerError };
 
 			var client = new Client(BaseUrl, RequestClientOptions)
 			{
