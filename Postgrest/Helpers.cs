@@ -11,7 +11,6 @@ using Newtonsoft.Json.Linq;
 using Postgrest.Exceptions;
 using Postgrest.Models;
 using Postgrest.Responses;
-using Supabase.Core;
 using Supabase.Core.Extensions;
 [assembly: InternalsVisibleTo("PostgrestTests")]
 
@@ -21,6 +20,8 @@ namespace Postgrest
 	internal static class Helpers
 	{
 		private static readonly HttpClient Client = new HttpClient();
+
+		private static Guid _appSession = Guid.NewGuid();
 
 		/// <summary>
 		/// Helper to make a request using the defined parameters to an API Endpoint and coerce into a model. 
@@ -137,7 +138,7 @@ namespace Postgrest
 
 			if (!headers.ContainsKey("X-Client-Info"))
 			{
-				headers.Add("X-Client-Info", Util.GetAssemblyVersion(typeof(Client)));
+				headers.Add("X-Client-Info", $"Client {_appSession}");
 			}
 
 			return headers;
