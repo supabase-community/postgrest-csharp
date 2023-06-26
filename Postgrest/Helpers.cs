@@ -21,7 +21,7 @@ namespace Postgrest
 	{
 		private static readonly HttpClient Client = new HttpClient();
 
-		private static Guid _appSession = Guid.NewGuid();
+		private static readonly Guid AppSession = Guid.NewGuid();
 
 		/// <summary>
 		/// Helper to make a request using the defined parameters to an API Endpoint and coerce into a model. 
@@ -138,7 +138,7 @@ namespace Postgrest
 
 			if (!headers.ContainsKey("X-Client-Info"))
 			{
-				headers.Add("X-Client-Info", $"Client {_appSession}");
+				headers.Add("X-Client-Info", $"Client {AppSession}");
 			}
 
 			return headers;
