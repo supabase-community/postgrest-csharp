@@ -11,6 +11,7 @@ using Newtonsoft.Json.Linq;
 using Postgrest.Exceptions;
 using Postgrest.Models;
 using Postgrest.Responses;
+using Supabase.Core;
 using Supabase.Core.Extensions;
 [assembly: InternalsVisibleTo("PostgrestTests")]
 
@@ -138,7 +139,18 @@ namespace Postgrest
 
 			if (!headers.ContainsKey("X-Client-Info"))
 			{
-				headers.Add("X-Client-Info", $"Client {AppSession}");
+				try
+				{
+					// Default version to match other clients
+					// https://github.com/search?q=org%3Asupabase-community+x-client-info&type=code
+					headers.Add("X-Client-Info", $"postgrest-csharp/{Util.GetAssemblyVersion(typeof(Client))}");
+				}
+				catch (Exception)
+				{
+					// Fallback for when the version can't be found
+					// e.g. running in the Unity Editor, ILL2CPP builds, etc.
+					headers.Add("X-Client-Info", $"postgrest-csharp/session-{AppSession}");
+				}
 			}
 
 			return headers;
