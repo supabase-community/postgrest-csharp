@@ -15,7 +15,7 @@ namespace Postgrest.Exceptions
 			NotAuthorized,
 			ForeignKeyViolation,
 			UniquenessViolation,
-			Internal,
+			ServerError,
 			UndefinedTable,
 			UndefinedFunction,
 			InvalidArgument
@@ -34,7 +34,7 @@ namespace Postgrest.Exceptions
 				404 when pgex.Content.Contains("42P01") => UndefinedFunction,
 				409 when pgex.Content.Contains("23503") => ForeignKeyViolation,
 				409 when pgex.Content.Contains("23505") => UniquenessViolation,
-				500 => Internal,
+				500 => ServerError,
 				_ => Unknown
 			};
 		}
