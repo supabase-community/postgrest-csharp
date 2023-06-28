@@ -895,12 +895,6 @@ references:
   commentId: F:Postgrest.Exceptions.FailureHint.Reason.ForeignKeyViolation
   fullName: Postgrest.Exceptions.FailureHint.Reason.ForeignKeyViolation
   nameWithType: FailureHint.Reason.ForeignKeyViolation
-- uid: Postgrest.Exceptions.FailureHint.Reason.Internal
-  name: Internal
-  href: api/Postgrest.Exceptions.FailureHint.Reason.html#Postgrest_Exceptions_FailureHint_Reason_Internal
-  commentId: F:Postgrest.Exceptions.FailureHint.Reason.Internal
-  fullName: Postgrest.Exceptions.FailureHint.Reason.Internal
-  nameWithType: FailureHint.Reason.Internal
 - uid: Postgrest.Exceptions.FailureHint.Reason.InvalidArgument
   name: InvalidArgument
   href: api/Postgrest.Exceptions.FailureHint.Reason.html#Postgrest_Exceptions_FailureHint_Reason_InvalidArgument
@@ -913,6 +907,12 @@ references:
   commentId: F:Postgrest.Exceptions.FailureHint.Reason.NotAuthorized
   fullName: Postgrest.Exceptions.FailureHint.Reason.NotAuthorized
   nameWithType: FailureHint.Reason.NotAuthorized
+- uid: Postgrest.Exceptions.FailureHint.Reason.ServerError
+  name: ServerError
+  href: api/Postgrest.Exceptions.FailureHint.Reason.html#Postgrest_Exceptions_FailureHint_Reason_ServerError
+  commentId: F:Postgrest.Exceptions.FailureHint.Reason.ServerError
+  fullName: Postgrest.Exceptions.FailureHint.Reason.ServerError
+  nameWithType: FailureHint.Reason.ServerError
 - uid: Postgrest.Exceptions.FailureHint.Reason.UndefinedFunction
   name: UndefinedFunction
   href: api/Postgrest.Exceptions.FailureHint.Reason.html#Postgrest_Exceptions_FailureHint_Reason_UndefinedFunction
