@@ -1,5 +1,9 @@
 ﻿# Changelog
 
+## 3.2.4 - 2023-06-29
+
+- [#70](https://github.com/supabase-community/postgrest-csharp/pull/70) Minor Unity related fixes
+
 ## 3.2.3 - 2023-06-25
 
 - [#69](https://github.com/supabase-community/postgrest-csharp/pull/69) Locks language version to C#9
