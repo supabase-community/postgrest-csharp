@@ -1,5 +1,11 @@
 ﻿# Changelog
 
+## 3.2.5 - 2023-07-13
+
+- Re: [supabase-community/supabase-csharp#81](https://github.com/supabase-community/supabase-csharp/discussions/81) -
+  Clarifies `ReferenceAttribute` by changing `shouldFilterTopLevel` to `useInnerJoin` and adds an additional
+  constructor for `ReferenceAttribute` with a shortcut for specifying the `JoinType`
+
 ## 3.2.4 - 2023-06-29
 
 - [#70](https://github.com/supabase-community/postgrest-csharp/pull/70) Minor Unity related fixes
