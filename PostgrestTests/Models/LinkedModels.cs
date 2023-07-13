@@ -8,11 +8,11 @@ namespace PostgrestTests.Models;
 [Table("movie")]
 public class Movie : BaseModel
 {
-    [PrimaryKey("id", false)] public string Id { get; set; }
+    [PrimaryKey("id")] public string Id { get; set; }
 
     [Column("name")] public string? Name { get; set; }
 
-    [Reference(typeof(Person), shouldFilterTopLevel: false)]
+    [Reference(typeof(Person), ReferenceAttribute.JoinType.Left)]
     public List<Person> People { get; set; } = new();
 
     [Column("created_at")] public DateTime CreatedAt { get; set; }

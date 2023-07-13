@@ -615,7 +615,7 @@ namespace Postgrest
 
 					var columns = string.Join(",", reference.Columns.ToArray());
 
-					if (reference.ShouldFilterTopLevel)
+					if (reference.UseInnerJoin)
 						query["select"] += $",{reference.TableName}!inner({columns})";
 					else
 						query["select"] += $",{reference.TableName}({columns})";
