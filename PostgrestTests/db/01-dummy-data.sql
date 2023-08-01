@@ -53,12 +53,12 @@ VALUES ('f3ff356d-5803-43a7-b125-ba10cf10fdcd',
         '[20,50]'::int4range);
 
 
-insert into "public"."movie" ("created_at", "id", "name")
-values ('2022-08-20 00:29:45.400188', 'ea07bd86-a507-4c68-9545-b848bfe74c90', 'Top Gun: Maverick');
-insert into "public"."movie" ("created_at", "id", "name")
-values ('2022-08-22 00:29:45.400188', 'a972a8f6-2e23-4172-be8d-7b65470ca0f4', 'Mad Max: Fury Road');
-insert into "public"."movie" ("created_at", "id", "name")
-values ('2022-08-28 00:29:45.400188', '42fd15b1-3bff-431d-9fa5-314289beb246', 'Guns Away');
+insert into "public"."movie" ("created_at", "id", "name", "status")
+values ('2022-08-20 00:29:45.400188', 'ea07bd86-a507-4c68-9545-b848bfe74c90', 'Top Gun: Maverick', 'OnDisplay');
+insert into "public"."movie" ("created_at", "id", "name", "status")
+values ('2022-08-22 00:29:45.400188', 'a972a8f6-2e23-4172-be8d-7b65470ca0f4', 'Mad Max: Fury Road', 'OnDisplay');
+insert into "public"."movie" ("created_at", "id", "name", "status")
+values ('2022-08-28 00:29:45.400188', '42fd15b1-3bff-431d-9fa5-314289beb246', 'Guns Away', 'OffDisplay');
 
 
 insert into "public"."person" ("created_at", "first_name", "id", "last_name")

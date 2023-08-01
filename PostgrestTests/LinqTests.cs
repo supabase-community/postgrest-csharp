@@ -98,6 +98,21 @@ namespace PostgrestTests
             foreach (var q in query7.Models)
                 Assert.IsNotNull(q.DateTimeValue);
 
+            //Testing where condition with Enum as constant
+            var query8 = await client.Table<Movie>()
+                .Where(x => x.Status == MovieStatus.OnDisplay)
+                .Get();
+            foreach (var q in query8.Models)
+                Assert.IsTrue(q.Status == MovieStatus.OnDisplay);
+
+            //Test where condition with Enum as Memeber expression
+            var testMovie = new Movie { Status = MovieStatus.OnDisplay };
+            var query9 = await client.Table<Movie>()
+                .Where(x => x.Status == testMovie.Status)
+                .Get();
+            foreach (var q in query9.Models)
+                Assert.IsTrue(q.Status == MovieStatus.OnDisplay);
+
             await client.Table<KitchenSink>()
                 .Where(x => x.DateTimeValue == DateTime.Now)
                 .Get();

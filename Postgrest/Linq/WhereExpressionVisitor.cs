@@ -59,7 +59,15 @@ namespace Postgrest.Linq
 			var left = Visit(node.Left);
 			var right = Visit(node.Right);
 
-			var column = left is MemberExpression leftMember ? GetColumnFromMemberExpression(leftMember) : null;
+			string? column = null;
+			if (left is MemberExpression leftMember)
+			{
+				column = GetColumnFromMemberExpression(leftMember);
+            }//To handle properly if it's a Convert ExpressionType generally with nullable properties
+			else if (left is UnaryExpression leftUnary && leftUnary.NodeType == ExpressionType.Convert && leftUnary.Operand is MemberExpression leftOperandMember)
+			{
+				column = GetColumnFromMemberExpression(leftOperandMember);
+			}
 
 			if (column == null)
 				throw new ArgumentException($"Left side of expression: '{node}' is expected to be property with a ColumnAttribute or PrimaryKeyAttribute");
@@ -129,7 +137,15 @@ namespace Postgrest.Linq
 		/// <param name="constantExpression"></param>
 		private void HandleConstantExpression(string column, Operator op, ConstantExpression constantExpression)
 		{
-			Filter = new QueryFilter(column, op, constantExpression.Value);
+			if (constantExpression.Type.IsEnum)
+			{
+				var enumValue = constantExpression.Value;
+				Filter = new QueryFilter(column, op, enumValue);
+            }
+			else
+			{
+                Filter = new QueryFilter(column, op, constantExpression.Value);
+            }
 		}
 
 		/// <summary>
@@ -140,8 +156,8 @@ namespace Postgrest.Linq
 		/// <param name="memberExpression"></param>
 		private void HandleMemberExpression(string column, Operator op, MemberExpression memberExpression)
 		{
-			Filter = new QueryFilter(column, op, GetMemberExpressionValue(memberExpression));
-		}
+            Filter = new QueryFilter(column, op, GetMemberExpressionValue(memberExpression));
+        }
 
 		/// <summary>
 		/// A unary expression parser (i.e. => x.Id == 1 &lt;- where both `1` is considered unary)
@@ -192,6 +208,10 @@ namespace Postgrest.Linq
 			{
 				Filter = new QueryFilter(column, op, guid.ToString());
 			}
+			else if (instance.GetType().IsEnum)
+			{
+                Filter = new QueryFilter(column, op, instance);
+            }
 		}
 
 		/// <summary>
