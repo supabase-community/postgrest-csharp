@@ -75,7 +75,8 @@ CREATE TABLE public.movie
 (
     id         uuid                                 DEFAULT gen_random_uuid() PRIMARY KEY,
     created_at timestamp without time zone NOT NULL DEFAULT now(),
-    name       character varying(255)      NULL
+    name       character varying(255)      NULL,
+    status     character varying(255)      NULL
 );
 
 CREATE TABLE public.person

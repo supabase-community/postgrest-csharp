@@ -12,10 +12,18 @@ public class Movie : BaseModel
 
     [Column("name")] public string? Name { get; set; }
 
+    [Column("status")] public MovieStatus? Status { get; set; }
+
     [Reference(typeof(Person), ReferenceAttribute.JoinType.Left)]
     public List<Person> People { get; set; } = new();
 
     [Column("created_at")] public DateTime CreatedAt { get; set; }
+}
+
+public enum MovieStatus
+{
+    OnDisplay,
+    OffDisplay
 }
 
 [Table("person")]
