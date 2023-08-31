@@ -1062,6 +1062,31 @@ namespace PostgrestTests
             Assert.AreEqual(true, response.Content?.Contains("OFFLINE"));
         }
 
+        [TestMethod("stored procedure with row param")]
+        public async Task TestStoredProcedureWithRowParam()
+        {
+            //Arrange 
+            var client = new Client(BaseUrl);
+
+            //Act 
+            var parameters = new Dictionary<string, object>
+            {
+                {
+                    "param",
+                    new Dictionary<string, object>
+                    {
+                        { "username", "supabot" }
+                    }
+                }
+            };
+            var response = await client.Rpc("get_data", parameters);
+
+            //Assert 
+            Assert.AreEqual(true, response.ResponseMessage?.IsSuccessStatusCode);
+            Assert.AreEqual("null", response.Content);
+        }
+
+
         [TestMethod("switch schema")]
         public async Task TestSwitchSchema()
         {

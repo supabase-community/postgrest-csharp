@@ -110,6 +110,15 @@ from users
 WHERE username = name_param;
 $$ LANGUAGE SQL IMMUTABLE;
 
+-- STORED FUNCTION WITH ROW PARAMETER
+CREATE FUNCTION public.get_data(param public.users)
+    RETURNS public.users.data%TYPE AS
+$$
+SELECT data
+from users u
+WHERE u.username = param.username;
+$$ LANGUAGE SQL IMMUTABLE;
+
 -- SECOND SCHEMA USERS
 CREATE TYPE personal.user_status AS ENUM ('ONLINE', 'OFFLINE');
 CREATE TABLE personal.users
@@ -130,3 +139,13 @@ SELECT status
 from users
 WHERE username = name_param;
 $$ LANGUAGE SQL IMMUTABLE;
+
+-- SECOND SCHEMA STORED FUNCTION WITH ROW PARAMETER
+CREATE FUNCTION personal.get_data(param personal.users)
+    RETURNS personal.users.data%TYPE AS
+$$
+SELECT data
+from users u
+WHERE u.username = param.username;
+$$ LANGUAGE SQL IMMUTABLE;
+
