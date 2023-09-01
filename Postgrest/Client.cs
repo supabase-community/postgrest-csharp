@@ -85,7 +85,7 @@ namespace Postgrest
 
 
 		/// <inheritdoc />
-		public Task<BaseResponse> Rpc(string procedureName, Dictionary<string, object>? parameters = null)
+		public Task<BaseResponse> Rpc(string procedureName, object? parameters = null)
 		{
 			// Build Uri
 			var builder = new UriBuilder($"{BaseUrl}/rpc/{procedureName}");
