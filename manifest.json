@@ -81,7 +81,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Client.html",
-          "hash": "oz4aYzLHWQcVBjT/+WsJXg=="
+          "hash": "bh+NeAw61T3zpjLLkg1+Aw=="
         }
       },
       "is_incremental": false,
@@ -333,7 +333,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Interfaces.IPostgrestClient.html",
-          "hash": "fT+Or0PNwxPYoPGTpCx1FQ=="
+          "hash": "NBVoAWiK9OJnL4tEeQLvtg=="
         }
       },
       "is_incremental": false,
