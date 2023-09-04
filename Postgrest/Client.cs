@@ -85,7 +85,7 @@ namespace Postgrest
 
 
 		/// <inheritdoc />
-		public Task<BaseResponse> Rpc(string procedureName, Dictionary<string, object>? parameters = null)
+		public Task<BaseResponse> Rpc(string procedureName, object? parameters = null)
 		{
 			// Build Uri
 			var builder = new UriBuilder($"{BaseUrl}/rpc/{procedureName}");
@@ -95,9 +95,9 @@ namespace Postgrest
 			var serializerSettings = SerializerSettings(Options);
 
 			// Prepare parameters
-			Dictionary<string, string>? data = null;
+			Dictionary<string, object>? data = null;
 			if (parameters != null)
-				data = JsonConvert.DeserializeObject<Dictionary<string, string>>(JsonConvert.SerializeObject(parameters, serializerSettings));
+				data = JsonConvert.DeserializeObject<Dictionary<string, object>>(JsonConvert.SerializeObject(parameters, serializerSettings));
 
 			// Prepare headers
 			var headers = Helpers.PrepareRequestHeaders(HttpMethod.Post, new Dictionary<string, string>(Options.Headers), Options);

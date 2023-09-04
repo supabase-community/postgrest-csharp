@@ -44,7 +44,7 @@ namespace Postgrest.Interfaces
 		/// <param name="procedureName">The function name to call</param>
 		/// <param name="parameters">The parameters to pass to the function call</param>
 		/// <returns></returns>
-		Task<BaseResponse> Rpc(string procedureName, Dictionary<string, object> parameters);
+		Task<BaseResponse> Rpc(string procedureName, object? parameters);
 
 		/// <summary>
 		/// Returns a Table Query Builder instance for a defined model - representative of `USE $TABLE`

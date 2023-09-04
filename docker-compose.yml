@@ -3,7 +3,7 @@ services:
   rest:
     image: postgrest/postgrest:latest
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
     environment:
       PGRST_DB_URI: postgres://postgres:postgres@db:5432/postgres
       PGRST_DB_SCHEMA: public, personal
@@ -13,8 +13,8 @@ services:
       - db
   db:
     image: postgres:14
-    ports:
-      - "5432:5432"
+    #ports:
+    #- "127.0.0.1:5432:5432"
     volumes:
       - ./PostgrestTests/db:/docker-entrypoint-initdb.d/
     environment:
