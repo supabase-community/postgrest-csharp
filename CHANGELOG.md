@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## 3.2.6 - 2023-09-04
+
+- Re: [#75](https://github.com/supabase-community/postgrest-csharp/pull/75) Fix issue with marshalling of stored
+  procedure arguments. Big thank you to [@corrideat](https://github.com/corrideat)!
+
 ## 3.2.5 - 2023-07-13
 
 - Re: [supabase-community/supabase-csharp#81](https://github.com/supabase-community/supabase-csharp/discussions/81) -
