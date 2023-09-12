@@ -359,6 +359,19 @@ references:
   isSpec: "True"
   fullName: Postgrest.Client.AddDebugHandler
   nameWithType: Client.AddDebugHandler
+- uid: Postgrest.Client.AddRequestPreparedHandler(Postgrest.OnRequestPreparedEventHandler)
+  name: AddRequestPreparedHandler(OnRequestPreparedEventHandler)
+  href: api/Postgrest.Client.html#Postgrest_Client_AddRequestPreparedHandler_Postgrest_OnRequestPreparedEventHandler_
+  commentId: M:Postgrest.Client.AddRequestPreparedHandler(Postgrest.OnRequestPreparedEventHandler)
+  fullName: Postgrest.Client.AddRequestPreparedHandler(Postgrest.OnRequestPreparedEventHandler)
+  nameWithType: Client.AddRequestPreparedHandler(OnRequestPreparedEventHandler)
+- uid: Postgrest.Client.AddRequestPreparedHandler*
+  name: AddRequestPreparedHandler
+  href: api/Postgrest.Client.html#Postgrest_Client_AddRequestPreparedHandler_
+  commentId: Overload:Postgrest.Client.AddRequestPreparedHandler
+  isSpec: "True"
+  fullName: Postgrest.Client.AddRequestPreparedHandler
+  nameWithType: Client.AddRequestPreparedHandler
 - uid: Postgrest.Client.BaseUrl
   name: BaseUrl
   href: api/Postgrest.Client.html#Postgrest_Client_BaseUrl
@@ -385,6 +398,19 @@ references:
   isSpec: "True"
   fullName: Postgrest.Client.ClearDebugHandlers
   nameWithType: Client.ClearDebugHandlers
+- uid: Postgrest.Client.ClearRequestPreparedHandlers
+  name: ClearRequestPreparedHandlers()
+  href: api/Postgrest.Client.html#Postgrest_Client_ClearRequestPreparedHandlers
+  commentId: M:Postgrest.Client.ClearRequestPreparedHandlers
+  fullName: Postgrest.Client.ClearRequestPreparedHandlers()
+  nameWithType: Client.ClearRequestPreparedHandlers()
+- uid: Postgrest.Client.ClearRequestPreparedHandlers*
+  name: ClearRequestPreparedHandlers
+  href: api/Postgrest.Client.html#Postgrest_Client_ClearRequestPreparedHandlers_
+  commentId: Overload:Postgrest.Client.ClearRequestPreparedHandlers
+  isSpec: "True"
+  fullName: Postgrest.Client.ClearRequestPreparedHandlers
+  nameWithType: Client.ClearRequestPreparedHandlers
 - uid: Postgrest.Client.GetHeaders
   name: GetHeaders
   href: api/Postgrest.Client.html#Postgrest_Client_GetHeaders
@@ -424,6 +450,19 @@ references:
   isSpec: "True"
   fullName: Postgrest.Client.RemoveDebugHandler
   nameWithType: Client.RemoveDebugHandler
+- uid: Postgrest.Client.RemoveRequestPreparedHandler(Postgrest.OnRequestPreparedEventHandler)
+  name: RemoveRequestPreparedHandler(OnRequestPreparedEventHandler)
+  href: api/Postgrest.Client.html#Postgrest_Client_RemoveRequestPreparedHandler_Postgrest_OnRequestPreparedEventHandler_
+  commentId: M:Postgrest.Client.RemoveRequestPreparedHandler(Postgrest.OnRequestPreparedEventHandler)
+  fullName: Postgrest.Client.RemoveRequestPreparedHandler(Postgrest.OnRequestPreparedEventHandler)
+  nameWithType: Client.RemoveRequestPreparedHandler(OnRequestPreparedEventHandler)
+- uid: Postgrest.Client.RemoveRequestPreparedHandler*
+  name: RemoveRequestPreparedHandler
+  href: api/Postgrest.Client.html#Postgrest_Client_RemoveRequestPreparedHandler_
+  commentId: Overload:Postgrest.Client.RemoveRequestPreparedHandler
+  isSpec: "True"
+  fullName: Postgrest.Client.RemoveRequestPreparedHandler
+  nameWithType: Client.RemoveRequestPreparedHandler
 - uid: Postgrest.Client.Rpc(System.String,System.Nullable{System.Object})
   name: Rpc(String, Nullable<Object>)
   href: api/Postgrest.Client.html#Postgrest_Client_Rpc_System_String_System_Nullable_System_Object__
@@ -1344,6 +1383,19 @@ references:
   isSpec: "True"
   fullName: Postgrest.Interfaces.IPostgrestClient.AddDebugHandler
   nameWithType: IPostgrestClient.AddDebugHandler
+- uid: Postgrest.Interfaces.IPostgrestClient.AddRequestPreparedHandler(Postgrest.OnRequestPreparedEventHandler)
+  name: AddRequestPreparedHandler(OnRequestPreparedEventHandler)
+  href: api/Postgrest.Interfaces.IPostgrestClient.html#Postgrest_Interfaces_IPostgrestClient_AddRequestPreparedHandler_Postgrest_OnRequestPreparedEventHandler_
+  commentId: M:Postgrest.Interfaces.IPostgrestClient.AddRequestPreparedHandler(Postgrest.OnRequestPreparedEventHandler)
+  fullName: Postgrest.Interfaces.IPostgrestClient.AddRequestPreparedHandler(Postgrest.OnRequestPreparedEventHandler)
+  nameWithType: IPostgrestClient.AddRequestPreparedHandler(OnRequestPreparedEventHandler)
+- uid: Postgrest.Interfaces.IPostgrestClient.AddRequestPreparedHandler*
+  name: AddRequestPreparedHandler
+  href: api/Postgrest.Interfaces.IPostgrestClient.html#Postgrest_Interfaces_IPostgrestClient_AddRequestPreparedHandler_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestClient.AddRequestPreparedHandler
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestClient.AddRequestPreparedHandler
+  nameWithType: IPostgrestClient.AddRequestPreparedHandler
 - uid: Postgrest.Interfaces.IPostgrestClient.BaseUrl
   name: BaseUrl
   href: api/Postgrest.Interfaces.IPostgrestClient.html#Postgrest_Interfaces_IPostgrestClient_BaseUrl
@@ -1370,6 +1422,19 @@ references:
   isSpec: "True"
   fullName: Postgrest.Interfaces.IPostgrestClient.ClearDebugHandlers
   nameWithType: IPostgrestClient.ClearDebugHandlers
+- uid: Postgrest.Interfaces.IPostgrestClient.ClearRequestPreparedHandlers
+  name: ClearRequestPreparedHandlers()
+  href: api/Postgrest.Interfaces.IPostgrestClient.html#Postgrest_Interfaces_IPostgrestClient_ClearRequestPreparedHandlers
+  commentId: M:Postgrest.Interfaces.IPostgrestClient.ClearRequestPreparedHandlers
+  fullName: Postgrest.Interfaces.IPostgrestClient.ClearRequestPreparedHandlers()
+  nameWithType: IPostgrestClient.ClearRequestPreparedHandlers()
+- uid: Postgrest.Interfaces.IPostgrestClient.ClearRequestPreparedHandlers*
+  name: ClearRequestPreparedHandlers
+  href: api/Postgrest.Interfaces.IPostgrestClient.html#Postgrest_Interfaces_IPostgrestClient_ClearRequestPreparedHandlers_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestClient.ClearRequestPreparedHandlers
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestClient.ClearRequestPreparedHandlers
+  nameWithType: IPostgrestClient.ClearRequestPreparedHandlers
 - uid: Postgrest.Interfaces.IPostgrestClient.Options
   name: Options
   href: api/Postgrest.Interfaces.IPostgrestClient.html#Postgrest_Interfaces_IPostgrestClient_Options
@@ -1396,6 +1461,19 @@ references:
   isSpec: "True"
   fullName: Postgrest.Interfaces.IPostgrestClient.RemoveDebugHandler
   nameWithType: IPostgrestClient.RemoveDebugHandler
+- uid: Postgrest.Interfaces.IPostgrestClient.RemoveRequestPreparedHandler(Postgrest.OnRequestPreparedEventHandler)
+  name: RemoveRequestPreparedHandler(OnRequestPreparedEventHandler)
+  href: api/Postgrest.Interfaces.IPostgrestClient.html#Postgrest_Interfaces_IPostgrestClient_RemoveRequestPreparedHandler_Postgrest_OnRequestPreparedEventHandler_
+  commentId: M:Postgrest.Interfaces.IPostgrestClient.RemoveRequestPreparedHandler(Postgrest.OnRequestPreparedEventHandler)
+  fullName: Postgrest.Interfaces.IPostgrestClient.RemoveRequestPreparedHandler(Postgrest.OnRequestPreparedEventHandler)
+  nameWithType: IPostgrestClient.RemoveRequestPreparedHandler(OnRequestPreparedEventHandler)
+- uid: Postgrest.Interfaces.IPostgrestClient.RemoveRequestPreparedHandler*
+  name: RemoveRequestPreparedHandler
+  href: api/Postgrest.Interfaces.IPostgrestClient.html#Postgrest_Interfaces_IPostgrestClient_RemoveRequestPreparedHandler_
+  commentId: Overload:Postgrest.Interfaces.IPostgrestClient.RemoveRequestPreparedHandler
+  isSpec: "True"
+  fullName: Postgrest.Interfaces.IPostgrestClient.RemoveRequestPreparedHandler
+  nameWithType: IPostgrestClient.RemoveRequestPreparedHandler
 - uid: Postgrest.Interfaces.IPostgrestClient.Rpc(System.String,System.Nullable{System.Object})
   name: Rpc(String, Nullable<Object>)
   href: api/Postgrest.Interfaces.IPostgrestClient.html#Postgrest_Interfaces_IPostgrestClient_Rpc_System_String_System_Nullable_System_Object__
@@ -2345,6 +2423,12 @@ references:
   fullName.vb: Postgrest.Models.BaseModel.Update(Of T)(CancellationToken)
   nameWithType: BaseModel.Update<T>(CancellationToken)
   nameWithType.vb: BaseModel.Update(Of T)(CancellationToken)
+- uid: Postgrest.OnRequestPreparedEventHandler
+  name: OnRequestPreparedEventHandler
+  href: api/Postgrest.OnRequestPreparedEventHandler.html
+  commentId: T:Postgrest.OnRequestPreparedEventHandler
+  fullName: Postgrest.OnRequestPreparedEventHandler
+  nameWithType: OnRequestPreparedEventHandler
 - uid: Postgrest.PostgrestContractResolver
   name: PostgrestContractResolver
   href: api/Postgrest.PostgrestContractResolver.html
