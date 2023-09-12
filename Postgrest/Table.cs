@@ -836,12 +836,21 @@ namespace Postgrest
 			var url = GenerateUrl();
 			var preparedData = PrepareRequestData(data, isInsert, isUpdate, isUpsert);
 
-			Debugger.Instance.Log(this, $"Request [{method}] at {DateTime.Now.ToLocalTime()}\n" + $"Headers:\n\t{JsonConvert.SerializeObject(requestHeaders)}\n" + $"Data:\n\t{JsonConvert.SerializeObject(preparedData)}");
+            Hooks.Instance.NotifyOnRequestPreparedHandlers(_options, method, url, _serializerSettings,
+                preparedData, requestHeaders);
 
-			return Helpers.MakeRequest(_options, method, url, _serializerSettings, preparedData, requestHeaders, cancellationToken);
+            Debugger.Instance.Log(this,
+                $"Request [{method}] at {DateTime.Now.ToLocalTime()}\n" +
+                $"Headers:\n\t{JsonConvert.SerializeObject(requestHeaders)}\n" +
+                $"Data:\n\t{JsonConvert.SerializeObject(preparedData)}");
+
+            return Helpers.MakeRequest(_options, method, url, _serializerSettings, preparedData, requestHeaders,
+                cancellationToken);
 		}
 
-		private Task<ModeledResponse<TU>> Send<TU>(HttpMethod method, object? data, Dictionary<string, string>? headers = null, CancellationToken cancellationToken = default, bool isInsert = false,
+        private Task<ModeledResponse<TU>> Send<TU>(HttpMethod method, object? data,
+            Dictionary<string, string>? headers = null, CancellationToken cancellationToken = default,
+            bool isInsert = false,
 			bool isUpdate = false, bool isUpsert = false) where TU : BaseModel, new()
 		{
 			var requestHeaders = Helpers.PrepareRequestHeaders(method, headers, _options, _rangeFrom, _rangeTo);
@@ -852,9 +861,16 @@ namespace Postgrest
 			var url = GenerateUrl();
 			var preparedData = PrepareRequestData(data, isInsert, isUpdate, isUpsert);
 
-			Debugger.Instance.Log(this, $"Request [{method}] at {DateTime.Now.ToLocalTime()}\n" + $"Headers:\n\t{JsonConvert.SerializeObject(requestHeaders)}\n" + $"Data:\n\t{JsonConvert.SerializeObject(preparedData)}");
+            Hooks.Instance.NotifyOnRequestPreparedHandlers(_options, method, url, _serializerSettings,
+                preparedData, requestHeaders);
 
-			return Helpers.MakeRequest<TU>(_options, method, url, _serializerSettings, preparedData, requestHeaders, GetHeaders, cancellationToken);
+            Debugger.Instance.Log(this,
+                $"Request [{method}] at {DateTime.Now.ToLocalTime()}\n" +
+                $"Headers:\n\t{JsonConvert.SerializeObject(requestHeaders)}\n" +
+                $"Data:\n\t{JsonConvert.SerializeObject(preparedData)}");
+
+            return Helpers.MakeRequest<TU>(_options, method, url, _serializerSettings, preparedData, requestHeaders,
+                GetHeaders, cancellationToken);
 		}
 
 		private static string FindTableName(object? obj = null)
