@@ -19,11 +19,16 @@ namespace Postgrest.Interfaces
 		/// API Base Url for subsequent calls.
 		/// </summary>
 		string BaseUrl { get; }
-		
+
 		/// <summary>
 		/// Name of the Table parsed by the Model.
 		/// </summary>
 		string TableName { get; }
+
+		/// <summary>
+		/// Generates the encoded URL with defined query parameters that will be sent to the Postgrest API.
+		/// </summary>
+		string GenerateUrl();
 
 		/// <summary>
 		/// Adds an AND Filter to the current query args.

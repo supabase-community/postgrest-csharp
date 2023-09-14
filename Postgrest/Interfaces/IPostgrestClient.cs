@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Postgrest.Models;
 using Postgrest.Responses;
 using Supabase.Core.Interfaces;
@@ -69,5 +68,13 @@ namespace Postgrest.Interfaces
         /// <typeparam name="T">Custom Model derived from `BaseModel`</typeparam>
         /// <returns></returns>
         IPostgrestTable<T> Table<T>() where T : BaseModel, new();
+        
+        /// <summary>
+        /// Returns a Table Query Builder instance with a Cache Provider for a defined model - representative of `USE #$TABLE`
+        /// </summary>
+        /// <param name="cacheProvider"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        IPostgrestTableWithCache<T> Table<T>(IPostgrestCacheProvider cacheProvider) where T : BaseModel, new();
     }
 }

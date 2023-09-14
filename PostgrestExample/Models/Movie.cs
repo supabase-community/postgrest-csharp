@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Postgrest;
 using Postgrest.Attributes;
 using Postgrest.Models;
 

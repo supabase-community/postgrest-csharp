@@ -561,7 +561,6 @@ namespace Postgrest
 			}
 		}
 
-
 		/// <inheritdoc />
 		public Task<ModeledResponse<T>> Get(CancellationToken cancellationToken = default)
 		{
@@ -836,7 +835,7 @@ namespace Postgrest
 			var url = GenerateUrl();
 			var preparedData = PrepareRequestData(data, isInsert, isUpdate, isUpsert);
 
-            Hooks.Instance.NotifyOnRequestPreparedHandlers(_options, method, url, _serializerSettings,
+            Hooks.Instance.NotifyOnRequestPreparedHandlers(this, _options, method, url, _serializerSettings,
                 preparedData, requestHeaders);
 
             Debugger.Instance.Log(this,
@@ -861,7 +860,7 @@ namespace Postgrest
 			var url = GenerateUrl();
 			var preparedData = PrepareRequestData(data, isInsert, isUpdate, isUpsert);
 
-            Hooks.Instance.NotifyOnRequestPreparedHandlers(_options, method, url, _serializerSettings,
+            Hooks.Instance.NotifyOnRequestPreparedHandlers(this, _options, method, url, _serializerSettings,
                 preparedData, requestHeaders);
 
             Debugger.Instance.Log(this,

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Runtime.Serialization;
@@ -1180,21 +1179,21 @@ namespace PostgrestTests
 
             var timer1 = new Stopwatch();
             var timer2 = new Stopwatch();
-            
+
             timer1.Start();
             timer2.Start();
-            
-            client.AddRequestPreparedHandler((options, method, url, settings, data, headers) =>
+
+            client.AddRequestPreparedHandler((_, _, _, _, _, _, _) =>
             {
                 timer1.Stop();
                 tsc.TrySetResult(true);
             });
-            
+
             var request = client.Table<Movie>();
 
             await request.Get();
             timer2.Stop();
-            
+
             await tsc.Task;
 
             Assert.IsTrue(timer1.ElapsedTicks < timer2.ElapsedTicks);

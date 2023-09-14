@@ -23,7 +23,7 @@ namespace Postgrest.Responses
 		/// A list of models in the response.
 		/// </summary>
 		public List<T> Models { get; } = new();
-
+		
 		/// <inheritdoc />
 		public ModeledResponse(BaseResponse baseResponse, JsonSerializerSettings serializerSettings, Func<Dictionary<string, string>>? getHeaders = null, bool shouldParse = true) : base(baseResponse.ClientOptions, baseResponse.ResponseMessage, baseResponse.Content)
 		{

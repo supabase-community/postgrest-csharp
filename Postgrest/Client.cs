@@ -92,33 +92,43 @@ namespace Postgrest
         public IPostgrestTable<T> Table<T>() where T : BaseModel, new() =>
             new Table<T>(BaseUrl, SerializerSettings(Options), Options)
             {
-				GetHeaders = GetHeaders
+                GetHeaders = GetHeaders
+            };
+
+        public IPostgrestTableWithCache<T> Table<T>(IPostgrestCacheProvider cacheProvider)
+            where T : BaseModel, new() =>
+            new TableWithCache<T>(BaseUrl, cacheProvider, SerializerSettings(Options), Options)
+            {
+                GetHeaders = GetHeaders
             };
 
 
-		/// <inheritdoc />
-		public Task<BaseResponse> Rpc(string procedureName, object? parameters = null)
-		{
-			// Build Uri
-			var builder = new UriBuilder($"{BaseUrl}/rpc/{procedureName}");
+        /// <inheritdoc />
+        public Task<BaseResponse> Rpc(string procedureName, object? parameters = null)
+        {
+            // Build Uri
+            var builder = new UriBuilder($"{BaseUrl}/rpc/{procedureName}");
 
             var canonicalUri = builder.Uri.ToString();
 
             var serializerSettings = SerializerSettings(Options);
 
-			// Prepare parameters
-			Dictionary<string, object>? data = null;
-			if (parameters != null)
-				data = JsonConvert.DeserializeObject<Dictionary<string, object>>(JsonConvert.SerializeObject(parameters, serializerSettings));
+            // Prepare parameters
+            Dictionary<string, object>? data = null;
+            if (parameters != null)
+                data = JsonConvert.DeserializeObject<Dictionary<string, object>>(
+                    JsonConvert.SerializeObject(parameters, serializerSettings));
 
             // Prepare headers
-			var headers = Helpers.PrepareRequestHeaders(HttpMethod.Post, new Dictionary<string, string>(Options.Headers), Options);
+            var headers = Helpers.PrepareRequestHeaders(HttpMethod.Post,
+                new Dictionary<string, string>(Options.Headers), Options);
 
             if (GetHeaders != null)
                 headers = GetHeaders().MergeLeft(headers);
 
             // Send request
-			var request = Helpers.MakeRequest(Options, HttpMethod.Post, canonicalUri, serializerSettings, data, headers);
+            var request =
+                Helpers.MakeRequest(Options, HttpMethod.Post, canonicalUri, serializerSettings, data, headers);
             return request;
         }
     }

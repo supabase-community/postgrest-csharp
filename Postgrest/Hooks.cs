@@ -1,14 +1,15 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using Newtonsoft.Json;
-using Postgrest.Interfaces;
 
 namespace Postgrest
 {
     /// <summary>
     /// Delegate representing the request to be sent to the remote server.
     /// </summary>
-    public delegate void OnRequestPreparedEventHandler(ClientOptions clientOptions, HttpMethod method, string url,
+    public delegate void OnRequestPreparedEventHandler(object sender, ClientOptions clientOptions,
+        HttpMethod method, string url,
         JsonSerializerSettings serializerSettings, object? data = null,
         Dictionary<string, string>? headers = null);
 
@@ -75,14 +76,15 @@ namespace Postgrest
         /// <param name="serializerSettings"></param>
         /// <param name="data"></param>
         /// <param name="headers"></param>
-        public void NotifyOnRequestPreparedHandlers(ClientOptions clientOptions, HttpMethod method, string url,
+        public void NotifyOnRequestPreparedHandlers(object sender, ClientOptions clientOptions, HttpMethod method,
+            string url,
             JsonSerializerSettings serializerSettings, object? data = null,
             Dictionary<string, string>? headers = null)
         {
             Debugger.Instance.Log(this, $"{nameof(NotifyOnRequestPreparedHandlers)} called for [{method}] to {url}");
-            
-            foreach (var handler in _requestPreparedEventHandlers)
-                handler.Invoke(clientOptions, method, url, serializerSettings, data, headers);
+
+            foreach (var handler in _requestPreparedEventHandlers.ToList())
+                handler.Invoke(sender, clientOptions, method, url, serializerSettings, data, headers);
         }
     }
 }
