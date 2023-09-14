@@ -81,7 +81,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Client.html",
-          "hash": "eYwkri+A8lxxM4wFsLGIUg=="
+          "hash": "+AUT3pVZPBNGL5dwhHsqLQ=="
         }
       },
       "is_incremental": false,
@@ -329,11 +329,23 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Postgrest.Interfaces.IPostgrestCacheProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Postgrest.Interfaces.IPostgrestCacheProvider.html",
+          "hash": "Gd+bMcATWg18YHDLo1Y5NA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Postgrest.Interfaces.IPostgrestClient.yml",
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Interfaces.IPostgrestClient.html",
-          "hash": "u7Mwp2h4bIyY3bxDruU4jA=="
+          "hash": "URoyHiLBmtSYCrtpKl2G3Q=="
         }
       },
       "is_incremental": false,
@@ -381,7 +393,19 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Interfaces.IPostgrestTable-1.html",
-          "hash": "jYDBNY8dhjpAeB2NggM9pQ=="
+          "hash": "Q2tydZaVkLsxJGUDkijvPA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Postgrest.Interfaces.IPostgrestTableWithCache-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Postgrest.Interfaces.IPostgrestTableWithCache-1.html",
+          "hash": "EsSUg9vcgZOKWtlolGOwZA=="
         }
       },
       "is_incremental": false,
@@ -393,7 +417,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Interfaces.html",
-          "hash": "eWUW/mepWZqSb8vRlyw7Hw=="
+          "hash": "JBAep6k28f7VXs6LbDKZxg=="
         }
       },
       "is_incremental": false,
@@ -413,11 +437,23 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Postgrest.Models.CachedModel-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Postgrest.Models.CachedModel-1.html",
+          "hash": "eizxaA0T2O/3Vq/wkl3ecA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Postgrest.Models.yml",
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Models.html",
-          "hash": "VhRub5O1pWQMCmGlKzz+OQ=="
+          "hash": "mKojoZw4U8+YMX7W5pvV/g=="
         }
       },
       "is_incremental": false,
@@ -429,7 +465,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.OnRequestPreparedEventHandler.html",
-          "hash": "y66KHEOHq7zERR/yzAzPkw=="
+          "hash": "saNj0ThkXvLCtXT+VntOhw=="
         }
       },
       "is_incremental": false,
@@ -521,6 +557,42 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Postgrest.Requests.CacheBackedRequest-1.RemoteModelsPopulatedEventHandler.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Postgrest.Requests.CacheBackedRequest-1.RemoteModelsPopulatedEventHandler.html",
+          "hash": "TDlzUtNXrMivsD5JaDeKYg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Postgrest.Requests.CacheBackedRequest-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Postgrest.Requests.CacheBackedRequest-1.html",
+          "hash": "JOtozEAX4a048eYNGc1oDA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Postgrest.Requests.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Postgrest.Requests.html",
+          "hash": "HM6Ybyt7H1+Uac+olsqZ5A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Postgrest.Responses.BaseResponse.yml",
       "output": {
         ".html": {
@@ -561,7 +633,19 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.Table-1.html",
-          "hash": "fZQcj2aY0niF6FXQM1w47w=="
+          "hash": "SFbl1VJV09vt6bhEs1n2yw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Postgrest.TableWithCache-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Postgrest.TableWithCache-1.html",
+          "hash": "eR2c+Ro/xpMogWdQd1LgVg=="
         }
       },
       "is_incremental": false,
@@ -573,7 +657,7 @@
       "output": {
         ".html": {
           "relative_path": "api/Postgrest.html",
-          "hash": "vaKzzMw/cXjhKX/DQXrlJw=="
+          "hash": "Q+/MR4iT32djURGsNium7w=="
         }
       },
       "is_incremental": false,
@@ -597,7 +681,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "/+SM0KLLrjSz0queQDvmyw=="
+          "hash": "fBMpX34XGQxRdMb9XtwsVg=="
         }
       },
       "is_incremental": false,
@@ -648,7 +732,7 @@
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 48,
+          "total_file_count": 55,
           "skipped_file_count": 0
         },
         "TocDocumentProcessor": {
