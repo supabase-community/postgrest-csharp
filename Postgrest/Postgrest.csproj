@@ -41,15 +41,20 @@
         <Version Condition=" '$(VersionSuffix)' != '' ">$(VersionPrefix)-$(VersionSuffix)</Version>
         <Version Condition=" '$(Version)' == '' ">$(VersionPrefix)</Version>
     </PropertyGroup>
-    
+
     <ItemGroup>
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-        <PackageReference Include="supabase-core" Version="0.0.3" />
-        <PackageReference Include="System.Linq.Expressions" Version="4.3.0" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
     </ItemGroup>
+
     <ItemGroup>
-        <Folder Include="Converters\" />
-        <None Include="..\.github\icon.png" Pack="true" Link="icon.png" PackagePath="\" />
-        <None Include="..\README.md" Pack="true" Link="README.md" PackagePath="\" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
+        <PackageReference Include="supabase-core" Version="0.0.3"/>
+        <PackageReference Include="System.Linq.Expressions" Version="4.3.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Converters\"/>
+        <None Include="..\.github\icon.png" Pack="true" Link="icon.png" PackagePath="\"/>
+        <None Include="..\README.md" Pack="true" Link="README.md" PackagePath="\"/>
     </ItemGroup>
 </Project>
