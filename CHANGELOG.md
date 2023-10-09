@@ -1,5 +1,9 @@
 ﻿# Changelog
 
+## 3.2.9 - 2023-10-09
+
+- Re: [supabase-csharp#115](https://github.com/supabase-community/supabase-csharp/discussions/115) Additional support for a model referencing another model with multiple foreign keys.
+
 ## 3.2.8 - 2023-10-08
 
 - Re: [supabase-csharp#115](https://github.com/supabase-community/supabase-csharp/discussions/115) Adds support for

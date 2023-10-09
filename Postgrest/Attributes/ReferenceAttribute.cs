@@ -186,9 +186,18 @@ namespace Postgrest.Attributes
                     seenRefs.Add(refAttr);
                     refAttr.ParseProperties(seenRefs);
 
-                    Columns.Add(UseInnerJoin
-                        ? $"{refAttr.TableName}!inner({string.Join(",", refAttr.Columns.ToArray())})"
-                        : $"{refAttr.TableName}({string.Join(",", refAttr.Columns.ToArray())})");
+                    if (!string.IsNullOrEmpty(refAttr.ForeignKey))
+                    {
+                        Columns.Add(UseInnerJoin
+                            ? $"{refAttr.ColumnName}:{refAttr.ForeignKey}!inner({string.Join(",", refAttr.Columns.ToArray())})"
+                            : $"{refAttr.ColumnName}:{refAttr.ForeignKey}({string.Join(",", refAttr.Columns.ToArray())})");
+                    }
+                    else
+                    {
+                        Columns.Add(UseInnerJoin
+                            ? $"{refAttr.TableName}!inner({string.Join(",", refAttr.Columns.ToArray())})"
+                            : $"{refAttr.TableName}({string.Join(",", refAttr.Columns.ToArray())})");
+                    }
                 }
             }
         }

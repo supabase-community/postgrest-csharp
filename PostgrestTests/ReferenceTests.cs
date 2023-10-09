@@ -108,5 +108,17 @@ namespace PostgrestTests
             Assert.IsInstanceOfType(response.Model!.MovieFK2, typeof(Movie));
             Assert.IsInstanceOfType(response.Model!.RandomPersonFK, typeof(Person));
         }
+        
+        [TestMethod("Reference: Table can reference a nested model with the same foreign table multiple times.")]
+        public async Task TestModelCanReferenceNestedModelWithSameForeignTableMultipleTimes()
+        {
+            var client = new Client(BaseUrl);
+
+            var response = await client.Table<NestedForeignKeyTestModel>().Get();
+
+            Assert.IsTrue(response.Models.Count > 0);
+            Assert.IsInstanceOfType(response.Model!.User, typeof(User));
+            Assert.IsInstanceOfType(response.Model!.FKTestModel, typeof(ForeignKeyTestModel));
+        }
     }
 }
