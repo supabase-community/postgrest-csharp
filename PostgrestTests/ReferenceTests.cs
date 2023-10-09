@@ -97,7 +97,7 @@ namespace PostgrestTests
         }
 
         [TestMethod("Reference: Table can reference the same foreign table multiple times.")]
-        public async Task TestTableCanReferenceSameTypeMultipleTimes()
+        public async Task TestModelCanReferenceSameForeignTableMultipleTimes()
         {
             var client = new Client(BaseUrl);
 
@@ -106,6 +106,7 @@ namespace PostgrestTests
             Assert.IsTrue(response.Models.Count > 0);
             Assert.IsInstanceOfType(response.Model!.MovieFK1, typeof(Movie));
             Assert.IsInstanceOfType(response.Model!.MovieFK2, typeof(Movie));
+            Assert.IsInstanceOfType(response.Model!.RandomPersonFK, typeof(Person));
         }
     }
 }

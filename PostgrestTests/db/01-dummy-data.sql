@@ -87,5 +87,5 @@ values ('ea07bd86-a507-4c68-9545-b848bfe74c90', '6f06c038-38e0-4a39-8aac-2c5e859
 insert into "public"."movie_person" ("movie_id", "person_id")
 values ('42fd15b1-3bff-431d-9fa5-314289beb246', 'd948ca02-c432-470e-9fe5-738269491762');
 
-insert into "public"."foreign_key_test" ("movie_fk_1", "movie_fk_2")
-values ('ea07bd86-a507-4c68-9545-b848bfe74c90', 'ea07bd86-a507-4c68-9545-b848bfe74c90');
+insert into "public"."foreign_key_test" ("movie_fk_1", "movie_fk_2", "random_person_fk")
+values ('ea07bd86-a507-4c68-9545-b848bfe74c90', 'ea07bd86-a507-4c68-9545-b848bfe74c90', 'd53072eb-5e64-4e9c-8a29-3ed07076fb2f');

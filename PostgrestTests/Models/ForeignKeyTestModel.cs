@@ -13,4 +13,6 @@ public class ForeignKeyTestModel : BaseModel
 
     [Reference(typeof(Movie), foreignKey: "foreign_key_test_relation_2")]
     public Movie MovieFK2 { get; set; }
+
+    [Reference(typeof(Person))] public Person RandomPersonFK { get; set; }
 }

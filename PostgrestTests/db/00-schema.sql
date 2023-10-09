@@ -153,10 +153,13 @@ create table public.foreign_key_test
 (
     "id"         serial primary key,
     "movie_fk_1" UUID null,
-    "movie_fk_2" UUID null
+    "movie_fk_2" UUID null,
+    "random_person_fk" UUID NULL
 );
 
 ALTER TABLE "public"."foreign_key_test"
     ADD CONSTRAINT "foreign_key_test_relation_1" FOREIGN KEY ("movie_fk_1") REFERENCES "public"."movie" ("id") ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE "public"."foreign_key_test"
     ADD CONSTRAINT "foreign_key_test_relation_2" FOREIGN KEY ("movie_fk_2") REFERENCES "public"."movie" ("id") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE "public"."foreign_key_test"
+    ADD CONSTRAINT "foreign_key_random_person_fk" FOREIGN KEY ("random_person_fk") REFERENCES "public"."person" ("id") ON UPDATE CASCADE ON DELETE CASCADE;
