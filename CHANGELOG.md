@@ -1,8 +1,14 @@
 ﻿# Changelog
 
+## 3.2.8 - 2023-10-08
+
+- Re: [supabase-csharp#115](https://github.com/supabase-community/supabase-csharp/discussions/115) Adds support for
+  multiple references attached to the same model (foreign keys) on a single C# Model.
+
 ## 3.2.7 - 2023-09-15
 
-- Implements a `TableWithCache` for `Get` requests that can pull reactive Models from cache before making a remote request.
+- Implements a `TableWithCache` for `Get` requests that can pull reactive Models from cache before making a remote
+  request.
 - Re: [supabase-csharp#85](https://github.com/supabase-community/supabase-csharp/issues/85) Includes sourcelink support.
 
 ## 3.2.6 - 2023-09-04

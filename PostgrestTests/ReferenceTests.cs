@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -89,10 +90,22 @@ namespace PostgrestTests
             Assert.IsNotNull(testRelations.People[1].Movies.Find(x => x.Id == movieModel.Id));
             Assert.AreEqual(testRelations.People[0].Profile!.PersonId, profileModels.Models[0].PersonId);
             Assert.AreEqual(testRelations.People[1].Profile!.PersonId, profileModels.Models[1].PersonId);
-            
+
             // Circular references should return 1 layer of references, otherwise null.
             Assert.IsTrue(testRelations.People[0].Movies[0].People.Count == 0);
             Assert.IsNotNull(testRelations.People[0].Profile!.Person);
+        }
+
+        [TestMethod("Reference: Table can reference the same foreign table multiple times.")]
+        public async Task TestTableCanReferenceSameTypeMultipleTimes()
+        {
+            var client = new Client(BaseUrl);
+
+            var response = await client.Table<ForeignKeyTestModel>().Get();
+
+            Assert.IsTrue(response.Models.Count > 0);
+            Assert.IsInstanceOfType(response.Model!.MovieFK1, typeof(Movie));
+            Assert.IsInstanceOfType(response.Model!.MovieFK2, typeof(Movie));
         }
     }
 }

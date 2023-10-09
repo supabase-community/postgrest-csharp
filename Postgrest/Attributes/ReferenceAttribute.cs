@@ -38,9 +38,14 @@ namespace Postgrest.Attributes
         public Type Model { get; }
 
         /// <summary>
-        /// Associated property name
+        /// Column this attribute references as specified in Postgres, DOES NOT need to be set if <see cref="ForeignKey"/> is set.
         /// </summary>
-        public string PropertyName { get; private set; }
+        public string? ColumnName { get; private set; }
+
+        /// <summary>
+        /// The explicit SQL defined foreign key that this references.
+        /// </summary>
+        public string? ForeignKey { get; private set; }
 
         /// <summary>
         /// Table name of model
@@ -80,11 +85,13 @@ namespace Postgrest.Attributes
         /// <param name="ignoreOnInsert">Should reference data be excluded from inserts/upserts?</param>
         /// <param name="ignoreOnUpdate">Should reference data be excluded from updates?</param>
         /// <param name="joinType">Specifies the join type for this relationship</param>
-        /// <param name="propertyName"></param>
+        /// <param name="columnName">Column this attribute references as specified in Postgres, DOES NOT need to be set if &lt;see cref="ForeignKey"/&gt; is set.</param>
+        /// <param name="foreignKey">Foreign Key this attribute references as specified in Postgres (only required if the model references the same table multiple times)</param>
         /// <exception cref="Exception"></exception>
         public ReferenceAttribute(Type model, JoinType joinType, bool includeInQuery = true, bool ignoreOnInsert = true,
-            bool ignoreOnUpdate = true, [CallerMemberName] string propertyName = "")
-            : this(model, includeInQuery, ignoreOnInsert, ignoreOnUpdate, joinType == JoinType.Inner, propertyName)
+            bool ignoreOnUpdate = true, [CallerMemberName] string columnName = "", string? foreignKey = null)
+            : this(model, includeInQuery, ignoreOnInsert, ignoreOnUpdate, joinType == JoinType.Inner, columnName,
+                foreignKey)
         {
         }
 
@@ -94,11 +101,13 @@ namespace Postgrest.Attributes
         /// <param name="ignoreOnInsert">Should reference data be excluded from inserts/upserts?</param>
         /// <param name="ignoreOnUpdate">Should reference data be excluded from updates?</param>
         /// <param name="useInnerJoin">As to whether the query will filter top-level rows.</param>
-        /// <param name="propertyName"></param>
+        /// <param name="propertyName">The Property Name on the C# Model</param>
+        /// <param name="columnName">Column this attribute references as specified in Postgres, DOES NOT need to be set if <see cref="ForeignKey"/> is set.</param>
+        /// <param name="foreignKey">Foreign Key this attribute references as specified in Postgres (only required if the model references the same table multiple times)</param>
         /// <exception cref="Exception"></exception>
         public ReferenceAttribute(Type model, bool includeInQuery = true, bool ignoreOnInsert = true,
             bool ignoreOnUpdate = true, bool useInnerJoin = true,
-            [CallerMemberName] string propertyName = "")
+            [CallerMemberName] string? columnName = null, string? foreignKey = null)
         {
             if (!IsDerivedFromBaseModel(model))
                 throw new PostgrestException("ReferenceAttribute must be used with Postgrest BaseModels.")
@@ -108,8 +117,9 @@ namespace Postgrest.Attributes
             IncludeInQuery = includeInQuery;
             IgnoreOnInsert = ignoreOnInsert;
             IgnoreOnUpdate = ignoreOnUpdate;
-            PropertyName = propertyName;
+            ColumnName = columnName;
             UseInnerJoin = useInnerJoin;
+            ForeignKey = foreignKey;
 
             var attr = GetCustomAttribute(model, typeof(TableAttribute));
             TableName = attr is TableAttribute tableAttr ? tableAttr.Name : model.Name;
@@ -119,11 +129,11 @@ namespace Postgrest.Attributes
         {
             seenRefs ??= new List<ReferenceAttribute>();
 
-            ParseColumns();
+            ParseColumns(ref seenRefs);
             ParseRelationships(seenRefs);
         }
 
-        private void ParseColumns()
+        private void ParseColumns(ref List<ReferenceAttribute> seenRefs)
         {
             foreach (var property in Model.GetProperties())
             {
@@ -133,11 +143,11 @@ namespace Postgrest.Attributes
                 {
                     switch (item)
                     {
-                        case ColumnAttribute columnAttribute:
-                            Columns.Add(columnAttribute.ColumnName);
+                        case ColumnAttribute colAttr:
+                            Columns.Add(colAttr.ColumnName);
                             break;
-                        case PrimaryKeyAttribute primaryKeyAttribute:
-                            Columns.Add(primaryKeyAttribute.ColumnName);
+                        case PrimaryKeyAttribute pkAttr:
+                            Columns.Add(pkAttr.ColumnName);
                             break;
                     }
                 }
@@ -149,7 +159,7 @@ namespace Postgrest.Attributes
         {
             if (obj is ReferenceAttribute attribute)
             {
-                return TableName == attribute.TableName && PropertyName == attribute.PropertyName &&
+                return TableName == attribute.TableName && ColumnName == attribute.ColumnName &&
                        Model == attribute.Model;
             }
 
@@ -157,6 +167,10 @@ namespace Postgrest.Attributes
         }
 
 
+        /// <summary>
+        /// Parses relationships that exist on this model. Called by <see cref="ParseProperties"/>
+        /// </summary>
+        /// <param name="seenRefs"></param>
         private void ParseRelationships(List<ReferenceAttribute> seenRefs)
         {
             foreach (var property in Model.GetProperties())
