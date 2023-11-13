@@ -202,7 +202,7 @@ namespace Postgrest.Linq
 
 			if (instance is DateTime dateTime)
 			{
-				Filter = new QueryFilter(column, op, dateTime.ToUniversalTime());
+				Filter = new QueryFilter(column, op, dateTime);
 			}
 			else if (instance is Guid guid)
 			{
