@@ -28,8 +28,8 @@ namespace Postgrest
     /// 
     /// Representative of a `USE $TABLE` command.
     /// </summary>
-    /// <typeparam name="T">Model derived from `BaseModel`.</typeparam>
-    public class Table<T> : IPostgrestTable<T> where T : BaseModel, new()
+    /// <typeparam name="TModel">Model derived from `BaseModel`.</typeparam>
+    public class Table<TModel> : IPostgrestTable<TModel> where TModel : BaseModel, new()
     {
         /// <inheritdoc />
         public string BaseUrl { get; }
@@ -83,7 +83,7 @@ namespace Postgrest
             _options = options ?? new ClientOptions();
             _serializerSettings = serializerSettings;
 
-            foreach (var property in typeof(T).GetProperties())
+            foreach (var property in typeof(TModel).GetProperties())
             {
                 var attrs = property.GetCustomAttributes(typeof(ReferenceAttribute), true);
 
@@ -98,7 +98,8 @@ namespace Postgrest
         }
 
         /// <inheritdoc />
-        public Table<T> Filter(Expression<Func<T, object>> predicate, Operator op, object? criterion)
+        public Table<TModel> Filter<TCriterion>(Expression<Func<TModel, object>> predicate, Operator op,
+            TCriterion? criterion)
         {
             var visitor = new SelectExpressionVisitor();
             visitor.Visit(predicate);
@@ -113,7 +114,7 @@ namespace Postgrest
         }
 
         /// <inheritdoc />
-        public Table<T> Filter(string columnName, Operator op, object? criterion)
+        public Table<TModel> Filter<TCriterion>(string columnName, Operator op, TCriterion? criterion)
         {
             switch (criterion)
             {
@@ -167,43 +168,89 @@ namespace Postgrest
         }
 
         /// <inheritdoc />
-        public Table<T> Not(QueryFilter filter)
+        public Table<TModel> Not(QueryFilter filter)
         {
             _filters.Add(new QueryFilter(Operator.Not, filter));
             return this;
         }
 
         /// <inheritdoc />
-        public Table<T> Not(string columnName, Operator op, string criterion) =>
+        public Table<TModel> Not<TCriterion>(string columnName, Operator op, TCriterion? criterion) =>
             Not(new QueryFilter(columnName, op, criterion));
 
+        /// <inheritdoc />
+        public Table<TModel> Not<TCriterion>(Expression<Func<TModel, object>> predicate, Operator op,
+            TCriterion? criterion)
+        {
+            var visitor = new SelectExpressionVisitor();
+            visitor.Visit(predicate);
+
+            if (visitor.Columns.Count == 0)
+                throw new ArgumentException("Expected predicate to return a reference to a Model column.");
+
+            if (visitor.Columns.Count > 1)
+                throw new ArgumentException("Only one column should be returned from the predicate.");
+
+            return Not(new QueryFilter(visitor.Columns.First(), op, criterion));
+        }
 
         /// <inheritdoc />
-        public Table<T> Not(string columnName, Operator op, List<object> criteria) =>
+        public Table<TModel> Not<TCriterion>(string columnName, Operator op, List<TCriterion> criteria) =>
+            Not(new QueryFilter(columnName, op, criteria.Cast<object>().ToList()));
+
+        /// <inheritdoc />
+        public Table<TModel> Not<TCriterion>(Expression<Func<TModel, object>> predicate, Operator op,
+            List<TCriterion> criteria)
+        {
+            var visitor = new SelectExpressionVisitor();
+            visitor.Visit(predicate);
+
+            if (visitor.Columns.Count == 0)
+                throw new ArgumentException("Expected predicate to return a reference to a Model column.");
+
+            if (visitor.Columns.Count > 1)
+                throw new ArgumentException("Only one column should be returned from the predicate.");
+
+            return Not(new QueryFilter(visitor.Columns.First(), op, criteria.Cast<object>().ToList()));
+        }
+
+        /// <inheritdoc />
+        public Table<TModel> Not(string columnName, Operator op, Dictionary<string, object> criteria) =>
             Not(new QueryFilter(columnName, op, criteria));
 
+        /// <inheritdoc />
+        public Table<TModel> Not(Expression<Func<TModel, object>> predicate, Operator op,
+            Dictionary<string, object> criteria)
+        {
+            var visitor = new SelectExpressionVisitor();
+            visitor.Visit(predicate);
+
+            if (visitor.Columns.Count == 0)
+                throw new ArgumentException("Expected predicate to return a reference to a Model column.");
+
+            if (visitor.Columns.Count > 1)
+                throw new ArgumentException("Only one column should be returned from the predicate.");
+
+            return Not(new QueryFilter(visitor.Columns.First(), op, criteria));
+        }
+
 
         /// <inheritdoc />
-        public Table<T> Not(string columnName, Operator op, Dictionary<string, object> criteria) =>
-            Not(new QueryFilter(columnName, op, criteria));
-
-
-        /// <inheritdoc />
-        public Table<T> And(List<QueryFilter> filters)
+        public Table<TModel> And(List<QueryFilter> filters)
         {
             _filters.Add(new QueryFilter(Operator.And, filters));
             return this;
         }
 
         /// <inheritdoc />
-        public Table<T> Or(List<QueryFilter> filters)
+        public Table<TModel> Or(List<QueryFilter> filters)
         {
             _filters.Add(new QueryFilter(Operator.Or, filters));
             return this;
         }
 
         /// <inheritdoc />
-        public Table<T> Match(T model)
+        public Table<TModel> Match(TModel model)
         {
             foreach (var kvp in model.PrimaryKey)
             {
@@ -214,7 +261,7 @@ namespace Postgrest
         }
 
         /// <inheritdoc />
-        public Table<T> Match(Dictionary<string, string> query)
+        public Table<TModel> Match(Dictionary<string, string> query)
         {
             foreach (var param in query)
             {
@@ -225,7 +272,7 @@ namespace Postgrest
         }
 
         /// <inheritdoc />
-        public Table<T> Order(Expression<Func<T, object>> predicate, Ordering ordering,
+        public Table<TModel> Order(Expression<Func<TModel, object>> predicate, Ordering ordering,
             NullPosition nullPosition = NullPosition.First)
         {
             var visitor = new SelectExpressionVisitor();
@@ -242,14 +289,14 @@ namespace Postgrest
 
 
         /// <inheritdoc />
-        public Table<T> Order(string column, Ordering ordering, NullPosition nullPosition = NullPosition.First)
+        public Table<TModel> Order(string column, Ordering ordering, NullPosition nullPosition = NullPosition.First)
         {
             _orderers.Add(new QueryOrderer(null, column, ordering, nullPosition));
             return this;
         }
 
         /// <inheritdoc />
-        public Table<T> Order(string foreignTable, string column, Ordering ordering,
+        public Table<TModel> Order(string foreignTable, string column, Ordering ordering,
             NullPosition nullPosition = NullPosition.First)
         {
             _orderers.Add(new QueryOrderer(foreignTable, column, ordering, nullPosition));
@@ -257,14 +304,14 @@ namespace Postgrest
         }
 
         /// <inheritdoc />
-        public Table<T> Range(int from)
+        public Table<TModel> Range(int from)
         {
             _rangeFrom = from;
             return this;
         }
 
         /// <inheritdoc />
-        public Table<T> Range(int from, int to)
+        public Table<TModel> Range(int from, int to)
         {
             _rangeFrom = from;
             _rangeTo = to;
@@ -272,7 +319,7 @@ namespace Postgrest
         }
 
         /// <inheritdoc />
-        public Table<T> Select(string columnQuery)
+        public Table<TModel> Select(string columnQuery)
         {
             _method = HttpMethod.Get;
             _columnQuery = columnQuery;
@@ -280,7 +327,7 @@ namespace Postgrest
         }
 
         /// <inheritdoc />
-        public Table<T> Select(Expression<Func<T, object[]>> predicate)
+        public Table<TModel> Select(Expression<Func<TModel, object[]>> predicate)
         {
             var visitor = new SelectExpressionVisitor();
             visitor.Visit(predicate);
@@ -293,7 +340,7 @@ namespace Postgrest
         }
 
         /// <inheritdoc />
-        public Table<T> Where(Expression<Func<T, bool>> predicate)
+        public Table<TModel> Where(Expression<Func<TModel, bool>> predicate)
         {
             var visitor = new WhereExpressionVisitor();
             visitor.Visit(predicate);
@@ -315,7 +362,7 @@ namespace Postgrest
 
 
         /// <inheritdoc />
-        public Table<T> Limit(int limit, string? foreignTableName = null)
+        public Table<TModel> Limit(int limit, string? foreignTableName = null)
         {
             _limit = limit;
             _limitForeignKey = foreignTableName;
@@ -324,14 +371,14 @@ namespace Postgrest
 
 
         /// <inheritdoc />
-        public Table<T> OnConflict(string columnName)
+        public Table<TModel> OnConflict(string columnName)
         {
             _onConflict = columnName;
             return this;
         }
 
         /// <inheritdoc />
-        public Table<T> OnConflict(Expression<Func<T, object>> predicate)
+        public Table<TModel> OnConflict(Expression<Func<TModel, object>> predicate)
         {
             var visitor = new SelectExpressionVisitor();
             visitor.Visit(predicate);
@@ -349,7 +396,7 @@ namespace Postgrest
 
 
         /// <inheritdoc />
-        public Table<T> Columns(string[] columns)
+        public Table<TModel> Columns(string[] columns)
         {
             foreach (var column in columns)
                 _columns.Add(column);
@@ -359,7 +406,7 @@ namespace Postgrest
 
 
         /// <inheritdoc />
-        public Table<T> Columns(Expression<Func<T, object[]>> predicate)
+        public Table<TModel> Columns(Expression<Func<TModel, object[]>> predicate)
         {
             var visitor = new SelectExpressionVisitor();
             visitor.Visit(predicate);
@@ -372,7 +419,7 @@ namespace Postgrest
 
 
         /// <inheritdoc />
-        public Table<T> Offset(int offset, string? foreignTableName = null)
+        public Table<TModel> Offset(int offset, string? foreignTableName = null)
         {
             _offset = offset;
             _offsetForeignKey = foreignTableName;
@@ -381,17 +428,17 @@ namespace Postgrest
 
 
         /// <inheritdoc />
-        public Task<ModeledResponse<T>> Insert(T model, QueryOptions? options = null,
+        public Task<ModeledResponse<TModel>> Insert(TModel model, QueryOptions? options = null,
             CancellationToken cancellationToken = default) => PerformInsert(model, options, cancellationToken);
 
 
         /// <inheritdoc />
-        public Task<ModeledResponse<T>> Insert(ICollection<T> models, QueryOptions? options = null,
+        public Task<ModeledResponse<TModel>> Insert(ICollection<TModel> models, QueryOptions? options = null,
             CancellationToken cancellationToken = default) => PerformInsert(models, options, cancellationToken);
 
 
         /// <inheritdoc />
-        public Task<ModeledResponse<T>> Upsert(T model, QueryOptions? options = null,
+        public Task<ModeledResponse<TModel>> Upsert(TModel model, QueryOptions? options = null,
             CancellationToken cancellationToken = default)
         {
             options ??= new QueryOptions();
@@ -404,7 +451,7 @@ namespace Postgrest
 
 
         /// <inheritdoc />
-        public Task<ModeledResponse<T>> Upsert(ICollection<T> model, QueryOptions? options = null,
+        public Task<ModeledResponse<TModel>> Upsert(ICollection<TModel> model, QueryOptions? options = null,
             CancellationToken cancellationToken = default)
         {
             options ??= new QueryOptions();
@@ -417,7 +464,7 @@ namespace Postgrest
 
 
         /// <inheritdoc />
-        public Table<T> Set(Expression<Func<T, object>> keySelector, object? value)
+        public Table<TModel> Set(Expression<Func<TModel, object>> keySelector, object? value)
         {
             var visitor = new SetExpressionVisitor();
             visitor.Visit(keySelector);
@@ -445,7 +492,7 @@ namespace Postgrest
 
 
         /// <inheritdoc />
-        public Table<T> Set(Expression<Func<T, KeyValuePair<object, object?>>> keyValuePairExpression)
+        public Table<TModel> Set(Expression<Func<TModel, KeyValuePair<object, object?>>> keyValuePairExpression)
         {
             var visitor = new SetExpressionVisitor();
             visitor.Visit(keyValuePairExpression);
@@ -461,7 +508,7 @@ namespace Postgrest
 
 
         /// <inheritdoc />
-        public Task<ModeledResponse<T>> Update(QueryOptions? options = null,
+        public Task<ModeledResponse<TModel>> Update(QueryOptions? options = null,
             CancellationToken cancellationToken = default)
         {
             options ??= new QueryOptions();
@@ -471,7 +518,7 @@ namespace Postgrest
 
             _method = new HttpMethod("PATCH");
 
-            var request = Send<T>(_method, _setData, options.ToHeaders(), cancellationToken, isUpdate: true);
+            var request = Send<TModel>(_method, _setData, options.ToHeaders(), cancellationToken, isUpdate: true);
 
             Clear();
 
@@ -480,7 +527,7 @@ namespace Postgrest
 
 
         /// <inheritdoc />
-        public Task<ModeledResponse<T>> Update(T model, QueryOptions? options = null,
+        public Task<ModeledResponse<TModel>> Update(TModel model, QueryOptions? options = null,
             CancellationToken cancellationToken = default)
         {
             options ??= new QueryOptions();
@@ -489,7 +536,7 @@ namespace Postgrest
 
             Match(model);
 
-            var request = Send<T>(_method, model, options.ToHeaders(), cancellationToken, isUpdate: true);
+            var request = Send<TModel>(_method, model, options.ToHeaders(), cancellationToken, isUpdate: true);
 
             Clear();
 
@@ -513,7 +560,7 @@ namespace Postgrest
 
 
         /// <inheritdoc />
-        public Task<ModeledResponse<T>> Delete(T model, QueryOptions? options = null,
+        public Task<ModeledResponse<TModel>> Delete(TModel model, QueryOptions? options = null,
             CancellationToken cancellationToken = default)
         {
             options ??= new QueryOptions();
@@ -522,7 +569,7 @@ namespace Postgrest
 
             Match(model);
 
-            var request = Send<T>(_method, null, options.ToHeaders(), cancellationToken);
+            var request = Send<TModel>(_method, null, options.ToHeaders(), cancellationToken);
             Clear();
             return request;
         }
@@ -552,7 +599,7 @@ namespace Postgrest
 
 
         /// <inheritdoc />
-        public async Task<T?> Single(CancellationToken cancellationToken = default)
+        public async Task<TModel?> Single(CancellationToken cancellationToken = default)
         {
             _method = HttpMethod.Get;
             var headers = new Dictionary<string, string>
@@ -561,7 +608,7 @@ namespace Postgrest
                 { "Prefer", "return=representation" }
             };
 
-            var request = Send<T>(_method, null, headers, cancellationToken);
+            var request = Send<TModel>(_method, null, headers, cancellationToken);
 
             Clear();
 
@@ -580,9 +627,9 @@ namespace Postgrest
         }
 
         /// <inheritdoc />
-        public Task<ModeledResponse<T>> Get(CancellationToken cancellationToken = default)
+        public Task<ModeledResponse<TModel>> Get(CancellationToken cancellationToken = default)
         {
-            var request = Send<T>(_method, null, null, cancellationToken);
+            var request = Send<TModel>(_method, null, null, cancellationToken);
             Clear();
             return request;
         }
@@ -693,7 +740,7 @@ namespace Postgrest
             resolver.SetState();
 
             // Check if data is a Collection for the Insert Bulk case
-            if (data is ICollection<T>)
+            if (data is ICollection<TModel>)
                 return JsonConvert.DeserializeObject<List<object>>(serialized, _serializerSettings);
 
             return JsonConvert.DeserializeObject<Dictionary<string, object>>(serialized, _serializerSettings);
@@ -849,7 +896,7 @@ namespace Postgrest
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        private Task<ModeledResponse<T>> PerformInsert(object data, QueryOptions? options = null,
+        private Task<ModeledResponse<TModel>> PerformInsert(object data, QueryOptions? options = null,
             CancellationToken cancellationToken = default)
         {
             _method = HttpMethod.Post;
@@ -858,7 +905,7 @@ namespace Postgrest
             if (!string.IsNullOrEmpty(options.OnConflict))
                 OnConflict(options.OnConflict!);
 
-            var request = Send<T>(_method, data, options.ToHeaders(), cancellationToken, isInsert: true,
+            var request = Send<TModel>(_method, data, options.ToHeaders(), cancellationToken, isInsert: true,
                 isUpsert: options.Upsert);
 
             Clear();
@@ -919,7 +966,7 @@ namespace Postgrest
 
         private static string FindTableName(object? obj = null)
         {
-            var type = obj == null ? typeof(T) : obj is Type t ? t : obj.GetType();
+            var type = obj == null ? typeof(TModel) : obj is Type t ? t : obj.GetType();
             var attr = Attribute.GetCustomAttribute(type, typeof(TableAttribute));
 
             if (attr is TableAttribute tableAttr)

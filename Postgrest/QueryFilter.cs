@@ -24,13 +24,14 @@ namespace Postgrest
 		/// <inheritdoc />
 		public object? Criteria { get; private set; }
 
+		
 		/// <summary>
 		/// Contractor to use single value filtering.
 		/// </summary>
 		/// <param name="property">Column name</param>
 		/// <param name="op">Operation: And, Equals, GreaterThan, LessThan, GreaterThanOrEqual, LessThanOrEqual, NotEqual, Is, Adjacent, Not, Like, ILike</param>
 		/// <param name="criteria"></param>
-		public QueryFilter(string property, Operator op, object criteria)
+		public QueryFilter(string property, Operator op, object? criteria)
 		{
 			switch (op)
 			{

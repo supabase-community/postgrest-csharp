@@ -92,7 +92,7 @@ namespace PostgrestTests
                 Assert.IsTrue(q.ListOfFloats!.Contains(10));
 
             var query7 = await client.Table<KitchenSink>()
-                .Filter(x => x.DateTimeValue!, Operator.NotEqual, null)
+                .Filter<string>(x => x.DateTimeValue!, Operator.NotEqual, null)
                 .Get();
 
             foreach (var q in query7.Models)
@@ -344,6 +344,30 @@ namespace PostgrestTests
             var exists = await client.Table<Movie>().Where(x => x.Name == newMovie.Name).Single();
 
             Assert.IsNull(exists);
+        }
+        
+        [TestMethod("Linq: Not")]
+        public async Task TestLinqNot()
+        {
+            var client = new Client(BaseUrl);
+
+            // Standard NOT Equal Op.
+            var filteredResponse = await client.Table<User>().Not(x => x.Username!, Operator.Equals, "supabot").Get();
+            var usersResponse = await client.Table<User>().Get();
+
+            var supaFilteredUsers = filteredResponse.Models;
+            var linqFilteredUsers = usersResponse.Models.Where(u => u.Username != "supabot").ToList();
+
+            CollectionAssert.AreEqual(linqFilteredUsers, supaFilteredUsers);
+
+            // NOT `In` Shorthand Op.
+            var notInFilterResponse = await client.Table<User>()
+                .Not(x => x.Username!, Operator.In, new List<string> { "supabot", "kiwicopple" }).Get();
+            var supaNotInList = notInFilterResponse.Models;
+            var linqNotInList = usersResponse.Models.Where(u => u.Username != "supabot")
+                .Where(u => u.Username != "kiwicopple").ToList();
+
+            CollectionAssert.AreEqual(supaNotInList, linqNotInList);
         }
     }
 }

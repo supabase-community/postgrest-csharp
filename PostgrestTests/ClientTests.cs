@@ -536,7 +536,7 @@ namespace PostgrestTests
 
             // NOT `In` Shorthand Op.
             var notInFilterResponse = await client.Table<User>()
-                .Not("username", Operator.In, new List<object> { "supabot", "kiwicopple" }).Get();
+                .Not("username", Operator.In, new List<string> { "supabot", "kiwicopple" }).Get();
             var supaNotInList = notInFilterResponse.Models;
             var linqNotInList = usersResponse.Models.Where(u => u.Username != "supabot")
                 .Where(u => u.Username != "kiwicopple").ToList();
@@ -553,7 +553,7 @@ namespace PostgrestTests
                 .Insert(new User { Username = "acupofjose", Status = "ONLINE", Catchphrase = null },
                     new QueryOptions { Upsert = true });
 
-            var filteredResponse = await client.Table<User>().Filter("catchphrase", Operator.Equals, null).Get();
+            var filteredResponse = await client.Table<User>().Filter<string>("catchphrase", Operator.Equals, null).Get();
             var usersResponse = await client.Table<User>().Get();
 
             var supaFilteredUsers = filteredResponse.Models;
@@ -571,7 +571,7 @@ namespace PostgrestTests
                 .Insert(new User { Username = "acupofjose", Status = "ONLINE", Catchphrase = null },
                     new QueryOptions { Upsert = true });
 
-            var filteredResponse = await client.Table<User>().Filter("catchphrase", Operator.Is, null).Get();
+            var filteredResponse = await client.Table<User>().Filter<string>("catchphrase", Operator.Is, null).Get();
             var usersResponse = await client.Table<User>().Get();
 
             var supaFilteredUsers = filteredResponse.Models;
@@ -589,7 +589,7 @@ namespace PostgrestTests
                 .Insert(new User { Username = "acupofjose", Status = "ONLINE", Catchphrase = null },
                     new QueryOptions { Upsert = true });
 
-            var filteredResponse = await client.Table<User>().Filter("catchphrase", Operator.NotEqual, null).Get();
+            var filteredResponse = await client.Table<User>().Filter<string>("catchphrase", Operator.NotEqual, null).Get();
             var usersResponse = await client.Table<User>().Get();
 
             var supaFilteredUsers = filteredResponse.Models;
@@ -607,7 +607,7 @@ namespace PostgrestTests
                 .Insert(new User { Username = "acupofjose", Status = "ONLINE", Catchphrase = null },
                     new QueryOptions { Upsert = true });
 
-            var filteredResponse = await client.Table<User>().Filter("catchphrase", Operator.Not, null).Get();
+            var filteredResponse = await client.Table<User>().Filter<string>("catchphrase", Operator.Not, null).Get();
             var usersResponse = await client.Table<User>().Get();
 
             var supaFilteredUsers = filteredResponse.Models;
@@ -906,7 +906,7 @@ namespace PostgrestTests
             var config = new FullTextSearchConfig("'cat'", "english");
 
             var filteredResponse = await client.Table<User>().Filter("catchphrase", Operator.PHFTS, config).Get();
-            var usersResponse = await client.Table<User>().Filter("catchphrase", Operator.NotEqual, null).Get();
+            var usersResponse = await client.Table<User>().Filter<string>("catchphrase", Operator.NotEqual, null).Get();
 
             var testAgainst = usersResponse.Models.Where(u => u.Catchphrase!.Contains("'cat'")).ToList();
             CollectionAssert.AreEqual(testAgainst, filteredResponse.Models);

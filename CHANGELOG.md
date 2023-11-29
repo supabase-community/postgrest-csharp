@@ -1,12 +1,21 @@
 ﻿# Changelog
 
+## 3.3.0 - 2023-11-28
+
+- Re: [#78](https://github.com/supabase-community/postgrest-csharp/issues/78) Updates signatures for `Not` and `Filter`
+  to include generic types for a better development experience.
+- Updates internal generic type names to be more descriptive.
+- Add support for LINQ predicates on `Table<TModel>.Not()` signatures
+
 ## 3.2.10 - 2023-11-13
 
-- Re: [#76](https://github.com/supabase-community/postgrest-csharp/issues/76) Removes the incorrect `ToUniversalTime` conversion in the LINQ `Where` parser.
+- Re: [#76](https://github.com/supabase-community/postgrest-csharp/issues/76) Removes the incorrect `ToUniversalTime`
+  conversion in the LINQ `Where` parser.
 
 ## 3.2.9 - 2023-10-09
 
-- Re: [supabase-csharp#115](https://github.com/supabase-community/supabase-csharp/discussions/115) Additional support for a model referencing another model with multiple foreign keys.
+- Re: [supabase-csharp#115](https://github.com/supabase-community/supabase-csharp/discussions/115) Additional support
+  for a model referencing another model with multiple foreign keys.
 
 ## 3.2.8 - 2023-10-08
 
