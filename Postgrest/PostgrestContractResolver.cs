@@ -92,13 +92,7 @@ namespace Postgrest
                     ? referenceAttr.TableName
                     : referenceAttr.ColumnName;
 
-                if (IsInsert && referenceAttr.IgnoreOnInsert)
-                    prop.Ignored = true;
-
-                if (IsUpdate && referenceAttr.IgnoreOnUpdate)
-                    prop.Ignored = true;
-
-                if ((IsUpsert && referenceAttr.IgnoreOnUpdate) || (IsUpsert && referenceAttr.IgnoreOnInsert))
+                if (IsInsert || IsUpdate)
                     prop.Ignored = true;
 
                 return prop;

@@ -108,7 +108,7 @@ namespace PostgrestTests
             Assert.IsInstanceOfType(response.Model!.MovieFK2, typeof(Movie));
             Assert.IsInstanceOfType(response.Model!.RandomPersonFK, typeof(Person));
         }
-        
+
         [TestMethod("Reference: Table can reference a nested model with the same foreign table multiple times.")]
         public async Task TestModelCanReferenceNestedModelWithSameForeignTableMultipleTimes()
         {
@@ -119,6 +119,36 @@ namespace PostgrestTests
             Assert.IsTrue(response.Models.Count > 0);
             Assert.IsInstanceOfType(response.Model!.User, typeof(User));
             Assert.IsInstanceOfType(response.Model!.FKTestModel, typeof(ForeignKeyTestModel));
+        }
+
+        [TestMethod("Reference: Model inserts and updates (ignoring reference properties) when Reference is not null.")]
+        public async Task TestModelInsertsAndUpdatesWhenReferenceIsSpecified()
+        {
+            var client = new Client(BaseUrl);
+
+            var newModel = new Movie()
+            {
+                Name = "The Blue Eyed Samurai (Movie)",
+                Status = MovieStatus.OffDisplay,
+                People =
+                [
+                    new Person { FirstName = "Maya", LastName = "Erskine" },
+                    new Person { FirstName = "Masi", LastName = "Oka" }
+                ]
+            };
+
+            var insertedModel = await client.Table<Movie>().Insert(newModel);
+
+            Assert.IsNotNull(insertedModel.Model);
+            Assert.IsNotNull(insertedModel.Model.Name);
+            Assert.AreEqual(MovieStatus.OffDisplay, insertedModel.Model.Status);
+            
+            insertedModel.Model.Status = MovieStatus.OnDisplay;
+
+            var updatedModel = await insertedModel.Model.Update<Movie>();
+            
+            Assert.IsNotNull(updatedModel.Model);
+            Assert.AreEqual(MovieStatus.OnDisplay, updatedModel.Model.Status);
         }
     }
 }
