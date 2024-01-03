@@ -1,3 +1,7 @@
+---
+_layout: landing
+---
+
 # postgrest-csharp
 
 ![Build And Test](https://github.com/supabase/postgrest-csharp/workflows/Build%20And%20Test/badge.svg)
