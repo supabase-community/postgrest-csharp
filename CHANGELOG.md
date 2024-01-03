@@ -1,5 +1,13 @@
 ﻿# Changelog
 
+## 3.4.0 - 2024-01-03
+
+- Re: [#81](https://github.com/supabase-community/postgrest-csharp/issues/81)
+    - [Minor] Removes `IgnoreOnInsert`and `IgnoreOnUpdate` from `ReferenceAttribute` as changing these properties
+      to `false` does not currently provide the expected functionality.
+    - Fixes `Insert` and `Update` not working on models that have `Reference` specified on a property with a non-null
+      value.
+
 ## 3.3.0 - 2023-11-28
 
 - Re: [#78](https://github.com/supabase-community/postgrest-csharp/issues/78) Updates signatures for `Not` and `Filter`
