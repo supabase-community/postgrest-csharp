@@ -26,7 +26,7 @@ jobs:
           wait-interval: 10
 
       - name: Generate package
-        run: dotnet pack ./Postgrest/Postgrest.csproj --configuration Release
+        run: dotnet pack --configuration Release
 
       - name: Publish on version change
         run: dotnet nuget push "**/*.nupkg" --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
