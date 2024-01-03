@@ -25,8 +25,14 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 10
 
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build ./Postgrest/Postgrest.csproj --configuration Release --no-restore
+        
       - name: Generate package
-        run: dotnet pack --configuration Release
+        run: dotnet pack ./Postgrest/Postgrest.csproj --configuration Release
 
       - name: Publish on version change
         run: dotnet nuget push "**/*.nupkg" --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
