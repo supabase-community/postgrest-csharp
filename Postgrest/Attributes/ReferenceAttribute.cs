@@ -82,15 +82,13 @@ namespace Postgrest.Attributes
         /// <summary>Establishes a reference between two tables</summary>
         /// <param name="model">Model referenced</param>
         /// <param name="includeInQuery">Should referenced be included in queries?</param>
-        /// <param name="ignoreOnInsert">Should reference data be excluded from inserts/upserts?</param>
-        /// <param name="ignoreOnUpdate">Should reference data be excluded from updates?</param>
         /// <param name="joinType">Specifies the join type for this relationship</param>
         /// <param name="columnName">Column this attribute references as specified in Postgres, DOES NOT need to be set if &lt;see cref="ForeignKey"/&gt; is set.</param>
         /// <param name="foreignKey">Foreign Key this attribute references as specified in Postgres (only required if the model references the same table multiple times)</param>
         /// <exception cref="Exception"></exception>
-        public ReferenceAttribute(Type model, JoinType joinType, bool includeInQuery = true, bool ignoreOnInsert = true,
-            bool ignoreOnUpdate = true, [CallerMemberName] string columnName = "", string? foreignKey = null)
-            : this(model, includeInQuery, ignoreOnInsert, ignoreOnUpdate, joinType == JoinType.Inner, columnName,
+        public ReferenceAttribute(Type model, JoinType joinType, bool includeInQuery = true,
+            [CallerMemberName] string columnName = "", string? foreignKey = null)
+            : this(model, includeInQuery, joinType == JoinType.Inner, columnName,
                 foreignKey)
         {
         }
@@ -98,15 +96,12 @@ namespace Postgrest.Attributes
         /// <summary>Establishes a reference between two tables</summary>
         /// <param name="model">Model referenced</param>
         /// <param name="includeInQuery">Should referenced be included in queries?</param>
-        /// <param name="ignoreOnInsert">Should reference data be excluded from inserts/upserts?</param>
-        /// <param name="ignoreOnUpdate">Should reference data be excluded from updates?</param>
         /// <param name="useInnerJoin">As to whether the query will filter top-level rows.</param>
         /// <param name="propertyName">The Property Name on the C# Model</param>
         /// <param name="columnName">Column this attribute references as specified in Postgres, DOES NOT need to be set if <see cref="ForeignKey"/> is set.</param>
         /// <param name="foreignKey">Foreign Key this attribute references as specified in Postgres (only required if the model references the same table multiple times)</param>
         /// <exception cref="Exception"></exception>
-        public ReferenceAttribute(Type model, bool includeInQuery = true, bool ignoreOnInsert = true,
-            bool ignoreOnUpdate = true, bool useInnerJoin = true,
+        public ReferenceAttribute(Type model, bool includeInQuery = true, bool useInnerJoin = true,
             [CallerMemberName] string? columnName = null, string? foreignKey = null)
         {
             if (!IsDerivedFromBaseModel(model))
@@ -115,8 +110,8 @@ namespace Postgrest.Attributes
 
             Model = model;
             IncludeInQuery = includeInQuery;
-            IgnoreOnInsert = ignoreOnInsert;
-            IgnoreOnUpdate = ignoreOnUpdate;
+            IgnoreOnInsert = true;
+            IgnoreOnUpdate = true;
             ColumnName = columnName;
             UseInnerJoin = useInnerJoin;
             ForeignKey = foreignKey;
