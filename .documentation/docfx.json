@@ -1,55 +1,44 @@
 {
-  "metadata": [{
-    "src": [{
-      "files": "Postgrest.csproj",
-      "exclude": ["**/bin/**", "**/obj/**"],
-      "src": "../Postgrest"
-    }],
-    "dest": "api",
-    "disableGitFeatures": false,
-    "disableDefaultFilter": false
-  }],
+  "metadata": [
+    {
+      "src": [
+        {
+          "src": "../Postgrest",
+          "files": [
+            "**/*.csproj"
+          ]
+        }
+      ],
+      "dest": "api"
+    }
+  ],
   "build": {
-    "content": [{
-        "files": [
-          "api/**.yml",
-          "api/index.md"
-        ]
-      },
+    "content": [
       {
         "files": [
-          "articles/**.md",
-          "articles/**/toc.yml",
-          "toc.yml",
-          "*.md"
+          "**/*.{md,yml}"
+        ],
+        "exclude": [
+          "_site/**"
         ]
       }
     ],
-    "resource": [{
-      "files": [
-        "images/**"
-      ]
-    }],
-    "overwrite": [{
-      "files": [
-        "apidoc/**.md"
-      ],
-      "exclude": [
-        "obj/**",
-        "_site/**"
-      ]
-    }],
-    "dest": "_site",
-    "globalMetadataFiles": [],
-    "fileMetadataFiles": [],
-    "template": [
-      "default"
+    "resource": [
+      {
+        "files": [
+          "images/**"
+        ]
+      }
     ],
-    "postProcessors": [],
-    "markdownEngineName": "markdig",
-    "noLangKeyword": false,
-    "keepFileLink": false,
-    "cleanupCacheHistory": false,
-    "disableGitFeatures": false
+    "output": "_site",
+    "template": [
+      "default",
+      "modern"
+    ],
+    "globalMetadata": {
+      "_appName": "postgrest-csharp",
+      "_appTitle": "postgrest-csharp",
+      "_enableSearch": true
+    }
   }
 }
