@@ -12,10 +12,10 @@ namespace PostgrestExample.Models
         public int Id { get; set; }
 
         [Column("name")]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
         [Reference(typeof(Person))]
-        public List<Person> Persons { get; set; }
+        public List<Person> Persons { get; set; } = new();
 
 
         [Column("created_at")]
@@ -29,13 +29,13 @@ namespace PostgrestExample.Models
         public int Id { get; set; }
 
         [Column("first_name")]
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = null!;
 
         [Column("last_name")]
-        public string LastName { get; set; }
+        public string LastName { get; set; } = null!;
 
         [Reference(typeof(Profile))]
-        public Profile Profile { get; set; }
+        public Profile Profile { get; set; } = null!;
 
         [Column("created_at")]
         public DateTime CreatedAt { get; set; }
@@ -45,7 +45,7 @@ namespace PostgrestExample.Models
     public class Profile : BaseModel
     {
         [Column("email")]
-        public string Email { get; set; }
+        public string Email { get; set; } = null!;
     }
 
     [Table("movie_person")]
