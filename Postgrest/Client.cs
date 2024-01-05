@@ -95,6 +95,7 @@ namespace Postgrest
                 GetHeaders = GetHeaders
             };
 
+        /// <inheritdoc />
         public IPostgrestTableWithCache<T> Table<T>(IPostgrestCacheProvider cacheProvider)
             where T : BaseModel, new() =>
             new TableWithCache<T>(BaseUrl, cacheProvider, SerializerSettings(Options), Options)
