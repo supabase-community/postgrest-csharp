@@ -10,12 +10,12 @@ namespace PostgrestExample.Models
         public int ChannelId { get; set; }
 
         [Column("message")]
-        public string MessageData { get; set; }
+        public string MessageData { get; set; } = null!;
 
         [Column("data")]
-        public string Data { get; set; }
+        public string Data { get; set; } = null!;
 
         [Column("username")]
-        public string Username { get; set; }
+        public string Username { get; set; } = null!;
     }
 }

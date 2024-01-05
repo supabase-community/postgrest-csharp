@@ -8,7 +8,7 @@ namespace PostgrestTests.Models;
 [Table("movie")]
 public class Movie : BaseModel
 {
-    [PrimaryKey("id")] public string Id { get; set; }
+    [PrimaryKey("id")] public string Id { get; set; } = null!;
 
     [Column("name")] public string? Name { get; set; }
 
@@ -29,7 +29,7 @@ public enum MovieStatus
 [Table("person")]
 public class Person : BaseModel
 {
-    [PrimaryKey("id")] public string Id { get; set; }
+    [PrimaryKey("id")] public string Id { get; set; } = null!;
 
     [Reference(typeof(Movie))] public List<Movie> Movies { get; set; } = new();
 
@@ -46,7 +46,7 @@ public class Person : BaseModel
 [Table("profile")]
 public class Profile : BaseModel
 {
-    [PrimaryKey("person_id", true)] public string PersonId { get; set; }
+    [PrimaryKey("person_id", true)] public string PersonId { get; set; } = null!;
 
     [Reference(typeof(Person))] public Person? Person { get; set; }
     [Column("email")] public string? Email { get; set; }

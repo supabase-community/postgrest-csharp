@@ -9,19 +9,19 @@ namespace PostgrestExample.Models
     public class User : BaseModel
     {
         [PrimaryKey("username")]
-        public string Username { get; set; }
+        public string Username { get; set; } = null!;
 
         [Column("data")]
-        public string Data { get; set; }
+        public string Data { get; set; } = null!;
 
         [Column("age_range")]
-        public IntRange AgeRange { get; set; }
+        public IntRange AgeRange { get; set; } = null!;
 
         [Column("catchphrase")]
-        public string Catchphrase { get; set; }
+        public string Catchphrase { get; set; } = null!;
 
         [Column("status")]
-        public string Status { get; set; }
+        public string Status { get; set; } = null!;
 
         [Column("inserted_at")]
         public DateTime InsertedAt { get; set; }

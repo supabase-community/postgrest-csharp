@@ -70,6 +70,7 @@ namespace Postgrest
         /// <summary>
         /// Notifies all listeners.
         /// </summary>
+        /// <param name="sender"></param>
         /// <param name="clientOptions"></param>
         /// <param name="method"></param>
         /// <param name="url"></param>

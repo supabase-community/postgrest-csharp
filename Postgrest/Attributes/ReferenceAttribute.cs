@@ -97,7 +97,6 @@ namespace Postgrest.Attributes
         /// <param name="model">Model referenced</param>
         /// <param name="includeInQuery">Should referenced be included in queries?</param>
         /// <param name="useInnerJoin">As to whether the query will filter top-level rows.</param>
-        /// <param name="propertyName">The Property Name on the C# Model</param>
         /// <param name="columnName">Column this attribute references as specified in Postgres, DOES NOT need to be set if <see cref="ForeignKey"/> is set.</param>
         /// <param name="foreignKey">Foreign Key this attribute references as specified in Postgres (only required if the model references the same table multiple times)</param>
         /// <exception cref="Exception"></exception>
