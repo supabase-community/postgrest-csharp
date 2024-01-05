@@ -39,22 +39,21 @@ namespace PostgrestTests
                 }
             });
 
-            Assert.AreEqual($"{BaseUrl}/users?some-param=foo&other-param=bar",
-                (client.Table<User>() as Table<User>)!.GenerateUrl());
+            Assert.AreEqual($"{BaseUrl}/users?some-param=foo&other-param=bar", client.Table<User>().GenerateUrl());
         }
 
         [TestMethod("will use TableAttribute")]
         public void TestTableAttribute()
         {
             var client = new Client(BaseUrl);
-            Assert.AreEqual($"{BaseUrl}/users", (client.Table<User>() as Table<User>)!.GenerateUrl());
+            Assert.AreEqual($"{BaseUrl}/users", client.Table<User>().GenerateUrl());
         }
 
         [TestMethod("will default to Class.name in absence of TableAttribute")]
         public void TestTableAttributeDefault()
         {
             var client = new Client(BaseUrl);
-            Assert.AreEqual($"{BaseUrl}/Stub", (client.Table<Stub>() as Table<Stub>)!.GenerateUrl());
+            Assert.AreEqual($"{BaseUrl}/Stub", client.Table<Stub>().GenerateUrl());
         }
 
         [TestMethod("will set header from options")]
@@ -76,7 +75,7 @@ namespace PostgrestTests
                     { "apikey", "some-key" }
                 }
             });
-            Assert.AreEqual($"{BaseUrl}/users?apikey=some-key", (client.Table<User>() as Table<User>)!.GenerateUrl());
+            Assert.AreEqual($"{BaseUrl}/users?apikey=some-key", client.Table<User>().GenerateUrl());
         }
 
         [TestMethod("filters: simple")]
@@ -97,7 +96,7 @@ namespace PostgrestTests
             foreach (var pair in dict)
             {
                 var filter = new QueryFilter("foo", pair.Key, "bar");
-                var result = (client.Table<User>() as Table<User>)!.PrepareFilter(filter);
+                var result = ((Table<User>)client.Table<User>()).PrepareFilter(filter);
                 Assert.AreEqual("foo", result.Key);
                 Assert.AreEqual(pair.Value, result.Value);
             }
@@ -116,7 +115,7 @@ namespace PostgrestTests
             foreach (var pair in dict)
             {
                 var filter = new QueryFilter("foo", pair.Key, "%bar%");
-                var result = (client.Table<User>() as Table<User>)!.PrepareFilter(filter);
+                var result = ((Table<User>)client.Table<User>()).PrepareFilter(filter);
                 Assert.AreEqual("foo", result.Key);
                 Assert.AreEqual(pair.Value, result.Value);
             }
@@ -141,7 +140,7 @@ namespace PostgrestTests
             {
                 var list = new List<object> { "bar", "buzz" };
                 var filter = new QueryFilter("foo", pair.Key, list);
-                var result = (client.Table<User>() as Table<User>)!.PrepareFilter(filter);
+                var result = ((Table<User>)client.Table<User>()).PrepareFilter(filter);
                 Assert.AreEqual("foo", result.Key);
                 Assert.AreEqual(pair.Value, result.Value);
             }
@@ -168,7 +167,7 @@ namespace PostgrestTests
             {
                 var list = new List<object> { "bar", "buzz" };
                 var filter = new QueryFilter("foo", pair.Key, list);
-                var result = (client.Table<User>() as Table<User>)!.PrepareFilter(filter);
+                var result = ((Table<User>)client.Table<User>()).PrepareFilter(filter);
                 Assert.AreEqual("foo", result.Key);
                 Assert.AreEqual(pair.Value, result.Value);
             }
@@ -192,7 +191,7 @@ namespace PostgrestTests
             {
                 var value = new Dictionary<string, object> { { "bar", 100 }, { "buzz", "zap" } };
                 var filter = new QueryFilter("foo", pair.Key, value);
-                var result = (client.Table<User>() as Table<User>)!.PrepareFilter(filter);
+                var result = ((Table<User>)client.Table<User>()).PrepareFilter(filter);
                 Assert.AreEqual("foo", result.Key);
                 Assert.AreEqual(pair.Value, result.Value);
             }
@@ -217,7 +216,7 @@ namespace PostgrestTests
             {
                 var config = new FullTextSearchConfig("bar", "english");
                 var filter = new QueryFilter("foo", pair.Key, config);
-                var result = (client.Table<User>() as Table<User>)!.PrepareFilter(filter);
+                var result = ((Table<User>)client.Table<User>()).PrepareFilter(filter);
                 Assert.AreEqual("foo", result.Key);
                 Assert.AreEqual(pair.Value, result.Value);
             }
@@ -242,7 +241,7 @@ namespace PostgrestTests
             {
                 var config = new IntRange(2, 3);
                 var filter = new QueryFilter("foo", pair.Key, config);
-                var result = (client.Table<User>() as Table<User>)!.PrepareFilter(filter);
+                var result = ((Table<User>)client.Table<User>()).PrepareFilter(filter);
                 Assert.AreEqual("foo", result.Key);
                 Assert.AreEqual(pair.Value, result.Value);
             }
@@ -254,7 +253,7 @@ namespace PostgrestTests
             var client = new Client(BaseUrl);
             var filter = new QueryFilter("foo", Operator.Equals, "bar");
             var notFilter = new QueryFilter(Operator.Not, filter);
-            var result = (client.Table<User>() as Table<User>)!.PrepareFilter(notFilter);
+            var result = ((Table<User>)client.Table<User>()).PrepareFilter(notFilter);
 
             Assert.AreEqual("foo", result.Key);
             Assert.AreEqual("not.eq.bar", result.Value);
@@ -281,7 +280,7 @@ namespace PostgrestTests
             foreach (var pair in dict)
             {
                 var filter = new QueryFilter(pair.Key, filters);
-                var result = (client.Table<User>() as Table<User>)!.PrepareFilter(filter);
+                var result = ((Table<User>)client.Table<User>()).PrepareFilter(filter);
                 Assert.AreEqual(pair.Value, $"{result.Key}={result.Value}");
             }
         }
@@ -293,21 +292,20 @@ namespace PostgrestTests
 
             var user = await client.Table<User>().Filter("username", Operator.Equals, "supabot").Single();
 
-            if (user != null)
-            {
-                // Update user status
-                user.Status = "OFFLINE";
-                var response = await user.Update<User>();
+            Assert.IsNotNull(user);
 
-                var updatedUser = response.Models.FirstOrDefault();
+            // Update user status
+            user.Status = "OFFLINE";
+            var response = await user.Update<User>();
 
-                if (updatedUser == null)
-                    Assert.Fail();
+            var updatedUser = response.Models.FirstOrDefault();
 
-                Assert.AreEqual(1, response.Models.Count);
-                Assert.AreEqual(user.Username, updatedUser.Username);
-                Assert.AreEqual(user.Status, updatedUser.Status);
-            }
+            if (updatedUser == null)
+                Assert.Fail();
+
+            Assert.AreEqual(1, response.Models.Count);
+            Assert.AreEqual(user.Username, updatedUser.Username);
+            Assert.AreEqual(user.Status, updatedUser.Status);
         }
 
 
@@ -1131,24 +1129,6 @@ namespace PostgrestTests
                 Assert.IsInstanceOfType(ex, typeof(TaskCanceledException));
                 Assert.IsNull(insertResponse);
             }
-        }
-
-        private string? GetEnumMemberAttrValue<T>(T enumVal)
-        {
-            var enumType = typeof(T);
-            var memInfo = enumType.GetMember(enumVal!.ToString()!);
-
-            if (memInfo == null)
-                throw new ArgumentException("Supplied enum value is unknown.");
-
-            var attr = memInfo.FirstOrDefault()?.GetCustomAttributes(false).OfType<EnumMemberAttribute>()
-                .FirstOrDefault();
-            if (attr != null)
-            {
-                return attr.Value;
-            }
-
-            return null;
         }
 
         [TestMethod("columns")]

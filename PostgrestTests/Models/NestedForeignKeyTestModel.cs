@@ -9,7 +9,7 @@ public class NestedForeignKeyTestModel : BaseModel
     [PrimaryKey("id")] public int Id { get; set; }
 
     [Reference(typeof(ForeignKeyTestModel))]
-    public ForeignKeyTestModel FKTestModel { get; set; }
+    public ForeignKeyTestModel FKTestModel { get; set; } = null!;
 
-    [Reference(typeof(User))] public User User { get; set; }
+    [Reference(typeof(User))] public User User { get; set; } = null!;
 }
