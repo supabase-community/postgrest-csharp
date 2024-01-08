@@ -668,13 +668,18 @@ namespace Postgrest
 
                     if (order.Length > 0)
                         order.Append(",");
-                    order.Append($"{(!string.IsNullOrEmpty(orderer.ForeignTable) ? orderer.ForeignTable + "(" + orderer.Column + ")" : orderer.Column)}.{orderingAttr.Mapping}.{nullPosAttr.Mapping}");
+
+                    var selector = !string.IsNullOrEmpty(orderer.ForeignTable)
+                        ? orderer.ForeignTable + "(" + orderer.Column + ")"
+                        : orderer.Column;
+                    
+                    order.Append($"{selector}.{orderingAttr.Mapping}.{nullPosAttr.Mapping}");
                 }
 
-				query.Add("order", order.ToString());
-			}
+                query.Add("order", order.ToString());
+            }
 
-			if (!string.IsNullOrEmpty(_columnQuery))
+            if (!string.IsNullOrEmpty(_columnQuery))
                 query["select"] = Regex.Replace(_columnQuery!, @"\s", "");
 
             if (_references.Count > 0)
