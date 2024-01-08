@@ -440,7 +440,7 @@ namespace PostgrestTests
 
             linqOrderedUsers = unorderedResponse.Models
                 .OrderByDescending(u => u.Username)
-                .OrderByDescending(u => u.Status)
+                .ThenByDescending(u => u.Status)
                 .ToList();
 
             CollectionAssert.AreEqual(linqOrderedUsers, multipleOrderedResponse.Models);
