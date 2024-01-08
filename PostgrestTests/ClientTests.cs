@@ -424,13 +424,26 @@ namespace PostgrestTests
         {
             var client = new Client(BaseUrl);
 
+            // Test with a single orderer specified
             var orderedResponse = await client.Table<User>().Order("username", Ordering.Descending).Get();
             var unorderedResponse = await client.Table<User>().Get();
 
-            var supaOrderedUsers = orderedResponse.Models;
             var linqOrderedUsers = unorderedResponse.Models.OrderByDescending(u => u.Username).ToList();
 
-            CollectionAssert.AreEqual(linqOrderedUsers, supaOrderedUsers);
+            CollectionAssert.AreEqual(linqOrderedUsers, orderedResponse.Models);
+
+            // Test with multiple orderers specified
+            var multipleOrderedResponse = await client.Table<User>()
+                .Order(u => u.Username!, Ordering.Descending)
+                .Order(u => u.Status!, Ordering.Descending)
+                .Get();
+
+            linqOrderedUsers = unorderedResponse.Models
+                .OrderByDescending(u => u.Username)
+                .OrderByDescending(u => u.Status)
+                .ToList();
+
+            CollectionAssert.AreEqual(linqOrderedUsers, multipleOrderedResponse.Models);
         }
 
         [TestMethod("limit: basic")]
