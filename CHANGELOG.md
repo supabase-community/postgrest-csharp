@@ -1,5 +1,11 @@
 ﻿# Changelog
 
+## 3.4.1 - 2024-01-08
+
+- Re: [#85](https://github.com/supabase-community/postgrest-csharp/issues/85) Fixes problem when using multiple .Order()
+  methods by merging [#86](https://github.com/supabase-community/postgrest-csharp/pull/86).
+  Thanks [@hunsra](https://github.com/hunsra)!
+
 ## 3.4.0 - 2024-01-03
 
 - Re: [#81](https://github.com/supabase-community/postgrest-csharp/issues/81)
