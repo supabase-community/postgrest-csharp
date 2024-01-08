@@ -655,15 +655,28 @@ namespace Postgrest
             foreach (var parsedFilter in _filters.Select(PrepareFilter))
                 query.Add(parsedFilter.Key, parsedFilter.Value);
 
-            foreach (var orderer in _orderers)
+            if (_orderers.Count > 0)
             {
-                var nullPosAttr = orderer.NullPosition.GetAttribute<MapToAttribute>();
-                var orderingAttr = orderer.Ordering.GetAttribute<MapToAttribute>();
+                var order = new StringBuilder();
 
-                if (nullPosAttr == null || orderingAttr == null) continue;
+                foreach (var orderer in _orderers)
+                {
+                    var nullPosAttr = orderer.NullPosition.GetAttribute<MapToAttribute>();
+                    var orderingAttr = orderer.Ordering.GetAttribute<MapToAttribute>();
 
-                var key = !string.IsNullOrEmpty(orderer.ForeignTable) ? $"{orderer.ForeignTable}.order" : "order";
-                query.Add(key, $"{orderer.Column}.{orderingAttr.Mapping}.{nullPosAttr.Mapping}");
+                    if (nullPosAttr == null || orderingAttr == null) continue;
+
+                    if (order.Length > 0)
+                        order.Append(",");
+
+                    var selector = !string.IsNullOrEmpty(orderer.ForeignTable)
+                        ? orderer.ForeignTable + "(" + orderer.Column + ")"
+                        : orderer.Column;
+                    
+                    order.Append($"{selector}.{orderingAttr.Mapping}.{nullPosAttr.Mapping}");
+                }
+
+                query.Add("order", order.ToString());
             }
 
             if (!string.IsNullOrEmpty(_columnQuery))
