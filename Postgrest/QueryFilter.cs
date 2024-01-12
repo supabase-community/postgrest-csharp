@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
 using Newtonsoft.Json;
 using Postgrest.Exceptions;
 using Postgrest.Interfaces;
@@ -62,7 +64,7 @@ namespace Postgrest
 		/// <param name="property">Column name</param>
 		/// <param name="op">Operation: In, Contains, ContainedIn, or Overlap</param>
 		/// <param name="criteria"></param>
-		public QueryFilter(string property, Operator op, List<object> criteria)
+		public QueryFilter(string property, Operator op, IList criteria)
 		{
 			switch (op)
 			{
@@ -85,7 +87,7 @@ namespace Postgrest
 		/// <param name="property">Column name</param>
 		/// <param name="op">Operation: In, Contains, ContainedIn, or Overlap</param>
 		/// <param name="criteria"></param>
-		public QueryFilter(string property, Operator op, Dictionary<string, object> criteria)
+		public QueryFilter(string property, Operator op, IDictionary criteria)
 		{
 			switch (op)
 			{

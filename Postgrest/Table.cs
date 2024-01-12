@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -146,11 +147,11 @@ namespace Postgrest
                 case float floatCriterion:
                     _filters.Add(new QueryFilter(columnName, op, floatCriterion));
                     return this;
-                case List<object> listCriteria:
-                    _filters.Add(new QueryFilter(columnName, op, listCriteria));
-                    return this;
-                case Dictionary<string, object> dictCriteria:
+                case IDictionary dictCriteria:
                     _filters.Add(new QueryFilter(columnName, op, dictCriteria));
+                    return this;
+                case IList listCriteria:
+                    _filters.Add(new QueryFilter(columnName, op, listCriteria));
                     return this;
                 case IntRange rangeCriteria:
                     _filters.Add(new QueryFilter(columnName, op, rangeCriteria));
@@ -810,7 +811,7 @@ namespace Postgrest
 
                     break;
                 case Operator.In:
-                    if (filter.Criteria is List<object> inCriteria && filter.Property != null)
+                    if (filter is { Criteria: IList inCriteria, Property: not null })
                     {
                         foreach (var item in inCriteria)
                             strBuilder.Append($"\"{item}\",");
@@ -818,10 +819,11 @@ namespace Postgrest
                         return new KeyValuePair<string, string>(filter.Property,
                             $"{asAttribute.Mapping}.({strBuilder.ToString().Trim(',')})");
                     }
-                    else if (filter.Criteria is Dictionary<string, object> dictCriteria && filter.Property != null)
+
+                    if (filter is { Criteria: IDictionary inDictCriteria, Property: not null })
                     {
                         return new KeyValuePair<string, string>(filter.Property,
-                            $"{asAttribute.Mapping}.{JsonConvert.SerializeObject(dictCriteria)}");
+                            $"{asAttribute.Mapping}.{JsonConvert.SerializeObject(inDictCriteria)}");
                     }
 
                     break;
@@ -830,7 +832,7 @@ namespace Postgrest
                 case Operator.Overlap:
                     switch (filter.Criteria)
                     {
-                        case List<object> listCriteria when filter.Property != null:
+                        case IList listCriteria when filter.Property != null:
                         {
                             foreach (var item in listCriteria)
                                 strBuilder.Append($"{item},");
@@ -838,7 +840,7 @@ namespace Postgrest
                             return new KeyValuePair<string, string>(filter.Property,
                                 $"{asAttribute.Mapping}.{{{strBuilder.ToString().Trim(',')}}}");
                         }
-                        case Dictionary<string, object> dictCriteria when filter.Property != null:
+                        case IDictionary dictCriteria when filter.Property != null:
                             return new KeyValuePair<string, string>(filter.Property,
                                 $"{asAttribute.Mapping}.{JsonConvert.SerializeObject(dictCriteria)}");
                         case IntRange rangeCriteria when filter.Property != null:
@@ -852,7 +854,7 @@ namespace Postgrest
                 case Operator.NotRightOf:
                 case Operator.NotLeftOf:
                 case Operator.Adjacent:
-                    if (filter.Criteria is IntRange rangeCriterion && filter.Property != null)
+                    if (filter is { Criteria: IntRange rangeCriterion, Property: not null })
                     {
                         return new KeyValuePair<string, string>(filter.Property,
                             $"{asAttribute.Mapping}.{rangeCriterion.ToPostgresString()}");
@@ -863,7 +865,7 @@ namespace Postgrest
                 case Operator.PHFTS:
                 case Operator.PLFTS:
                 case Operator.WFTS:
-                    if (filter.Criteria is FullTextSearchConfig searchConfig && filter.Property != null)
+                    if (filter is { Criteria: FullTextSearchConfig searchConfig, Property: not null })
                     {
                         return new KeyValuePair<string, string>(filter.Property,
                             $"{asAttribute.Mapping}({searchConfig.Config}).{searchConfig.QueryText}");
