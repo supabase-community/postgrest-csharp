@@ -50,7 +50,7 @@ namespace Postgrest
 
         private string? _columnQuery;
 
-        private readonly List<QueryFilter> _filters = new();
+        private readonly List<IPostgrestQueryFilter> _filters = new();
         private readonly List<QueryOrderer> _orderers = new();
         private readonly List<string> _columns = new();
 
@@ -169,7 +169,7 @@ namespace Postgrest
         }
 
         /// <inheritdoc />
-        public Table<TModel> Not(QueryFilter filter)
+        public Table<TModel> Not(IPostgrestQueryFilter filter)
         {
             _filters.Add(new QueryFilter(Operator.Not, filter));
             return this;
@@ -237,14 +237,14 @@ namespace Postgrest
 
 
         /// <inheritdoc />
-        public Table<TModel> And(List<QueryFilter> filters)
+        public Table<TModel> And(List<IPostgrestQueryFilter> filters)
         {
             _filters.Add(new QueryFilter(Operator.And, filters));
             return this;
         }
 
         /// <inheritdoc />
-        public Table<TModel> Or(List<QueryFilter> filters)
+        public Table<TModel> Or(List<IPostgrestQueryFilter> filters)
         {
             _filters.Add(new QueryFilter(Operator.Or, filters));
             return this;
@@ -767,7 +767,7 @@ namespace Postgrest
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        internal KeyValuePair<string, string> PrepareFilter(QueryFilter filter)
+        internal KeyValuePair<string, string> PrepareFilter(IPostgrestQueryFilter filter)
         {
             var asAttribute = filter.Op.GetAttribute<MapToAttribute>();
             var strBuilder = new StringBuilder();
@@ -779,7 +779,7 @@ namespace Postgrest
             {
                 case Operator.Or:
                 case Operator.And:
-                    if (filter.Criteria is List<QueryFilter> subFilters)
+                    if (filter.Criteria is List<IPostgrestQueryFilter> subFilters)
                     {
                         var list = new List<KeyValuePair<string, string>>();
                         foreach (var subFilter in subFilters)

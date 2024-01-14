@@ -1,13 +1,58 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Globalization;
+using System.Linq;
+using System.Linq.Expressions;
 using Newtonsoft.Json;
 using Postgrest.Exceptions;
 using Postgrest.Interfaces;
+using Postgrest.Linq;
 using static Postgrest.Constants;
 
 namespace Postgrest
 {
+    /// <summary>
+    /// Allow for the expression of a query filter with linq expressions.
+    /// </summary>
+    /// <typeparam name="TModel"></typeparam>
+    /// <typeparam name="TCriterion"></typeparam>
+    public class QueryFilter<TModel, TCriterion> : IPostgrestQueryFilter
+    {
+        /// <inheritdoc />
+        public object? Criteria { get; }
+
+        /// <inheritdoc />
+        public Operator Op { get; }
+
+        /// <inheritdoc />
+        public string? Property { get; }
+
+        /// <summary>
+        /// Allows the creation of a Query Filter using a LINQ expression.
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <param name="op"></param>
+        /// <param name="criterion"></param>
+        /// <exception cref="ArgumentException"></exception>
+        public QueryFilter(Expression<Func<TModel, object>> predicate, Operator op, TCriterion? criterion)
+        {
+            var visitor = new SelectExpressionVisitor();
+            visitor.Visit(predicate);
+
+            if (visitor.Columns.Count == 0)
+                throw new ArgumentException("Expected predicate to return a reference to a Model column.");
+
+            if (visitor.Columns.Count > 1)
+                throw new ArgumentException("Only one column should be returned from the predicate.");
+
+            var filter = new QueryFilter(visitor.Columns.First(), op, criterion);
+
+            Criteria = filter.Criteria;
+            Op = filter.Op;
+            Property = filter.Property;
+        }
+    }
 
 	/// <inheritdoc />
 	public class QueryFilter : IPostgrestQueryFilter
@@ -26,7 +71,6 @@ namespace Postgrest
 		/// <inheritdoc />
 		public object? Criteria { get; private set; }
 
-		
 		/// <summary>
 		/// Contractor to use single value filtering.
 		/// </summary>
@@ -53,54 +97,26 @@ namespace Postgrest
 					Op = op;
 					Criteria = criteria;
 					break;
-				default:
-					throw new PostgrestException("Advanced filters require a constructor with more specific arguments") { Reason = FailureHint.Reason.InvalidArgument };
-			}
-		}
-
-		/// <summary>
-		/// Constructor to use multiple values as for filtering.
-		/// </summary>
-		/// <param name="property">Column name</param>
-		/// <param name="op">Operation: In, Contains, ContainedIn, or Overlap</param>
-		/// <param name="criteria"></param>
-		public QueryFilter(string property, Operator op, IList criteria)
-		{
-			switch (op)
-			{
 				case Operator.In:
 				case Operator.Contains:
 				case Operator.ContainedIn:
 				case Operator.Overlap:
+                    if (criteria is IList or IDictionary)
+                    {
 					Property = property;
 					Op = op;
 					Criteria = criteria;
-					break;
-				default:
-					throw new PostgrestException("List constructor must be used with filter that accepts an array of arguments.") { Reason = FailureHint.Reason.InvalidArgument };
-			}
 		}
-
-		/// <summary>
-		/// Constructor to use multiple values as for filtering (using a dictionary).
-		/// </summary>
-		/// <param name="property">Column name</param>
-		/// <param name="op">Operation: In, Contains, ContainedIn, or Overlap</param>
-		/// <param name="criteria"></param>
-		public QueryFilter(string property, Operator op, IDictionary criteria)
+                    else
 		{
-			switch (op)
-			{
-				case Operator.In:
-				case Operator.Contains:
-				case Operator.ContainedIn:
-				case Operator.Overlap:
-					Property = property;
-					Op = op;
-					Criteria = criteria;
+                        throw new PostgrestException(
+                                "List or Dictionary must be used supplied as criteria with filters that accept an array of arguments.")
+                            { Reason = FailureHint.Reason.InvalidArgument };
+                    }
 					break;
 				default:
-					throw new PostgrestException("List constructor must be used with filter that accepts an array of arguments.") { Reason = FailureHint.Reason.InvalidArgument };
+                    throw new PostgrestException("Advanced filters require a constructor with more specific arguments")
+                        { Reason = FailureHint.Reason.InvalidArgument };
 			}
 		}
 
@@ -123,7 +139,8 @@ namespace Postgrest
 					Criteria = fullTextSearchConfig;
 					break;
 				default:
-					throw new PostgrestException("Constructor must be called with a full text search operator") { Reason = FailureHint.Reason.InvalidArgument };
+                    throw new PostgrestException("Constructor must be called with a full text search operator")
+                        { Reason = FailureHint.Reason.InvalidArgument };
 			}
 		}
 
@@ -162,7 +179,7 @@ namespace Postgrest
 		/// </summary>
 		/// <param name="op">Operation: And, Or</param>
 		/// <param name="filters"></param>
-		public QueryFilter(Operator op, List<QueryFilter> filters)
+        public QueryFilter(Operator op, List<IPostgrestQueryFilter> filters)
 		{
 			switch (op)
 			{
@@ -172,7 +189,8 @@ namespace Postgrest
 					Criteria = filters;
 					break;
 				default:
-					throw new PostgrestException("Constructor can only be used with `or` or `and` filters") { Reason = FailureHint.Reason.InvalidArgument };
+                    throw new PostgrestException("Constructor can only be used with `or` or `and` filters")
+                        { Reason = FailureHint.Reason.InvalidArgument };
 			}
 		}
 
@@ -181,7 +199,7 @@ namespace Postgrest
 		/// </summary>
 		/// <param name="op">Operation: Not.</param>
 		/// <param name="filter"></param>
-		public QueryFilter(Operator op, QueryFilter filter)
+        public QueryFilter(Operator op, IPostgrestQueryFilter filter)
 		{
 			switch (op)
 			{
@@ -190,7 +208,8 @@ namespace Postgrest
 					Criteria = filter;
 					break;
 				default:
-					throw new PostgrestException("Constructor can only be used with `not` filter") { Reason = FailureHint.Reason.InvalidArgument };
+                    throw new PostgrestException("Constructor can only be used with `not` filter")
+                        { Reason = FailureHint.Reason.InvalidArgument };
 			}
 		}
 	}

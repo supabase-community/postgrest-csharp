@@ -35,7 +35,7 @@ namespace Postgrest.Interfaces
         /// </summary>
         /// <param name="filters"></param>
         /// <returns></returns>
-        Table<TModel> And(List<QueryFilter> filters);
+        Table<TModel> And(List<IPostgrestQueryFilter> filters);
 
         /// <summary>
         /// Clears currently defined query values.
@@ -166,7 +166,7 @@ namespace Postgrest.Interfaces
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        Table<TModel> Not(QueryFilter filter);
+        Table<TModel> Not(IPostgrestQueryFilter filter);
 
         /// <summary>
         /// Adds a NOT filter to the current query args.
@@ -270,7 +270,7 @@ namespace Postgrest.Interfaces
         /// </summary>
         /// <param name="filters"></param>
         /// <returns></returns>
-        Table<TModel> Or(List<QueryFilter> filters);
+        Table<TModel> Or(List<IPostgrestQueryFilter> filters);
 
         /// <summary>
         /// Adds an ordering to the current query args.

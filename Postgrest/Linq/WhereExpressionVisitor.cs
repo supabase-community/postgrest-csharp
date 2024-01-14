@@ -49,7 +49,8 @@ namespace Postgrest.Linq
 					var rightVisitor = new WhereExpressionVisitor();
 					rightVisitor.Visit(node.Right);
 
-					Filter = new QueryFilter(op, new List<QueryFilter>() { leftVisitor.Filter!, rightVisitor.Filter! });
+                    Filter = new QueryFilter(op,
+                        new List<IPostgrestQueryFilter> { leftVisitor.Filter!, rightVisitor.Filter! });
 
 					return node;
 			}

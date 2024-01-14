@@ -369,5 +369,37 @@ namespace PostgrestTests
 
             CollectionAssert.AreEqual(supaNotInList, linqNotInList);
         }
+
+        [TestMethod("Linq: QueryFilter")]
+        public async Task TestLinqQueryFilter()
+        {
+            var client = new Client(BaseUrl);
+
+            var filteredResponse = await client.Table<User>()
+                .Filter(x => x.Username!, Operator.Equals, "supabot")
+                .Single();
+
+            Assert.IsNotNull(filteredResponse);
+            Assert.AreEqual("supabot", filteredResponse.Username);
+
+            var filters = new List<IPostgrestQueryFilter>
+            {
+                new QueryFilter<User, List<string>>(x => x.Username!, Operator.In,
+                    new List<string> { "supabot", "kiwicopple" }),
+                new QueryFilter<User, string>(x => x.Status!, Operator.Equals, "OFFLINE")
+            };
+
+            var orResponse = await client.Table<User>()
+                .Or(filters)
+                .Get();
+
+            Assert.IsNotNull(orResponse);
+
+            foreach (var model in orResponse.Models)
+            {
+                Assert.IsTrue(
+                    model.Username == "supabot" || model.Username == "kiwicopple" || model.Status == "OFFLINE");
+            }
+        }
     }
 }

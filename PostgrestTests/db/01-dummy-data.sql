@@ -2,6 +2,7 @@
 VALUES ('supabot', 'ONLINE', '[1,2)'::int4range, 'fat cat'::tsvector),
        ('kiwicopple', 'OFFLINE', '[25,35)'::int4range, 'cat bat'::tsvector),
        ('awailas', 'ONLINE', '[25,35)'::int4range, 'bat rat'::tsvector),
+       ('acupofjose', 'OFFLINE', '[25,35)'::int4range, 'bat rat'::tsvector),
        ('dragarcia', 'ONLINE', '[20,30)'::int4range, 'rat fat'::tsvector);
 
 INSERT INTO public.channels (slug)
@@ -18,7 +19,7 @@ VALUES ('supabot', 'ONLINE', '[1,2)'::int4range),
        ('kiwicopple', 'OFFLINE', '[25,35)'::int4range),
        ('awailas', 'ONLINE', '[25,35)'::int4range),
        ('dragarcia', 'ONLINE', '[20,30)'::int4range),
-       ('leroyjenkins', 'ONLINE', '[20,40)'::int4range);
+       ('leroyjenkins', 'OFFLINE', '[20,40)'::int4range);
 
 INSERT INTO public.kitchen_sink (id,
                                  string_value,
