@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Postgrest;
+using Postgrest.Interfaces;
 using PostgrestTests.Models;
 using static Postgrest.Constants;
 
@@ -63,7 +64,7 @@ namespace PostgrestTests
 
             // Test multiple conditions
             var query3 = await client.Table<Movie>()
-                .Where(x => x.Name!.Contains("Gun") && x.CreatedAt <= new DateTime(2022, 08, 23))
+                .Where(x => x.Name!.Contains("Gun") && x.CreatedAt <= new DateTimeOffset(new DateTime(2022, 8, 23)))
                 .Get();
 
             Assert.IsTrue(query3.Models.Count == 1);
@@ -256,7 +257,7 @@ namespace PostgrestTests
                 .Single();
 
             Assert.IsNotNull(originalRecord);
-            
+
             var newRecord = await client.Table<KitchenSink>()
                 .Set(x => new KeyValuePair<object, object?>(x.BooleanValue!, !originalRecord.BooleanValue!))
                 .Set(x => new KeyValuePair<object, object?>(x.IntValue!, originalRecord.IntValue! + 1))
@@ -345,7 +346,7 @@ namespace PostgrestTests
 
             Assert.IsNull(exists);
         }
-        
+
         [TestMethod("Linq: Not")]
         public async Task TestLinqNot()
         {

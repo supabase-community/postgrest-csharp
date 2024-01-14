@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Postgrest;
 using Postgrest.Exceptions;
+using Postgrest.Interfaces;
 using Postgrest.Responses;
 using PostgrestTests.Models;
 using static Postgrest.Constants;
@@ -271,10 +272,10 @@ namespace PostgrestTests
                 { Operator.Or, $"or={exp}" },
             };
 
-            var filters = new List<QueryFilter>
+            var filters = new List<IPostgrestQueryFilter>
             {
-                new("a", Operator.GreaterThanOrEqual, "0"),
-                new("a", Operator.LessThanOrEqual, "100")
+                new QueryFilter("a", Operator.GreaterThanOrEqual, "0"),
+                new QueryFilter("a", Operator.LessThanOrEqual, "100")
             };
 
             foreach (var pair in dict)
@@ -564,7 +565,8 @@ namespace PostgrestTests
                 .Insert(new User { Username = "acupofjose", Status = "ONLINE", Catchphrase = null },
                     new QueryOptions { Upsert = true });
 
-            var filteredResponse = await client.Table<User>().Filter<string>("catchphrase", Operator.Equals, null).Get();
+            var filteredResponse =
+                await client.Table<User>().Filter<string>("catchphrase", Operator.Equals, null).Get();
             var usersResponse = await client.Table<User>().Get();
 
             var supaFilteredUsers = filteredResponse.Models;
@@ -600,7 +602,8 @@ namespace PostgrestTests
                 .Insert(new User { Username = "acupofjose", Status = "ONLINE", Catchphrase = null },
                     new QueryOptions { Upsert = true });
 
-            var filteredResponse = await client.Table<User>().Filter<string>("catchphrase", Operator.NotEqual, null).Get();
+            var filteredResponse =
+                await client.Table<User>().Filter<string>("catchphrase", Operator.NotEqual, null).Get();
             var usersResponse = await client.Table<User>().Get();
 
             var supaFilteredUsers = filteredResponse.Models;
@@ -1109,7 +1112,7 @@ namespace PostgrestTests
             var client = new Client(BaseUrl, options);
 
             //Act 
-            var response = await client.Table<User>().Filter("username", Operator.Equals, "leroyjenkins").Get();
+            var response = await client.Table<User>().Filter(x => x.Username!, Operator.Equals, "leroyjenkins").Get();
 
             //Assert 
             Assert.AreEqual(1, response.Models.Count);
