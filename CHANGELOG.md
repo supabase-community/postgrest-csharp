@@ -1,5 +1,16 @@
 ﻿# Changelog
 
+## 3.5.0 - 2024-01-14
+
+- Re: [#78](https://github.com/supabase-community/postgrest-csharp/issues/78), Generalize query filtering creation
+  in `Table` so that it matches new generic signatures.
+- Move from `QueryFilter` parameters to a more generic `IPosgrestQueryFilter` to support constructing new QueryFilters
+  from a LINQ expression.
+    - Note: Lists of `QueryFilter`s will now need to be defined
+      as: `new List<IPostgrestQueryFilter> { new QueryFilter(), ... }`
+- Adjust serialization of timestamps within a `QueryFilter` to support `DateTime` and `DateTimeOffset` using the
+  ISO-8601 (https://stackoverflow.com/a/115002)
+
 ## 3.4.1 - 2024-01-08
 
 - Re: [#85](https://github.com/supabase-community/postgrest-csharp/issues/85) Fixes problem when using multiple .Order()
