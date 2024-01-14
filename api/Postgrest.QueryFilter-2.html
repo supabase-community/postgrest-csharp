@@ -2,13 +2,13 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Class ModeledResponse&lt;T&gt;
+      <title>Class QueryFilter&lt;TModel, TCriterion&gt;
  | postgrest-csharp </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Class ModeledResponse&lt;T&gt;
+      <meta name="title" content="Class QueryFilter&lt;TModel, TCriterion&gt;
  | postgrest-csharp ">
       
-      <meta name="description" content="A representation of a successful Postgrest response that transforms the string response into a C# Modelled response.">
+      <meta name="description" content="Allow for the expression of a query filter with linq expressions.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css">
@@ -18,7 +18,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_Responses_ModeledResponse_1.md&amp;value=---%0Auid%3A%20Postgrest.Responses.ModeledResponse%601%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/supabase-community/postgrest-csharp/new/master/apiSpec/new?filename=Postgrest_QueryFilter_2.md&amp;value=---%0Auid%3A%20Postgrest.QueryFilter%602%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -86,33 +86,35 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="Postgrest.Responses.ModeledResponse`1">
+        <article data-uid="Postgrest.QueryFilter`2">
 
 
 
-  <h1 id="Postgrest_Responses_ModeledResponse_1" data-uid="Postgrest.Responses.ModeledResponse`1" class="text-break">
-    Class ModeledResponse&lt;T&gt;
-  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Responses/ModeledResponse.cs/#L15"><i class="bi bi-code-slash"></i></a>
+  <h1 id="Postgrest_QueryFilter_2" data-uid="Postgrest.QueryFilter`2" class="text-break">
+    Class QueryFilter&lt;TModel, TCriterion&gt;
+  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/QueryFilter.cs/#L20"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
-    <dl><dt>Namespace</dt><dd><a class="xref" href="Postgrest.html">Postgrest</a>.<a class="xref" href="Postgrest.Responses.html">Responses</a></dd></dl>
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Postgrest.html">Postgrest</a></dd></dl>
   <dl><dt>Assembly</dt><dd>Supabase.Postgrest.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>A representation of a successful Postgrest response that transforms the string response into a C# Modelled response.</p>
+  <div class="markdown summary"><p>Allow for the expression of a query filter with linq expressions.</p>
 </div>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class ModeledResponse&lt;T&gt; : BaseResponse where T : BaseModel, new()</code></pre>
+    <pre><code class="lang-csharp hljs">public class QueryFilter&lt;TModel, TCriterion&gt; : IPostgrestQueryFilter</code></pre>
   </div>
 
 
 
   <h4 class="section">Type Parameters</h4>
   <dl class="parameters">
-    <dt><code>T</code></dt>
+    <dt><code>TModel</code></dt>
+    <dd></dd>
+    <dt><code>TCriterion</code></dt>
     <dd></dd>
   </dl>
 
@@ -120,25 +122,21 @@
     <dt>Inheritance</dt>
     <dd>
       <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
-      <div><a class="xref" href="Postgrest.Responses.BaseResponse.html">BaseResponse</a></div>
-      <div><span class="xref">ModeledResponse&lt;T&gt;</span></div>
+      <div><span class="xref">QueryFilter&lt;TModel, TCriterion&gt;</span></div>
     </dd>
   </dl>
 
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="Postgrest.Interfaces.IPostgrestQueryFilter.html">IPostgrestQueryFilter</a></div>
+    </dd>
+  </dl>
 
 
   <dl class="typelist derived">
     <dt>Inherited Members</dt>
     <dd>
-    <div>
-      <a class="xref" href="Postgrest.Responses.BaseResponse.html#Postgrest_Responses_BaseResponse_ResponseMessage">BaseResponse.ResponseMessage</a>
-    </div>
-    <div>
-      <a class="xref" href="Postgrest.Responses.BaseResponse.html#Postgrest_Responses_BaseResponse_Content">BaseResponse.Content</a>
-    </div>
-    <div>
-      <a class="xref" href="Postgrest.Responses.BaseResponse.html#Postgrest_Responses_BaseResponse_ClientOptions">BaseResponse.ClientOptions</a>
-    </div>
     <div>
       <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
     </div>
@@ -171,30 +169,29 @@
 </h2>
 
 
-  <a id="Postgrest_Responses_ModeledResponse_1__ctor_" data-uid="Postgrest.Responses.ModeledResponse`1.#ctor*"></a>
+  <a id="Postgrest_QueryFilter_2__ctor_" data-uid="Postgrest.QueryFilter`2.#ctor*"></a>
 
-  <h3 id="Postgrest_Responses_ModeledResponse_1__ctor_Postgrest_Responses_BaseResponse_Newtonsoft_Json_JsonSerializerSettings_System_Func_System_Collections_Generic_Dictionary_System_String_System_String___System_Boolean_" data-uid="Postgrest.Responses.ModeledResponse`1.#ctor(Postgrest.Responses.BaseResponse,Newtonsoft.Json.JsonSerializerSettings,System.Func{System.Collections.Generic.Dictionary{System.String,System.String}},System.Boolean)">
-  ModeledResponse(BaseResponse, JsonSerializerSettings, Func&lt;Dictionary&lt;string, string&gt;&gt;?, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Responses/ModeledResponse.cs/#L28"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Postgrest_QueryFilter_2__ctor_System_Linq_Expressions_Expression_System_Func__0_System_Object___Postgrest_Constants_Operator__1_" data-uid="Postgrest.QueryFilter`2.#ctor(System.Linq.Expressions.Expression{System.Func{`0,System.Object}},Postgrest.Constants.Operator,`1)">
+  QueryFilter(Expression&lt;Func&lt;TModel, object&gt;&gt;, Operator, TCriterion?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/QueryFilter.cs/#L38"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Allows the creation of a Query Filter using a LINQ expression.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ModeledResponse(BaseResponse baseResponse, JsonSerializerSettings serializerSettings, Func&lt;Dictionary&lt;string, string&gt;&gt;? getHeaders = null, bool shouldParse = true)</code></pre>
+    <pre><code class="lang-csharp hljs">public QueryFilter(Expression&lt;Func&lt;TModel, object&gt;&gt; predicate, Constants.Operator op, TCriterion? criterion)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><code>baseResponse</code> <a class="xref" href="Postgrest.Responses.BaseResponse.html">BaseResponse</a></dt>
-    <dd>A representation of a successful Postgrest response that transforms the string response into a C# Modelled response.</dd>
-    <dt><code>serializerSettings</code> <span class="xref">JsonSerializerSettings</span></dt>
-    <dd>A representation of a successful Postgrest response that transforms the string response into a C# Modelled response.</dd>
-    <dt><code>getHeaders</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</dt>
-    <dd>A representation of a successful Postgrest response that transforms the string response into a C# Modelled response.</dd>
-    <dt><code>shouldParse</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
-    <dd>A representation of a successful Postgrest response that transforms the string response into a C# Modelled response.</dd>
+    <dt><code>predicate</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.linq.expressions.expression-1">Expression</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-2">Func</a>&lt;TModel, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a>&gt;&gt;</dt>
+    <dd></dd>
+    <dt><code>op</code> <a class="xref" href="Postgrest.Constants.html">Constants</a>.<a class="xref" href="Postgrest.Constants.Operator.html">Operator</a></dt>
+    <dd></dd>
+    <dt><code>criterion</code> <span class="xref">TCriterion</span></dt>
+    <dd></dd>
   </dl>
 
 
@@ -205,6 +202,11 @@
 
 
 
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a></dt>
+    <dd></dd>
+  </dl>
 
 
 
@@ -212,19 +214,18 @@
 </h2>
 
 
-  <a id="Postgrest_Responses_ModeledResponse_1_Model_" data-uid="Postgrest.Responses.ModeledResponse`1.Model*"></a>
+  <a id="Postgrest_QueryFilter_2_Criteria_" data-uid="Postgrest.QueryFilter`2.Criteria*"></a>
 
-  <h3 id="Postgrest_Responses_ModeledResponse_1_Model" data-uid="Postgrest.Responses.ModeledResponse`1.Model">
-  Model
-  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Responses/ModeledResponse.cs/#L20"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Postgrest_QueryFilter_2_Criteria" data-uid="Postgrest.QueryFilter`2.Criteria">
+  Criteria
+  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/QueryFilter.cs/#L23"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>The first model in the response.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public T? Model { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public object? Criteria { get; }</code></pre>
   </div>
 
 
@@ -233,8 +234,8 @@
 
   <h4 class="section">Property Value</h4>
   <dl class="parameters">
-    <dt><span class="xref">T</span></dt>
-    <dd>A representation of a successful Postgrest response that transforms the string response into a C# Modelled response.</dd>
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
+    <dd>Allow for the expression of a query filter with linq expressions.</dd>
   </dl>
 
 
@@ -244,19 +245,18 @@
 
 
 
-  <a id="Postgrest_Responses_ModeledResponse_1_Models_" data-uid="Postgrest.Responses.ModeledResponse`1.Models*"></a>
+  <a id="Postgrest_QueryFilter_2_Op_" data-uid="Postgrest.QueryFilter`2.Op*"></a>
 
-  <h3 id="Postgrest_Responses_ModeledResponse_1_Models" data-uid="Postgrest.Responses.ModeledResponse`1.Models">
-  Models
-  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Responses/ModeledResponse.cs/#L25"><i class="bi bi-code-slash"></i></a>
+  <h3 id="Postgrest_QueryFilter_2_Op" data-uid="Postgrest.QueryFilter`2.Op">
+  Op
+  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/QueryFilter.cs/#L26"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>A list of models in the response.</p>
-</div>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public List&lt;T&gt; Models { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public Constants.Operator Op { get; }</code></pre>
   </div>
 
 
@@ -265,8 +265,39 @@
 
   <h4 class="section">Property Value</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;T&gt;</dt>
-    <dd>A representation of a successful Postgrest response that transforms the string response into a C# Modelled response.</dd>
+    <dt><a class="xref" href="Postgrest.Constants.html">Constants</a>.<a class="xref" href="Postgrest.Constants.Operator.html">Operator</a></dt>
+    <dd>Allow for the expression of a query filter with linq expressions.</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Postgrest_QueryFilter_2_Property_" data-uid="Postgrest.QueryFilter`2.Property*"></a>
+
+  <h3 id="Postgrest_QueryFilter_2_Property" data-uid="Postgrest.QueryFilter`2.Property">
+  Property
+  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/QueryFilter.cs/#L29"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string? Property { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd>Allow for the expression of a query filter with linq expressions.</dd>
   </dl>
 
 
@@ -280,7 +311,7 @@
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Responses/ModeledResponse.cs/#L15" class="edit-link">Edit this page</a>
+          <a href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/QueryFilter.cs/#L20" class="edit-link">Edit this page</a>
         </div>
 
 
