@@ -297,7 +297,7 @@ If desired, this can be avoided by making specific join models that do not have 
 
 **By default** relations expect to be used as top level filters on a query. If following the models above, this would
 mean that a `Movie` with no `Person` relations on it would not return on a query **unless** the `Relation`
-has `shouldFilterTopLevel` set to `false`:
+has `useInnerJoin` set to `false`:
 
 The following model would return any movie, even if there are no `Person` models associated with it:
 
@@ -311,7 +311,7 @@ public class Movie : BaseModel
     [Column("name")] 
     public string? Name { get; set; }
 
-    [Reference(typeof(Person), shouldFilterTopLevel: false)]
+    [Reference(typeof(Person), useInnerJoin: false)]
     public List<Person> People { get; set; } = new();
 }
 ```
