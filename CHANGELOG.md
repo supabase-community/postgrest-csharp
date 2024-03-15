@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## 3.5.1 - 2024-03-15
+
+- Re: [#147](https://github.com/supabase-community/supabase-csharp/issues/147) - Supports `Rpc` specifying a generic
+  type for its return.
+
 ## 3.5.0 - 2024-01-14
 
 - Re: [#78](https://github.com/supabase-community/postgrest-csharp/issues/78), Generalize query filtering creation
