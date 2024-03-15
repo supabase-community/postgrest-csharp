@@ -105,6 +105,14 @@ namespace Postgrest
 
 
         /// <inheritdoc />
+        public async Task<TModeledResponse?> Rpc<TModeledResponse>(string procedureName, object? parameters = null)
+        {
+            var response = await Rpc(procedureName, parameters);
+
+            return string.IsNullOrEmpty(response.Content) ? default : JsonConvert.DeserializeObject<TModeledResponse>(response.Content!);
+        }
+
+        /// <inheritdoc />
         public Task<BaseResponse> Rpc(string procedureName, object? parameters = null)
         {
             // Build Uri

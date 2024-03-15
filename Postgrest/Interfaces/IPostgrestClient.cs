@@ -63,6 +63,15 @@ namespace Postgrest.Interfaces
         Task<BaseResponse> Rpc(string procedureName, object? parameters);
 
         /// <summary>
+        /// Perform a stored procedure call.
+        /// </summary>
+        /// <param name="procedureName">The function name to call</param>
+        /// <param name="parameters">The parameters to pass to the function call</param>
+        /// <typeparam name="TModeledResponse">A type used for hydrating the HTTP response content (hydration through JSON.NET)</typeparam>
+        /// <returns>A hydrated model</returns>
+        Task<TModeledResponse?> Rpc<TModeledResponse>(string procedureName, object? parameters = null);
+
+        /// <summary>
         /// Returns a Table Query Builder instance for a defined model - representative of `USE $TABLE`
         /// </summary>
         /// <typeparam name="T">Custom Model derived from `BaseModel`</typeparam>
