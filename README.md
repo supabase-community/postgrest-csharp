@@ -4,9 +4,9 @@
 
 <p align="center">
   <img src="https://github.com/supabase/postgrest-csharp/workflows/Build%20And%20Test/badge.svg"/>
-<a href="https://www.nuget.org/packages/postgrest-csharp/">
-  <img src="https://img.shields.io/badge/dynamic/json?color=green&label=Nuget%20Release&query=data[0].version&url=https%3A%2F%2Fazuresearch-usnc.nuget.org%2Fquery%3Fq%3Dpackageid%3Apostgrest-csharp"/>
-</a>
+  <a href="https://www.nuget.org/packages/Supabase.Postgrest/">
+    <img src="https://img.shields.io/nuget/vpre/Supabase.Postgrest"/>
+  </a>
 </p>
 
 ---
