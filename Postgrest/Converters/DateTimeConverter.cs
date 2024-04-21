@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-namespace Postgrest.Converters
+namespace Supabase.Postgrest.Converters
 {
 
 	/// <inheritdoc />

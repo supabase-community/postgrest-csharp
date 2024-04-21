@@ -1,5 +1,6 @@
-using Postgrest.Exceptions;
-namespace Postgrest.Interfaces
+using Supabase.Postgrest.Exceptions;
+
+namespace Supabase.Postgrest.Interfaces
 {
 	/// <summary>
 	/// Interface for getting debug info from Postgrest

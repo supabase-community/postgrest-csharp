@@ -11,6 +11,8 @@
 
 ---
 
+## [Notice]: v4.0.0 renames this package from `postgrest-csharp` to `Supabase.Postgrest`. Which includes changing the namespace from `Postgrest` to `Supabase.Postgrest`.
+
 ## Now supporting (many) LINQ expressions!
 
 ```c#

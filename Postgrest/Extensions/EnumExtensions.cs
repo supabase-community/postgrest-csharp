@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Postgrest.Extensions
+namespace Supabase.Postgrest.Extensions
 {
 
 	/// <summary>

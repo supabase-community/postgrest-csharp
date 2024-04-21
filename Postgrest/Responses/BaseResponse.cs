@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using Newtonsoft.Json;
 #pragma warning disable CS1591
-namespace Postgrest.Responses
+namespace Supabase.Postgrest.Responses
 {
 
 	/// <summary>

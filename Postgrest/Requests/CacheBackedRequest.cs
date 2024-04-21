@@ -4,11 +4,11 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using Postgrest.Interfaces;
-using Postgrest.Models;
-using Postgrest.Responses;
+using Supabase.Postgrest.Interfaces;
+using Supabase.Postgrest.Models;
+using Supabase.Postgrest.Responses;
 
-namespace Postgrest.Requests
+namespace Supabase.Postgrest.Requests
 {
     /// <summary>
     /// Represents a Request that is backed by a caching strategy.

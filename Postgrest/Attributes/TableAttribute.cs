@@ -1,6 +1,6 @@
 ﻿using System;
 #pragma warning disable CS1591
-namespace Postgrest.Attributes
+namespace Supabase.Postgrest.Attributes
 {
 
 	/// <summary>

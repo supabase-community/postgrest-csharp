@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
-using Postgrest.Models;
-using Postgrest.Responses;
 using Supabase.Core.Interfaces;
+using Supabase.Postgrest.Models;
+using Supabase.Postgrest.Responses;
 
-namespace Postgrest.Interfaces
+namespace Supabase.Postgrest.Interfaces
 {
     /// <summary>
     /// Client interface for Postgrest

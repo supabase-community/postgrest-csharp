@@ -11,18 +11,18 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using Newtonsoft.Json;
-using Postgrest.Attributes;
-using Postgrest.Exceptions;
-using Postgrest.Extensions;
-using Postgrest.Interfaces;
-using Postgrest.Linq;
-using Postgrest.Models;
-using Postgrest.Responses;
+using Supabase.Postgrest.Extensions;
 using Supabase.Core.Attributes;
 using Supabase.Core.Extensions;
-using static Postgrest.Constants;
+using Supabase.Postgrest.Attributes;
+using Supabase.Postgrest.Exceptions;
+using Supabase.Postgrest.Interfaces;
+using Supabase.Postgrest.Linq;
+using Supabase.Postgrest.Models;
+using Supabase.Postgrest.Responses;
+using static Supabase.Postgrest.Constants;
 
-namespace Postgrest
+namespace Supabase.Postgrest
 {
     /// <summary>
     /// Class created from a model derived from `BaseModel` that can generate query requests to a Postgrest Endpoint.
@@ -99,7 +99,7 @@ namespace Postgrest
         }
 
         /// <inheritdoc />
-        public Table<TModel> Filter<TCriterion>(Expression<Func<TModel, object>> predicate, Operator op,
+        public Table<TModel> Filter<TCriterion>(Expression<Func<TModel, object>> predicate, Constants.Operator op,
             TCriterion? criterion)
         {
             var visitor = new SelectExpressionVisitor();
@@ -115,21 +115,21 @@ namespace Postgrest
         }
 
         /// <inheritdoc />
-        public Table<TModel> Filter<TCriterion>(string columnName, Operator op, TCriterion? criterion)
+        public Table<TModel> Filter<TCriterion>(string columnName, Constants.Operator op, TCriterion? criterion)
         {
             switch (criterion)
             {
                 case null:
                     switch (op)
                     {
-                        case Operator.Equals:
-                        case Operator.Is:
-                            _filters.Add(new QueryFilter(columnName, Operator.Is, QueryFilter.NullVal));
+                        case Constants.Operator.Equals:
+                        case Constants.Operator.Is:
+                            _filters.Add(new QueryFilter(columnName, Constants.Operator.Is, QueryFilter.NullVal));
                             break;
-                        case Operator.Not:
-                        case Operator.NotEqual:
-                            _filters.Add(new QueryFilter(columnName, Operator.Not,
-                                new QueryFilter(columnName, Operator.Is, QueryFilter.NullVal)));
+                        case Constants.Operator.Not:
+                        case Constants.Operator.NotEqual:
+                            _filters.Add(new QueryFilter(columnName, Constants.Operator.Not,
+                                new QueryFilter(columnName, Constants.Operator.Is, QueryFilter.NullVal)));
                             break;
                         default:
                             throw new PostgrestException(
@@ -171,16 +171,16 @@ namespace Postgrest
         /// <inheritdoc />
         public Table<TModel> Not(IPostgrestQueryFilter filter)
         {
-            _filters.Add(new QueryFilter(Operator.Not, filter));
+            _filters.Add(new QueryFilter(Constants.Operator.Not, filter));
             return this;
         }
 
         /// <inheritdoc />
-        public Table<TModel> Not<TCriterion>(string columnName, Operator op, TCriterion? criterion) =>
+        public Table<TModel> Not<TCriterion>(string columnName, Constants.Operator op, TCriterion? criterion) =>
             Not(new QueryFilter(columnName, op, criterion));
 
         /// <inheritdoc />
-        public Table<TModel> Not<TCriterion>(Expression<Func<TModel, object>> predicate, Operator op,
+        public Table<TModel> Not<TCriterion>(Expression<Func<TModel, object>> predicate, Constants.Operator op,
             TCriterion? criterion)
         {
             var visitor = new SelectExpressionVisitor();
@@ -196,11 +196,11 @@ namespace Postgrest
         }
 
         /// <inheritdoc />
-        public Table<TModel> Not<TCriterion>(string columnName, Operator op, List<TCriterion> criteria) =>
+        public Table<TModel> Not<TCriterion>(string columnName, Constants.Operator op, List<TCriterion> criteria) =>
             Not(new QueryFilter(columnName, op, criteria.Cast<object>().ToList()));
 
         /// <inheritdoc />
-        public Table<TModel> Not<TCriterion>(Expression<Func<TModel, object>> predicate, Operator op,
+        public Table<TModel> Not<TCriterion>(Expression<Func<TModel, object>> predicate, Constants.Operator op,
             List<TCriterion> criteria)
         {
             var visitor = new SelectExpressionVisitor();
@@ -216,11 +216,11 @@ namespace Postgrest
         }
 
         /// <inheritdoc />
-        public Table<TModel> Not(string columnName, Operator op, Dictionary<string, object> criteria) =>
+        public Table<TModel> Not(string columnName, Constants.Operator op, Dictionary<string, object> criteria) =>
             Not(new QueryFilter(columnName, op, criteria));
 
         /// <inheritdoc />
-        public Table<TModel> Not(Expression<Func<TModel, object>> predicate, Operator op,
+        public Table<TModel> Not(Expression<Func<TModel, object>> predicate, Constants.Operator op,
             Dictionary<string, object> criteria)
         {
             var visitor = new SelectExpressionVisitor();
@@ -239,14 +239,14 @@ namespace Postgrest
         /// <inheritdoc />
         public Table<TModel> And(List<IPostgrestQueryFilter> filters)
         {
-            _filters.Add(new QueryFilter(Operator.And, filters));
+            _filters.Add(new QueryFilter(Constants.Operator.And, filters));
             return this;
         }
 
         /// <inheritdoc />
         public Table<TModel> Or(List<IPostgrestQueryFilter> filters)
         {
-            _filters.Add(new QueryFilter(Operator.Or, filters));
+            _filters.Add(new QueryFilter(Constants.Operator.Or, filters));
             return this;
         }
 
@@ -255,7 +255,7 @@ namespace Postgrest
         {
             foreach (var kvp in model.PrimaryKey)
             {
-                _filters.Add(new QueryFilter(kvp.Key.ColumnName, Operator.Equals, kvp.Value));
+                _filters.Add(new QueryFilter(kvp.Key.ColumnName, Constants.Operator.Equals, kvp.Value));
             }
 
             return this;
@@ -266,15 +266,15 @@ namespace Postgrest
         {
             foreach (var param in query)
             {
-                _filters.Add(new QueryFilter(param.Key, Operator.Equals, param.Value));
+                _filters.Add(new QueryFilter(param.Key, Constants.Operator.Equals, param.Value));
             }
 
             return this;
         }
 
         /// <inheritdoc />
-        public Table<TModel> Order(Expression<Func<TModel, object>> predicate, Ordering ordering,
-            NullPosition nullPosition = NullPosition.First)
+        public Table<TModel> Order(Expression<Func<TModel, object>> predicate, Constants.Ordering ordering,
+            Constants.NullPosition nullPosition = Constants.NullPosition.First)
         {
             var visitor = new SelectExpressionVisitor();
             visitor.Visit(predicate);
@@ -290,15 +290,15 @@ namespace Postgrest
 
 
         /// <inheritdoc />
-        public Table<TModel> Order(string column, Ordering ordering, NullPosition nullPosition = NullPosition.First)
+        public Table<TModel> Order(string column, Constants.Ordering ordering, Constants.NullPosition nullPosition = Constants.NullPosition.First)
         {
             _orderers.Add(new QueryOrderer(null, column, ordering, nullPosition));
             return this;
         }
 
         /// <inheritdoc />
-        public Table<TModel> Order(string foreignTable, string column, Ordering ordering,
-            NullPosition nullPosition = NullPosition.First)
+        public Table<TModel> Order(string foreignTable, string column, Constants.Ordering ordering,
+            Constants.NullPosition nullPosition = Constants.NullPosition.First)
         {
             _orderers.Add(new QueryOrderer(foreignTable, column, ordering, nullPosition));
             return this;
@@ -350,11 +350,11 @@ namespace Postgrest
                 throw new ArgumentException(
                     "Unable to parse the supplied predicate, did you return a predicate where each left hand of the condition is a Model property?");
 
-            if (visitor.Filter.Op == Operator.Equals && visitor.Filter.Criteria == null)
-                _filters.Add(new QueryFilter(visitor.Filter.Property!, Operator.Is, QueryFilter.NullVal));
-            else if (visitor.Filter.Op == Operator.NotEqual && visitor.Filter.Criteria == null)
-                _filters.Add(new QueryFilter(visitor.Filter.Property!, Operator.Not,
-                    new QueryFilter(visitor.Filter.Property!, Operator.Is, QueryFilter.NullVal)));
+            if (visitor.Filter.Op == Constants.Operator.Equals && visitor.Filter.Criteria == null)
+                _filters.Add(new QueryFilter(visitor.Filter.Property!, Constants.Operator.Is, QueryFilter.NullVal));
+            else if (visitor.Filter.Op == Constants.Operator.NotEqual && visitor.Filter.Criteria == null)
+                _filters.Add(new QueryFilter(visitor.Filter.Property!, Constants.Operator.Not,
+                    new QueryFilter(visitor.Filter.Property!, Constants.Operator.Is, QueryFilter.NullVal)));
             else
                 _filters.Add(visitor.Filter);
 
@@ -577,7 +577,7 @@ namespace Postgrest
 
 
         /// <inheritdoc />
-        public async Task<int> Count(CountType type, CancellationToken cancellationToken = default)
+        public async Task<int> Count(Constants.CountType type, CancellationToken cancellationToken = default)
         {
             _method = HttpMethod.Head;
 
@@ -777,8 +777,8 @@ namespace Postgrest
 
             switch (filter.Op)
             {
-                case Operator.Or:
-                case Operator.And:
+                case Constants.Operator.Or:
+                case Constants.Operator.And:
                     if (filter.Criteria is List<IPostgrestQueryFilter> subFilters)
                     {
                         var list = new List<KeyValuePair<string, string>>();
@@ -793,7 +793,7 @@ namespace Postgrest
                     }
 
                     break;
-                case Operator.Not:
+                case Constants.Operator.Not:
                     if (filter.Criteria is QueryFilter notFilter)
                     {
                         var prepped = PrepareFilter(notFilter);
@@ -801,8 +801,8 @@ namespace Postgrest
                     }
 
                     break;
-                case Operator.Like:
-                case Operator.ILike:
+                case Constants.Operator.Like:
+                case Constants.Operator.ILike:
                     if (filter.Criteria is string likeCriteria && filter.Property != null)
                     {
                         return new KeyValuePair<string, string>(filter.Property,
@@ -810,7 +810,7 @@ namespace Postgrest
                     }
 
                     break;
-                case Operator.In:
+                case Constants.Operator.In:
                     if (filter is { Criteria: IList inCriteria, Property: not null })
                     {
                         foreach (var item in inCriteria)
@@ -827,9 +827,9 @@ namespace Postgrest
                     }
 
                     break;
-                case Operator.Contains:
-                case Operator.ContainedIn:
-                case Operator.Overlap:
+                case Constants.Operator.Contains:
+                case Constants.Operator.ContainedIn:
+                case Constants.Operator.Overlap:
                     switch (filter.Criteria)
                     {
                         case IList listCriteria when filter.Property != null:
@@ -849,11 +849,11 @@ namespace Postgrest
                     }
 
                     break;
-                case Operator.StrictlyLeft:
-                case Operator.StrictlyRight:
-                case Operator.NotRightOf:
-                case Operator.NotLeftOf:
-                case Operator.Adjacent:
+                case Constants.Operator.StrictlyLeft:
+                case Constants.Operator.StrictlyRight:
+                case Constants.Operator.NotRightOf:
+                case Constants.Operator.NotLeftOf:
+                case Constants.Operator.Adjacent:
                     if (filter is { Criteria: IntRange rangeCriterion, Property: not null })
                     {
                         return new KeyValuePair<string, string>(filter.Property,
@@ -861,10 +861,10 @@ namespace Postgrest
                     }
 
                     break;
-                case Operator.FTS:
-                case Operator.PHFTS:
-                case Operator.PLFTS:
-                case Operator.WFTS:
+                case Constants.Operator.FTS:
+                case Constants.Operator.PHFTS:
+                case Constants.Operator.PLFTS:
+                case Constants.Operator.WFTS:
                     if (filter is { Criteria: FullTextSearchConfig searchConfig, Property: not null })
                     {
                         return new KeyValuePair<string, string>(filter.Property,

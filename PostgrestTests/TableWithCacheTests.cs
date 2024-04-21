@@ -2,9 +2,9 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using Postgrest;
-using Postgrest.Interfaces;
-using Postgrest.Requests;
+using Supabase.Postgrest;
+using Supabase.Postgrest.Interfaces;
+using Supabase.Postgrest.Requests;
 using PostgrestTests.Models;
 
 namespace PostgrestTests

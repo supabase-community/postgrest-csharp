@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Net.Http;
-namespace Postgrest.Exceptions
+namespace Supabase.Postgrest.Exceptions
 {
 	/// <summary>
 	/// Errors from Postgrest are wrapped by this exception

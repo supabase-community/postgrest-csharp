@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Postgrest.Interfaces
+namespace Supabase.Postgrest.Interfaces
 {
     /// <summary>
     /// A caching provider than can be used by postgrest to store requests.

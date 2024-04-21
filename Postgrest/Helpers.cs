@@ -8,14 +8,15 @@ using System.Threading.Tasks;
 using System.Web;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Postgrest.Exceptions;
-using Postgrest.Models;
-using Postgrest.Responses;
 using Supabase.Core;
 using Supabase.Core.Extensions;
+using Supabase.Postgrest.Exceptions;
+using Supabase.Postgrest.Models;
+using Supabase.Postgrest.Responses;
+
 [assembly: InternalsVisibleTo("PostgrestTests")]
 
-namespace Postgrest
+namespace Supabase.Postgrest
 {
 
 	internal static class Helpers

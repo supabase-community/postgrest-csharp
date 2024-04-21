@@ -1,7 +1,7 @@
 ﻿using System;
-using Postgrest;
-using Postgrest.Attributes;
-using Postgrest.Models;
+using Supabase.Postgrest;
+using Supabase.Postgrest.Attributes;
+using Supabase.Postgrest.Models;
 
 namespace PostgrestExample.Models
 {

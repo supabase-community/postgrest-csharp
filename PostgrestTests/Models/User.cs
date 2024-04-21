@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Postgrest;
-using Postgrest.Attributes;
-using Postgrest.Models;
+using Supabase.Postgrest;
+using Supabase.Postgrest.Attributes;
+using Supabase.Postgrest.Models;
 
 namespace PostgrestTests.Models
 {

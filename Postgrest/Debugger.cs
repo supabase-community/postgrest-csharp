@@ -1,7 +1,8 @@
 using System.Collections.Generic;
-using Postgrest.Exceptions;
-using Postgrest.Interfaces;
-namespace Postgrest
+using Supabase.Postgrest.Exceptions;
+using Supabase.Postgrest.Interfaces;
+
+namespace Supabase.Postgrest
 {
 
 	/// <summary>

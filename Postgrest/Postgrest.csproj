@@ -4,15 +4,17 @@
         <LangVersion>9.0</LangVersion>
         <WarningsAsErrors>CS8600;CS8602;CS8603</WarningsAsErrors>
         <Nullable>enable</Nullable>
-        <Title>postgrest-csharp</Title>
-        <PackageId>postgrest-csharp</PackageId>
+        <Title>Supabase.Postgrest</Title>
+        <AssemblyName>Supabase.Postgrest</AssemblyName>
+        <PackageId>Supabase.Postgrest</PackageId>
+        <RootNamespace>Supabase.Postgrest</RootNamespace>
         <Authors>Joseph Schultz &lt;joseph@acupofjose.com&gt;</Authors>
         <PackOnBuild>true</PackOnBuild>
         <Copyright>MIT</Copyright>
         <NeutralLanguage>en-US</NeutralLanguage>
         <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <Owners>Joseph Schultz &lt;joseph@acupajoe.io&gt;</Owners>
+        <Owners>Joseph Schultz &lt;joseph@acupofjose.com&gt;</Owners>
         <PackageProjectUrl>https://github.com/supabase-community/postgrest-csharp</PackageProjectUrl>
         <Summary>Library to interact with postgREST servers</Summary>
         <Description>Postgrest-csharp is written primarily as a helper library for supabase/supabase-csharp, however, it should be easy enough to use outside of the supabase ecosystem.
@@ -20,33 +22,29 @@
         </Description>
         <PackageIconUrl>https://avatars.githubusercontent.com/u/54469796?s=200&amp;v=4</PackageIconUrl>
         <PackageTags>supabase,postgrest</PackageTags>
-        <ReleaseVersion>3.5.1</ReleaseVersion>
-        <PackageVersion>3.5.1</PackageVersion>
+        <ReleaseVersion>4.0.0</ReleaseVersion>
+        <PackageVersion>4.0.0</PackageVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageIcon>icon.png</PackageIcon>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <RepositoryUrl>https://github.com/supabase-community/postgrest-csharp</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <AssemblyName>Supabase.Postgrest</AssemblyName>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Version)' == '' ">
-        <VersionPrefix Condition=" '$(VersionPrefix)' == '' ">3.5.1</VersionPrefix>
+        <VersionPrefix Condition=" '$(VersionPrefix)' == '' ">4.0.0</VersionPrefix>
         <VersionSuffix Condition=" '$(VersionSuffix)' == '' "></VersionSuffix>
         <Version Condition=" '$(VersionSuffix)' != '' ">$(VersionPrefix)-$(VersionSuffix)</Version>
         <Version Condition=" '$(Version)' == '' ">$(VersionPrefix)</Version>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
-    </ItemGroup>
-
-    <ItemGroup>
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+        <PackageReference Include="Supabase.Core" Version="1.0.0" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-        <PackageReference Include="supabase-core" Version="0.0.3" />
     </ItemGroup>
 
     <ItemGroup>

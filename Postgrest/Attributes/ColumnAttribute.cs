@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
-namespace Postgrest.Attributes
+namespace Supabase.Postgrest.Attributes
 {
 
 	/// <summary>

@@ -4,10 +4,10 @@ using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Postgrest.Attributes;
-using Postgrest.Converters;
+using Supabase.Postgrest.Attributes;
+using Supabase.Postgrest.Converters;
 
-namespace Postgrest
+namespace Supabase.Postgrest
 {
     /// <summary>
     /// A custom resolver that handles mapping column names and property names as well

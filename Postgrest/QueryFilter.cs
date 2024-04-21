@@ -5,12 +5,12 @@ using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using Newtonsoft.Json;
-using Postgrest.Exceptions;
-using Postgrest.Interfaces;
-using Postgrest.Linq;
-using static Postgrest.Constants;
+using Supabase.Postgrest.Exceptions;
+using Supabase.Postgrest.Interfaces;
+using Supabase.Postgrest.Linq;
+using static Supabase.Postgrest.Constants;
 
-namespace Postgrest
+namespace Supabase.Postgrest
 {
     /// <summary>
     /// Allow for the expression of a query filter with linq expressions.
@@ -23,7 +23,7 @@ namespace Postgrest
         public object? Criteria { get; }
 
         /// <inheritdoc />
-        public Operator Op { get; }
+        public Constants.Operator Op { get; }
 
         /// <inheritdoc />
         public string? Property { get; }
@@ -35,7 +35,7 @@ namespace Postgrest
         /// <param name="op"></param>
         /// <param name="criterion"></param>
         /// <exception cref="ArgumentException"></exception>
-        public QueryFilter(Expression<Func<TModel, object>> predicate, Operator op, TCriterion? criterion)
+        public QueryFilter(Expression<Func<TModel, object>> predicate, Constants.Operator op, TCriterion? criterion)
         {
             var visitor = new SelectExpressionVisitor();
             visitor.Visit(predicate);
@@ -66,7 +66,7 @@ namespace Postgrest
         public string? Property { get; private set; }
 
         /// <inheritdoc />
-        public Operator Op { get; private set; }
+        public Constants.Operator Op { get; private set; }
 
         /// <inheritdoc />
         public object? Criteria { get; private set; }
@@ -77,7 +77,7 @@ namespace Postgrest
         /// <param name="property">Column name</param>
         /// <param name="op">Operation: And, Equals, GreaterThan, LessThan, GreaterThanOrEqual, LessThanOrEqual, NotEqual, Is, Adjacent, Not, Like, ILike</param>
         /// <param name="criteria"></param>
-        public QueryFilter(string property, Operator op, object? criteria)
+        public QueryFilter(string property, Constants.Operator op, object? criteria)
         {
             if (criteria is DateTime dateTime)
                 criteria = dateTime.ToString("o", CultureInfo.InvariantCulture);
@@ -86,26 +86,26 @@ namespace Postgrest
             
             switch (op)
             {
-                case Operator.And:
-                case Operator.Equals:
-                case Operator.GreaterThan:
-                case Operator.GreaterThanOrEqual:
-                case Operator.LessThan:
-                case Operator.LessThanOrEqual:
-                case Operator.NotEqual:
-                case Operator.Is:
-                case Operator.Adjacent:
-                case Operator.Not:
-                case Operator.Like:
-                case Operator.ILike:
+                case Constants.Operator.And:
+                case Constants.Operator.Equals:
+                case Constants.Operator.GreaterThan:
+                case Constants.Operator.GreaterThanOrEqual:
+                case Constants.Operator.LessThan:
+                case Constants.Operator.LessThanOrEqual:
+                case Constants.Operator.NotEqual:
+                case Constants.Operator.Is:
+                case Constants.Operator.Adjacent:
+                case Constants.Operator.Not:
+                case Constants.Operator.Like:
+                case Constants.Operator.ILike:
                     Property = property;
                     Op = op;
                     Criteria = criteria;
                     break;
-                case Operator.In:
-                case Operator.Contains:
-                case Operator.ContainedIn:
-                case Operator.Overlap:
+                case Constants.Operator.In:
+                case Constants.Operator.Contains:
+                case Constants.Operator.ContainedIn:
+                case Constants.Operator.Overlap:
                     if (criteria is IList or IDictionary)
                     {
                         Property = property;
@@ -131,14 +131,14 @@ namespace Postgrest
         /// <param name="property">Column Name</param>
         /// <param name="op">Operation: FTS, PHFTS, PLFTS, WFTS</param>
         /// <param name="fullTextSearchConfig"></param>
-        public QueryFilter(string property, Operator op, FullTextSearchConfig fullTextSearchConfig)
+        public QueryFilter(string property, Constants.Operator op, FullTextSearchConfig fullTextSearchConfig)
         {
             switch (op)
             {
-                case Operator.FTS:
-                case Operator.PHFTS:
-                case Operator.PLFTS:
-                case Operator.WFTS:
+                case Constants.Operator.FTS:
+                case Constants.Operator.PHFTS:
+                case Constants.Operator.PLFTS:
+                case Constants.Operator.WFTS:
                     Property = property;
                     Op = op;
                     Criteria = fullTextSearchConfig;
@@ -155,18 +155,18 @@ namespace Postgrest
         /// <param name="property"></param>
         /// <param name="op">Operator: Overlap, StrictlyLeft, StrictlyRight, NotRightOf, NotLeftOf, Adjacent</param>
         /// <param name="range"></param>
-        public QueryFilter(string property, Operator op, IntRange range)
+        public QueryFilter(string property, Constants.Operator op, IntRange range)
         {
             switch (op)
             {
-                case Operator.Overlap:
-                case Operator.Contains:
-                case Operator.ContainedIn:
-                case Operator.StrictlyLeft:
-                case Operator.StrictlyRight:
-                case Operator.NotRightOf:
-                case Operator.NotLeftOf:
-                case Operator.Adjacent:
+                case Constants.Operator.Overlap:
+                case Constants.Operator.Contains:
+                case Constants.Operator.ContainedIn:
+                case Constants.Operator.StrictlyLeft:
+                case Constants.Operator.StrictlyRight:
+                case Constants.Operator.NotRightOf:
+                case Constants.Operator.NotLeftOf:
+                case Constants.Operator.Adjacent:
                     Property = property;
                     Op = op;
                     Criteria = range;
@@ -184,12 +184,12 @@ namespace Postgrest
         /// </summary>
         /// <param name="op">Operation: And, Or</param>
         /// <param name="filters"></param>
-        public QueryFilter(Operator op, List<IPostgrestQueryFilter> filters)
+        public QueryFilter(Constants.Operator op, List<IPostgrestQueryFilter> filters)
         {
             switch (op)
             {
-                case Operator.Or:
-                case Operator.And:
+                case Constants.Operator.Or:
+                case Constants.Operator.And:
                     Op = op;
                     Criteria = filters;
                     break;
@@ -204,11 +204,11 @@ namespace Postgrest
         /// </summary>
         /// <param name="op">Operation: Not.</param>
         /// <param name="filter"></param>
-        public QueryFilter(Operator op, IPostgrestQueryFilter filter)
+        public QueryFilter(Constants.Operator op, IPostgrestQueryFilter filter)
         {
             switch (op)
             {
-                case Operator.Not:
+                case Constants.Operator.Not:
                     Op = op;
                     Criteria = filter;
                     break;

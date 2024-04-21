@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Postgrest.Attributes;
-using Postgrest.Exceptions;
-using Postgrest.Responses;
+using Supabase.Postgrest.Attributes;
+using Supabase.Postgrest.Exceptions;
+using Supabase.Postgrest.Responses;
+
 #pragma warning disable CS1591
 
-namespace Postgrest.Models
+namespace Supabase.Postgrest.Models
 {
 
 	/// <summary>

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-namespace Postgrest.Converters
+namespace Supabase.Postgrest.Converters
 {
 
 	/// <inheritdoc />

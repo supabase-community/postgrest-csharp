@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Postgrest.Extensions;
+using Supabase.Postgrest.Extensions;
 using Supabase.Core.Attributes;
 #pragma warning disable CS1591
-namespace Postgrest
+namespace Supabase.Postgrest
 {
 
 	public class QueryOptions

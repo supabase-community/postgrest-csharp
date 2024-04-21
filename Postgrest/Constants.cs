@@ -1,6 +1,6 @@
 ﻿using Supabase.Core.Attributes;
 #pragma warning disable CS1591
-namespace Postgrest
+namespace Supabase.Postgrest
 {
 
 	public static class Constants

@@ -7,12 +7,12 @@ using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Postgrest;
-using Postgrest.Exceptions;
-using Postgrest.Interfaces;
-using Postgrest.Responses;
+using Supabase.Postgrest;
+using Supabase.Postgrest.Exceptions;
+using Supabase.Postgrest.Interfaces;
+using Supabase.Postgrest.Responses;
 using PostgrestTests.Models;
-using static Postgrest.Constants;
+using static Supabase.Postgrest.Constants;
 
 namespace PostgrestTests
 {
@@ -60,7 +60,7 @@ namespace PostgrestTests
         [TestMethod("will set header from options")]
         public void TestHeadersToken()
         {
-            var headers = Postgrest.Helpers.PrepareRequestHeaders(HttpMethod.Get,
+            var headers = Supabase.Postgrest.Helpers.PrepareRequestHeaders(HttpMethod.Get,
                 new Dictionary<string, string> { { "Authorization", "Bearer token" } });
 
             Assert.AreEqual("Bearer token", headers["Authorization"]);

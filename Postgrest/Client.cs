@@ -4,12 +4,12 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Postgrest.Interfaces;
-using Postgrest.Models;
-using Postgrest.Responses;
 using Supabase.Core.Extensions;
+using Supabase.Postgrest.Interfaces;
+using Supabase.Postgrest.Models;
+using Supabase.Postgrest.Responses;
 
-namespace Postgrest
+namespace Supabase.Postgrest
 {
     /// <inheritdoc />
     public class Client : IPostgrestClient

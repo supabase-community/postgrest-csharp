@@ -5,13 +5,13 @@ using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using Postgrest.Attributes;
-using Postgrest.Interfaces;
-using static Postgrest.Constants;
+using Supabase.Postgrest.Attributes;
+using Supabase.Postgrest.Interfaces;
+using static Supabase.Postgrest.Constants;
 
 // ReSharper disable InvalidXmlDocComment
 
-namespace Postgrest.Linq
+namespace Supabase.Postgrest.Linq
 
 {
     /// <summary>
@@ -123,9 +123,9 @@ namespace Postgrest.Linq
                 case nameof(String.Contains):
 
                     if (typeof(ICollection).IsAssignableFrom(node.Method.DeclaringType))
-                        Filter = new QueryFilter(column, Operator.Contains, GetArgumentValues(node));
+                        Filter = new QueryFilter(column, Constants.Operator.Contains, GetArgumentValues(node));
                     else
-                        Filter = new QueryFilter(column, Operator.Like, "*" + GetArgumentValues(node).First() + "*");
+                        Filter = new QueryFilter(column, Constants.Operator.Like, "*" + GetArgumentValues(node).First() + "*");
 
                     break;
                 default:
@@ -141,7 +141,7 @@ namespace Postgrest.Linq
         /// <param name="column"></param>
         /// <param name="op"></param>
         /// <param name="constantExpression"></param>
-        private void HandleConstantExpression(string column, Operator op, ConstantExpression constantExpression)
+        private void HandleConstantExpression(string column, Constants.Operator op, ConstantExpression constantExpression)
         {
             if (constantExpression.Type.IsEnum)
             {
@@ -160,7 +160,7 @@ namespace Postgrest.Linq
         /// <param name="column"></param>
         /// <param name="op"></param>
         /// <param name="memberExpression"></param>
-        private void HandleMemberExpression(string column, Operator op, MemberExpression memberExpression)
+        private void HandleMemberExpression(string column, Constants.Operator op, MemberExpression memberExpression)
         {
             Filter = new QueryFilter(column, op, GetMemberExpressionValue(memberExpression));
         }
@@ -171,7 +171,7 @@ namespace Postgrest.Linq
         /// <param name="column"></param>
         /// <param name="op"></param>
         /// <param name="unaryExpression"></param>
-        private void HandleUnaryExpression(string column, Operator op, UnaryExpression unaryExpression)
+        private void HandleUnaryExpression(string column, Constants.Operator op, UnaryExpression unaryExpression)
         {
             if (unaryExpression.Operand is ConstantExpression constantExpression)
             {
@@ -193,7 +193,7 @@ namespace Postgrest.Linq
         /// <param name="column"></param>
         /// <param name="op"></param>
         /// <param name="newExpression"></param>
-        private void HandleNewExpression(string column, Operator op, NewExpression newExpression)
+        private void HandleNewExpression(string column, Constants.Operator op, NewExpression newExpression)
         {
             var argumentValues = new List<object>();
             foreach (var argument in newExpression.Arguments)
@@ -275,26 +275,26 @@ namespace Postgrest.Linq
         }
 
         /// <summary>
-        /// Creates map between linq <see cref="ExpressionType"/> and <see cref="Operator"/>
+        /// Creates map between linq <see cref="ExpressionType"/> and <see cref="Constants.Operator"/>
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        private Operator GetMappedOperator(Expression node)
+        private Constants.Operator GetMappedOperator(Expression node)
         {
             return node.NodeType switch
             {
-                ExpressionType.Not => Operator.Not,
-                ExpressionType.And => Operator.And,
-                ExpressionType.AndAlso => Operator.And,
-                ExpressionType.OrElse => Operator.Or,
-                ExpressionType.Or => Operator.Or,
-                ExpressionType.Equal => Operator.Equals,
-                ExpressionType.NotEqual => Operator.NotEqual,
-                ExpressionType.LessThan => Operator.LessThan,
-                ExpressionType.GreaterThan => Operator.GreaterThan,
-                ExpressionType.LessThanOrEqual => Operator.LessThanOrEqual,
-                ExpressionType.GreaterThanOrEqual => Operator.GreaterThanOrEqual,
-                _ => Operator.Equals
+                ExpressionType.Not => Constants.Operator.Not,
+                ExpressionType.And => Constants.Operator.And,
+                ExpressionType.AndAlso => Constants.Operator.And,
+                ExpressionType.OrElse => Constants.Operator.Or,
+                ExpressionType.Or => Constants.Operator.Or,
+                ExpressionType.Equal => Constants.Operator.Equals,
+                ExpressionType.NotEqual => Constants.Operator.NotEqual,
+                ExpressionType.LessThan => Constants.Operator.LessThan,
+                ExpressionType.GreaterThan => Constants.Operator.GreaterThan,
+                ExpressionType.LessThanOrEqual => Constants.Operator.LessThanOrEqual,
+                ExpressionType.GreaterThanOrEqual => Constants.Operator.GreaterThanOrEqual,
+                _ => Constants.Operator.Equals
             };
         }
 

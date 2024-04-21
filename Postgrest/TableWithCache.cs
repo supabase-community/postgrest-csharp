@@ -2,12 +2,12 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Postgrest.Interfaces;
-using Postgrest.Models;
-using Postgrest.Requests;
-using Postgrest.Responses;
+using Supabase.Postgrest.Interfaces;
+using Supabase.Postgrest.Models;
+using Supabase.Postgrest.Requests;
+using Supabase.Postgrest.Responses;
 
-namespace Postgrest
+namespace Supabase.Postgrest
 {
     /// <summary>
     /// Represents a table constructed with a <see cref="IPostgrestCacheProvider"/>

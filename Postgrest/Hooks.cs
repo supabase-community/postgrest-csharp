@@ -3,7 +3,7 @@ using System.Linq;
 using System.Net.Http;
 using Newtonsoft.Json;
 
-namespace Postgrest
+namespace Supabase.Postgrest
 {
     /// <summary>
     /// Delegate representing the request to be sent to the remote server.

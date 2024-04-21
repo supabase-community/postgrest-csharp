@@ -1,5 +1,11 @@
 ﻿# Changelog
 
+## 4.0.0 - 2024-04-21
+
+- [MAJOR] Moves namespaces from `Postgrest` to `Supabase.Postgrest`
+- Re: [#135](https://github.com/supabase-community/supabase-csharp/issues/135) Update nuget package
+  name `postgrest-csharp` to `Supabase.Postgrest`
+
 ## 3.5.1 - 2024-03-15
 
 - Re: [#147](https://github.com/supabase-community/supabase-csharp/issues/147) - Supports `Rpc` specifying a generic
@@ -9,7 +15,7 @@
 
 - Re: [#78](https://github.com/supabase-community/postgrest-csharp/issues/78), Generalize query filtering creation
   in `Table` so that it matches new generic signatures.
-- Move from `QueryFilter` parameters to a more generic `IPosgrestQueryFilter` to support constructing new QueryFilters
+- Move from `QueryFilter` parameters to a more generic `IPostgrestQueryFilter` to support constructing new QueryFilters
   from a LINQ expression.
     - Note: Lists of `QueryFilter`s will now need to be defined
       as: `new List<IPostgrestQueryFilter> { new QueryFilter(), ... }`

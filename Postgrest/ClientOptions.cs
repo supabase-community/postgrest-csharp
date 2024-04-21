@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 #pragma warning disable CS1591
-namespace Postgrest
+namespace Supabase.Postgrest
 {
 
 	/// <summary>

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
-using Postgrest.Exceptions;
-using Postgrest.Extensions;
-namespace Postgrest.Converters
+using Supabase.Postgrest.Extensions;
+using Supabase.Postgrest.Exceptions;
+
+namespace Supabase.Postgrest.Converters
 {
 
 	/// <summary>

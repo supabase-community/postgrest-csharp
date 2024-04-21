@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Postgrest.Exceptions;
-using Postgrest.Extensions;
-using Postgrest.Models;
+using Supabase.Postgrest.Extensions;
+using Supabase.Postgrest.Exceptions;
+using Supabase.Postgrest.Models;
 
-namespace Postgrest.Attributes
+namespace Supabase.Postgrest.Attributes
 {
     /// <summary>
     /// Used to specify that a foreign key relationship exists in PostgreSQL

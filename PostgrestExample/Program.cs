@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Threading.Tasks;
-using Postgrest;
+using Supabase.Postgrest;
 using PostgrestExample.Models;
 
 namespace PostgrestExample
@@ -10,7 +10,7 @@ namespace PostgrestExample
         static async Task<int> Main(string[] args)
         {
             var url = "http://localhost:3000";
-            var client = new Postgrest.Client(url);
+            var client = new Supabase.Postgrest.Client(url);
 
             // Get all Users
             var users = await client.Table<User>().Get();
@@ -21,14 +21,14 @@ namespace PostgrestExample
             }
 
             // Get a single User
-            var supabotUser = await client.Table<User>().Filter("username", Postgrest.Constants.Operator.Equals, "supabot").Single();
+            var supabotUser = await client.Table<User>().Filter("username", Supabase.Postgrest.Constants.Operator.Equals, "supabot").Single();
 
             if (supabotUser != null)
             {
                 Debug.WriteLine($"{supabotUser.Username} was born on: {supabotUser.InsertedAt}");
 
                 // Use username to Query another table
-                var supabotMessages = await client.Table<Message>().Filter("username", Postgrest.Constants.Operator.Equals, supabotUser.Username).Get();
+                var supabotMessages = await client.Table<Message>().Filter("username", Supabase.Postgrest.Constants.Operator.Equals, supabotUser.Username).Get();
 
                 if (supabotMessages != null)
                 {
@@ -49,7 +49,7 @@ namespace PostgrestExample
                 Status = "ONLINE"
             };
 
-            var exists = await client.Table<User>().Filter("username", Postgrest.Constants.Operator.Equals, "Ash Ketchum").Single();
+            var exists = await client.Table<User>().Filter("username", Supabase.Postgrest.Constants.Operator.Equals, "Ash Ketchum").Single();
 
             if (exists == null)
             {

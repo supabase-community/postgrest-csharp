@@ -1,8 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Postgrest;
-using Postgrest.Converters;
-using Postgrest.Exceptions;
-using Postgrest.Extensions;
+using Supabase.Postgrest;
+using Supabase.Postgrest.Converters;
+using Supabase.Postgrest.Exceptions;
+using Supabase.Postgrest.Extensions;
 
 namespace PostgrestTests
 {

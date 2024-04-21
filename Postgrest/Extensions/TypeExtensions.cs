@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-namespace Postgrest.Extensions
+namespace Supabase.Postgrest.Extensions
 {
 	internal static class TypeExtensions
 	{

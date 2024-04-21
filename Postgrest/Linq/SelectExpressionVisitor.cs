@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using Postgrest.Attributes;
-namespace Postgrest.Linq
+using Supabase.Postgrest.Attributes;
+
+namespace Supabase.Postgrest.Linq
 
 {
 

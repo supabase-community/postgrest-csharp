@@ -1,5 +1,5 @@
 ﻿#pragma warning disable CS1591
-namespace Postgrest.Interfaces
+namespace Supabase.Postgrest.Interfaces
 {
 	public interface IPostgrestQueryFilter
 	{

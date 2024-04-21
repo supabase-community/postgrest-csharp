@@ -1,7 +1,7 @@
-﻿using static Postgrest.Exceptions.FailureHint.Reason;
+﻿using static Supabase.Postgrest.Exceptions.FailureHint.Reason;
 #pragma warning disable CS1591
 
-namespace Postgrest.Exceptions
+namespace Supabase.Postgrest.Exceptions
 {
 
 	/// <summary>
