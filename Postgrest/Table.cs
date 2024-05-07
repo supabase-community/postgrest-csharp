@@ -99,7 +99,7 @@ namespace Supabase.Postgrest
         }
 
         /// <inheritdoc />
-        public Table<TModel> Filter<TCriterion>(Expression<Func<TModel, object>> predicate, Constants.Operator op,
+        public IPostgrestTable<TModel> Filter<TCriterion>(Expression<Func<TModel, object>> predicate, Operator op,
             TCriterion? criterion)
         {
             var visitor = new SelectExpressionVisitor();
@@ -115,21 +115,21 @@ namespace Supabase.Postgrest
         }
 
         /// <inheritdoc />
-        public Table<TModel> Filter<TCriterion>(string columnName, Constants.Operator op, TCriterion? criterion)
+        public IPostgrestTable<TModel> Filter<TCriterion>(string columnName, Operator op, TCriterion? criterion)
         {
             switch (criterion)
             {
                 case null:
                     switch (op)
                     {
-                        case Constants.Operator.Equals:
-                        case Constants.Operator.Is:
-                            _filters.Add(new QueryFilter(columnName, Constants.Operator.Is, QueryFilter.NullVal));
+                        case Operator.Equals:
+                        case Operator.Is:
+                            _filters.Add(new QueryFilter(columnName, Operator.Is, QueryFilter.NullVal));
                             break;
-                        case Constants.Operator.Not:
-                        case Constants.Operator.NotEqual:
-                            _filters.Add(new QueryFilter(columnName, Constants.Operator.Not,
-                                new QueryFilter(columnName, Constants.Operator.Is, QueryFilter.NullVal)));
+                        case Operator.Not:
+                        case Operator.NotEqual:
+                            _filters.Add(new QueryFilter(columnName, Operator.Not,
+                                new QueryFilter(columnName, Operator.Is, QueryFilter.NullVal)));
                             break;
                         default:
                             throw new PostgrestException(
@@ -169,18 +169,18 @@ namespace Supabase.Postgrest
         }
 
         /// <inheritdoc />
-        public Table<TModel> Not(IPostgrestQueryFilter filter)
+        public IPostgrestTable<TModel> Not(IPostgrestQueryFilter filter)
         {
-            _filters.Add(new QueryFilter(Constants.Operator.Not, filter));
+            _filters.Add(new QueryFilter(Operator.Not, filter));
             return this;
         }
 
         /// <inheritdoc />
-        public Table<TModel> Not<TCriterion>(string columnName, Constants.Operator op, TCriterion? criterion) =>
+        public IPostgrestTable<TModel> Not<TCriterion>(string columnName, Operator op, TCriterion? criterion) =>
             Not(new QueryFilter(columnName, op, criterion));
 
         /// <inheritdoc />
-        public Table<TModel> Not<TCriterion>(Expression<Func<TModel, object>> predicate, Constants.Operator op,
+        public IPostgrestTable<TModel> Not<TCriterion>(Expression<Func<TModel, object>> predicate, Operator op,
             TCriterion? criterion)
         {
             var visitor = new SelectExpressionVisitor();
@@ -196,11 +196,11 @@ namespace Supabase.Postgrest
         }
 
         /// <inheritdoc />
-        public Table<TModel> Not<TCriterion>(string columnName, Constants.Operator op, List<TCriterion> criteria) =>
+        public IPostgrestTable<TModel> Not<TCriterion>(string columnName, Operator op, List<TCriterion> criteria) =>
             Not(new QueryFilter(columnName, op, criteria.Cast<object>().ToList()));
 
         /// <inheritdoc />
-        public Table<TModel> Not<TCriterion>(Expression<Func<TModel, object>> predicate, Constants.Operator op,
+        public IPostgrestTable<TModel> Not<TCriterion>(Expression<Func<TModel, object>> predicate, Operator op,
             List<TCriterion> criteria)
         {
             var visitor = new SelectExpressionVisitor();
@@ -216,11 +216,11 @@ namespace Supabase.Postgrest
         }
 
         /// <inheritdoc />
-        public Table<TModel> Not(string columnName, Constants.Operator op, Dictionary<string, object> criteria) =>
+        public IPostgrestTable<TModel> Not(string columnName, Operator op, Dictionary<string, object> criteria) =>
             Not(new QueryFilter(columnName, op, criteria));
 
         /// <inheritdoc />
-        public Table<TModel> Not(Expression<Func<TModel, object>> predicate, Constants.Operator op,
+        public IPostgrestTable<TModel> Not(Expression<Func<TModel, object>> predicate, Operator op,
             Dictionary<string, object> criteria)
         {
             var visitor = new SelectExpressionVisitor();
@@ -237,44 +237,44 @@ namespace Supabase.Postgrest
 
 
         /// <inheritdoc />
-        public Table<TModel> And(List<IPostgrestQueryFilter> filters)
+        public IPostgrestTable<TModel> And(List<IPostgrestQueryFilter> filters)
         {
-            _filters.Add(new QueryFilter(Constants.Operator.And, filters));
+            _filters.Add(new QueryFilter(Operator.And, filters));
             return this;
         }
 
         /// <inheritdoc />
-        public Table<TModel> Or(List<IPostgrestQueryFilter> filters)
+        public IPostgrestTable<TModel> Or(List<IPostgrestQueryFilter> filters)
         {
-            _filters.Add(new QueryFilter(Constants.Operator.Or, filters));
+            _filters.Add(new QueryFilter(Operator.Or, filters));
             return this;
         }
 
         /// <inheritdoc />
-        public Table<TModel> Match(TModel model)
+        public IPostgrestTable<TModel> Match(TModel model)
         {
             foreach (var kvp in model.PrimaryKey)
             {
-                _filters.Add(new QueryFilter(kvp.Key.ColumnName, Constants.Operator.Equals, kvp.Value));
+                _filters.Add(new QueryFilter(kvp.Key.ColumnName, Operator.Equals, kvp.Value));
             }
 
             return this;
         }
 
         /// <inheritdoc />
-        public Table<TModel> Match(Dictionary<string, string> query)
+        public IPostgrestTable<TModel> Match(Dictionary<string, string> query)
         {
             foreach (var param in query)
             {
-                _filters.Add(new QueryFilter(param.Key, Constants.Operator.Equals, param.Value));
+                _filters.Add(new QueryFilter(param.Key, Operator.Equals, param.Value));
             }
 
             return this;
         }
 
         /// <inheritdoc />
-        public Table<TModel> Order(Expression<Func<TModel, object>> predicate, Constants.Ordering ordering,
-            Constants.NullPosition nullPosition = Constants.NullPosition.First)
+        public IPostgrestTable<TModel> Order(Expression<Func<TModel, object>> predicate, Ordering ordering,
+            NullPosition nullPosition = NullPosition.First)
         {
             var visitor = new SelectExpressionVisitor();
             visitor.Visit(predicate);
@@ -290,29 +290,29 @@ namespace Supabase.Postgrest
 
 
         /// <inheritdoc />
-        public Table<TModel> Order(string column, Constants.Ordering ordering, Constants.NullPosition nullPosition = Constants.NullPosition.First)
+        public IPostgrestTable<TModel> Order(string column, Ordering ordering, NullPosition nullPosition = NullPosition.First)
         {
             _orderers.Add(new QueryOrderer(null, column, ordering, nullPosition));
             return this;
         }
 
         /// <inheritdoc />
-        public Table<TModel> Order(string foreignTable, string column, Constants.Ordering ordering,
-            Constants.NullPosition nullPosition = Constants.NullPosition.First)
+        public IPostgrestTable<TModel> Order(string foreignTable, string column, Ordering ordering,
+            NullPosition nullPosition = NullPosition.First)
         {
             _orderers.Add(new QueryOrderer(foreignTable, column, ordering, nullPosition));
             return this;
         }
 
         /// <inheritdoc />
-        public Table<TModel> Range(int from)
+        public IPostgrestTable<TModel> Range(int from)
         {
             _rangeFrom = from;
             return this;
         }
 
         /// <inheritdoc />
-        public Table<TModel> Range(int from, int to)
+        public IPostgrestTable<TModel> Range(int from, int to)
         {
             _rangeFrom = from;
             _rangeTo = to;
@@ -320,7 +320,7 @@ namespace Supabase.Postgrest
         }
 
         /// <inheritdoc />
-        public Table<TModel> Select(string columnQuery)
+        public IPostgrestTable<TModel> Select(string columnQuery)
         {
             _method = HttpMethod.Get;
             _columnQuery = columnQuery;
@@ -328,7 +328,7 @@ namespace Supabase.Postgrest
         }
 
         /// <inheritdoc />
-        public Table<TModel> Select(Expression<Func<TModel, object[]>> predicate)
+        public IPostgrestTable<TModel> Select(Expression<Func<TModel, object[]>> predicate)
         {
             var visitor = new SelectExpressionVisitor();
             visitor.Visit(predicate);
@@ -341,7 +341,7 @@ namespace Supabase.Postgrest
         }
 
         /// <inheritdoc />
-        public Table<TModel> Where(Expression<Func<TModel, bool>> predicate)
+        public IPostgrestTable<TModel> Where(Expression<Func<TModel, bool>> predicate)
         {
             var visitor = new WhereExpressionVisitor();
             visitor.Visit(predicate);
@@ -350,11 +350,11 @@ namespace Supabase.Postgrest
                 throw new ArgumentException(
                     "Unable to parse the supplied predicate, did you return a predicate where each left hand of the condition is a Model property?");
 
-            if (visitor.Filter.Op == Constants.Operator.Equals && visitor.Filter.Criteria == null)
-                _filters.Add(new QueryFilter(visitor.Filter.Property!, Constants.Operator.Is, QueryFilter.NullVal));
-            else if (visitor.Filter.Op == Constants.Operator.NotEqual && visitor.Filter.Criteria == null)
-                _filters.Add(new QueryFilter(visitor.Filter.Property!, Constants.Operator.Not,
-                    new QueryFilter(visitor.Filter.Property!, Constants.Operator.Is, QueryFilter.NullVal)));
+            if (visitor.Filter.Op == Operator.Equals && visitor.Filter.Criteria == null)
+                _filters.Add(new QueryFilter(visitor.Filter.Property!, Operator.Is, QueryFilter.NullVal));
+            else if (visitor.Filter.Op == Operator.NotEqual && visitor.Filter.Criteria == null)
+                _filters.Add(new QueryFilter(visitor.Filter.Property!, Operator.Not,
+                    new QueryFilter(visitor.Filter.Property!, Operator.Is, QueryFilter.NullVal)));
             else
                 _filters.Add(visitor.Filter);
 
@@ -363,7 +363,7 @@ namespace Supabase.Postgrest
 
 
         /// <inheritdoc />
-        public Table<TModel> Limit(int limit, string? foreignTableName = null)
+        public IPostgrestTable<TModel> Limit(int limit, string? foreignTableName = null)
         {
             _limit = limit;
             _limitForeignKey = foreignTableName;
@@ -372,14 +372,14 @@ namespace Supabase.Postgrest
 
 
         /// <inheritdoc />
-        public Table<TModel> OnConflict(string columnName)
+        public IPostgrestTable<TModel> OnConflict(string columnName)
         {
             _onConflict = columnName;
             return this;
         }
 
         /// <inheritdoc />
-        public Table<TModel> OnConflict(Expression<Func<TModel, object>> predicate)
+        public IPostgrestTable<TModel> OnConflict(Expression<Func<TModel, object>> predicate)
         {
             var visitor = new SelectExpressionVisitor();
             visitor.Visit(predicate);
@@ -397,7 +397,7 @@ namespace Supabase.Postgrest
 
 
         /// <inheritdoc />
-        public Table<TModel> Columns(string[] columns)
+        public IPostgrestTable<TModel> Columns(string[] columns)
         {
             foreach (var column in columns)
                 _columns.Add(column);
@@ -407,7 +407,7 @@ namespace Supabase.Postgrest
 
 
         /// <inheritdoc />
-        public Table<TModel> Columns(Expression<Func<TModel, object[]>> predicate)
+        public IPostgrestTable<TModel> Columns(Expression<Func<TModel, object[]>> predicate)
         {
             var visitor = new SelectExpressionVisitor();
             visitor.Visit(predicate);
@@ -420,7 +420,7 @@ namespace Supabase.Postgrest
 
 
         /// <inheritdoc />
-        public Table<TModel> Offset(int offset, string? foreignTableName = null)
+        public IPostgrestTable<TModel> Offset(int offset, string? foreignTableName = null)
         {
             _offset = offset;
             _offsetForeignKey = foreignTableName;
@@ -465,7 +465,7 @@ namespace Supabase.Postgrest
 
 
         /// <inheritdoc />
-        public Table<TModel> Set(Expression<Func<TModel, object>> keySelector, object? value)
+        public IPostgrestTable<TModel> Set(Expression<Func<TModel, object>> keySelector, object? value)
         {
             var visitor = new SetExpressionVisitor();
             visitor.Visit(keySelector);
@@ -493,7 +493,7 @@ namespace Supabase.Postgrest
 
 
         /// <inheritdoc />
-        public Table<TModel> Set(Expression<Func<TModel, KeyValuePair<object, object?>>> keyValuePairExpression)
+        public IPostgrestTable<TModel> Set(Expression<Func<TModel, KeyValuePair<object, object?>>> keyValuePairExpression)
         {
             var visitor = new SetExpressionVisitor();
             visitor.Visit(keyValuePairExpression);
@@ -577,7 +577,7 @@ namespace Supabase.Postgrest
 
 
         /// <inheritdoc />
-        public async Task<int> Count(Constants.CountType type, CancellationToken cancellationToken = default)
+        public async Task<int> Count(CountType type, CancellationToken cancellationToken = default)
         {
             _method = HttpMethod.Head;
 
@@ -777,8 +777,8 @@ namespace Supabase.Postgrest
 
             switch (filter.Op)
             {
-                case Constants.Operator.Or:
-                case Constants.Operator.And:
+                case Operator.Or:
+                case Operator.And:
                     if (filter.Criteria is List<IPostgrestQueryFilter> subFilters)
                     {
                         var list = new List<KeyValuePair<string, string>>();
@@ -793,7 +793,7 @@ namespace Supabase.Postgrest
                     }
 
                     break;
-                case Constants.Operator.Not:
+                case Operator.Not:
                     if (filter.Criteria is QueryFilter notFilter)
                     {
                         var prepped = PrepareFilter(notFilter);
@@ -801,16 +801,16 @@ namespace Supabase.Postgrest
                     }
 
                     break;
-                case Constants.Operator.Like:
-                case Constants.Operator.ILike:
-                    if (filter.Criteria is string likeCriteria && filter.Property != null)
+                case Operator.Like:
+                case Operator.ILike:
+                    if (filter is { Criteria: string likeCriteria, Property: not null })
                     {
                         return new KeyValuePair<string, string>(filter.Property,
                             $"{asAttribute.Mapping}.{likeCriteria.Replace("%", "*")}");
                     }
 
                     break;
-                case Constants.Operator.In:
+                case Operator.In:
                     if (filter is { Criteria: IList inCriteria, Property: not null })
                     {
                         foreach (var item in inCriteria)
@@ -827,9 +827,9 @@ namespace Supabase.Postgrest
                     }
 
                     break;
-                case Constants.Operator.Contains:
-                case Constants.Operator.ContainedIn:
-                case Constants.Operator.Overlap:
+                case Operator.Contains:
+                case Operator.ContainedIn:
+                case Operator.Overlap:
                     switch (filter.Criteria)
                     {
                         case IList listCriteria when filter.Property != null:
@@ -849,11 +849,11 @@ namespace Supabase.Postgrest
                     }
 
                     break;
-                case Constants.Operator.StrictlyLeft:
-                case Constants.Operator.StrictlyRight:
-                case Constants.Operator.NotRightOf:
-                case Constants.Operator.NotLeftOf:
-                case Constants.Operator.Adjacent:
+                case Operator.StrictlyLeft:
+                case Operator.StrictlyRight:
+                case Operator.NotRightOf:
+                case Operator.NotLeftOf:
+                case Operator.Adjacent:
                     if (filter is { Criteria: IntRange rangeCriterion, Property: not null })
                     {
                         return new KeyValuePair<string, string>(filter.Property,
@@ -861,10 +861,10 @@ namespace Supabase.Postgrest
                     }
 
                     break;
-                case Constants.Operator.FTS:
-                case Constants.Operator.PHFTS:
-                case Constants.Operator.PLFTS:
-                case Constants.Operator.WFTS:
+                case Operator.FTS:
+                case Operator.PHFTS:
+                case Operator.PLFTS:
+                case Operator.WFTS:
                     if (filter is { Criteria: FullTextSearchConfig searchConfig, Property: not null })
                     {
                         return new KeyValuePair<string, string>(filter.Property,

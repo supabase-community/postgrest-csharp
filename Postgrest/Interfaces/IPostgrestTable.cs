@@ -35,7 +35,7 @@ namespace Supabase.Postgrest.Interfaces
         /// </summary>
         /// <param name="filters"></param>
         /// <returns></returns>
-        Table<TModel> And(List<IPostgrestQueryFilter> filters);
+        IPostgrestTable<TModel> And(List<IPostgrestQueryFilter> filters);
 
         /// <summary>
         /// Clears currently defined query values.
@@ -52,7 +52,7 @@ namespace Supabase.Postgrest.Interfaces
         /// </summary>
         /// <param name="columns"></param>
         /// <returns></returns>
-        Table<TModel> Columns(string[] columns);
+        IPostgrestTable<TModel> Columns(string[] columns);
 
         /// <summary>
         /// By using the columns query parameter it’s possible to specify the payload keys that will be inserted and ignore the rest of the payload.
@@ -64,7 +64,7 @@ namespace Supabase.Postgrest.Interfaces
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        Table<TModel> Columns(Expression<Func<TModel, object[]>> predicate);
+        IPostgrestTable<TModel> Columns(Expression<Func<TModel, object[]>> predicate);
 
         /// <summary>
         /// Returns ONLY a count from the specified query.
@@ -99,7 +99,7 @@ namespace Supabase.Postgrest.Interfaces
         /// <param name="op">Operation to perform.</param>
         /// <param name="criterion">Value to filter with, must be a `string`, `List&lt;object&gt;`, `Dictionary&lt;string, object&gt;`, `FullTextSearchConfig`, or `Range`</param>
         /// <returns></returns>
-        Table<TModel> Filter<TCriterion>(string columnName, Constants.Operator op, TCriterion? criterion);
+        IPostgrestTable<TModel> Filter<TCriterion>(string columnName, Constants.Operator op, TCriterion? criterion);
 
         /// <summary>
         /// Add a filter to a query request using a predicate to select column.
@@ -109,7 +109,7 @@ namespace Supabase.Postgrest.Interfaces
         /// <param name="criterion">Value to filter with, must be a `string`, `List&lt;object&gt;`, `Dictionary&lt;string, object&gt;`, `FullTextSearchConfig`, or `Range`</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"></exception>
-        Table<TModel> Filter<TCriterion>(Expression<Func<TModel, object>> predicate, Constants.Operator op,
+        IPostgrestTable<TModel> Filter<TCriterion>(Expression<Func<TModel, object>> predicate, Constants.Operator op,
             TCriterion? criterion);
 
         /// <summary>
@@ -145,28 +145,28 @@ namespace Supabase.Postgrest.Interfaces
         /// <param name="limit"></param>
         /// <param name="foreignTableName"></param>
         /// <returns></returns>
-        Table<TModel> Limit(int limit, string? foreignTableName = null);
+        IPostgrestTable<TModel> Limit(int limit, string? foreignTableName = null);
 
         /// <summary>
         /// Finds all rows whose columns match the specified `query` object.
         /// </summary>
         /// <param name="query">The object to filter with, with column names as keys mapped to their filter values.</param>
         /// <returns></returns>
-        Table<TModel> Match(Dictionary<string, string> query);
+        IPostgrestTable<TModel> Match(Dictionary<string, string> query);
 
         /// <summary>
         /// Fills in query parameters based on a given model's primary key(s).
         /// </summary>
         /// <param name="model">A model with a primary key column</param>
         /// <returns></returns>
-        Table<TModel> Match(TModel model);
+        IPostgrestTable<TModel> Match(TModel model);
 
         /// <summary>
         /// Adds a NOT filter to the current query args.
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        Table<TModel> Not(IPostgrestQueryFilter filter);
+        IPostgrestTable<TModel> Not(IPostgrestQueryFilter filter);
 
         /// <summary>
         /// Adds a NOT filter to the current query args.
@@ -175,7 +175,7 @@ namespace Supabase.Postgrest.Interfaces
         /// <param name="op"></param>
         /// <param name="criteria"></param>
         /// <returns></returns>
-        Table<TModel> Not(string columnName, Constants.Operator op, Dictionary<string, object> criteria);
+        IPostgrestTable<TModel> Not(string columnName, Constants.Operator op, Dictionary<string, object> criteria);
 
         /// <summary>
         /// Adds a NOT filter to the current query args.
@@ -184,7 +184,7 @@ namespace Supabase.Postgrest.Interfaces
         /// <param name="op"></param>
         /// <param name="criteria"></param>
         /// <returns></returns>
-        Table<TModel> Not(Expression<Func<TModel, object>> predicate, Constants.Operator op, Dictionary<string, object> criteria);
+        IPostgrestTable<TModel> Not(Expression<Func<TModel, object>> predicate, Constants.Operator op, Dictionary<string, object> criteria);
 
         /// <summary>
         /// Adds a NOT filter to the current query args.
@@ -197,7 +197,7 @@ namespace Supabase.Postgrest.Interfaces
         /// <param name="op"></param>
         /// <param name="criteria"></param>
         /// <returns></returns>
-        Table<TModel> Not<TCriterion>(string columnName, Constants.Operator op, List<TCriterion> criteria);
+        IPostgrestTable<TModel> Not<TCriterion>(string columnName, Constants.Operator op, List<TCriterion> criteria);
 
         /// <summary>
         /// Adds a NOT filter to the current query args.
@@ -210,7 +210,7 @@ namespace Supabase.Postgrest.Interfaces
         /// <param name="op"></param>
         /// <param name="criteria"></param>
         /// <returns></returns>
-        Table<TModel> Not<TCriterion>(Expression<Func<TModel, object>> predicate, Constants.Operator op,
+        IPostgrestTable<TModel> Not<TCriterion>(Expression<Func<TModel, object>> predicate, Constants.Operator op,
             List<TCriterion> criteria);
 
         /// <summary>
@@ -225,7 +225,7 @@ namespace Supabase.Postgrest.Interfaces
         /// <param name="op"></param>
         /// <param name="criterion"></param>
         /// <returns></returns>
-        Table<TModel> Not<TCriterion>(string columnName, Constants.Operator op, TCriterion? criterion);
+        IPostgrestTable<TModel> Not<TCriterion>(string columnName, Constants.Operator op, TCriterion? criterion);
 
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace Supabase.Postgrest.Interfaces
         /// <param name="op"></param>
         /// <param name="criterion"></param>
         /// <returns></returns>
-        Table<TModel> Not<TCriterion>(Expression<Func<TModel, object>> predicate, Constants.Operator op,
+        IPostgrestTable<TModel> Not<TCriterion>(Expression<Func<TModel, object>> predicate, Constants.Operator op,
             TCriterion? criterion);
 
         /// <summary>
@@ -249,28 +249,28 @@ namespace Supabase.Postgrest.Interfaces
         /// <param name="offset"></param>
         /// <param name="foreignTableName"></param>
         /// <returns></returns>
-        Table<TModel> Offset(int offset, string? foreignTableName = null);
+        IPostgrestTable<TModel> Offset(int offset, string? foreignTableName = null);
 
         /// <summary>
         /// By specifying the onConflict query parameter, you can make UPSERT work on a column(s) that has a UNIQUE constraint.
         /// </summary>
         /// <param name="columnName"></param>
         /// <returns></returns>
-        Table<TModel> OnConflict(string columnName);
+        IPostgrestTable<TModel> OnConflict(string columnName);
 
         /// <summary>
         /// Set an onConflict query parameter for UPSERTing on a column that has a UNIQUE constraint using a linq predicate.
         /// </summary>
         /// <param name="predicate">Expects a column from the model to be returned.</param>
         /// <returns></returns>
-        Table<TModel> OnConflict(Expression<Func<TModel, object>> predicate);
+        IPostgrestTable<TModel> OnConflict(Expression<Func<TModel, object>> predicate);
 
         /// <summary>
         /// Adds a OR Filter to the current query args.
         /// </summary>
         /// <param name="filters"></param>
         /// <returns></returns>
-        Table<TModel> Or(List<IPostgrestQueryFilter> filters);
+        IPostgrestTable<TModel> Or(List<IPostgrestQueryFilter> filters);
 
         /// <summary>
         /// Adds an ordering to the current query args.
@@ -284,7 +284,7 @@ namespace Supabase.Postgrest.Interfaces
         /// <param name="ordering"></param>
         /// <param name="nullPosition"></param>
         /// <returns></returns>
-        Table<TModel> Order(string column, Constants.Ordering ordering,
+        IPostgrestTable<TModel> Order(string column, Constants.Ordering ordering,
             Constants.NullPosition nullPosition = Constants.NullPosition.First);
 
         /// <summary>
@@ -299,7 +299,7 @@ namespace Supabase.Postgrest.Interfaces
         /// <param name="ordering">>Expects a columns from the Model to be returned</param>
         /// <param name="nullPosition"></param>
         /// <returns></returns>
-        Table<TModel> Order(Expression<Func<TModel, object>> predicate, Constants.Ordering ordering,
+        IPostgrestTable<TModel> Order(Expression<Func<TModel, object>> predicate, Constants.Ordering ordering,
             Constants.NullPosition nullPosition = Constants.NullPosition.First);
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Supabase.Postgrest.Interfaces
         /// <param name="ordering"></param>
         /// <param name="nullPosition"></param>
         /// <returns></returns>
-        Table<TModel> Order(string foreignTable, string column, Constants.Ordering ordering,
+        IPostgrestTable<TModel> Order(string foreignTable, string column, Constants.Ordering ordering,
             Constants.NullPosition nullPosition = Constants.NullPosition.First);
 
         /// <summary>
@@ -323,7 +323,7 @@ namespace Supabase.Postgrest.Interfaces
         /// </summary>
         /// <param name="from"></param>
         /// <returns></returns>
-        Table<TModel> Range(int from);
+        IPostgrestTable<TModel> Range(int from);
 
         /// <summary>
         /// Sets a bounded range to the current query.
@@ -331,14 +331,14 @@ namespace Supabase.Postgrest.Interfaces
         /// <param name="from"></param>
         /// <param name="to"></param>
         /// <returns></returns>
-        Table<TModel> Range(int from, int to);
+        IPostgrestTable<TModel> Range(int from, int to);
 
         /// <summary>
         /// Select columns for query. 
         /// </summary>
         /// <param name="columnQuery"></param>
         /// <returns></returns>
-        Table<TModel> Select(string columnQuery);
+        IPostgrestTable<TModel> Select(string columnQuery);
 
         /// <summary>
         /// Select columns using a predicate function.
@@ -348,7 +348,7 @@ namespace Supabase.Postgrest.Interfaces
         /// </summary>
         /// <param name="predicate">Expects an array of columns from the Model to be returned.</param>
         /// <returns></returns>
-        Table<TModel> Select(Expression<Func<TModel, object[]>> predicate);
+        IPostgrestTable<TModel> Select(Expression<Func<TModel, object[]>> predicate);
 
         /// <summary>
         /// Filter a query based on a predicate function. 
@@ -365,7 +365,7 @@ namespace Supabase.Postgrest.Interfaces
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        Table<TModel> Where(Expression<Func<TModel, bool>> predicate);
+        IPostgrestTable<TModel> Where(Expression<Func<TModel, bool>> predicate);
 
         /// <summary>
         /// Executes a query that expects to have a single object returned, rather than returning list of models
@@ -383,7 +383,7 @@ namespace Supabase.Postgrest.Interfaces
         /// <param name="keySelector"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        Table<TModel> Set(Expression<Func<TModel, object>> keySelector, object? value);
+        IPostgrestTable<TModel> Set(Expression<Func<TModel, object>> keySelector, object? value);
 
         /// <summary>
         /// Specifies a KeyValuePair to be updated. Should be combined with filters/where clauses.
@@ -393,7 +393,7 @@ namespace Supabase.Postgrest.Interfaces
         /// <param name="keyValuePairExpression"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"></exception>
-        Table<TModel> Set(Expression<Func<TModel, KeyValuePair<object, object?>>> keyValuePairExpression);
+        IPostgrestTable<TModel> Set(Expression<Func<TModel, KeyValuePair<object, object?>>> keyValuePairExpression);
 
         /// <summary>
         /// Calls an Update function after `Set` has been called.

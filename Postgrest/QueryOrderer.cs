@@ -8,10 +8,10 @@ namespace Supabase.Postgrest
 	{
 		public string? ForeignTable { get; }
 		public string Column { get; }
-		public Constants.Ordering Ordering { get; }
-		public Constants.NullPosition NullPosition { get; }
+		public Ordering Ordering { get; }
+		public NullPosition NullPosition { get; }
 
-		public QueryOrderer(string? foreignTable, string column, Constants.Ordering ordering, Constants.NullPosition nullPosition)
+		public QueryOrderer(string? foreignTable, string column, Ordering ordering, NullPosition nullPosition)
 		{
 			ForeignTable = foreignTable;
 			Column = column;
