@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## 4.0.1 - 2024-05-07
+
+- Re: [#92](https://github.com/supabase-community/postgrest-csharp/issues/92) Changes `IPostgrestTable<>` contract to
+  return the interface rather than a concrete type.
+
 ## 4.0.0 - 2024-04-21
 
 - [MAJOR] Moves namespaces from `Postgrest` to `Supabase.Postgrest`
