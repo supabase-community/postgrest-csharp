@@ -213,7 +213,7 @@ Interface IPostgrestTable&lt;TModel&gt;  <a class="header-action link-secondary"
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Table&lt;TModel&gt; And(List&lt;IPostgrestQueryFilter&gt; filters)</code></pre>
+    <pre><code class="lang-csharp hljs">IPostgrestTable&lt;TModel&gt; And(List&lt;IPostgrestQueryFilter&gt; filters)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -224,7 +224,7 @@ Interface IPostgrestTable&lt;TModel&gt;  <a class="header-action link-secondary"
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Supabase.Postgrest.Table-1.html">Table</a>&lt;TModel&gt;</dt>
+    <dt><a class="xref" href="Supabase.Postgrest.Interfaces.IPostgrestTable-1.html">IPostgrestTable</a>&lt;TModel&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -280,7 +280,7 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Table&lt;TModel&gt; Columns(Expression&lt;Func&lt;TModel, object[]&gt;&gt; predicate)</code></pre>
+    <pre><code class="lang-csharp hljs">IPostgrestTable&lt;TModel&gt; Columns(Expression&lt;Func&lt;TModel, object[]&gt;&gt; predicate)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -291,7 +291,7 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Supabase.Postgrest.Table-1.html">Table</a>&lt;TModel&gt;</dt>
+    <dt><a class="xref" href="Supabase.Postgrest.Interfaces.IPostgrestTable-1.html">IPostgrestTable</a>&lt;TModel&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -320,7 +320,7 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Table&lt;TModel&gt; Columns(string[] columns)</code></pre>
+    <pre><code class="lang-csharp hljs">IPostgrestTable&lt;TModel&gt; Columns(string[] columns)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -331,7 +331,7 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Supabase.Postgrest.Table-1.html">Table</a>&lt;TModel&gt;</dt>
+    <dt><a class="xref" href="Supabase.Postgrest.Interfaces.IPostgrestTable-1.html">IPostgrestTable</a>&lt;TModel&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -478,7 +478,7 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Table&lt;TModel&gt; Filter&lt;TCriterion&gt;(Expression&lt;Func&lt;TModel, object&gt;&gt; predicate, Constants.Operator op, TCriterion? criterion)</code></pre>
+    <pre><code class="lang-csharp hljs">IPostgrestTable&lt;TModel&gt; Filter&lt;TCriterion&gt;(Expression&lt;Func&lt;TModel, object&gt;&gt; predicate, Constants.Operator op, TCriterion? criterion)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -496,7 +496,7 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Supabase.Postgrest.Table-1.html">Table</a>&lt;TModel&gt;</dt>
+    <dt><a class="xref" href="Supabase.Postgrest.Interfaces.IPostgrestTable-1.html">IPostgrestTable</a>&lt;TModel&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -532,7 +532,7 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Table&lt;TModel&gt; Filter&lt;TCriterion&gt;(string columnName, Constants.Operator op, TCriterion? criterion)</code></pre>
+    <pre><code class="lang-csharp hljs">IPostgrestTable&lt;TModel&gt; Filter&lt;TCriterion&gt;(string columnName, Constants.Operator op, TCriterion? criterion)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -550,7 +550,7 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Supabase.Postgrest.Table-1.html">Table</a>&lt;TModel&gt;</dt>
+    <dt><a class="xref" href="Supabase.Postgrest.Interfaces.IPostgrestTable-1.html">IPostgrestTable</a>&lt;TModel&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -734,7 +734,7 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Table&lt;TModel&gt; Limit(int limit, string? foreignTableName = null)</code></pre>
+    <pre><code class="lang-csharp hljs">IPostgrestTable&lt;TModel&gt; Limit(int limit, string? foreignTableName = null)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -747,7 +747,7 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Supabase.Postgrest.Table-1.html">Table</a>&lt;TModel&gt;</dt>
+    <dt><a class="xref" href="Supabase.Postgrest.Interfaces.IPostgrestTable-1.html">IPostgrestTable</a>&lt;TModel&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -773,7 +773,7 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Table&lt;TModel&gt; Match(Dictionary&lt;string, string&gt; query)</code></pre>
+    <pre><code class="lang-csharp hljs">IPostgrestTable&lt;TModel&gt; Match(Dictionary&lt;string, string&gt; query)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -785,7 +785,7 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Supabase.Postgrest.Table-1.html">Table</a>&lt;TModel&gt;</dt>
+    <dt><a class="xref" href="Supabase.Postgrest.Interfaces.IPostgrestTable-1.html">IPostgrestTable</a>&lt;TModel&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -811,7 +811,7 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Table&lt;TModel&gt; Match(TModel model)</code></pre>
+    <pre><code class="lang-csharp hljs">IPostgrestTable&lt;TModel&gt; Match(TModel model)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -823,7 +823,7 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Supabase.Postgrest.Table-1.html">Table</a>&lt;TModel&gt;</dt>
+    <dt><a class="xref" href="Supabase.Postgrest.Interfaces.IPostgrestTable-1.html">IPostgrestTable</a>&lt;TModel&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -849,7 +849,7 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Table&lt;TModel&gt; Not(IPostgrestQueryFilter filter)</code></pre>
+    <pre><code class="lang-csharp hljs">IPostgrestTable&lt;TModel&gt; Not(IPostgrestQueryFilter filter)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -860,7 +860,7 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Supabase.Postgrest.Table-1.html">Table</a>&lt;TModel&gt;</dt>
+    <dt><a class="xref" href="Supabase.Postgrest.Interfaces.IPostgrestTable-1.html">IPostgrestTable</a>&lt;TModel&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -886,7 +886,7 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Table&lt;TModel&gt; Not(Expression&lt;Func&lt;TModel, object&gt;&gt; predicate, Constants.Operator op, Dictionary&lt;string, object&gt; criteria)</code></pre>
+    <pre><code class="lang-csharp hljs">IPostgrestTable&lt;TModel&gt; Not(Expression&lt;Func&lt;TModel, object&gt;&gt; predicate, Constants.Operator op, Dictionary&lt;string, object&gt; criteria)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -902,7 +902,7 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Supabase.Postgrest.Table-1.html">Table</a>&lt;TModel&gt;</dt>
+    <dt><a class="xref" href="Supabase.Postgrest.Interfaces.IPostgrestTable-1.html">IPostgrestTable</a>&lt;TModel&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -928,7 +928,7 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Table&lt;TModel&gt; Not(string columnName, Constants.Operator op, Dictionary&lt;string, object&gt; criteria)</code></pre>
+    <pre><code class="lang-csharp hljs">IPostgrestTable&lt;TModel&gt; Not(string columnName, Constants.Operator op, Dictionary&lt;string, object&gt; criteria)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -943,7 +943,7 @@ Using this also has the side-effect of being more efficient for Bulk Insert sinc
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Supabase.Postgrest.Table-1.html">Table</a>&lt;TModel&gt;</dt>
+    <dt><a class="xref" href="Supabase.Postgrest.Interfaces.IPostgrestTable-1.html">IPostgrestTable</a>&lt;TModel&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -971,7 +971,7 @@ Allows queries like:</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Table&lt;TModel&gt; Not&lt;TCriterion&gt;(Expression&lt;Func&lt;TModel, object&gt;&gt; predicate, Constants.Operator op, List&lt;TCriterion&gt; criteria)</code></pre>
+    <pre><code class="lang-csharp hljs">IPostgrestTable&lt;TModel&gt; Not&lt;TCriterion&gt;(Expression&lt;Func&lt;TModel, object&gt;&gt; predicate, Constants.Operator op, List&lt;TCriterion&gt; criteria)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -987,7 +987,7 @@ Allows queries like:</p>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Supabase.Postgrest.Table-1.html">Table</a>&lt;TModel&gt;</dt>
+    <dt><a class="xref" href="Supabase.Postgrest.Interfaces.IPostgrestTable-1.html">IPostgrestTable</a>&lt;TModel&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -1020,7 +1020,7 @@ Allows queries like:</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Table&lt;TModel&gt; Not&lt;TCriterion&gt;(Expression&lt;Func&lt;TModel, object&gt;&gt; predicate, Constants.Operator op, TCriterion? criterion)</code></pre>
+    <pre><code class="lang-csharp hljs">IPostgrestTable&lt;TModel&gt; Not&lt;TCriterion&gt;(Expression&lt;Func&lt;TModel, object&gt;&gt; predicate, Constants.Operator op, TCriterion? criterion)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -1036,7 +1036,7 @@ Allows queries like:</p>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Supabase.Postgrest.Table-1.html">Table</a>&lt;TModel&gt;</dt>
+    <dt><a class="xref" href="Supabase.Postgrest.Interfaces.IPostgrestTable-1.html">IPostgrestTable</a>&lt;TModel&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -1069,7 +1069,7 @@ Allows queries like:</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Table&lt;TModel&gt; Not&lt;TCriterion&gt;(string columnName, Constants.Operator op, List&lt;TCriterion&gt; criteria)</code></pre>
+    <pre><code class="lang-csharp hljs">IPostgrestTable&lt;TModel&gt; Not&lt;TCriterion&gt;(string columnName, Constants.Operator op, List&lt;TCriterion&gt; criteria)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -1084,7 +1084,7 @@ Allows queries like:</p>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Supabase.Postgrest.Table-1.html">Table</a>&lt;TModel&gt;</dt>
+    <dt><a class="xref" href="Supabase.Postgrest.Interfaces.IPostgrestTable-1.html">IPostgrestTable</a>&lt;TModel&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -1117,7 +1117,7 @@ Allows queries like:</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Table&lt;TModel&gt; Not&lt;TCriterion&gt;(string columnName, Constants.Operator op, TCriterion? criterion)</code></pre>
+    <pre><code class="lang-csharp hljs">IPostgrestTable&lt;TModel&gt; Not&lt;TCriterion&gt;(string columnName, Constants.Operator op, TCriterion? criterion)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -1132,7 +1132,7 @@ Allows queries like:</p>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Supabase.Postgrest.Table-1.html">Table</a>&lt;TModel&gt;</dt>
+    <dt><a class="xref" href="Supabase.Postgrest.Interfaces.IPostgrestTable-1.html">IPostgrestTable</a>&lt;TModel&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -1163,7 +1163,7 @@ Allows queries like:</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Table&lt;TModel&gt; Offset(int offset, string? foreignTableName = null)</code></pre>
+    <pre><code class="lang-csharp hljs">IPostgrestTable&lt;TModel&gt; Offset(int offset, string? foreignTableName = null)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -1176,7 +1176,7 @@ Allows queries like:</p>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Supabase.Postgrest.Table-1.html">Table</a>&lt;TModel&gt;</dt>
+    <dt><a class="xref" href="Supabase.Postgrest.Interfaces.IPostgrestTable-1.html">IPostgrestTable</a>&lt;TModel&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -1202,7 +1202,7 @@ Allows queries like:</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Table&lt;TModel&gt; OnConflict(Expression&lt;Func&lt;TModel, object&gt;&gt; predicate)</code></pre>
+    <pre><code class="lang-csharp hljs">IPostgrestTable&lt;TModel&gt; OnConflict(Expression&lt;Func&lt;TModel, object&gt;&gt; predicate)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -1214,7 +1214,7 @@ Allows queries like:</p>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Supabase.Postgrest.Table-1.html">Table</a>&lt;TModel&gt;</dt>
+    <dt><a class="xref" href="Supabase.Postgrest.Interfaces.IPostgrestTable-1.html">IPostgrestTable</a>&lt;TModel&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -1240,7 +1240,7 @@ Allows queries like:</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Table&lt;TModel&gt; OnConflict(string columnName)</code></pre>
+    <pre><code class="lang-csharp hljs">IPostgrestTable&lt;TModel&gt; OnConflict(string columnName)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -1251,7 +1251,7 @@ Allows queries like:</p>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Supabase.Postgrest.Table-1.html">Table</a>&lt;TModel&gt;</dt>
+    <dt><a class="xref" href="Supabase.Postgrest.Interfaces.IPostgrestTable-1.html">IPostgrestTable</a>&lt;TModel&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -1277,7 +1277,7 @@ Allows queries like:</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Table&lt;TModel&gt; Or(List&lt;IPostgrestQueryFilter&gt; filters)</code></pre>
+    <pre><code class="lang-csharp hljs">IPostgrestTable&lt;TModel&gt; Or(List&lt;IPostgrestQueryFilter&gt; filters)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -1288,7 +1288,7 @@ Allows queries like:</p>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Supabase.Postgrest.Table-1.html">Table</a>&lt;TModel&gt;</dt>
+    <dt><a class="xref" href="Supabase.Postgrest.Interfaces.IPostgrestTable-1.html">IPostgrestTable</a>&lt;TModel&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -1316,7 +1316,7 @@ Allows queries like:</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Table&lt;TModel&gt; Order(Expression&lt;Func&lt;TModel, object&gt;&gt; predicate, Constants.Ordering ordering, Constants.NullPosition nullPosition = NullPosition.First)</code></pre>
+    <pre><code class="lang-csharp hljs">IPostgrestTable&lt;TModel&gt; Order(Expression&lt;Func&lt;TModel, object&gt;&gt; predicate, Constants.Ordering ordering, Constants.NullPosition nullPosition = NullPosition.First)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -1334,7 +1334,7 @@ Allows queries like:</p>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Supabase.Postgrest.Table-1.html">Table</a>&lt;TModel&gt;</dt>
+    <dt><a class="xref" href="Supabase.Postgrest.Interfaces.IPostgrestTable-1.html">IPostgrestTable</a>&lt;TModel&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -1362,7 +1362,7 @@ Allows queries like:</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Table&lt;TModel&gt; Order(string column, Constants.Ordering ordering, Constants.NullPosition nullPosition = NullPosition.First)</code></pre>
+    <pre><code class="lang-csharp hljs">IPostgrestTable&lt;TModel&gt; Order(string column, Constants.Ordering ordering, Constants.NullPosition nullPosition = NullPosition.First)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -1378,7 +1378,7 @@ Allows queries like:</p>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Supabase.Postgrest.Table-1.html">Table</a>&lt;TModel&gt;</dt>
+    <dt><a class="xref" href="Supabase.Postgrest.Interfaces.IPostgrestTable-1.html">IPostgrestTable</a>&lt;TModel&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -1406,7 +1406,7 @@ Allows queries like:</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Table&lt;TModel&gt; Order(string foreignTable, string column, Constants.Ordering ordering, Constants.NullPosition nullPosition = NullPosition.First)</code></pre>
+    <pre><code class="lang-csharp hljs">IPostgrestTable&lt;TModel&gt; Order(string foreignTable, string column, Constants.Ordering ordering, Constants.NullPosition nullPosition = NullPosition.First)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -1423,7 +1423,7 @@ Allows queries like:</p>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Supabase.Postgrest.Table-1.html">Table</a>&lt;TModel&gt;</dt>
+    <dt><a class="xref" href="Supabase.Postgrest.Interfaces.IPostgrestTable-1.html">IPostgrestTable</a>&lt;TModel&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -1449,7 +1449,7 @@ Allows queries like:</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Table&lt;TModel&gt; Range(int from)</code></pre>
+    <pre><code class="lang-csharp hljs">IPostgrestTable&lt;TModel&gt; Range(int from)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -1460,7 +1460,7 @@ Allows queries like:</p>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Supabase.Postgrest.Table-1.html">Table</a>&lt;TModel&gt;</dt>
+    <dt><a class="xref" href="Supabase.Postgrest.Interfaces.IPostgrestTable-1.html">IPostgrestTable</a>&lt;TModel&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -1486,7 +1486,7 @@ Allows queries like:</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Table&lt;TModel&gt; Range(int from, int to)</code></pre>
+    <pre><code class="lang-csharp hljs">IPostgrestTable&lt;TModel&gt; Range(int from, int to)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -1499,7 +1499,7 @@ Allows queries like:</p>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Supabase.Postgrest.Table-1.html">Table</a>&lt;TModel&gt;</dt>
+    <dt><a class="xref" href="Supabase.Postgrest.Interfaces.IPostgrestTable-1.html">IPostgrestTable</a>&lt;TModel&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -1527,7 +1527,7 @@ Allows queries like:</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Table&lt;TModel&gt; Select(Expression&lt;Func&lt;TModel, object[]&gt;&gt; predicate)</code></pre>
+    <pre><code class="lang-csharp hljs">IPostgrestTable&lt;TModel&gt; Select(Expression&lt;Func&lt;TModel, object[]&gt;&gt; predicate)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -1539,7 +1539,7 @@ Allows queries like:</p>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Supabase.Postgrest.Table-1.html">Table</a>&lt;TModel&gt;</dt>
+    <dt><a class="xref" href="Supabase.Postgrest.Interfaces.IPostgrestTable-1.html">IPostgrestTable</a>&lt;TModel&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -1565,7 +1565,7 @@ Allows queries like:</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Table&lt;TModel&gt; Select(string columnQuery)</code></pre>
+    <pre><code class="lang-csharp hljs">IPostgrestTable&lt;TModel&gt; Select(string columnQuery)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -1576,7 +1576,7 @@ Allows queries like:</p>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Supabase.Postgrest.Table-1.html">Table</a>&lt;TModel&gt;</dt>
+    <dt><a class="xref" href="Supabase.Postgrest.Interfaces.IPostgrestTable-1.html">IPostgrestTable</a>&lt;TModel&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -1603,7 +1603,7 @@ Allows queries like:</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Table&lt;TModel&gt; Set(Expression&lt;Func&lt;TModel, KeyValuePair&lt;object, object?&gt;&gt;&gt; keyValuePairExpression)</code></pre>
+    <pre><code class="lang-csharp hljs">IPostgrestTable&lt;TModel&gt; Set(Expression&lt;Func&lt;TModel, KeyValuePair&lt;object, object?&gt;&gt;&gt; keyValuePairExpression)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -1614,7 +1614,7 @@ Allows queries like:</p>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Supabase.Postgrest.Table-1.html">Table</a>&lt;TModel&gt;</dt>
+    <dt><a class="xref" href="Supabase.Postgrest.Interfaces.IPostgrestTable-1.html">IPostgrestTable</a>&lt;TModel&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -1646,7 +1646,7 @@ Allows queries like:</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Table&lt;TModel&gt; Set(Expression&lt;Func&lt;TModel, object&gt;&gt; keySelector, object? value)</code></pre>
+    <pre><code class="lang-csharp hljs">IPostgrestTable&lt;TModel&gt; Set(Expression&lt;Func&lt;TModel, object&gt;&gt; keySelector, object? value)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -1659,7 +1659,7 @@ Allows queries like:</p>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Supabase.Postgrest.Table-1.html">Table</a>&lt;TModel&gt;</dt>
+    <dt><a class="xref" href="Supabase.Postgrest.Interfaces.IPostgrestTable-1.html">IPostgrestTable</a>&lt;TModel&gt;</dt>
     <dd></dd>
   </dl>
 
@@ -1905,7 +1905,7 @@ be parsed as an &quot;AND&quot; query.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">Table&lt;TModel&gt; Where(Expression&lt;Func&lt;TModel, bool&gt;&gt; predicate)</code></pre>
+    <pre><code class="lang-csharp hljs">IPostgrestTable&lt;TModel&gt; Where(Expression&lt;Func&lt;TModel, bool&gt;&gt; predicate)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -1916,7 +1916,7 @@ be parsed as an &quot;AND&quot; query.</p>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Supabase.Postgrest.Table-1.html">Table</a>&lt;TModel&gt;</dt>
+    <dt><a class="xref" href="Supabase.Postgrest.Interfaces.IPostgrestTable-1.html">IPostgrestTable</a>&lt;TModel&gt;</dt>
     <dd></dd>
   </dl>
 
