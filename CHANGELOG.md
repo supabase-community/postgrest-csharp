@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## 4.0.2 - 2024-05-16
+
+- Re: [#96](https://github.com/supabase-community/postgrest-csharp/pull/96) Set `ConfigureAwait(false)` the response to
+  prevent deadlocking applications. Thanks [@pur3extreme](https://github.com/pur3extreme)!
+
 ## 4.0.1 - 2024-05-07
 
 - Re: [#92](https://github.com/supabase-community/postgrest-csharp/issues/92) Changes `IPostgrestTable<>` contract to
