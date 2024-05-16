@@ -94,7 +94,7 @@ namespace Supabase.Postgrest
 				}
 			}
 
-			var response = await Client.SendAsync(requestMessage, cancellationToken);
+			using var response = await Client.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 			var content = await response.Content.ReadAsStringAsync();
 
 			if (response.IsSuccessStatusCode)
