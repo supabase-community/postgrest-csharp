@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## 4.0.3 - 2024-05-23
+
+- Re: [#97](https://github.com/supabase-community/postgrest-csharp/pull/97) Fix set null value on string property.
+  Thanks [@alustrement-bob](https://github.com/alustrement-bob)!
+
 ## 4.0.2 - 2024-05-16
 
 - Re: [#96](https://github.com/supabase-community/postgrest-csharp/pull/96) Set `ConfigureAwait(false)` the response to
