@@ -474,13 +474,13 @@ namespace Supabase.Postgrest
                 throw new ArgumentException(
                     "Expression should return a KeyValuePair with a key of a Model Property and a value.");
 
-            if (value == null)
+            if (value == null && visitor.ExpectedType != typeof(string))
             {
                 if (Nullable.GetUnderlyingType(visitor.ExpectedType) == null)
                     throw new ArgumentException(
                         $"Expected Value to be of Type: {visitor.ExpectedType.Name}, instead received: {null}.");
             }
-            else if (!visitor.ExpectedType.IsInstanceOfType(value))
+            else if (value != null && !visitor.ExpectedType.IsInstanceOfType(value))
             {
                 throw new ArgumentException(string.Format("Expected Value to be of Type: {0}, instead received: {1}.",
                     visitor.ExpectedType.Name, value.GetType().Name));

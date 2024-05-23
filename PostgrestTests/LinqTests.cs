@@ -129,6 +129,10 @@ namespace PostgrestTests
             await client.Table<KitchenSink>()
                 .Set(x => x.BooleanValue, true)
                 .Update();
+
+            await client.Table<KitchenSink>()
+                .Set(x => x.StringValue!, null)
+                .Update();
         }
 
         [TestMethod("Linq: OnConflict")]
