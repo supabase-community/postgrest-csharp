@@ -6,8 +6,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Supabase.Core;
 using Supabase.Core.Extensions;
 using Supabase.Postgrest.Exceptions;
@@ -18,7 +18,6 @@ using Supabase.Postgrest.Responses;
 
 namespace Supabase.Postgrest
 {
-
 	internal static class Helpers
 	{
 		private static readonly HttpClient Client = new HttpClient();
@@ -26,7 +25,7 @@ namespace Supabase.Postgrest
 		private static readonly Guid AppSession = Guid.NewGuid();
 
 		/// <summary>
-		/// Helper to make a request using the defined parameters to an API Endpoint and coerce into a model. 
+		/// Helper to make a request using the defined parameters to an API Endpoint and coerce into a model.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="clientOptions"></param>
@@ -34,15 +33,15 @@ namespace Supabase.Postgrest
 		/// <param name="url"></param>
 		/// <param name="data"></param>
 		/// <param name="headers"></param>
-		/// <param name="serializerSettings"></param>
+		/// <param name="serializerOptions"></param>
 		/// <param name="getHeaders"></param>
 		/// <param name="cancellationToken"></param>
 		/// <returns></returns>
-		public static async Task<ModeledResponse<T>> MakeRequest<T>(ClientOptions clientOptions, HttpMethod method, string url, JsonSerializerSettings serializerSettings, object? data = null,
+		public static async Task<ModeledResponse<T>> MakeRequest<T>(ClientOptions clientOptions, HttpMethod method, string url, JsonSerializerOptions serializerOptions, object? data = null,
 			Dictionary<string, string>? headers = null, Func<Dictionary<string, string>>? getHeaders = null, CancellationToken cancellationToken = default) where T : BaseModel, new()
 		{
-			var baseResponse = await MakeRequest(clientOptions, method, url, serializerSettings, data, headers, cancellationToken);
-			return new ModeledResponse<T>(baseResponse, serializerSettings, getHeaders);
+			var baseResponse = await MakeRequest(clientOptions, method, url, serializerOptions, data, headers, cancellationToken);
+			return new ModeledResponse<T>(baseResponse, serializerOptions, getHeaders);
 		}
 
 		/// <summary>
@@ -53,10 +52,10 @@ namespace Supabase.Postgrest
 		/// <param name="url"></param>
 		/// <param name="data"></param>
 		/// <param name="headers"></param>
-		/// <param name="serializerSettings"></param>
+		/// <param name="serializerOptions"></param>
 		/// <param name="cancellationToken"></param>
 		/// <returns></returns>
-		public static async Task<BaseResponse> MakeRequest(ClientOptions clientOptions, HttpMethod method, string url, JsonSerializerSettings serializerSettings, object? data = null,
+		public static async Task<BaseResponse> MakeRequest(ClientOptions clientOptions, HttpMethod method, string url, JsonSerializerOptions serializerOptions, object? data = null,
 			Dictionary<string, string>? headers = null, CancellationToken cancellationToken = default)
 		{
 			var builder = new UriBuilder(url);
@@ -78,9 +77,9 @@ namespace Supabase.Postgrest
 
 			if (data != null && method != HttpMethod.Get)
 			{
-				var stringContent = JsonConvert.SerializeObject(data, serializerSettings);
+				var stringContent = JsonSerializer.Serialize(data, serializerOptions);
 
-				if (!string.IsNullOrWhiteSpace(stringContent) && JToken.Parse(stringContent).HasValues)
+				if (!string.IsNullOrWhiteSpace(stringContent) && JsonDocument.Parse(stringContent).RootElement.ValueKind != JsonValueKind.Null)
 				{
 					requestMessage.Content = new StringContent(stringContent, Encoding.UTF8, "application/json");
 				}

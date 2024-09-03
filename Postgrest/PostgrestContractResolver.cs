@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Supabase.Postgrest.Attributes;
-using Supabase.Postgrest.Converters;
 
 namespace Supabase.Postgrest
 {
@@ -13,7 +12,7 @@ namespace Supabase.Postgrest
     /// A custom resolver that handles mapping column names and property names as well
     /// as handling the conversion of Postgrest Ranges to a C# `Range`.
     /// </summary>
-    public class PostgrestContractResolver : DefaultContractResolver
+    public class PostgrestContractResolver : JsonConverter<object>
     {
         private bool IsUpdate { get; set; }
         private bool IsInsert { get; set; }
@@ -32,79 +31,168 @@ namespace Supabase.Postgrest
             IsUpsert = isUpsert;
         }
 
-        /// <inheritdoc />
-        protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
+        public override bool CanConvert(Type typeToConvert)
         {
-            JsonProperty prop = base.CreateProperty(member, memberSerialization);
+            return true; // This converter can handle any type
+        }
 
-            // Handle non-primitive conversions from a Postgres type to C#
-            if (prop.PropertyType == typeof(IntRange))
+        public override object? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            if (reader.TokenType != JsonTokenType.StartObject)
             {
-                prop.Converter = new RangeConverter();
-            }
-            else if (prop.PropertyType != null && (prop.PropertyType == typeof(DateTime) ||
-                                                   Nullable.GetUnderlyingType(prop.PropertyType) == typeof(DateTime)))
-            {
-                prop.Converter = new DateTimeConverter();
-            }
-            else if (prop.PropertyType == typeof(List<int>))
-            {
-                prop.Converter = new IntArrayConverter();
-            }
-            else if (prop.PropertyType != null && (prop.PropertyType == typeof(List<DateTime>) ||
-                                                   Nullable.GetUnderlyingType(prop.PropertyType) ==
-                                                   typeof(List<DateTime>)))
-            {
-                prop.Converter = new DateTimeConverter();
+                throw new JsonException("JSON object expected.");
             }
 
-            // Dynamically set the name of the key we are serializing/deserializing from the model.
-            if (!member.CustomAttributes.Any())
+            var instance = Activator.CreateInstance(typeToConvert);
+            var properties = typeToConvert.GetProperties();
+
+            while (reader.Read())
             {
-                return prop;
+                if (reader.TokenType == JsonTokenType.EndObject)
+                {
+                    return instance;
+                }
+
+                if (reader.TokenType != JsonTokenType.PropertyName)
+                {
+                    throw new JsonException("Property name expected.");
+                }
+
+                string propertyName = reader.GetString()!;
+                reader.Read();
+
+                var property = FindProperty(properties, propertyName);
+                if (property != null)
+                {
+                    object? value = JsonSerializer.Deserialize(ref reader, property.PropertyType, options);
+                    property.SetValue(instance, value);
+                }
+                else
+                {
+                    reader.Skip();
+                }
             }
 
-            var columnAttribute = member.GetCustomAttribute<ColumnAttribute>();
+            throw new JsonException("JSON object not properly closed.");
+        }
 
-            if (columnAttribute != null)
+        private PropertyInfo? FindProperty(PropertyInfo[] properties, string jsonPropertyName)
+        {
+            foreach (var prop in properties)
             {
-                prop.PropertyName = columnAttribute.ColumnName;
-                prop.NullValueHandling = columnAttribute.NullValueHandling;
+                var columnAttribute = prop.GetCustomAttribute<ColumnAttribute>();
+                var referenceAttr = prop.GetCustomAttribute<ReferenceAttribute>();
+                var primaryKeyAttribute = prop.GetCustomAttribute<PrimaryKeyAttribute>();
 
-                if (IsInsert && columnAttribute.IgnoreOnInsert)
-                    prop.Ignored = true;
-
-                if (IsUpdate && columnAttribute.IgnoreOnUpdate)
-                    prop.Ignored = true;
-
-                if ((IsUpsert && columnAttribute.IgnoreOnUpdate) || (IsUpsert && columnAttribute.IgnoreOnInsert))
-                    prop.Ignored = true;
-
-                return prop;
+                if (columnAttribute != null && columnAttribute.ColumnName == jsonPropertyName)
+                {
+                    return prop;
+                }
+                else if (referenceAttr != null)
+                {
+                    string? refPropertyName = string.IsNullOrEmpty(referenceAttr.ForeignKey)
+                        ? referenceAttr.TableName
+                        : referenceAttr.ColumnName;
+                    if (refPropertyName == jsonPropertyName)
+                    {
+                        return prop;
+                    }
+                }
+                else if (primaryKeyAttribute != null && primaryKeyAttribute.ColumnName == jsonPropertyName)
+                {
+                    return prop;
+                }
+                else if (prop.Name == jsonPropertyName)
+                {
+                    return prop;
+                }
             }
 
-            var referenceAttr = member.GetCustomAttribute<ReferenceAttribute>();
+            return null;
+        }
 
-            if (referenceAttr != null)
+        public override void Write(Utf8JsonWriter writer, object value, JsonSerializerOptions options)
+        {
+            if (value == null)
             {
-                // If a foreign key is not specified, PostgREST will return JSON that uses the table's name as the key.
-                prop.PropertyName = string.IsNullOrEmpty(referenceAttr.ForeignKey)
-                    ? referenceAttr.TableName
-                    : referenceAttr.ColumnName;
-
-                if (IsInsert || IsUpdate)
-                    prop.Ignored = true;
-
-                return prop;
+                writer.WriteNullValue();
+                return;
             }
 
-            var primaryKeyAttribute = member.GetCustomAttribute<PrimaryKeyAttribute>();
-            if (primaryKeyAttribute == null)
-                return prop;
+            writer.WriteStartObject();
 
-            prop.PropertyName = primaryKeyAttribute.ColumnName;
-            prop.ShouldSerialize = instance => primaryKeyAttribute.ShouldInsert || (IsUpsert && instance != null);
-            return prop;
+            var properties = value.GetType().GetProperties();
+            var customOptions = new JsonSerializerOptions(options);
+            customOptions.Converters.Remove(this);
+
+            foreach (var prop in properties)
+            {
+                var columnAttribute = prop.GetCustomAttribute<ColumnAttribute>();
+                var referenceAttr = prop.GetCustomAttribute<ReferenceAttribute>();
+                var primaryKeyAttribute = prop.GetCustomAttribute<PrimaryKeyAttribute>();
+                var ignoreAttribute = prop.GetCustomAttribute<JsonIgnoreAttribute>();
+
+                string? propertyName = prop.Name;
+                bool shouldSerialize = ignoreAttribute == null;
+
+                if (columnAttribute != null)
+                {
+                    propertyName = columnAttribute.ColumnName;
+                    if ((IsInsert && columnAttribute.IgnoreOnInsert) ||
+                        (IsUpdate && columnAttribute.IgnoreOnUpdate) ||
+                        (IsUpsert && (columnAttribute.IgnoreOnUpdate || columnAttribute.IgnoreOnInsert)))
+                    {
+                        shouldSerialize = false;
+                    }
+                }
+                else if (referenceAttr != null)
+                {
+                    propertyName = string.IsNullOrEmpty(referenceAttr.ForeignKey)
+                        ? referenceAttr.TableName
+                        : referenceAttr.ColumnName;
+                    if (IsInsert || IsUpdate)
+                    {
+                        shouldSerialize = false;
+                    }
+                }
+                else if (primaryKeyAttribute != null)
+                {
+                    propertyName = primaryKeyAttribute.ColumnName;
+                    shouldSerialize = primaryKeyAttribute.ShouldInsert || (IsUpsert && value != null);
+                }
+
+                if (shouldSerialize)
+                {
+                    object? propValue = null;
+                    try
+                    {
+                        propValue = prop.GetValue(value);
+                    }
+                    catch (TargetParameterCountException)
+                    {
+                        // Skip properties that require parameters
+                        continue;
+                    }
+                    catch (Exception ex)
+                    {
+                        // Log or handle other exceptions as needed
+                        Console.WriteLine($"Error getting value for property {prop.Name}: {ex.Message}");
+                        continue;
+                    }
+
+                    if (propValue != null && propertyName != null)
+                    {
+                        // Check if the property is not the GetPrimaryKey method
+                        if (prop.Name != "GetPrimaryKey" && !prop.Name.EndsWith("PrimaryKeyInternal"))
+                        {
+                            writer.WritePropertyName(propertyName);
+                            JsonSerializer.Serialize(writer, propValue, prop.PropertyType, customOptions);
+                        }
+                    }
+                }
+            }
+
+            writer.WriteEndObject();
         }
     }
 }

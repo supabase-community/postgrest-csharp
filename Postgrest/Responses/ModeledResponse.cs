@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json;
 using Supabase.Postgrest.Extensions;
 using Supabase.Postgrest.Models;
 
 namespace Supabase.Postgrest.Responses
 {
-
 	/// <summary>
 	/// A representation of a successful Postgrest response that transforms the string response into a C# Modelled response.
 	/// </summary>
@@ -24,55 +22,59 @@ namespace Supabase.Postgrest.Responses
 		/// A list of models in the response.
 		/// </summary>
 		public List<T> Models { get; } = new();
-		
+
 		/// <inheritdoc />
-		public ModeledResponse(BaseResponse baseResponse, JsonSerializerSettings serializerSettings, Func<Dictionary<string, string>>? getHeaders = null, bool shouldParse = true) : base(baseResponse.ClientOptions, baseResponse.ResponseMessage, baseResponse.Content)
+		public ModeledResponse(BaseResponse baseResponse, JsonSerializerOptions serializerOptions, Func<Dictionary<string, string>>? getHeaders = null, bool shouldParse = true) : base(baseResponse.ClientOptions, baseResponse.ResponseMessage, baseResponse.Content)
 		{
 			Content = baseResponse.Content;
 			ResponseMessage = baseResponse.ResponseMessage;
 
 			if (!shouldParse || string.IsNullOrEmpty(Content)) return;
 
-			var token = JToken.Parse(Content!);
+			var jsonDocument = JsonDocument.Parse(Content!);
 
-			switch (token)
+			switch (jsonDocument.RootElement.ValueKind)
 			{
 				// A List of models has been returned
-				case JArray: {
-					var deserialized = JsonConvert.DeserializeObject<List<T>>(Content!, serializerSettings);
-
-					if (deserialized != null)
-						Models = deserialized;
-
-					foreach (var model in Models)
+				case JsonValueKind.Array:
 					{
-						model.BaseUrl = baseResponse.ResponseMessage!.RequestMessage.RequestUri.GetInstanceUrl().Replace(model.TableName, "").TrimEnd('/');
-						model.RequestClientOptions = ClientOptions;
-						model.GetHeaders = getHeaders;
-					}
+						// TODO: This deserialization is not working as expected
+						// datetime fields end up as null
+						var deserialized = JsonSerializer.Deserialize<List<T>>(Content!, serializerOptions);
 
-					break;
-				}
+						if (deserialized != null)
+							Models = deserialized;
+
+						foreach (var model in Models)
+						{
+							model.BaseUrl = baseResponse.ResponseMessage!.RequestMessage.RequestUri.GetInstanceUrl().Replace(model.TableName, "").TrimEnd('/');
+							model.RequestClientOptions = ClientOptions;
+							model.GetHeaders = getHeaders;
+						}
+
+						break;
+					}
 				// A single model has been returned
-				case JObject: {
-					Models.Clear();
-
-					var obj = JsonConvert.DeserializeObject<T>(Content!, serializerSettings);
-
-					if (obj != null)
+				case JsonValueKind.Object:
 					{
-						obj.BaseUrl = baseResponse.ResponseMessage!.RequestMessage.RequestUri.GetInstanceUrl().Replace(obj.TableName, "").TrimEnd('/');
-						obj.RequestClientOptions = ClientOptions;
-						obj.GetHeaders = getHeaders;
+						Models.Clear();
 
-						Models.Add(obj);
+						var obj = JsonSerializer.Deserialize<T>(Content!, serializerOptions);
+
+						if (obj != null)
+						{
+							obj.BaseUrl = baseResponse.ResponseMessage!.RequestMessage.RequestUri.GetInstanceUrl().Replace(obj.TableName, "").TrimEnd('/');
+							obj.RequestClientOptions = ClientOptions;
+							obj.GetHeaders = getHeaders;
+
+							Models.Add(obj);
+						}
+
+						break;
 					}
-
-					break;
-				}
 			}
 
-			Debugger.Instance.Log(this, $"Response: [{baseResponse.ResponseMessage?.StatusCode}]\n" + $"Parsed Models <{typeof(T).Name}>:\n\t{JsonConvert.SerializeObject(Models)}\n");
+			Debugger.Instance.Log(this, $"Response: [{baseResponse.ResponseMessage?.StatusCode}]\n" + $"Parsed Models <{typeof(T).Name}>:\n\t{JsonSerializer.Serialize(Models, serializerOptions)}\n");
 		}
 	}
 }

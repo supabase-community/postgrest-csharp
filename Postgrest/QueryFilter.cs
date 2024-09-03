@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 using Supabase.Postgrest.Exceptions;
 using Supabase.Postgrest.Interfaces;
 using Supabase.Postgrest.Linq;
@@ -83,7 +83,7 @@ namespace Supabase.Postgrest
                 criteria = dateTime.ToString("o", CultureInfo.InvariantCulture);
             if (criteria is DateTimeOffset dateTimeOffset)
                 criteria = dateTimeOffset.ToString("o", CultureInfo.InvariantCulture);
-            
+
             switch (op)
             {
                 case Operator.And:
@@ -116,12 +116,12 @@ namespace Supabase.Postgrest
                     {
                         throw new PostgrestException(
                                 "List or Dictionary must be used supplied as criteria with filters that accept an array of arguments.")
-                            { Reason = FailureHint.Reason.InvalidArgument };
+                        { Reason = FailureHint.Reason.InvalidArgument };
                     }
                     break;
                 default:
                     throw new PostgrestException("Advanced filters require a constructor with more specific arguments")
-                        { Reason = FailureHint.Reason.InvalidArgument };
+                    { Reason = FailureHint.Reason.InvalidArgument };
             }
         }
 
@@ -145,7 +145,7 @@ namespace Supabase.Postgrest
                     break;
                 default:
                     throw new PostgrestException("Constructor must be called with a full text search operator")
-                        { Reason = FailureHint.Reason.InvalidArgument };
+                    { Reason = FailureHint.Reason.InvalidArgument };
             }
         }
 
@@ -195,7 +195,7 @@ namespace Supabase.Postgrest
                     break;
                 default:
                     throw new PostgrestException("Constructor can only be used with `or` or `and` filters")
-                        { Reason = FailureHint.Reason.InvalidArgument };
+                    { Reason = FailureHint.Reason.InvalidArgument };
             }
         }
 
@@ -214,7 +214,7 @@ namespace Supabase.Postgrest
                     break;
                 default:
                     throw new PostgrestException("Constructor can only be used with `not` filter")
-                        { Reason = FailureHint.Reason.InvalidArgument };
+                    { Reason = FailureHint.Reason.InvalidArgument };
             }
         }
     }
@@ -228,13 +228,13 @@ namespace Supabase.Postgrest
         /// <summary>
         /// Query Text
         /// </summary>
-        [JsonProperty("queryText")]
+        [JsonPropertyName("queryText")]
         public string QueryText { get; private set; }
 
         /// <summary>
         /// Defaults to english
         /// </summary>
-        [JsonProperty("config")]
+        [JsonPropertyName("config")]
         public string Config { get; private set; } = "english";
 
         /// <summary>

@@ -13,6 +13,7 @@ using Supabase.Postgrest.Interfaces;
 using Supabase.Postgrest.Responses;
 using PostgrestTests.Models;
 using static Supabase.Postgrest.Constants;
+using System.Text.Json;
 
 namespace PostgrestTests
 {
@@ -1051,7 +1052,10 @@ namespace PostgrestTests
                 .Insert(
                     new User
                     {
-                        Username = "WALRUS", Status = "ONLINE", Catchphrase = "I'm a walrus", FavoriteNumbers = numbers,
+                        Username = "WALRUS",
+                        Status = "ONLINE",
+                        Catchphrase = "I'm a walrus",
+                        FavoriteNumbers = numbers,
                         AgeRange = new IntRange(15, 25)
                     }, new QueryOptions { Upsert = true });
 
@@ -1061,17 +1065,17 @@ namespace PostgrestTests
         [TestMethod("stored procedure")]
         public async Task TestStoredProcedure()
         {
-            //Arrange 
+            //Arrange
             var client = new Client(BaseUrl);
 
-            //Act 
+            //Act
             var parameters = new Dictionary<string, object>
             {
                 { "name_param", "supabot" }
             };
             var response = await client.Rpc("get_status", parameters);
 
-            //Assert 
+            //Assert
             Assert.AreEqual(true, response.ResponseMessage?.IsSuccessStatusCode);
             Assert.AreEqual(true, response.Content?.Contains("OFFLINE"));
         }
@@ -1079,10 +1083,10 @@ namespace PostgrestTests
         [TestMethod("stored procedure with row param")]
         public async Task TestStoredProcedureWithRowParam()
         {
-            //Arrange 
+            //Arrange
             var client = new Client(BaseUrl);
 
-            //Act 
+            //Act
             var parameters = new Dictionary<string, object>
             {
                 {
@@ -1095,7 +1099,7 @@ namespace PostgrestTests
             };
             var response = await client.Rpc("get_data", parameters);
 
-            //Assert 
+            //Assert
             Assert.AreEqual(true, response.ResponseMessage?.IsSuccessStatusCode);
             Assert.AreEqual("null", response.Content);
         }
@@ -1111,10 +1115,10 @@ namespace PostgrestTests
             };
             var client = new Client(BaseUrl, options);
 
-            //Act 
+            //Act
             var response = await client.Table<User>().Filter(x => x.Username!, Operator.Equals, "leroyjenkins").Get();
 
-            //Assert 
+            //Assert
             Assert.AreEqual(1, response.Models.Count);
             Assert.AreEqual("leroyjenkins", response.Models.FirstOrDefault()?.Username);
         }

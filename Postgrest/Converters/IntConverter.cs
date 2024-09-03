@@ -1,34 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 namespace Supabase.Postgrest.Converters
 {
 
 	/// <inheritdoc />
-	public class IntArrayConverter : JsonConverter
+	public class IntArrayConverter : JsonConverter<List<int>>
 	{
 		/// <inheritdoc />
-		public override bool CanConvert(Type objectType)
+		public override bool CanConvert(Type typeToConvert)
 		{
-			throw new NotImplementedException();
+			return typeToConvert == typeof(List<int>);
 		}
 
 		/// <inheritdoc />
-		public override bool CanRead => false;
-
-		/// <inheritdoc />
-		public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+		public override List<int>? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 		{
-			throw new NotImplementedException();
-		}
-
-		/// <inheritdoc />
-		public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
-		{
-			if (value is List<int> list)
+			if (reader.TokenType != JsonTokenType.StartArray)
 			{
-				writer.WriteValue($"{{{string.Join(",", list)}}}");
+				throw new JsonException("Expected start of array.");
 			}
+
+			var list = new List<int>();
+
+			while (reader.Read())
+			{
+				if (reader.TokenType == JsonTokenType.EndArray)
+				{
+					return list;
+				}
+
+				if (reader.TokenType == JsonTokenType.Number)
+				{
+					list.Add(reader.GetInt32());
+				}
+				else
+				{
+					throw new JsonException($"Unexpected token type: {reader.TokenType}");
+				}
+			}
+
+			throw new JsonException("Unexpected end of JSON.");
+		}
+
+		/// <inheritdoc />
+		public override void Write(Utf8JsonWriter writer, List<int> value, JsonSerializerOptions options)
+		{
+			writer.WriteStringValue($"{{{string.Join(",", value)}}}");
 		}
 	}
 }
