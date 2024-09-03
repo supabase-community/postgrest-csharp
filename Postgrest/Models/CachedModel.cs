@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace Supabase.Postgrest.Models
 {
@@ -13,11 +13,11 @@ namespace Supabase.Postgrest.Models
         /// <summary>
         /// The stored Models
         /// </summary>
-        [JsonProperty("response")] public List<TModel>? Models { get; set; }
+        [JsonPropertyName("response")] public List<TModel>? Models { get; set; }
 
         /// <summary>
         /// Cache time in UTC.
         /// </summary>
-        [JsonProperty("cachedAt")] public DateTime CachedAt { get; set; }
+        [JsonPropertyName("cachedAt")] public DateTime CachedAt { get; set; }
     }
 }

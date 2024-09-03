@@ -1,33 +1,35 @@
 ﻿using System;
 using System.Text.RegularExpressions;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Supabase.Postgrest.Extensions;
 using Supabase.Postgrest.Exceptions;
 
 namespace Supabase.Postgrest.Converters
 {
-
 	/// <summary>
-	/// Used by Newtonsoft.Json to convert a C# range into a Postgrest range.
+	/// Used by System.Text.Json to convert a C# range into a Postgrest range.
 	/// </summary>
-	internal class RangeConverter : JsonConverter
+	internal class RangeConverter : JsonConverter<IntRange>
 	{
-		public override bool CanConvert(Type objectType)
+		public override bool CanConvert(Type typeToConvert)
 		{
-			throw new NotImplementedException();
+			return typeToConvert == typeof(IntRange);
 		}
 
-		public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+		public override IntRange? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 		{
-			return reader.Value != null ? ParseIntRange(reader.Value.ToString()) : null;
+			if (reader.TokenType == JsonTokenType.String)
+			{
+				string? value = reader.GetString();
+				return value != null ? ParseIntRange(value) : null;
+			}
+			throw new JsonException("Expected string value for IntRange.");
 		}
 
-		public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+		public override void Write(Utf8JsonWriter writer, IntRange value, JsonSerializerOptions options)
 		{
-			if (value == null) return;
-
-			var val = (IntRange)value;
-			writer.WriteValue(val.ToPostgresString());
+			writer.WriteStringValue(value.ToPostgresString());
 		}
 
 		public static IntRange ParseIntRange(string value)

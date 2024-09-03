@@ -1,7 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
+using System.Text.Json;
 using Supabase.Postgrest.Interfaces;
 using Supabase.Postgrest.Models;
 using Supabase.Postgrest.Requests;
@@ -22,14 +22,14 @@ namespace Supabase.Postgrest
 
         /// <inheritdoc />
         public TableWithCache(string baseUrl, IPostgrestCacheProvider cacheProvider,
-            JsonSerializerSettings serializerSettings, ClientOptions? options = null)
-            : base(baseUrl, serializerSettings, options)
+            JsonSerializerOptions serializerOptions, ClientOptions? options = null)
+            : base(baseUrl, serializerOptions, options)
         {
             CacheProvider = cacheProvider;
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>

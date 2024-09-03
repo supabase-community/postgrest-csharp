@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Supabase.Core.Extensions;
 using Supabase.Postgrest.Interfaces;
 using Supabase.Postgrest.Models;
 using Supabase.Postgrest.Responses;
+using System.Text.Json.Serialization.Metadata;
+using System.Reflection;
+using Supabase.Postgrest.Converters;
 
 namespace Supabase.Postgrest
 {
@@ -15,26 +18,23 @@ namespace Supabase.Postgrest
     public class Client : IPostgrestClient
     {
         /// <summary>
-        /// Custom Serializer resolvers and converters that will be used for encoding and decoding Postgrest JSON responses.
+        /// Custom Serializer options that will be used for encoding and decoding Postgrest JSON responses.
         ///
-        /// By default, Postgrest seems to use a date format that C# and Newtonsoft do not like, so this initial
+        /// By default, Postgrest seems to use a date format that C# does not like, so this initial
         /// configuration handles that.
         /// </summary>
-        public static JsonSerializerSettings SerializerSettings(ClientOptions? options = null)
+        public static JsonSerializerOptions SerializerOptions(ClientOptions? options = null)
         {
             options ??= new ClientOptions();
 
-            return new JsonSerializerSettings
+            return new JsonSerializerOptions
             {
-                ContractResolver = new PostgrestContractResolver(),
+                PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
                 Converters =
                 {
-                    // 2020-08-28T12:01:54.763231
-                    new IsoDateTimeConverter
-                    {
-                        DateTimeStyles = options.DateTimeStyles,
-                        DateTimeFormat = ClientOptions.DATE_TIME_FORMAT
-                    }
+                    new JsonStringEnumConverter(),
+                    new DateTimeConverter(),
+                    new RangeConverter()
                 }
             };
         }
@@ -70,7 +70,7 @@ namespace Supabase.Postgrest
 
         /// <summary>
         /// Function that can be set to return dynamic headers.
-        /// 
+        ///
         /// Headers specified in the constructor options will ALWAYS take precedence over headers returned by this function.
         /// </summary>
         public Func<Dictionary<string, string>>? GetHeaders { get; set; }
@@ -87,10 +87,9 @@ namespace Supabase.Postgrest
             Options = options ?? new ClientOptions();
         }
 
-
         /// <inheritdoc />
         public IPostgrestTable<T> Table<T>() where T : BaseModel, new() =>
-            new Table<T>(BaseUrl, SerializerSettings(Options), Options)
+            new Table<T>(BaseUrl, SerializerOptions(Options), Options)
             {
                 GetHeaders = GetHeaders
             };
@@ -98,18 +97,17 @@ namespace Supabase.Postgrest
         /// <inheritdoc />
         public IPostgrestTableWithCache<T> Table<T>(IPostgrestCacheProvider cacheProvider)
             where T : BaseModel, new() =>
-            new TableWithCache<T>(BaseUrl, cacheProvider, SerializerSettings(Options), Options)
+            new TableWithCache<T>(BaseUrl, cacheProvider, SerializerOptions(Options), Options)
             {
                 GetHeaders = GetHeaders
             };
-
 
         /// <inheritdoc />
         public async Task<TModeledResponse?> Rpc<TModeledResponse>(string procedureName, object? parameters = null)
         {
             var response = await Rpc(procedureName, parameters);
 
-            return string.IsNullOrEmpty(response.Content) ? default : JsonConvert.DeserializeObject<TModeledResponse>(response.Content!);
+            return string.IsNullOrEmpty(response.Content) ? default : JsonSerializer.Deserialize<TModeledResponse>(response.Content!, SerializerOptions(Options));
         }
 
         /// <inheritdoc />
@@ -120,13 +118,13 @@ namespace Supabase.Postgrest
 
             var canonicalUri = builder.Uri.ToString();
 
-            var serializerSettings = SerializerSettings(Options);
+            var serializerOptions = SerializerOptions(Options);
 
             // Prepare parameters
             Dictionary<string, object>? data = null;
             if (parameters != null)
-                data = JsonConvert.DeserializeObject<Dictionary<string, object>>(
-                    JsonConvert.SerializeObject(parameters, serializerSettings));
+                data = JsonSerializer.Deserialize<Dictionary<string, object>>(
+                    JsonSerializer.Serialize(parameters, serializerOptions));
 
             // Prepare headers
             var headers = Helpers.PrepareRequestHeaders(HttpMethod.Post,
@@ -137,7 +135,7 @@ namespace Supabase.Postgrest
 
             // Send request
             var request =
-                Helpers.MakeRequest(Options, HttpMethod.Post, canonicalUri, serializerSettings, data, headers);
+                Helpers.MakeRequest(Options, HttpMethod.Post, canonicalUri, serializerOptions, data, headers);
             return request;
         }
     }

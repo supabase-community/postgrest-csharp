@@ -10,7 +10,8 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Supabase.Postgrest.Extensions;
 using Supabase.Core.Attributes;
 using Supabase.Core.Extensions;
@@ -26,7 +27,7 @@ namespace Supabase.Postgrest
 {
     /// <summary>
     /// Class created from a model derived from `BaseModel` that can generate query requests to a Postgrest Endpoint.
-    /// 
+    ///
     /// Representative of a `USE $TABLE` command.
     /// </summary>
     /// <typeparam name="TModel">Model derived from `BaseModel`.</typeparam>
@@ -42,7 +43,7 @@ namespace Supabase.Postgrest
         public Func<Dictionary<string, string>>? GetHeaders { get; set; }
 
         private readonly ClientOptions _options;
-        private readonly JsonSerializerSettings _serializerSettings;
+        private readonly JsonSerializerOptions _serializerOptions;
 
         private HttpMethod _method = HttpMethod.Get;
 
@@ -75,14 +76,14 @@ namespace Supabase.Postgrest
         /// Typically called from the Client `new Client.Table&lt;ModelType&gt;`
         /// </summary>
         /// <param name="baseUrl">Api Endpoint (ex: "http://localhost:8000"), no trailing slash required.</param>
-        /// <param name="serializerSettings"></param>
+        /// <param name="serializerOptions"></param>
         /// <param name="options">Optional client configuration.</param>
-        public Table(string baseUrl, JsonSerializerSettings serializerSettings, ClientOptions? options = null)
+        public Table(string baseUrl, JsonSerializerOptions serializerOptions, ClientOptions? options = null)
         {
             BaseUrl = baseUrl;
 
             _options = options ?? new ClientOptions();
-            _serializerSettings = serializerSettings;
+            _serializerOptions = serializerOptions;
 
             foreach (var property in typeof(TModel).GetProperties())
             {
@@ -134,7 +135,7 @@ namespace Supabase.Postgrest
                         default:
                             throw new PostgrestException(
                                     "NOT filters must use the `Equals`, `Is`, `Not` or `NotEqual` operators")
-                                { Reason = FailureHint.Reason.InvalidArgument };
+                            { Reason = FailureHint.Reason.InvalidArgument };
                     }
 
                     return this;
@@ -518,8 +519,8 @@ namespace Supabase.Postgrest
                 throw new ArgumentException("No data has been set to update, was `Set` called?");
 
             _method = new HttpMethod("PATCH");
-
-            var request = Send<TModel>(_method, _setData, options.ToHeaders(), cancellationToken, isUpdate: true);
+            var data = (TModel)Convert.ChangeType(_setData, typeof(TModel));
+            var request = Send<TModel>(_method, data, options.ToHeaders(), cancellationToken, isUpdate: true);
 
             Clear();
 
@@ -552,7 +553,7 @@ namespace Supabase.Postgrest
 
             _method = HttpMethod.Delete;
 
-            var request = Send(_method, null, options.ToHeaders(), cancellationToken);
+            var request = Send<TModel>(_method, null, options.ToHeaders(), cancellationToken);
 
             Clear();
 
@@ -588,7 +589,7 @@ namespace Supabase.Postgrest
                 { "Prefer", $"count={attr?.Mapping}" }
             };
 
-            var request = Send(_method, null, headers, cancellationToken);
+            var request = Send<TModel>(_method, null, headers, cancellationToken);
             Clear();
 
             var response = await request;
@@ -673,7 +674,7 @@ namespace Supabase.Postgrest
                     var selector = !string.IsNullOrEmpty(orderer.ForeignTable)
                         ? orderer.ForeignTable + "(" + orderer.Column + ")"
                         : orderer.Column;
-                    
+
                     order.Append($"{selector}.{orderingAttr.Mapping}.{nullPosAttr.Mapping}");
                 }
 
@@ -732,32 +733,30 @@ namespace Supabase.Postgrest
         }
 
         /// <summary>
-        /// Transforms an object into a string mapped list/dictionary using `JsonSerializerSettings`.
+        /// Transforms an object into a string mapped list/dictionary using `JsonSerializerOptions`.
         /// </summary>
         /// <param name="data"></param>
         /// <param name="isInsert"></param>
         /// <param name="isUpdate"></param>
         /// <param name="isUpsert"></param>
         /// <returns></returns>
-        private object? PrepareRequestData(object? data, bool isInsert = false, bool isUpdate = false,
+        private object? PrepareRequestData<T>(T? data, bool isInsert = false, bool isUpdate = false,
             bool isUpsert = false)
         {
             if (data == null) return new Dictionary<string, string>();
+            var postgrestContractResolver = new PostgrestContractResolver();
+            postgrestContractResolver.SetState(isInsert, isUpdate, isUpsert);
+            var options = new JsonSerializerOptions(_serializerOptions);
+            options.Converters.Add(postgrestContractResolver);
 
-            // Specified in constructor;
-            var resolver = (PostgrestContractResolver)_serializerSettings.ContractResolver!;
 
-            resolver.SetState(isInsert, isUpdate, isUpsert);
-
-            var serialized = JsonConvert.SerializeObject(data, _serializerSettings);
-
-            resolver.SetState();
+            var serialized = JsonSerializer.Serialize<T>(data, options);
 
             // Check if data is a Collection for the Insert Bulk case
             if (data is ICollection<TModel>)
-                return JsonConvert.DeserializeObject<List<object>>(serialized, _serializerSettings);
-
-            return JsonConvert.DeserializeObject<Dictionary<string, object>>(serialized, _serializerSettings);
+                return JsonSerializer.Deserialize<List<object>>(serialized, options);
+            // TODO: resolve options causing test failures
+            return JsonSerializer.Deserialize<Dictionary<string, object>>(serialized);
         }
 
         /// <summary>
@@ -823,7 +822,7 @@ namespace Supabase.Postgrest
                     if (filter is { Criteria: IDictionary inDictCriteria, Property: not null })
                     {
                         return new KeyValuePair<string, string>(filter.Property,
-                            $"{asAttribute.Mapping}.{JsonConvert.SerializeObject(inDictCriteria)}");
+                            $"{asAttribute.Mapping}.{JsonSerializer.Serialize(inDictCriteria, _serializerOptions)}");
                     }
 
                     break;
@@ -833,16 +832,16 @@ namespace Supabase.Postgrest
                     switch (filter.Criteria)
                     {
                         case IList listCriteria when filter.Property != null:
-                        {
-                            foreach (var item in listCriteria)
-                                strBuilder.Append($"{item},");
+                            {
+                                foreach (var item in listCriteria)
+                                    strBuilder.Append($"{item},");
 
-                            return new KeyValuePair<string, string>(filter.Property,
-                                $"{asAttribute.Mapping}.{{{strBuilder.ToString().Trim(',')}}}");
-                        }
+                                return new KeyValuePair<string, string>(filter.Property,
+                                    $"{asAttribute.Mapping}.{{{strBuilder.ToString().Trim(',')}}}");
+                            }
                         case IDictionary dictCriteria when filter.Property != null:
                             return new KeyValuePair<string, string>(filter.Property,
-                                $"{asAttribute.Mapping}.{JsonConvert.SerializeObject(dictCriteria)}");
+                                $"{asAttribute.Mapping}.{JsonSerializer.Serialize(dictCriteria, _serializerOptions)}");
                         case IntRange rangeCriteria when filter.Property != null:
                             return new KeyValuePair<string, string>(filter.Property,
                                 $"{asAttribute.Mapping}.{rangeCriteria.ToPostgresString()}");
@@ -919,8 +918,9 @@ namespace Supabase.Postgrest
 
             if (!string.IsNullOrEmpty(options.OnConflict))
                 OnConflict(options.OnConflict!);
+            var castData = (TModel)Convert.ChangeType(data, typeof(TModel));
 
-            var request = Send<TModel>(_method, data, options.ToHeaders(), cancellationToken, isInsert: true,
+            var request = Send<TModel>(_method, castData, options.ToHeaders(), cancellationToken, isInsert: true,
                 isUpsert: options.Upsert);
 
             Clear();
@@ -928,33 +928,33 @@ namespace Supabase.Postgrest
             return request;
         }
 
-        private Task<BaseResponse> Send(HttpMethod method, object? data, Dictionary<string, string>? headers = null,
-            CancellationToken cancellationToken = default, bool isInsert = false,
-            bool isUpdate = false, bool isUpsert = false)
-        {
-            var requestHeaders = Helpers.PrepareRequestHeaders(method, headers, _options, _rangeFrom, _rangeTo);
+        // private Task<BaseResponse> Send<T>(HttpMethod method, T? data, Dictionary<string, string>? headers = null,
+        //     CancellationToken cancellationToken = default, bool isInsert = false,
+        //     bool isUpdate = false, bool isUpsert = false)
+        // {
+        //     var requestHeaders = Helpers.PrepareRequestHeaders(method, headers, _options, _rangeFrom, _rangeTo);
 
-            if (GetHeaders != null)
-            {
-                requestHeaders = GetHeaders().MergeLeft(requestHeaders);
-            }
+        //     if (GetHeaders != null)
+        //     {
+        //         requestHeaders = GetHeaders().MergeLeft(requestHeaders);
+        //     }
 
-            var url = GenerateUrl();
-            var preparedData = PrepareRequestData(data, isInsert, isUpdate, isUpsert);
+        //     var url = GenerateUrl();
+        //     var preparedData = PrepareRequestData<T>(data, isInsert, isUpdate, isUpsert);
 
-            Hooks.Instance.NotifyOnRequestPreparedHandlers(this, _options, method, url, _serializerSettings,
-                preparedData, requestHeaders);
+        //     Hooks.Instance.NotifyOnRequestPreparedHandlers(this, _options, method, url, _serializerOptions,
+        //         preparedData, requestHeaders);
 
-            Debugger.Instance.Log(this,
-                $"Request [{method}] at {DateTime.Now.ToLocalTime()}\n" +
-                $"Headers:\n\t{JsonConvert.SerializeObject(requestHeaders)}\n" +
-                $"Data:\n\t{JsonConvert.SerializeObject(preparedData)}");
+        //     Debugger.Instance.Log(this,
+        //         $"Request [{method}] at {DateTime.Now.ToLocalTime()}\n" +
+        //         $"Headers:\n\t{JsonSerializer.Serialize(requestHeaders, _serializerOptions)}\n" +
+        //         $"Data:\n\t{JsonSerializer.Serialize(preparedData, _serializerOptions)}");
 
-            return Helpers.MakeRequest(_options, method, url, _serializerSettings, preparedData, requestHeaders,
-                cancellationToken);
-        }
+        //     return Helpers.MakeRequest(_options, method, url, _serializerOptions, preparedData, requestHeaders,
+        //         cancellationToken);
+        // }
 
-        private Task<ModeledResponse<TU>> Send<TU>(HttpMethod method, object? data,
+        private Task<ModeledResponse<TU>> Send<TU>(HttpMethod method, TU? data,
             Dictionary<string, string>? headers = null, CancellationToken cancellationToken = default,
             bool isInsert = false,
             bool isUpdate = false, bool isUpsert = false) where TU : BaseModel, new()
@@ -965,17 +965,17 @@ namespace Supabase.Postgrest
                 requestHeaders = GetHeaders().MergeLeft(requestHeaders);
 
             var url = GenerateUrl();
-            var preparedData = PrepareRequestData(data, isInsert, isUpdate, isUpsert);
-
-            Hooks.Instance.NotifyOnRequestPreparedHandlers(this, _options, method, url, _serializerSettings,
+            var preparedData = PrepareRequestData<TU>(data, isInsert, isUpdate, isUpsert);
+            // var preparedData = data;
+            Hooks.Instance.NotifyOnRequestPreparedHandlers(this, _options, method, url, _serializerOptions,
                 preparedData, requestHeaders);
 
             Debugger.Instance.Log(this,
                 $"Request [{method}] at {DateTime.Now.ToLocalTime()}\n" +
-                $"Headers:\n\t{JsonConvert.SerializeObject(requestHeaders)}\n" +
-                $"Data:\n\t{JsonConvert.SerializeObject(preparedData)}");
+                $"Headers:\n\t{JsonSerializer.Serialize(requestHeaders, _serializerOptions)}\n" +
+                $"Data:\n\t{JsonSerializer.Serialize(preparedData, _serializerOptions)}");
 
-            return Helpers.MakeRequest<TU>(_options, method, url, _serializerSettings, preparedData, requestHeaders,
+            return Helpers.MakeRequest<TU>(_options, method, url, _serializerOptions, preparedData, requestHeaders,
                 GetHeaders, cancellationToken);
         }
 

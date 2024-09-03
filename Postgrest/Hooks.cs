@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace Supabase.Postgrest
 {
@@ -10,7 +10,7 @@ namespace Supabase.Postgrest
     /// </summary>
     public delegate void OnRequestPreparedEventHandler(object sender, ClientOptions clientOptions,
         HttpMethod method, string url,
-        JsonSerializerSettings serializerSettings, object? data = null,
+        JsonSerializerOptions serializerOptions, object? data = null,
         Dictionary<string, string>? headers = null);
 
     /// <summary>
@@ -74,18 +74,18 @@ namespace Supabase.Postgrest
         /// <param name="clientOptions"></param>
         /// <param name="method"></param>
         /// <param name="url"></param>
-        /// <param name="serializerSettings"></param>
+        /// <param name="serializerOptions"></param>
         /// <param name="data"></param>
         /// <param name="headers"></param>
         public void NotifyOnRequestPreparedHandlers(object sender, ClientOptions clientOptions, HttpMethod method,
             string url,
-            JsonSerializerSettings serializerSettings, object? data = null,
+            JsonSerializerOptions serializerOptions, object? data = null,
             Dictionary<string, string>? headers = null)
         {
             Debugger.Instance.Log(this, $"{nameof(NotifyOnRequestPreparedHandlers)} called for [{method}] to {url}");
 
             foreach (var handler in _requestPreparedEventHandlers.ToList())
-                handler.Invoke(sender, clientOptions, method, url, serializerSettings, data, headers);
+                handler.Invoke(sender, clientOptions, method, url, serializerOptions, data, headers);
         }
     }
 }
