@@ -21,6 +21,8 @@ namespace PostgrestTests.Models
 
         [Column("int_value")] public int? IntValue { get; set; }
 
+        [Column("long_value")] public long? LongValue { get; set; }
+
         [Column("float_value")] public float FloatValue { get; set; }
 
         [Column("double_value")] public double DoubleValue { get; set; }

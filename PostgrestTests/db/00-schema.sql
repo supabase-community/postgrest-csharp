@@ -57,6 +57,7 @@ create table "public"."kitchen_sink"
     "bool_value"                  BOOL DEFAULT false,
     "unique_value"                varchar(255) UNIQUE,
     "int_value"                   INT              null,
+    "long_value"                  BIGINT           null,
     "float_value"                 FLOAT            null,
     "double_value"                DOUBLE PRECISION null,
     "datetime_value"              timestamp        null,
