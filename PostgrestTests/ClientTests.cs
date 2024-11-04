@@ -959,6 +959,37 @@ namespace PostgrestTests
             CollectionAssert.AreEqual(expected, filteredResponse.Models);
         }
 
+        [TestMethod("filters: dt")]
+        public async Task TestDateTimeFilter()
+        {
+            var client = new Client(BaseUrl);
+            var filteredResponse = await client.Table<Movie>().Filter("created_at", Operator.GreaterThan, new DateTime(2022, 08, 20))
+                                                              .Filter("created_at", Operator.LessThan, new DateTime(2022, 08, 21))
+                                                              .Get();
+            Assert.AreEqual(1, filteredResponse.Models.Count);
+            Assert.AreEqual("ea07bd86-a507-4c68-9545-b848bfe74c90", filteredResponse.Models[0].Id);
+        }
+
+        [TestMethod("filters: dto")]
+        public async Task TestDateTimeOffsetFilter()
+        {
+            var client = new Client(BaseUrl);
+            var filteredResponse = await client.Table<Movie>().Filter("created_at", Operator.GreaterThan, new DateTimeOffset(new DateTime(2022, 08, 20)))
+                                                              .Filter("created_at", Operator.LessThan, new DateTimeOffset(new DateTime(2022, 08, 21)))
+                                                              .Get();
+            Assert.AreEqual(1, filteredResponse.Models.Count);
+            Assert.AreEqual("ea07bd86-a507-4c68-9545-b848bfe74c90", filteredResponse.Models[0].Id);
+        }
+
+        [TestMethod("filters: long")]
+        public async Task TestLongIntFilter()
+        {
+            var client = new Client(BaseUrl);
+            var filteredResponse = await client.Table<KitchenSink>().Filter("long_value", Operator.Equals, 2147483648L)
+                                                                    .Get();
+            Assert.AreEqual(1, filteredResponse.Models.Count);
+        }
+
         [TestMethod("select: basic")]
         public async Task TestSelect()
         {
