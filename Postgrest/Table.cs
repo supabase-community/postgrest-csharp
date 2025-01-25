@@ -636,7 +636,7 @@ namespace Supabase.Postgrest
         }
         
         /// <inheritdoc />
-        public async Task<Tuple<List<TModel>, int>> GetWithCount(CountType type, CancellationToken cancellationToken = default)
+        public async Task<(ModeledResponse<TModel> Result, int Count)>GetWithCount(CountType type, CancellationToken cancellationToken = default)
         {
             var attr = type.GetAttribute<MapToAttribute>();
             
@@ -652,7 +652,7 @@ namespace Supabase.Postgrest
             var countStr = response.ResponseMessage?.Content.Headers.GetValues("Content-Range").FirstOrDefault();
             var count = int.Parse(countStr?.Split('/')[1] ?? throw new InvalidOperationException());
 
-            return new Tuple<List<TModel>, int>(response.Models, count);
+            return (response, count);
         }
 
         /// <summary>

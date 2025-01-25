@@ -125,7 +125,7 @@ namespace Supabase.Postgrest.Interfaces
         /// <param name="type">The kind of count.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<Tuple<List<TModel>, int>> GetWithCount(Constants.CountType type,
+        Task<(ModeledResponse<TModel> Result, int Count)> GetWithCount(Constants.CountType type,
             CancellationToken cancellationToken = default);
 
         /// <summary>
