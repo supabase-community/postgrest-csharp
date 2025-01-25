@@ -120,6 +120,15 @@ namespace Supabase.Postgrest.Interfaces
         Task<ModeledResponse<TModel>> Get(CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Executes the query using the defined filters on the current instance, along with count from the specified query.
+        /// </summary>
+        /// <param name="type">The kind of count.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<Tuple<List<TModel>, int>> GetWithCount(Constants.CountType type,
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Executes a BULK INSERT query using the defined query params on the current instance.
         /// </summary>
         /// <param name="models"></param>

@@ -634,6 +634,26 @@ namespace Supabase.Postgrest
             Clear();
             return request;
         }
+        
+        /// <inheritdoc />
+        public async Task<Tuple<List<TModel>, int>> GetWithCount(CountType type, CancellationToken cancellationToken = default)
+        {
+            var attr = type.GetAttribute<MapToAttribute>();
+            
+            var headers = new Dictionary<string, string>
+            {
+                { "Prefer", $"count={attr?.Mapping}" }
+            };
+            
+            var request = Send<TModel>(_method, null, headers, cancellationToken);
+            Clear();
+            
+            var response = await request;
+            var countStr = response.ResponseMessage?.Content.Headers.GetValues("Content-Range").FirstOrDefault();
+            var count = int.Parse(countStr?.Split('/')[1] ?? throw new InvalidOperationException());
+
+            return new Tuple<List<TModel>, int>(response.Models, count);
+        }
 
         /// <summary>
         /// Generates the encoded URL with defined query parameters that will be sent to the Postgrest API.
