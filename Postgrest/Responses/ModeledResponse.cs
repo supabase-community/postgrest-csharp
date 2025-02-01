@@ -76,9 +76,18 @@ namespace Supabase.Postgrest.Responses
 					break;
 				}
 			}
-			
-			var countStr = baseResponse.ResponseMessage?.Content.Headers.GetValues("Content-Range").FirstOrDefault();
-			Count = int.Parse(countStr?.Split('/')[1] ?? throw new InvalidOperationException());
+
+			try
+			{
+				var countStr = baseResponse.ResponseMessage?.Content.Headers.GetValues("Content-Range")
+					.FirstOrDefault();
+				Count = int.Parse(countStr?.Split('/')[1] ?? throw new InvalidOperationException());
+			}
+			catch (Exception e)
+			{
+				Debugger.Instance.Log(this, e.Message);
+				Count = -1;
+			}
 
 			Debugger.Instance.Log(this, $"Response: [{baseResponse.ResponseMessage?.StatusCode}]\n" + $"Parsed Models <{typeof(T).Name}>:\n\t{JsonConvert.SerializeObject(Models)}\n");
 		}
