@@ -24,6 +24,11 @@ namespace Supabase.Postgrest.Responses
 		/// A list of models in the response.
 		/// </summary>
 		public List<T> Models { get; } = new();
+
+		/// <summary>
+		/// The number of results matching the specified filters
+		/// </summary>
+		public int Count = 0;
 		
 		/// <inheritdoc />
 		public ModeledResponse(BaseResponse baseResponse, JsonSerializerSettings serializerSettings, Func<Dictionary<string, string>>? getHeaders = null, bool shouldParse = true) : base(baseResponse.ClientOptions, baseResponse.ResponseMessage, baseResponse.Content)
@@ -71,6 +76,9 @@ namespace Supabase.Postgrest.Responses
 					break;
 				}
 			}
+			
+			var countStr = baseResponse.ResponseMessage?.Content.Headers.GetValues("Content-Range").FirstOrDefault();
+			Count = int.Parse(countStr?.Split('/')[1] ?? throw new InvalidOperationException());
 
 			Debugger.Instance.Log(this, $"Response: [{baseResponse.ResponseMessage?.StatusCode}]\n" + $"Parsed Models <{typeof(T).Name}>:\n\t{JsonConvert.SerializeObject(Models)}\n");
 		}
