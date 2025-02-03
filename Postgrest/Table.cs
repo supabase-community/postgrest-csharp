@@ -144,6 +144,9 @@ namespace Supabase.Postgrest
                 case int intCriterion:
                     _filters.Add(new QueryFilter(columnName, op, intCriterion));
                     return this;
+                case long longCriterion:
+                    _filters.Add(new QueryFilter(columnName, op, longCriterion));
+                    return this;
                 case float floatCriterion:
                     _filters.Add(new QueryFilter(columnName, op, floatCriterion));
                     return this;
@@ -159,9 +162,15 @@ namespace Supabase.Postgrest
                 case FullTextSearchConfig fullTextSearchCriteria:
                     _filters.Add(new QueryFilter(columnName, op, fullTextSearchCriteria));
                     return this;
+                case DateTime dtSearchCriteria:
+                    _filters.Add(new QueryFilter(columnName, op, dtSearchCriteria));
+                    return this;
+                case DateTimeOffset dtoSearchCriteria:
+                    _filters.Add(new QueryFilter(columnName, op, dtoSearchCriteria));
+                    return this;
                 default:
                     throw new PostgrestException(
-                        "Unknown criterion type, is it of type `string`, `int`, `float`, `List`, `Dictionary<string, object>`, `FullTextSearchConfig`, or `Range`?")
+                        "Unknown criterion type, is it of type `string`, `int`, `long`, `float`, `List`, `DateTime`, `DateTimeOffset`, `Dictionary<string, object>`, `FullTextSearchConfig`, or `Range`?")
                     {
                         Reason = FailureHint.Reason.InvalidArgument
                     };
