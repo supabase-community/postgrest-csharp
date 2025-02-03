@@ -1,5 +1,10 @@
 ﻿# Changelog
 
+## 4.1.0 - 2025-02-03
+
+- Added count to ModeledResponse [#103](https://github.com/supabase-community/postgrest-csharp/pull/103) by [DanielW093]https://github.com/DanielW093
+- Add support for long, DateTime, and DateTimeOffset criteria in filter expressions [#101](https://github.com/supabase-community/postgrest-csharp/pull/101) by [sbarnes-ellenbytech](https://github.com/sbarnes-ellenbytech)
+
 ## 4.0.3 - 2024-05-23
 
 - Re: [#97](https://github.com/supabase-community/postgrest-csharp/pull/97) Fix set null value on string property.
