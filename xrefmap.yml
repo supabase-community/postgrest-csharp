@@ -2144,14 +2144,14 @@ references:
   fullName.vb: Supabase.Postgrest.Interfaces.IPostgrestTable(Of TModel).GenerateUrl
   nameWithType: IPostgrestTable<TModel>.GenerateUrl
   nameWithType.vb: IPostgrestTable(Of TModel).GenerateUrl
-- uid: Supabase.Postgrest.Interfaces.IPostgrestTable`1.Get(System.Threading.CancellationToken)
-  name: Get(CancellationToken)
-  href: api/Supabase.Postgrest.Interfaces.IPostgrestTable-1.html#Supabase_Postgrest_Interfaces_IPostgrestTable_1_Get_System_Threading_CancellationToken_
-  commentId: M:Supabase.Postgrest.Interfaces.IPostgrestTable`1.Get(System.Threading.CancellationToken)
-  fullName: Supabase.Postgrest.Interfaces.IPostgrestTable<TModel>.Get(System.Threading.CancellationToken)
-  fullName.vb: Supabase.Postgrest.Interfaces.IPostgrestTable(Of TModel).Get(System.Threading.CancellationToken)
-  nameWithType: IPostgrestTable<TModel>.Get(CancellationToken)
-  nameWithType.vb: IPostgrestTable(Of TModel).Get(CancellationToken)
+- uid: Supabase.Postgrest.Interfaces.IPostgrestTable`1.Get(System.Threading.CancellationToken,Supabase.Postgrest.Constants.CountType)
+  name: Get(CancellationToken, CountType)
+  href: api/Supabase.Postgrest.Interfaces.IPostgrestTable-1.html#Supabase_Postgrest_Interfaces_IPostgrestTable_1_Get_System_Threading_CancellationToken_Supabase_Postgrest_Constants_CountType_
+  commentId: M:Supabase.Postgrest.Interfaces.IPostgrestTable`1.Get(System.Threading.CancellationToken,Supabase.Postgrest.Constants.CountType)
+  fullName: Supabase.Postgrest.Interfaces.IPostgrestTable<TModel>.Get(System.Threading.CancellationToken, Supabase.Postgrest.Constants.CountType)
+  fullName.vb: Supabase.Postgrest.Interfaces.IPostgrestTable(Of TModel).Get(System.Threading.CancellationToken, Supabase.Postgrest.Constants.CountType)
+  nameWithType: IPostgrestTable<TModel>.Get(CancellationToken, Constants.CountType)
+  nameWithType.vb: IPostgrestTable(Of TModel).Get(CancellationToken, Constants.CountType)
 - uid: Supabase.Postgrest.Interfaces.IPostgrestTable`1.Get*
   name: Get
   href: api/Supabase.Postgrest.Interfaces.IPostgrestTable-1.html#Supabase_Postgrest_Interfaces_IPostgrestTable_1_Get_
@@ -3423,6 +3423,14 @@ references:
   fullName.vb: Supabase.Postgrest.Responses.ModeledResponse(Of T).New
   nameWithType: ModeledResponse<T>.ModeledResponse
   nameWithType.vb: ModeledResponse(Of T).New
+- uid: Supabase.Postgrest.Responses.ModeledResponse`1.Count
+  name: Count
+  href: api/Supabase.Postgrest.Responses.ModeledResponse-1.html#Supabase_Postgrest_Responses_ModeledResponse_1_Count
+  commentId: F:Supabase.Postgrest.Responses.ModeledResponse`1.Count
+  fullName: Supabase.Postgrest.Responses.ModeledResponse<T>.Count
+  fullName.vb: Supabase.Postgrest.Responses.ModeledResponse(Of T).Count
+  nameWithType: ModeledResponse<T>.Count
+  nameWithType.vb: ModeledResponse(Of T).Count
 - uid: Supabase.Postgrest.Responses.ModeledResponse`1.Model
   name: Model
   href: api/Supabase.Postgrest.Responses.ModeledResponse-1.html#Supabase_Postgrest_Responses_ModeledResponse_1_Model
@@ -3714,14 +3722,14 @@ references:
   fullName.vb: Supabase.Postgrest.Table(Of TModel).GenerateUrl
   nameWithType: Table<TModel>.GenerateUrl
   nameWithType.vb: Table(Of TModel).GenerateUrl
-- uid: Supabase.Postgrest.Table`1.Get(System.Threading.CancellationToken)
-  name: Get(CancellationToken)
-  href: api/Supabase.Postgrest.Table-1.html#Supabase_Postgrest_Table_1_Get_System_Threading_CancellationToken_
-  commentId: M:Supabase.Postgrest.Table`1.Get(System.Threading.CancellationToken)
-  fullName: Supabase.Postgrest.Table<TModel>.Get(System.Threading.CancellationToken)
-  fullName.vb: Supabase.Postgrest.Table(Of TModel).Get(System.Threading.CancellationToken)
-  nameWithType: Table<TModel>.Get(CancellationToken)
-  nameWithType.vb: Table(Of TModel).Get(CancellationToken)
+- uid: Supabase.Postgrest.Table`1.Get(System.Threading.CancellationToken,Supabase.Postgrest.Constants.CountType)
+  name: Get(CancellationToken, CountType)
+  href: api/Supabase.Postgrest.Table-1.html#Supabase_Postgrest_Table_1_Get_System_Threading_CancellationToken_Supabase_Postgrest_Constants_CountType_
+  commentId: M:Supabase.Postgrest.Table`1.Get(System.Threading.CancellationToken,Supabase.Postgrest.Constants.CountType)
+  fullName: Supabase.Postgrest.Table<TModel>.Get(System.Threading.CancellationToken, Supabase.Postgrest.Constants.CountType)
+  fullName.vb: Supabase.Postgrest.Table(Of TModel).Get(System.Threading.CancellationToken, Supabase.Postgrest.Constants.CountType)
+  nameWithType: Table<TModel>.Get(CancellationToken, Constants.CountType)
+  nameWithType.vb: Table(Of TModel).Get(CancellationToken, Constants.CountType)
 - uid: Supabase.Postgrest.Table`1.Get*
   name: Get
   href: api/Supabase.Postgrest.Table-1.html#Supabase_Postgrest_Table_1_Get_
