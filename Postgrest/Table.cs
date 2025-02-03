@@ -628,10 +628,18 @@ namespace Supabase.Postgrest
         }
 
         /// <inheritdoc />
-        public Task<ModeledResponse<TModel>> Get(CancellationToken cancellationToken = default)
+        public Task<ModeledResponse<TModel>> Get(CancellationToken cancellationToken = default, CountType type = CountType.Estimated)
         {
-            var request = Send<TModel>(_method, null, null, cancellationToken);
+            var attr = type.GetAttribute<MapToAttribute>();
+            
+            var headers = new Dictionary<string, string>
+            {
+                { "Prefer", $"count={attr?.Mapping}" }
+            };
+            
+            var request = Send<TModel>(_method, null, headers, cancellationToken);
             Clear();
+            
             return request;
         }
 

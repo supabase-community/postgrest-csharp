@@ -1041,6 +1041,24 @@ namespace PostgrestTests
             Assert.IsNotNull(resp);
         }
 
+        [TestMethod("response count")]
+        public async Task TestCountInResponse()
+        {
+            var client = new Client(BaseUrl);
+
+            var resp = await client.Table<User>().Get(default, CountType.Exact);
+            Assert.IsTrue(resp.Count > -1);
+        }
+        
+        [TestMethod("response count: with filter")]
+        public async Task TestCountInResponseWithFilter()
+        {
+            var client = new Client(BaseUrl);
+
+            var resp = await client.Table<User>().Filter("status", Operator.Equals, "ONLINE").Get(default, CountType.Exact);
+            Assert.IsTrue(resp.Count > -1);
+        }
+
         [TestMethod("support: int arrays")]
         public async Task TestSupportIntArraysAsLists()
         {
