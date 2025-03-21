@@ -45,9 +45,8 @@ namespace Supabase.Postgrest.Linq
             // Handle logical operations (e.g., x.Rating > 5 && x.Year == 1986)
             if (IsLogicalOperation(node.NodeType))
             {
-                var leftFilter = ProcessSubExpression(node.Left);
-                var rightFilter = ProcessSubExpression(node.Right);
-                Filter = new QueryFilter(op, new List<IPostgrestQueryFilter> { leftFilter, rightFilter });
+                var conditions = FlattenLogicalConditions(node, op);
+                Filter = new QueryFilter(op, conditions);
                 return node;
             }
 
@@ -58,6 +57,58 @@ namespace Supabase.Postgrest.Linq
             // Define the filter for a simple comparison
             Filter = new QueryFilter(column, op, rightValue);
             return node;
+        }
+
+        /// <summary>
+        /// Flattens a tree of logical conditions (e.g., AND, OR) into a single list of conditions at the same level.
+        /// </summary>
+        /// <param name="node">The binary expression node representing a logical operation.</param>
+        /// <param name="op">The operator (e.g., AND, OR) for the logical operation.</param>
+        /// <returns>A list of filters representing all conditions at the same level.</returns>
+        private List<IPostgrestQueryFilter> FlattenLogicalConditions(BinaryExpression node, Operator op)
+        {
+            var conditions = new List<IPostgrestQueryFilter>();
+
+            // Recursively flatten the left and right sides
+            FlattenLogicalConditionsRecursive(node, op, conditions);
+
+            return conditions;
+        }
+
+        /// <summary>
+        /// Recursively flattens a tree of logical conditions into a list of filters.
+        /// </summary>
+        /// <param name="node">The current binary expression node.</param>
+        /// <param name="op">The operator (e.g., AND, OR) for the logical operation.</param>
+        /// <param name="conditions">The list to accumulate the flattened conditions.</param>
+        private void FlattenLogicalConditionsRecursive(BinaryExpression node, Operator op, List<IPostgrestQueryFilter> conditions)
+        {
+            // If the node is a logical operation with the same operator, recurse into its children
+            if (IsLogicalOperation(node.NodeType) && GetMappedOperator(node) == op)
+            {
+                if (node.Left is BinaryExpression leftBinary)
+                {
+                    FlattenLogicalConditionsRecursive(leftBinary, op, conditions);
+                }
+                else
+                {
+                    conditions.Add(ProcessSubExpression(node.Left));
+                }
+
+                if (node.Right is BinaryExpression rightBinary)
+                {
+                    FlattenLogicalConditionsRecursive(rightBinary, op, conditions);
+                }
+                else
+                {
+                    conditions.Add(ProcessSubExpression(node.Right));
+                }
+            }
+            else
+            {
+                // If the node is not a logical operation (or has a different operator), process it as a single condition
+                conditions.Add(ProcessSubExpression(node));
+            }
         }
 
         /// <summary>
@@ -135,8 +186,8 @@ namespace Supabase.Postgrest.Linq
                 DateTime dateTime => dateTime,
                 DateTimeOffset dateTimeOffset => dateTimeOffset,
                 Guid guid => guid.ToString(),
-                Enum enumValue => enumValue, 
-                _ => value 
+                Enum enumValue => enumValue,
+                _ => value
             };
         }
 
@@ -232,19 +283,21 @@ namespace Supabase.Postgrest.Linq
         {
             var type = node.Member.ReflectedType;
             var prop = type?.GetProperty(node.Member.Name);
-            var attrs = prop?.GetCustomAttributes(true);
-
-            if (attrs == null) return node.Member.Name;
-
-            foreach (var attr in attrs)
+            if (prop == null)
             {
-                switch (attr)
-                {
-                    case ColumnAttribute columnAttr:
-                        return columnAttr.ColumnName;
-                    case PrimaryKeyAttribute primaryKeyAttr:
-                        return primaryKeyAttr.ColumnName;
-                }
+                return node.Member.Name;
+            }
+
+            var columnAttr = prop.GetCustomAttribute<ColumnAttribute>(true);
+            if (columnAttr != null)
+            {
+                return columnAttr.ColumnName;
+            }
+
+            var primaryKeyAttr = prop.GetCustomAttribute<PrimaryKeyAttribute>(true);
+            if (primaryKeyAttr != null)
+            {
+                return primaryKeyAttr.ColumnName;
             }
 
             return node.Member.Name;
