@@ -111,12 +111,8 @@ namespace PostgrestTests
         public void GivenNullDelegate_ShouldApplyNoFilter()
         {
             var client = new Client(BaseUrl);
-
             var requestModel = new UserRequestModel();
-
-            var table = client.Table<User>()
-                .Where(x => requestModel.FilterPredicate == null || requestModel.FilterPredicate(x));
-
+            var table = client.Table<User>().Where(x => requestModel.FilterPredicate == null || requestModel.FilterPredicate(x));
             Assert.AreEqual($"{BaseUrl}/users", table.GenerateUrl());
         }
 
@@ -124,12 +120,8 @@ namespace PostgrestTests
         public void GivenNonNullDelegate_ShouldThrowArgumentException()
         {
             var client = new Client(BaseUrl);
-
             var requestModel = new UserRequestModel { FilterPredicate = u => u.Username == "supabot" };
-
-            var exception = Assert.ThrowsException<ArgumentException>(() => client.Table<User>()
-                .Where(x => requestModel.FilterPredicate == null || requestModel.FilterPredicate(x)));
-
+            var exception = Assert.ThrowsException<ArgumentException>(() => client.Table<User>().Where(x => requestModel.FilterPredicate == null || requestModel.FilterPredicate(x)));
             StringAssert.Contains(exception.Message, "Unable to translate expression");
         }
 
@@ -137,12 +129,8 @@ namespace PostgrestTests
         public void GivenAlwaysFalsePredicate_ShouldThrowArgumentException()
         {
             var client = new Client(BaseUrl);
-
             var requestModel = new UserRequestModel();
-
-            var exception = Assert.ThrowsException<ArgumentException>(() => client.Table<User>()
-                .Where(x => requestModel.FilterPredicate != null && requestModel.FilterPredicate(x)));
-
+            var exception = Assert.ThrowsException<ArgumentException>(() => client.Table<User>().Where(x => requestModel.FilterPredicate != null && requestModel.FilterPredicate(x)));
             StringAssert.Contains(exception.Message, "always evaluates to false");
         }
 
@@ -150,10 +138,7 @@ namespace PostgrestTests
         public void GivenNullCheckInsideOrPredicate_WhereTranslateToIsNullFilter()
         {
             var client = new Client(BaseUrl);
-
-            var table = client.Table<User>()
-                .Where(x => x.Catchphrase == null || x.Catchphrase == "fat cat");
-
+            var table = client.Table<User>().Where(x => x.Catchphrase == null || x.Catchphrase == "fat cat");
             var urlEncodedIsNullFilter = "or=(catchphrase.is.null%2ccatchphrase.eq.fat+cat)";
             Assert.AreEqual($"{BaseUrl}/users?{urlEncodedIsNullFilter}", table.GenerateUrl());
         }
