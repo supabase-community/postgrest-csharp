@@ -378,6 +378,61 @@ namespace PostgrestTests
             CollectionAssert.AreEqual(supaNotInList, linqNotInList);
         }
 
+        [TestMethod("Linq: Where with a null-check on an absent delegate applies no filter (supabase-csharp#192)")]
+        public void TestLinqWhereNullCheckOnAbsentDelegate()
+        {
+            var client = new Client(BaseUrl);
+
+            var requestModel = new UserRequestModel();
+
+            var table = client.Table<User>()
+                .Where(x => requestModel.FilterPredicate == null || requestModel.FilterPredicate(x));
+
+            // The delegate is null so the predicate is always true - no filter should be applied.
+            Assert.AreEqual($"{BaseUrl}/users", table.GenerateUrl());
+        }
+
+        [TestMethod("Linq: Where with a null-check on a present delegate throws a descriptive exception (supabase-csharp#192)")]
+        public void TestLinqWhereNullCheckOnPresentDelegate()
+        {
+            var client = new Client(BaseUrl);
+
+            var requestModel = new UserRequestModel { FilterPredicate = u => u.Username == "supabot" };
+
+            // A compiled delegate is opaque and can't be translated into a Postgrest filter;
+            // the SDK should say so instead of blowing up with a NullReferenceException on `Get`.
+            var exception = Assert.ThrowsException<ArgumentException>(() => client.Table<User>()
+                .Where(x => requestModel.FilterPredicate == null || requestModel.FilterPredicate(x)));
+
+            StringAssert.Contains(exception.Message, "Unable to translate expression");
+        }
+
+        [TestMethod("Linq: Where with an always-false predicate throws a descriptive exception (supabase-csharp#192)")]
+        public void TestLinqWhereAlwaysFalsePredicateThrows()
+        {
+            var client = new Client(BaseUrl);
+
+            var requestModel = new UserRequestModel();
+
+            var exception = Assert.ThrowsException<ArgumentException>(() => client.Table<User>()
+                .Where(x => requestModel.FilterPredicate != null && requestModel.FilterPredicate(x)));
+
+            StringAssert.Contains(exception.Message, "always evaluates to false");
+        }
+
+        [TestMethod("Linq: Where translates a nested null-check to `is.null` (supabase-csharp#192)")]
+        public void TestLinqWhereNestedNullCheck()
+        {
+            var client = new Client(BaseUrl);
+
+            var table = client.Table<User>()
+                .Where(x => x.Catchphrase == null || x.Catchphrase == "fat cat");
+
+            // `or=(catchphrase.is.null,catchphrase.eq.fat cat)`, url-encoded.
+            Assert.AreEqual($"{BaseUrl}/users?or=(catchphrase.is.null%2ccatchphrase.eq.fat+cat)",
+                table.GenerateUrl());
+        }
+
         [TestMethod("Linq: QueryFilter")]
         public async Task TestLinqQueryFilter()
         {
@@ -408,6 +463,11 @@ namespace PostgrestTests
                 Assert.IsTrue(
                     model.Username == "supabot" || model.Username == "kiwicopple" || model.Status == "OFFLINE");
             }
+        }
+
+        private class UserRequestModel
+        {
+            public Func<User, bool>? FilterPredicate { get; set; }
         }
     }
 }

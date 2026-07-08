@@ -19,15 +19,46 @@ namespace Supabase.Postgrest.Linq
     /// </summary>
     internal class WhereExpressionVisitor : ExpressionVisitor
     {
+        private ParameterExpression? _parameter;
+
+        public WhereExpressionVisitor()
+        { }
+
+        private WhereExpressionVisitor(ParameterExpression? parameter) =>
+            _parameter = parameter;
+
         /// <summary>
         /// The filter resulting from this Visitor, capable of producing nested filters.
         /// </summary>
         public QueryFilter? Filter { get; private set; }
 
         /// <summary>
+        /// Set instead of <see cref="Filter"/> when the predicate (or the visited branch of it) never
+        /// references the model and was instead evaluated locally to a boolean
+        /// (i.e. `x => filterPredicate == null || filterPredicate(x)` where `filterPredicate` is null).
+        /// </summary>
+        public bool? ConstantValue { get; private set; }
+
+        /// <inheritdoc />
+        protected override Expression VisitLambda<T>(Expression<T> node)
+        {
+            _parameter ??= node.Parameters.FirstOrDefault();
+
+            // A predicate that never references the model (i.e. `x => localVariable == null`) can't be
+            // translated into a filter - it is evaluated locally instead.
+            if (node.Body.Type == typeof(bool) && !ContainsParameter(node.Body))
+            {
+                ConstantValue = (bool)EvaluateExpression(node.Body)!;
+                return node;
+            }
+
+            return base.VisitLambda(node);
+        }
+
+        /// <summary>
         /// An entry point that will be used to populate <see cref="Filter"/>.
-        /// 
-        /// Invoked like: 
+        ///
+        /// Invoked like:
         ///		`Table&lt;Movies&gt;().Where(x => x.Name == "Top Gun").Get();`
         /// </summary>
         /// <param name="node"></param>
@@ -44,29 +75,52 @@ namespace Supabase.Postgrest.Linq
                 case ExpressionType.Or:
                 case ExpressionType.AndAlso:
                 case ExpressionType.OrElse:
-                    var leftVisitor = new WhereExpressionVisitor();
-                    leftVisitor.Visit(node.Left);
+                    var shortCircuitValue = node.NodeType is ExpressionType.Or or ExpressionType.OrElse;
 
-                    var rightVisitor = new WhereExpressionVisitor();
-                    rightVisitor.Visit(node.Right);
+                    var (leftConstant, leftFilter) = VisitBranch(node.Left);
+
+                    // Follow C#'s short-circuit semantics: `true || anything` and `false && anything`
+                    // never evaluate their right side (i.e. `filterPredicate == null || filterPredicate(x)`).
+                    if (leftConstant == shortCircuitValue)
+                    {
+                        ConstantValue = leftConstant;
+                        return node;
+                    }
+
+                    var (rightConstant, rightFilter) = VisitBranch(node.Right);
+
+                    // A non-short-circuiting constant (`false ||` / `true &&`) reduces to the other side.
+                    if (leftConstant != null)
+                    {
+                        ConstantValue = rightConstant;
+                        Filter = rightFilter;
+                        return node;
+                    }
+
+                    if (rightConstant != null)
+                    {
+                        if (rightConstant == shortCircuitValue)
+                            ConstantValue = rightConstant;
+                        else
+                            Filter = leftFilter;
+
+                        return node;
+                    }
 
                     Filter = new QueryFilter(op,
-                        new List<IPostgrestQueryFilter> { leftVisitor.Filter!, rightVisitor.Filter! });
+                        new List<IPostgrestQueryFilter> { leftFilter!, rightFilter! });
 
                     return node;
             }
 
             // Otherwise, the base case.
 
-            var left = Visit(node.Left);
-            var right = Visit(node.Right);
-
             string? column = null;
-            if (left is MemberExpression leftMember)
+            if (node.Left is MemberExpression leftMember)
             {
                 column = GetColumnFromMemberExpression(leftMember);
             } //To handle properly if it's a Convert ExpressionType generally with nullable properties
-            else if (left is UnaryExpression leftUnary && leftUnary.NodeType == ExpressionType.Convert &&
+            else if (node.Left is UnaryExpression leftUnary && leftUnary.NodeType == ExpressionType.Convert &&
                      leftUnary.Operand is MemberExpression leftOperandMember)
             {
                 column = GetColumnFromMemberExpression(leftOperandMember);
@@ -76,24 +130,49 @@ namespace Supabase.Postgrest.Linq
                 throw new ArgumentException(
                     $"Left side of expression: '{node}' is expected to be property with a ColumnAttribute or PrimaryKeyAttribute");
 
-            if (right is ConstantExpression rightConstant)
+            if (node.Right is ConstantExpression rightConstantExpression)
             {
-                HandleConstantExpression(column, op, rightConstant);
+                HandleConstantExpression(column, op, rightConstantExpression);
             }
-            else if (right is MemberExpression memberExpression)
+            else if (node.Right is MemberExpression memberExpression)
             {
                 HandleMemberExpression(column, op, memberExpression);
             }
-            else if (right is NewExpression newExpression)
+            else if (node.Right is NewExpression newExpression)
             {
                 HandleNewExpression(column, op, newExpression);
             }
-            else if (right is UnaryExpression unaryExpression)
+            else if (node.Right is UnaryExpression unaryExpression)
             {
                 HandleUnaryExpression(column, op, unaryExpression);
             }
 
             return node;
+        }
+
+        /// <summary>
+        /// Visits one side of an `AND`/`OR` expression, producing either a <see cref="QueryFilter"/> or,
+        /// when the branch never references the model, its locally evaluated boolean value.
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        private (bool? Constant, QueryFilter? Filter) VisitBranch(Expression expression)
+        {
+            if (expression.Type == typeof(bool) && !ContainsParameter(expression))
+                return ((bool)EvaluateExpression(expression)!, null);
+
+            var visitor = new WhereExpressionVisitor(_parameter);
+            visitor.Visit(expression);
+
+            if (visitor.ConstantValue != null)
+                return (visitor.ConstantValue, null);
+
+            if (visitor.Filter == null)
+                throw new ArgumentException(
+                    $"Unable to translate expression '{expression}' into a Postgrest filter. If the condition depends on values that are not model columns (i.e. invoking a delegate), evaluate it outside of `Where` and build the query conditionally instead.");
+
+            return (null, visitor.Filter);
         }
 
         /// <summary>
@@ -143,15 +222,7 @@ namespace Supabase.Postgrest.Linq
         /// <param name="constantExpression"></param>
         private void HandleConstantExpression(string column, Operator op, ConstantExpression constantExpression)
         {
-            if (constantExpression.Type.IsEnum)
-            {
-                var enumValue = constantExpression.Value;
-                Filter = new QueryFilter(column, op, enumValue);
-            }
-            else
-            {
-                Filter = new QueryFilter(column, op, constantExpression.Value);
-            }
+            Filter = BuildFilter(column, op, constantExpression.Value);
         }
 
         /// <summary>
@@ -162,7 +233,29 @@ namespace Supabase.Postgrest.Linq
         /// <param name="memberExpression"></param>
         private void HandleMemberExpression(string column, Operator op, MemberExpression memberExpression)
         {
-            Filter = new QueryFilter(column, op, GetMemberExpressionValue(memberExpression));
+            Filter = BuildFilter(column, op, GetMemberExpressionValue(memberExpression));
+        }
+
+        /// <summary>
+        /// Builds a filter from a column, operator and (possibly null) criterion, translating null
+        /// equality checks (i.e. `x => x.Name == null`) into the `IS NULL`/`IS NOT NULL` filters
+        /// Postgrest expects — at any nesting depth.
+        /// </summary>
+        /// <param name="column"></param>
+        /// <param name="op"></param>
+        /// <param name="value"></param>
+        private static QueryFilter BuildFilter(string column, Operator op, object? value)
+        {
+            if (value != null)
+                return new QueryFilter(column, op, value);
+
+            return op switch
+            {
+                Operator.Equals => new QueryFilter(column, Operator.Is, QueryFilter.NullVal),
+                Operator.NotEqual => new QueryFilter(column, Operator.Not,
+                    new QueryFilter(column, Operator.Is, QueryFilter.NullVal)),
+                _ => new QueryFilter(column, op, value)
+            };
         }
 
         /// <summary>
@@ -296,6 +389,46 @@ namespace Supabase.Postgrest.Linq
                 ExpressionType.GreaterThanOrEqual => Operator.GreaterThanOrEqual,
                 _ => Operator.Equals
             };
+        }
+
+        /// <summary>
+        /// Checks if an expression references the model parameter of the `Where` predicate.
+        /// Expressions that don't (i.e. `filterPredicate == null`) can be evaluated locally
+        /// instead of being translated into a filter.
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        private bool ContainsParameter(Expression expression)
+        {
+            var finder = new ParameterFinder(_parameter);
+            finder.Visit(expression);
+            return finder.Found;
+        }
+
+        /// <summary>
+        /// Evaluates an expression that doesn't reference the model locally.
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        private static object? EvaluateExpression(Expression expression) =>
+            Expression.Lambda(expression).Compile().DynamicInvoke();
+
+        private class ParameterFinder : ExpressionVisitor
+        {
+            private readonly ParameterExpression? _target;
+
+            public ParameterFinder(ParameterExpression? target) =>
+                _target = target;
+
+            public bool Found { get; private set; }
+
+            protected override Expression VisitParameter(ParameterExpression node)
+            {
+                if (_target == null || node == _target)
+                    Found = true;
+
+                return base.VisitParameter(node);
+            }
         }
 
         /// <summary>
