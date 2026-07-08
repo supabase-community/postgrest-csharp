@@ -19,13 +19,12 @@ namespace Supabase.Postgrest.Linq
     /// </summary>
     internal class WhereExpressionVisitor : ExpressionVisitor
     {
-        private ParameterExpression? _parameter;
+        private ParameterExpression? parameter;
 
-        public WhereExpressionVisitor()
-        { }
+        public WhereExpressionVisitor() { }
 
         private WhereExpressionVisitor(ParameterExpression? parameter) =>
-            _parameter = parameter;
+            this.parameter = parameter;
 
         /// <summary>
         /// The filter resulting from this Visitor, capable of producing nested filters.
@@ -42,7 +41,7 @@ namespace Supabase.Postgrest.Linq
         /// <inheritdoc />
         protected override Expression VisitLambda<T>(Expression<T> node)
         {
-            _parameter ??= node.Parameters.FirstOrDefault();
+            parameter ??= node.Parameters.FirstOrDefault();
 
             // A predicate that never references the model (i.e. `x => localVariable == null`) can't be
             // translated into a filter - it is evaluated locally instead.
@@ -162,7 +161,7 @@ namespace Supabase.Postgrest.Linq
             if (expression.Type == typeof(bool) && !ContainsParameter(expression))
                 return ((bool)EvaluateExpression(expression)!, null);
 
-            var visitor = new WhereExpressionVisitor(_parameter);
+            var visitor = new WhereExpressionVisitor(parameter);
             visitor.Visit(expression);
 
             if (visitor.ConstantValue != null)
@@ -400,7 +399,7 @@ namespace Supabase.Postgrest.Linq
         /// <returns></returns>
         private bool ContainsParameter(Expression expression)
         {
-            var finder = new ParameterFinder(_parameter);
+            var finder = new ParameterFinder(parameter);
             finder.Visit(expression);
             return finder.Found;
         }

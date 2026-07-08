@@ -388,7 +388,6 @@ namespace PostgrestTests
             var table = client.Table<User>()
                 .Where(x => requestModel.FilterPredicate == null || requestModel.FilterPredicate(x));
 
-            // The delegate is null so the predicate is always true - no filter should be applied.
             Assert.AreEqual($"{BaseUrl}/users", table.GenerateUrl());
         }
 
@@ -399,8 +398,6 @@ namespace PostgrestTests
 
             var requestModel = new UserRequestModel { FilterPredicate = u => u.Username == "supabot" };
 
-            // A compiled delegate is opaque and can't be translated into a Postgrest filter;
-            // the SDK should say so instead of blowing up with a NullReferenceException on `Get`.
             var exception = Assert.ThrowsException<ArgumentException>(() => client.Table<User>()
                 .Where(x => requestModel.FilterPredicate == null || requestModel.FilterPredicate(x)));
 
@@ -428,9 +425,8 @@ namespace PostgrestTests
             var table = client.Table<User>()
                 .Where(x => x.Catchphrase == null || x.Catchphrase == "fat cat");
 
-            // `or=(catchphrase.is.null,catchphrase.eq.fat cat)`, url-encoded.
-            Assert.AreEqual($"{BaseUrl}/users?or=(catchphrase.is.null%2ccatchphrase.eq.fat+cat)",
-                table.GenerateUrl());
+            var urlEncodedIsNullFilter = "or=(catchphrase.is.null%2ccatchphrase.eq.fat+cat)";
+            Assert.AreEqual($"{BaseUrl}/users?{urlEncodedIsNullFilter}", table.GenerateUrl());
         }
 
         [TestMethod("Linq: QueryFilter")]

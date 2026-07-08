@@ -355,8 +355,6 @@ namespace Supabase.Postgrest
             var visitor = new WhereExpressionVisitor();
             visitor.Visit(predicate);
 
-            // The predicate never referenced the model and was evaluated locally instead
-            // (i.e. `x => filterPredicate == null || filterPredicate(x)` where `filterPredicate` is null).
             if (visitor.ConstantValue == true)
                 return this;
 
