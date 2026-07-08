@@ -195,3 +195,15 @@ alter default privileges in schema personal grant all on functions to postgres, 
 alter default privileges in schema personal grant all on sequences to postgres, anon, authenticated, service_role;
 
 GRANT ALL PRIVILEGES ON TABLE personal.users TO postgres, anon, authenticated, service_role;
+
+-- Tables created by the `postgres` role in the `public` schema no longer inherit
+-- SELECT/INSERT/UPDATE/DELETE for the API roles under current Supabase CLI default privileges
+-- (https://supabase.com/changelog/45329-breaking-change-tables-not-exposed-to-data-and-graphql-api-automatically),
+-- so the privileges must be granted explicitly.
+grant select, insert, update, delete on all tables in schema public to anon, authenticated, service_role;
+grant usage, select on all sequences in schema public to anon, authenticated, service_role;
+grant execute on all functions in schema public to anon, authenticated, service_role;
+
+alter default privileges in schema public grant select, insert, update, delete on tables to anon, authenticated, service_role;
+alter default privileges in schema public grant usage, select on sequences to anon, authenticated, service_role;
+alter default privileges in schema public grant execute on functions to anon, authenticated, service_role;
