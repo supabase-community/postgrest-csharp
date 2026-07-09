@@ -356,7 +356,7 @@ Class Table&lt;TModel&gt;  <a class="header-action link-secondary" title="View s
 
   <h3 id="Supabase_Postgrest_Table_1_Clear" data-uid="Supabase.Postgrest.Table`1.Clear">
   Clear()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L919"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Table.cs/#L925"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Clears currently defined query values.</p>
@@ -2051,7 +2051,10 @@ be parsed as an &quot;AND&quot; query.</p>
 
   <h4 class="section" id="Supabase_Postgrest_Table_1_Where_System_Linq_Expressions_Expression_System_Func__0_System_Boolean____remarks">Remarks</h4>
   <div class="markdown level1 remarks"><p>Supported predicate shapes:</p>
-<ul><li>The left side of a comparison must be a Model property (with a `Column` or `PrimaryKey` attribute); the right side a constant, captured variable, or instantiation (`new DateTime(...)`).</li><li>Comparisons (`==`, `!=`, `&gt;`, `&gt;=`, `&lt;`, `&lt;=`) can be combined with `&amp;&amp;` and `||`, and `String`/collection `Contains` is supported.</li><li>Null checks translate to Postgrest `is null` filters: `x =&gt; x.Name == null` and `x =&gt; x.Name == null || x.Name == "Top Gun"` both work.</li><li>Conditions that never reference the Model (i.e. `x =&gt; localVariable == null`) are evaluated locally: an always-true predicate applies no filter, an always-false one throws.</li></ul>
+<ul><li>The left side of a comparison must be a Model property (with a `Column` or `PrimaryKey` attribute); the right side a constant, captured variable, or instantiation (`new DateTime(...)`).</li><li>Comparisons (`==`, `!=`, `&gt;`, `&gt;=`, `&lt;`, `&lt;=`) can be combined with `&amp;&amp;` and `||`, and `String`/collection `Contains` is supported.</li><li>`Contains` translates by which side is the Model: a column containing a constant (`x =&gt; x.Tags.Contains("a")`) becomes a `cs`/`like` filter, while a captured collection containing a column (`x =&gt; ids.Contains(x.Id)`) becomes an `in` filter.</li><li>A boolean column can be used as a predicate on its own: `x =&gt; x.IsActive` becomes an `eq` filter and `x =&gt; !x.IsActive` a `not.eq` filter.</li><li>Negation (`!`) is translated to a Postgrest `not.` filter: `x =&gt; !(x.Name == "Top Gun")` becomes `not.eq`, and a negated group `x =&gt; !(x.Name == "Top Gun" || x.Id &gt; 5)` becomes `not.or=(...)`.</li><li>Null checks translate to Postgrest `is null` filters: `x =&gt; x.Name == null` and `x =&gt; x.Name == null || x.Name == "Top Gun"` both work.</li><li>Conditions that never reference the Model (i.e. `x =&gt; localVariable == null`) are evaluated locally: an always-true predicate applies no filter, an always-false one throws.</li></ul>
+<p>Comparing two Model columns to each other (<code>x =&gt; x.StartDate &lt; x.EndDate</code>) is not supported:
+Postgrest has no column-to-column filter syntax, so it throws an <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a> —
+use a database computed/generated column or an RPC instead.</p>
 <p>Invoking a delegate (<code>Func&lt;TModel, bool&gt;</code>) inside the predicate is not supported: a compiled
 delegate cannot be translated into a Postgrest filter and throws an <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.argumentexception">ArgumentException</a>.
 To apply an optional filter, declare it as an <code>Expression&lt;Func&lt;TModel, bool&gt;&gt;</code> and pass it
