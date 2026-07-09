@@ -15,7 +15,9 @@ namespace Supabase.Postgrest.Linq
 
 {
     /// <summary>
-    /// Helper class for parsing Where linq queries.
+    /// Helper class for parsing Where linq queries. Supports comparisons, `&amp;&amp;`/`||` groups,
+    /// `String`/collection `Contains`, null checks (`is null`), and negation (`!`), translating each into
+    /// the equivalent Postgrest filter; negation wraps its operand in a `not.` filter.
     /// </summary>
     internal class WhereExpressionVisitor : ExpressionVisitor
     {
@@ -145,6 +147,29 @@ namespace Supabase.Postgrest.Linq
             {
                 HandleUnaryExpression(column, op, unaryExpression);
             }
+
+            return node;
+        }
+
+        /// <summary>
+        /// Handles a logical negation (i.e. `x => !(x.Name == "foo")`). The operand is visited as its own
+        /// branch and the resulting filter is wrapped in a `not.` filter; a locally evaluated operand
+        /// (i.e. `x => !someLocalBool`) simply flips its boolean value.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        protected override Expression VisitUnary(UnaryExpression node)
+        {
+            if (node.NodeType != ExpressionType.Not)
+                return base.VisitUnary(node);
+
+            var (constant, filter) = VisitBranch(node.Operand);
+
+            if (constant != null)
+                ConstantValue = !constant;
+            else
+                Filter = new QueryFilter(Operator.Not, filter!);
 
             return node;
         }

@@ -143,6 +143,39 @@ namespace PostgrestTests
             Assert.AreEqual($"{BaseUrl}/users?{urlEncodedIsNullFilter}", table.GenerateUrl());
         }
 
+        [TestMethod("Linq: Where negates an equality predicate into a `not.eq` filter")]
+        public void GivenNegatedEqualityPredicate_ShouldGenerateNotEqFilter()
+        {
+            var client = new Client(BaseUrl);
+            var table = client.Table<User>().Where(x => !(x.Username == "supabot"));
+            Assert.AreEqual($"{BaseUrl}/users?username=not.eq.supabot", table.GenerateUrl());
+        }
+
+        [TestMethod("Linq: Where negates a null-check into a `not.is.null` filter")]
+        public void GivenNegatedNullCheckPredicate_ShouldGenerateNotIsNullFilter()
+        {
+            var client = new Client(BaseUrl);
+            var table = client.Table<User>().Where(x => !(x.Catchphrase == null));
+            Assert.AreEqual($"{BaseUrl}/users?catchphrase=not.is.null", table.GenerateUrl());
+        }
+
+        [TestMethod("Linq: Where negates a grouped predicate into a `not.`-wrapped logical filter")]
+        public void GivenNegatedGroupedPredicate_ShouldGenerateNotWrappedLogicalFilter()
+        {
+            var client = new Client(BaseUrl);
+            var table = client.Table<User>().Where(x => !(x.Catchphrase == "fat cat" || x.Username == "supabot"));
+            var urlEncodedNotOrFilter = "not.or=(catchphrase.eq.fat+cat%2cusername.eq.supabot)";
+            Assert.AreEqual($"{BaseUrl}/users?{urlEncodedNotOrFilter}", table.GenerateUrl());
+        }
+
+        [TestMethod("Linq: Where negates a string `Contains` into a `not.like` filter")]
+        public void GivenNegatedStringContainsPredicate_ShouldGenerateNotLikeFilter()
+        {
+            var client = new Client(BaseUrl);
+            var table = client.Table<User>().Where(x => !x.Username!.Contains("supa"));
+            Assert.AreEqual($"{BaseUrl}/users?username=not.like.*supa*", table.GenerateUrl());
+        }
+
         private class UserRequestModel
         {
             public Func<User, bool>? FilterPredicate { get; set; }

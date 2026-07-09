@@ -260,6 +260,21 @@ namespace PostgrestTests
             Assert.AreEqual("not.eq.bar", result.Value);
         }
 
+        [TestMethod("filters: not around a logical group prefixes the key")]
+        public void GivenNotAroundLogicalGroup_ShouldPrefixKeyWithNot()
+        {
+            var client = new Client(BaseUrl);
+            var group = new QueryFilter(Operator.And, new List<IPostgrestQueryFilter>
+            {
+                new QueryFilter("a", Operator.GreaterThanOrEqual, "0"),
+                new QueryFilter("a", Operator.LessThanOrEqual, "100")
+            });
+            var notFilter = new QueryFilter(Operator.Not, group);
+            var result = ((Table<User>)client.Table<User>()).PrepareFilter(notFilter);
+            Assert.AreEqual("not.and", result.Key);
+            Assert.AreEqual("(a.gte.0,a.lte.100)", result.Value);
+        }
+
         [TestMethod("filters: and & or")]
         public void TestFiltersAndOr()
         {

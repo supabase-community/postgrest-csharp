@@ -829,10 +829,7 @@ namespace Supabase.Postgrest
                     break;
                 case Operator.Not:
                     if (filter.Criteria is QueryFilter notFilter)
-                    {
-                        var prepped = PrepareFilter(notFilter);
-                        return new KeyValuePair<string, string>(prepped.Key, $"not.{prepped.Value}");
-                    }
+                        return NegatePreparedFilter(notFilter, PrepareFilter(notFilter));
 
                     break;
                 case Operator.Like:
@@ -914,6 +911,15 @@ namespace Supabase.Postgrest
             return new KeyValuePair<string, string>();
         }
 
+        /// <summary>
+        /// Applies a `not.` negation to an already-prepared filter. A negated logical group is expressed as
+        /// `not.and=(...)` / `not.or=(...)`, with the `not.` prefixing the key; a negated column filter keeps
+        /// the `not.` on the value (`not.eq.foo`).
+        /// </summary>
+        private static KeyValuePair<string, string> NegatePreparedFilter(QueryFilter inner, KeyValuePair<string, string> prepared) =>
+            inner.Op is Operator.And or Operator.Or
+                ? new KeyValuePair<string, string>($"not.{prepared.Key}", prepared.Value)
+                : new KeyValuePair<string, string>(prepared.Key, $"not.{prepared.Value}");
 
         /// <inheritdoc />
         public void Clear()
