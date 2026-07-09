@@ -377,6 +377,10 @@ namespace Supabase.Postgrest.Interfaces
         /// <item><description>Conditions that never reference the Model (i.e. `x =&gt; localVariable == null`) are evaluated locally: an always-true predicate applies no filter, an always-false one throws.</description></item>
         /// </list>
         ///
+        /// Comparing two Model columns to each other (`x =&gt; x.StartDate &lt; x.EndDate`) is not supported:
+        /// Postgrest has no column-to-column filter syntax, so it throws an <see cref="ArgumentException"/> —
+        /// use a database computed/generated column or an RPC instead.
+        ///
         /// Invoking a delegate (`Func&lt;TModel, bool&gt;`) inside the predicate is not supported: a compiled
         /// delegate cannot be translated into a Postgrest filter and throws an <see cref="ArgumentException"/>.
         /// To apply an optional filter, declare it as an `Expression&lt;Func&lt;TModel, bool&gt;&gt;` and pass it

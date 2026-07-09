@@ -133,6 +133,9 @@ namespace Supabase.Postgrest.Linq
                 throw new ArgumentException(
                     $"Left side of expression: '{node}' is expected to be property with a ColumnAttribute or PrimaryKeyAttribute");
 
+            if (ContainsParameter(node.Right))
+                throw new ArgumentException($"Unable to translate '{node}': Postgrest cannot compare two model columns to each other. Use a database computed/generated column or an RPC for column-to-column comparisons.");
+
             if (node.Right is ConstantExpression rightConstantExpression)
             {
                 HandleConstantExpression(column, op, rightConstantExpression);

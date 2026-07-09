@@ -219,6 +219,13 @@ namespace PostgrestTests
             Assert.AreEqual($"{BaseUrl}/kitchen_sink?and=(bool_value.eq.True%2cint_value.gt.3)", table.GenerateUrl());
         }
 
+        [TestMethod("Linq: Where throws a descriptive exception when comparing two columns")]
+        public void GivenColumnComparedToColumnPredicate_ShouldThrowDescriptiveArgumentException()
+        {
+            var exception = Assert.ThrowsException<ArgumentException>(() => client.Table<KitchenSink>().Where(x => x.DateTimeValue < x.DateTimeValue1));
+            StringAssert.Contains(exception.Message, "cannot compare two model columns");
+        }
+
         private class UserRequestModel
         {
             public Func<User, bool>? FilterPredicate { get; set; }
