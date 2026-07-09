@@ -15,7 +15,11 @@ namespace Supabase.Postgrest.Linq
 
 {
     /// <summary>
-    /// Helper class for parsing Where linq queries.
+    /// Helper class for parsing Where linq queries. Supports comparisons, `&amp;&amp;`/`||` groups,
+    /// `String`/collection `Contains` (including a captured collection containing a column, which becomes
+    /// an `in` filter), bare boolean columns (`x =&gt; x.IsActive`), null checks (`is null`), and negation
+    /// (`!`), translating each into the equivalent Postgrest filter; negation wraps its operand in a `not.`
+    /// filter.
     /// </summary>
     internal class WhereExpressionVisitor : ExpressionVisitor
     {
@@ -129,6 +133,9 @@ namespace Supabase.Postgrest.Linq
                 throw new ArgumentException(
                     $"Left side of expression: '{node}' is expected to be property with a ColumnAttribute or PrimaryKeyAttribute");
 
+            if (ContainsParameter(node.Right))
+                throw new ArgumentException($"Unable to translate '{node}': Postgrest cannot compare two model columns to each other. Use a database computed/generated column or an RPC for column-to-column comparisons.");
+
             if (node.Right is ConstantExpression rightConstantExpression)
             {
                 HandleConstantExpression(column, op, rightConstantExpression);
@@ -146,6 +153,44 @@ namespace Supabase.Postgrest.Linq
                 HandleUnaryExpression(column, op, unaryExpression);
             }
 
+            return node;
+        }
+
+        /// <summary>
+        /// Handles a logical negation (i.e. `x => !(x.Name == "foo")`). The operand is visited as its own
+        /// branch and the resulting filter is wrapped in a `not.` filter; a locally evaluated operand
+        /// (i.e. `x => !someLocalBool`) simply flips its boolean value.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        protected override Expression VisitUnary(UnaryExpression node)
+        {
+            if (node.NodeType != ExpressionType.Not)
+                return base.VisitUnary(node);
+
+            var (constant, filter) = VisitBranch(node.Operand);
+
+            if (constant != null)
+                ConstantValue = !constant;
+            else
+                Filter = new QueryFilter(Operator.Not, filter!);
+
+            return node;
+        }
+
+        /// <summary>
+        /// Handles a boolean column used directly as a predicate (i.e. `x => x.IsActive`, or negated via
+        /// <see cref="VisitUnary"/> `x => !x.IsActive`), translating it into a `column.eq.true` filter.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        protected override Expression VisitMember(MemberExpression node)
+        {
+            if (node.Type != typeof(bool) || !ContainsParameter(node))
+                return base.VisitMember(node);
+
+            Filter = new QueryFilter(GetColumnFromMemberExpression(node), Operator.Equals, true);
             return node;
         }
 
@@ -175,7 +220,10 @@ namespace Supabase.Postgrest.Linq
         }
 
         /// <summary>
-        /// Called when evaluating a method 
+        /// Translates a `Contains` call. Two shapes are supported, distinguished by which side references
+        /// the model: a model column containing a constant (`x =&gt; x.Tags.Contains("a")` → `cs`/`like`) and
+        /// a captured collection containing a model column (`x =&gt; ids.Contains(x.Id)` → `in`). The latter
+        /// works for both instance (`List.Contains`) and static (`Enumerable.Contains`) calls.
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
@@ -183,35 +231,112 @@ namespace Supabase.Postgrest.Linq
         /// <exception cref="NotImplementedException"></exception>
         protected override Expression VisitMethodCall(MethodCallExpression node)
         {
-            var obj = node.Object as MemberExpression;
+            if (node.Method.Name != nameof(Enumerable.Contains))
+                throw new NotImplementedException("Unsupported method");
 
-            if (obj == null)
-                throw new ArgumentException(
-                    $"Calling context '{node.Object}' is expected to be a member of or derived from `BaseModel`");
-
-            var column = GetColumnFromMemberExpression(obj);
-
-            if (column == null)
-                throw new ArgumentException(
-                    $"Left side of expression: '{node.ToString()}' is expected to be property with a ColumnAttribute or PrimaryKeyAttribute");
-
-            switch (node.Method.Name)
-            {
-                // Includes String.Contains and IEnumerable.Contains
-                case nameof(String.Contains):
-
-                    if (typeof(ICollection).IsAssignableFrom(node.Method.DeclaringType))
-                        Filter = new QueryFilter(column, Operator.Contains, GetArgumentValues(node));
-                    else
-                        Filter = new QueryFilter(column, Operator.Like, "*" + GetArgumentValues(node).First() + "*");
-
-                    break;
-                default:
-                    throw new NotImplementedException("Unsupported method");
-            }
+            var (collection, item) = DeconstructContains(node);
+            var collectionIsColumn = ContainsParameter(collection);
+            var itemIsColumn = ContainsParameter(item);
+            if (collectionIsColumn && !itemIsColumn)
+                VisitColumnContains(collection, item);
+            else if (itemIsColumn && !collectionIsColumn)
+                VisitCapturedContains(collection, item);
+            else
+                throw new ArgumentException($"Unable to translate '{node}' into a Postgrest filter. `Contains` is supported as a model column containing a constant (i.e. `x => x.Tags.Contains(\"a\")`) or a captured collection containing a model column (i.e. `x => ids.Contains(x.Id)`).");
 
             return node;
         }
+
+        /// <summary>
+        /// Splits a `Contains` call into its collection and item, whether it is an instance call
+        /// (`collection.Contains(item)`) or a static `Enumerable.Contains(collection, item)`.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        private static (Expression Collection, Expression Item) DeconstructContains(MethodCallExpression node) =>
+            node.Object == null ? (node.Arguments[0], node.Arguments[1]) : (node.Object, node.Arguments[0]);
+
+        /// <summary>
+        /// Translates `x =&gt; x.Column.Contains(value)`: a `cs` filter for a collection column, or a `like`
+        /// filter for a string column.
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <param name="item"></param>
+        private void VisitColumnContains(Expression collection, Expression item)
+        {
+            var column = ResolveColumn(collection) ?? throw new ArgumentException($"Left side of expression: '{collection}' is expected to be property with a ColumnAttribute or PrimaryKeyAttribute");
+            Filter = collection.Type == typeof(string)
+                ? new QueryFilter(column, Operator.Like, "*" + EvaluateExpression(item) + "*")
+                : new QueryFilter(column, Operator.Contains, new List<object> { EvaluateExpression(item)! });
+        }
+
+        /// <summary>
+        /// Translates `x =&gt; capturedCollection.Contains(x.Column)` into an `in` filter, resolving the column
+        /// from the argument and evaluating the collection locally.
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <param name="item"></param>
+        private void VisitCapturedContains(Expression collection, Expression item)
+        {
+            var column = ResolveColumn(item) ?? throw new ArgumentException($"Argument of expression: '{item}' is expected to be property with a ColumnAttribute or PrimaryKeyAttribute");
+            Filter = new QueryFilter(column, Operator.In, EvaluateCollection(collection));
+        }
+
+        /// <summary>
+        /// Resolves the column name from an expression that references the model parameter, unwrapping a
+        /// `Convert` (nullable coercion) or a `Nullable&lt;T&gt;.Value` access along the way.
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        private string? ResolveColumn(Expression expression) =>
+            expression switch
+            {
+                UnaryExpression { NodeType: ExpressionType.Convert } convert => ResolveColumn(convert.Operand),
+                MemberExpression member when IsNullableValueAccess(member) => ResolveColumn(member.Expression!),
+                MemberExpression member => GetColumnFromMemberExpression(member),
+                _ => null
+            };
+
+        /// <summary>
+        /// True for the `Nullable&lt;T&gt;.Value` access the compiler inserts around a nullable column (i.e.
+        /// the `.Value` in `x.IntValue!.Value`); its inner expression is the column itself.
+        /// </summary>
+        /// <param name="member"></param>
+        /// <returns></returns>
+        private static bool IsNullableValueAccess(MemberExpression member) =>
+            member.Member.Name == "Value" &&
+            member.Expression != null &&
+            Nullable.GetUnderlyingType(member.Expression.Type) != null;
+
+        /// <summary>
+        /// Evaluates a parameter-free collection expression locally into the list of values expected by an
+        /// `in` filter. Conversion wrappers are stripped first so a `T[]` compiled against the span-based
+        /// `MemoryExtensions.Contains` (i.e. `op_Implicit(array)` to `ReadOnlySpan&lt;T&gt;`) is evaluated as
+        /// the underlying array rather than an un-invokable ref struct.
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        private static IList EvaluateCollection(Expression expression) =>
+            EvaluateExpression(UnwrapConversion(expression)) switch
+            {
+                IList list => list,
+                IEnumerable enumerable => enumerable.Cast<object>().ToList(),
+                _ => throw new ArgumentException($"Expected the collection in '{expression}' to be enumerable so it can be translated into an `in` filter.")
+            };
+
+        /// <summary>
+        /// Strips `Convert` and implicit/explicit conversion-operator wrappers to reach the underlying value.
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        private static Expression UnwrapConversion(Expression expression) =>
+            expression switch
+            {
+                UnaryExpression { NodeType: ExpressionType.Convert } convert => UnwrapConversion(convert.Operand),
+                MethodCallExpression { Method: { Name: "op_Implicit" or "op_Explicit" } } call => UnwrapConversion(call.Arguments[0]),
+                _ => expression
+            };
 
         /// <summary>
         /// A constant expression parser (i.e. x => x.Id == 5 &lt;- where '5' is the constant)
@@ -428,25 +553,6 @@ namespace Supabase.Postgrest.Linq
 
                 return base.VisitParameter(node);
             }
-        }
-
-        /// <summary>
-        /// Gets arguments from a method call expression, (i.e. x => x.Name.Contains("Top")) &lt;- where `Top` is the argument on the called method `Contains`
-        /// </summary>
-        /// <param name="methodCall"></param>
-        /// <returns></returns>
-        List<object> GetArgumentValues(MethodCallExpression methodCall)
-        {
-            var argumentValues = new List<object>();
-
-            foreach (var argument in methodCall.Arguments)
-            {
-                var lambda = Expression.Lambda(argument);
-                var func = lambda.Compile();
-                argumentValues.Add(func.DynamicInvoke());
-            }
-
-            return argumentValues;
         }
     }
 }
