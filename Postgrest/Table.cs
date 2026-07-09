@@ -355,17 +355,18 @@ namespace Supabase.Postgrest
             var visitor = new WhereExpressionVisitor();
             visitor.Visit(predicate);
 
+            if (visitor.ConstantValue == true)
+                return this;
+
+            if (visitor.ConstantValue == false)
+                throw new ArgumentException(
+                    "The supplied predicate always evaluates to false, so no row would ever match. Evaluate the condition outside of `Where` and build the query conditionally instead.");
+
             if (visitor.Filter == null)
                 throw new ArgumentException(
                     "Unable to parse the supplied predicate, did you return a predicate where each left hand of the condition is a Model property?");
 
-            if (visitor.Filter.Op == Operator.Equals && visitor.Filter.Criteria == null)
-                _filters.Add(new QueryFilter(visitor.Filter.Property!, Operator.Is, QueryFilter.NullVal));
-            else if (visitor.Filter.Op == Operator.NotEqual && visitor.Filter.Criteria == null)
-                _filters.Add(new QueryFilter(visitor.Filter.Property!, Operator.Not,
-                    new QueryFilter(visitor.Filter.Property!, Operator.Is, QueryFilter.NullVal)));
-            else
-                _filters.Add(visitor.Filter);
+            _filters.Add(visitor.Filter);
 
             return this;
         }
@@ -800,7 +801,13 @@ namespace Supabase.Postgrest
                     {
                         var list = new List<KeyValuePair<string, string>>();
                         foreach (var subFilter in subFilters)
+                        {
+                            if (subFilter == null)
+                                throw new ArgumentException(
+                                    $"Expected all filters supplied to a `{filter.Op}` filter to be non-null.");
+
                             list.Add(PrepareFilter(subFilter));
+                        }
 
                         foreach (var preppedFilter in list)
                             strBuilder.Append($"{preppedFilter.Key}.{preppedFilter.Value},");

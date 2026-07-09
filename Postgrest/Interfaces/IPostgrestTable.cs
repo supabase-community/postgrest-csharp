@@ -352,11 +352,12 @@ namespace Supabase.Postgrest.Interfaces
         IPostgrestTable<TModel> Select(Expression<Func<TModel, object[]>> predicate);
 
         /// <summary>
-        /// Filter a query based on a predicate function. 
-        /// 
+        /// Filter a query based on a predicate expression. The expression is translated into a
+        /// Postgrest filter and evaluated server-side - it is never executed as C# code.
+        ///
         /// Note: Chaining multiple <see cref="Where(Expression{Func{TModel, bool}})"/> calls will
         /// be parsed as an "AND" query.
-        /// 
+        ///
         /// Examples:
         ///		`Table&lt;Movie&gt;().Where(x =&gt; x.Name == "Top Gun").Get();`
         ///		`Table&lt;Movie&gt;().Where(x =&gt; x.Name == "Top Gun" || x.Name == "Mad Max").Get();`
@@ -364,8 +365,28 @@ namespace Supabase.Postgrest.Interfaces
         ///		`Table&lt;Movie&gt;().Where(x =&gt; x.CreatedAt &lt;= new DateTime(2022, 08, 21)).Get();`
         ///		`Table&lt;Movie&gt;().Where(x =&gt; x.Id > 5 &amp;&amp; x.Name.Contains("Max")).Get();`
         /// </summary>
+        /// <remarks>
+        /// Supported predicate shapes:
+        /// <list type="bullet">
+        /// <item><description>The left side of a comparison must be a Model property (with a `Column` or `PrimaryKey` attribute); the right side a constant, captured variable, or instantiation (`new DateTime(...)`).</description></item>
+        /// <item><description>Comparisons (`==`, `!=`, `&gt;`, `&gt;=`, `&lt;`, `&lt;=`) can be combined with `&amp;&amp;` and `||`, and `String`/collection `Contains` is supported.</description></item>
+        /// <item><description>Null checks translate to Postgrest `is null` filters: `x =&gt; x.Name == null` and `x =&gt; x.Name == null || x.Name == "Top Gun"` both work.</description></item>
+        /// <item><description>Conditions that never reference the Model (i.e. `x =&gt; localVariable == null`) are evaluated locally: an always-true predicate applies no filter, an always-false one throws.</description></item>
+        /// </list>
+        ///
+        /// Invoking a delegate (`Func&lt;TModel, bool&gt;`) inside the predicate is not supported: a compiled
+        /// delegate cannot be translated into a Postgrest filter and throws an <see cref="ArgumentException"/>.
+        /// To apply an optional filter, declare it as an `Expression&lt;Func&lt;TModel, bool&gt;&gt;` and pass it
+        /// conditionally:
+        /// <code>
+        ///	var query = client.Table&lt;Movie&gt;();
+        ///	if (optionalFilter != null)
+        ///		query = query.Where(optionalFilter);
+        /// </code>
+        /// </remarks>
         /// <param name="predicate"></param>
         /// <returns></returns>
+        /// <exception cref="ArgumentException">The predicate contains an expression that cannot be translated into a Postgrest filter, or never matches any row.</exception>
         IPostgrestTable<TModel> Where(Expression<Func<TModel, bool>> predicate);
 
         /// <summary>
