@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -10,76 +11,83 @@ namespace Supabase.Postgrest.Converters
 	public class DateTimeConverter : JsonConverter
 	{
 		/// <inheritdoc />
-		public override bool CanConvert(Type objectType)
-		{
-			throw new NotImplementedException();
-		}
+		public override bool CanConvert(Type objectType) => throw new NotImplementedException();
 
 		/// <inheritdoc />
-		public override bool CanWrite => false;
+		public override bool CanWrite => true;
 
 		/// <inheritdoc />
-		public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
-		{
-			if (reader.Value != null)
+		public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer) => 
+			reader.TokenType == JsonToken.StartArray ? ReadDateTimeList(reader) : ReadDateTime(reader.Value);
+
+		private static List<DateTime> ReadDateTimeList(JsonReader reader) =>
+			JArray.Load(reader)
+				.Select(item => ReadDateTime((item as JValue)?.Value))
+				.Where(date => date != null)
+				.Select(date => date!.Value)
+				.ToList();
+
+		/// <summary>
+		/// Returns the value the reader has already parsed, keeping its <see cref="DateTimeKind"/> and
+		/// sub-second precision intact, rather than round-tripping it through a culture-formatted string
+		/// (which dropped the offset and fractional seconds). The `infinity` sentinels are still mapped
+		/// to <see cref="DateTime.MaxValue"/> / <see cref="DateTime.MinValue"/>.
+		/// </summary>
+		private static DateTime? ReadDateTime(object? value) =>
+			value switch
 			{
-				var str = reader.Value.ToString();
+				null => null,
+				DateTime dateTime => dateTime,
+				DateTimeOffset dateTimeOffset => dateTimeOffset.LocalDateTime,
+				string text => ParseFromText(text),
+				_ => ParseFromObject(value)
+			};
 
-				var infinity = ParseInfinity(str);
+		private static DateTime ParseFromObject(object value) => 
+			DateTime.Parse(value.ToString(), CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
 
-				if (infinity != null)
-				{
-					return (DateTime)infinity;
-				}
+		private static DateTime ParseFromText(string text) => 
+			ParseInfinity(text) ?? ParseFromObject(text);
 
-				var date = DateTime.Parse(str);
-				return date;
-			}
+		private static DateTime? ParseInfinity(string input) => 
+			input.Contains("infinity") ? input.Contains("-") ? DateTime.MinValue : DateTime.MaxValue : null;
 
-			var result = new List<DateTime>();
-
-			try
-			{
-				var jo = JArray.Load(reader);
-
-				foreach (var item in jo.ToArray())
-				{
-					var inner = item.ToString();
-
-					var infinity = ParseInfinity(inner);
-
-					if (infinity != null)
-					{
-						result.Add((DateTime)infinity);
-					}
-
-					var date = DateTime.Parse(inner);
-					result.Add(date);
-				}
-			}
-			catch (JsonReaderException)
-			{
-				return null;
-			}
-
-
-			return result;
-		}
-
-		private static DateTime? ParseInfinity(string input)
-		{
-			if (input.Contains("infinity"))
-			{
-				return input.Contains("-") ? DateTime.MinValue : DateTime.MaxValue;
-			}
-
-			return null;
-		}
-
-		/// <inheritdoc />
+		/// <summary>
+		/// Writes the value with its wall-clock intact, mirroring the read path. The default handling
+		/// (via <c>DateTimeStyles.AdjustToUniversal</c>) forced every value through `ToUniversalTime()`,
+		/// which shifts an <see cref="DateTimeKind.Unspecified"/> date to the previous day in timezones
+		/// ahead of UTC and, for `date` columns, silently stored the wrong day.
+		/// </summary>
 		public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
 		{
-			throw new NotImplementedException();
+			switch (value)
+			{
+				case null:
+					writer.WriteNull();
+					break;
+				case DateTime dateTime:
+					WriteDateTime(writer, dateTime);
+					break;
+				case IEnumerable<DateTime> dateTimes:
+					writer.WriteStartArray();
+					dateTimes.ToList().ForEach(date => WriteDateTime(writer, date));
+					writer.WriteEndArray();
+					break;
+			}
+		}
+
+		/// <summary>
+		/// Writes a single value, mapping <see cref="DateTime.MaxValue"/> back to the `infinity` sentinel
+		/// the read path maps it from: Postgres rounds `MaxValue` up to year 10000 when stored as a literal
+		/// timestamp, which then cannot be read back. <see cref="DateTime.MinValue"/> is left as a literal
+		/// (it round-trips cleanly and doubles as the default for an unset value, so it is not `-infinity`).
+		/// </summary>
+		private static void WriteDateTime(JsonWriter writer, DateTime value)
+		{
+			if (value == DateTime.MaxValue)
+				writer.WriteValue("infinity");
+			else
+				writer.WriteValue(value);
 		}
 	}
 }

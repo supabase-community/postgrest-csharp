@@ -750,6 +750,16 @@ namespace Supabase.Postgrest
         }
 
         /// <summary>
+        /// Settings for re-parsing the already-serialized payload into the loose object graph that is sent
+        /// on the wire. <see cref="DateParseHandling.None"/> keeps date/time values as their serialized
+        /// strings so they pass through verbatim; parsing them back into <see cref="DateTime"/> would strip
+        /// the column-level converters and let the default handling shift them (i.e. an unspecified-kind
+        /// `date` to the previous day in timezones ahead of UTC).
+        /// </summary>
+        private readonly JsonSerializerSettings _passthroughSettings =
+            new() { DateParseHandling = DateParseHandling.None };
+
+        /// <summary>
         /// Transforms an object into a string mapped list/dictionary using `JsonSerializerSettings`.
         /// </summary>
         /// <param name="data"></param>
@@ -773,9 +783,9 @@ namespace Supabase.Postgrest
 
             // Check if data is a Collection for the Insert Bulk case
             if (data is ICollection<TModel>)
-                return JsonConvert.DeserializeObject<List<object>>(serialized, _serializerSettings);
+                return JsonConvert.DeserializeObject<List<object>>(serialized, _passthroughSettings);
 
-            return JsonConvert.DeserializeObject<Dictionary<string, object>>(serialized, _serializerSettings);
+            return JsonConvert.DeserializeObject<Dictionary<string, object>>(serialized, _passthroughSettings);
         }
 
         /// <summary>
