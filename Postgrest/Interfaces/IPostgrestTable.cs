@@ -370,6 +370,7 @@ namespace Supabase.Postgrest.Interfaces
         /// <list type="bullet">
         /// <item><description>The left side of a comparison must be a Model property (with a `Column` or `PrimaryKey` attribute); the right side a constant, captured variable, or instantiation (`new DateTime(...)`).</description></item>
         /// <item><description>Comparisons (`==`, `!=`, `&gt;`, `&gt;=`, `&lt;`, `&lt;=`) can be combined with `&amp;&amp;` and `||`, and `String`/collection `Contains` is supported.</description></item>
+        /// <item><description>`Contains` translates by which side is the Model: a column containing a constant (`x =&gt; x.Tags.Contains("a")`) becomes a `cs`/`like` filter, while a captured collection containing a column (`x =&gt; ids.Contains(x.Id)`) becomes an `in` filter.</description></item>
         /// <item><description>Negation (`!`) is translated to a Postgrest `not.` filter: `x =&gt; !(x.Name == "Top Gun")` becomes `not.eq`, and a negated group `x =&gt; !(x.Name == "Top Gun" || x.Id &gt; 5)` becomes `not.or=(...)`.</description></item>
         /// <item><description>Null checks translate to Postgrest `is null` filters: `x =&gt; x.Name == null` and `x =&gt; x.Name == null || x.Name == "Top Gun"` both work.</description></item>
         /// <item><description>Conditions that never reference the Model (i.e. `x =&gt; localVariable == null`) are evaluated locally: an always-true predicate applies no filter, an always-false one throws.</description></item>
