@@ -17,8 +17,9 @@ namespace Supabase.Postgrest.Linq
     /// <summary>
     /// Helper class for parsing Where linq queries. Supports comparisons, `&amp;&amp;`/`||` groups,
     /// `String`/collection `Contains` (including a captured collection containing a column, which becomes
-    /// an `in` filter), null checks (`is null`), and negation (`!`), translating each into the equivalent
-    /// Postgrest filter; negation wraps its operand in a `not.` filter.
+    /// an `in` filter), bare boolean columns (`x =&gt; x.IsActive`), null checks (`is null`), and negation
+    /// (`!`), translating each into the equivalent Postgrest filter; negation wraps its operand in a `not.`
+    /// filter.
     /// </summary>
     internal class WhereExpressionVisitor : ExpressionVisitor
     {
@@ -172,6 +173,21 @@ namespace Supabase.Postgrest.Linq
             else
                 Filter = new QueryFilter(Operator.Not, filter!);
 
+            return node;
+        }
+
+        /// <summary>
+        /// Handles a boolean column used directly as a predicate (i.e. `x => x.IsActive`, or negated via
+        /// <see cref="VisitUnary"/> `x => !x.IsActive`), translating it into a `column.eq.true` filter.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        protected override Expression VisitMember(MemberExpression node)
+        {
+            if (node.Type != typeof(bool) || !ContainsParameter(node))
+                return base.VisitMember(node);
+
+            Filter = new QueryFilter(GetColumnFromMemberExpression(node), Operator.Equals, true);
             return node;
         }
 

@@ -198,6 +198,27 @@ namespace PostgrestTests
             Assert.AreEqual($"{BaseUrl}/kitchen_sink?string_value=like.*foo*", table.GenerateUrl());
         }
 
+        [TestMethod("Linq: Where translates a bare boolean member into an `eq` filter")]
+        public void GivenBareBooleanMemberPredicate_ShouldGenerateEqTrueFilter()
+        {
+            var table = client.Table<KitchenSink>().Where(x => x.BooleanValue);
+            Assert.AreEqual($"{BaseUrl}/kitchen_sink?bool_value=eq.True", table.GenerateUrl());
+        }
+
+        [TestMethod("Linq: Where translates a negated boolean member into a `not.eq` filter")]
+        public void GivenNegatedBooleanMemberPredicate_ShouldGenerateNotEqTrueFilter()
+        {
+            var table = client.Table<KitchenSink>().Where(x => !x.BooleanValue);
+            Assert.AreEqual($"{BaseUrl}/kitchen_sink?bool_value=not.eq.True", table.GenerateUrl());
+        }
+
+        [TestMethod("Linq: Where translates a boolean member inside an AND into a nested filter")]
+        public void GivenBooleanMemberInsideAndPredicate_ShouldGenerateNestedFilter()
+        {
+            var table = client.Table<KitchenSink>().Where(x => x.BooleanValue && x.IntValue > 3);
+            Assert.AreEqual($"{BaseUrl}/kitchen_sink?and=(bool_value.eq.True%2cint_value.gt.3)", table.GenerateUrl());
+        }
+
         private class UserRequestModel
         {
             public Func<User, bool>? FilterPredicate { get; set; }
