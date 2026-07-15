@@ -1,4 +1,23 @@
-﻿# Changelog
+# Changelog
+
+## [4.2.0](https://github.com/supabase-community/postgrest-csharp/compare/v4.1.0...v4.2.0) (2026-07-15)
+
+
+### Features
+
+* improves doc, unit tests, ci/cd ([#113](https://github.com/supabase-community/postgrest-csharp/issues/113)) ([726dbd8](https://github.com/supabase-community/postgrest-csharp/commit/726dbd8d3af7e85cc11bbdad66ca3750809240c4))
+
+
+### Bug Fixes
+
+* [#85](https://github.com/supabase-community/postgrest-csharp/issues/85) ([ce5f7d9](https://github.com/supabase-community/postgrest-csharp/commit/ce5f7d9bfd52c95206d5624533795ac4b942d3b3))
+* `SerializerSettings` could reach be accessed in a state where `ClientOptions` were not defined ([c852fc3](https://github.com/supabase-community/postgrest-csharp/commit/c852fc3637e7df493d0b1aaa2de2173f9b960899))
+* 35 ([5aa1835](https://github.com/supabase-community/postgrest-csharp/commit/5aa183530fe89fa1c7c4567bfd8e5d6cd4b7f73e))
+* lower Newtonsoft.Json minimum version to 13.0.2 ([#126](https://github.com/supabase-community/postgrest-csharp/issues/126)) ([20e7848](https://github.com/supabase-community/postgrest-csharp/commit/20e7848153fd24f16bceb8a3d8a1ac6586a1aab7))
+* Null object reference could be reached if there was no request data specified ([ac37a62](https://github.com/supabase-community/postgrest-csharp/commit/ac37a62cb9ed286306cf3514f435e362e94c955c))
+* null-reference crash when a Where predicate null-checks a captured value ([#122](https://github.com/supabase-community/postgrest-csharp/issues/122)) ([5581287](https://github.com/supabase-community/postgrest-csharp/commit/5581287beeb5a7434f2f2501e6a70229a98c178b))
+* PrepareRequestHeaders could be called without ClientOptions setting a default value ([183bb55](https://github.com/supabase-community/postgrest-csharp/commit/183bb55abcc4cbf19dc5fd4718cf8269337208fd))
+* preserve DateTime kind, precision, and wall-clock across read and write ([#123](https://github.com/supabase-community/postgrest-csharp/issues/123)) ([5c71f1c](https://github.com/supabase-community/postgrest-csharp/commit/5c71f1c7fa41adbe78a57327b44a687edd583256)), closes [#120](https://github.com/supabase-community/postgrest-csharp/issues/120)
 
 ## 4.1.0 - 2025-02-03
 

@@ -23,8 +23,8 @@
         <PackageIconUrl>https://avatars.githubusercontent.com/u/54469796?s=200&amp;v=4</PackageIconUrl>
         <PackageTags>supabase,postgrest</PackageTags>
         <!-- x-release-please-start-version -->
-        <ReleaseVersion>4.1.0</ReleaseVersion>
-        <PackageVersion>4.1.0</PackageVersion>
+        <ReleaseVersion>4.2.0</ReleaseVersion>
+        <PackageVersion>4.2.0</PackageVersion>
         <!-- x-release-please-end -->
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageIcon>icon.png</PackageIcon>
@@ -37,7 +37,7 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Version)' == '' ">
-        <VersionPrefix Condition=" '$(VersionPrefix)' == '' ">4.1.0</VersionPrefix> <!-- x-release-please-version -->
+        <VersionPrefix Condition=" '$(VersionPrefix)' == '' ">4.2.0</VersionPrefix> <!-- x-release-please-version -->
         <VersionSuffix Condition=" '$(VersionSuffix)' == '' "></VersionSuffix>
         <Version Condition=" '$(VersionSuffix)' != '' ">$(VersionPrefix)-$(VersionSuffix)</Version>
         <Version Condition=" '$(Version)' == '' ">$(VersionPrefix)</Version>
