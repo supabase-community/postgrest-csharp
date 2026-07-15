@@ -8,6 +8,7 @@ on:
     workflows: [ build-and-test ]
     types:
       - completed
+  workflow_dispatch:
 
 jobs:
   release-please:
@@ -25,9 +26,11 @@ jobs:
           
   publish:
     needs: release-please
-    if: ${{ github.repository_owner == 'supabase-community' && startsWith(github.event.head_commit.message, 'chore(master)') && github.ref == 'refs/heads/master' && github.event_name == 'push' }}
+    if: ${{ github.repository_owner == 'supabase-community' && github.ref == 'refs/heads/master' && (github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && startsWith(github.event.head_commit.message, 'chore(master)'))) }}
     name: build, pack & publish
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     steps:
       - uses: actions/checkout@v3
 
@@ -53,5 +56,11 @@ jobs:
       - name: Generate package
         run: dotnet pack ./Postgrest/Postgrest.csproj --configuration Release
 
+      - name: NuGet login
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: ${{ secrets.NUGET_USER }}
+
       - name: Publish on version change
-        run: dotnet nuget push "**/*.nupkg" --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
+        run: dotnet nuget push "**/*.nupkg" --source https://api.nuget.org/v3/index.json --api-key ${{ steps.login.outputs.NUGET_API_KEY }}
