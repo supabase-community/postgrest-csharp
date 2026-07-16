@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Supabase.Postgrest;
@@ -14,7 +15,7 @@ namespace PostgrestTests
     {
         private const string BaseUrl = "http://localhost:54321/rest/v1";
 
-        [TestMethod("Reference: Returns linked models on a root model.")]
+        [TestMethod(DisplayName = "Reference: Returns linked models on a root model.")]
         public async Task TestReferenceReturnsLinkedModels()
         {
             var client = new Client(BaseUrl);
@@ -66,7 +67,7 @@ namespace PostgrestTests
             Assert.AreEqual("category 1", productFiltered?.Category?.Name);
         }
 
-        [TestMethod("Reference: Can create linked records.")]
+        [TestMethod(DisplayName = "Reference: Can create linked records.")]
         public async Task TestReferenceCreateLinked()
         {
             var client = new Client(BaseUrl);
@@ -117,7 +118,7 @@ namespace PostgrestTests
             Assert.IsNotNull(testRelations.People[0].Profile!.Person);
         }
 
-        [TestMethod("Reference: Table can reference the same foreign table multiple times.")]
+        [TestMethod(DisplayName = "Reference: Table can reference the same foreign table multiple times.")]
         public async Task TestModelCanReferenceSameForeignTableMultipleTimes()
         {
             var client = new Client(BaseUrl);
@@ -130,7 +131,7 @@ namespace PostgrestTests
             Assert.IsInstanceOfType(response.Model!.RandomPersonFK, typeof(Person));
         }
 
-        [TestMethod("Reference: Table can reference a nested model with the same foreign table multiple times.")]
+        [TestMethod(DisplayName = "Reference: Table can reference a nested model with the same foreign table multiple times.")]
         public async Task TestModelCanReferenceNestedModelWithSameForeignTableMultipleTimes()
         {
             var client = new Client(BaseUrl);
@@ -142,7 +143,53 @@ namespace PostgrestTests
             Assert.IsInstanceOfType(response.Model!.FKTestModel, typeof(ForeignKeyTestModel));
         }
 
-        [TestMethod("Reference: Model inserts and updates (ignoring reference properties) when Reference is not null.")]
+        [TestMethod(DisplayName = "Reference: Update and Delete requests do not include reference columns in select parameter.")]
+        public async Task GivenModelWithReference_WhenUpdatingOrDeleting_ShouldNotIncludeReferenceColumnsInSelect()
+        {
+            var client = new Client(BaseUrl);
+
+            string? capturedUpdateUrl = null;
+            string? capturedDeleteUrl = null;
+
+            OnRequestPreparedEventHandler handler = (_, _, method, url, _, _, _) =>
+            {
+                if (method == new HttpMethod("PATCH"))
+                    capturedUpdateUrl = url;
+                else if (method == HttpMethod.Delete)
+                    capturedDeleteUrl = url;
+            };
+
+            client.AddRequestPreparedHandler(handler);
+
+            try
+            {
+                var movie = new Movie { Name = "Reference Column Test" };
+                var inserted = await client.Table<Movie>().Insert(movie);
+
+                inserted.Model!.Name = "Reference Column Test Updated";
+                await inserted.Model.Update<Movie>();
+
+                await client.Table<Movie>()
+                    .Filter("id", Operator.Equals, inserted.Model.Id)
+                    .Delete();
+            }
+            finally
+            {
+                client.ClearRequestPreparedHandlers();
+            }
+
+            Assert.IsNotNull(capturedUpdateUrl);
+            var decodedUpdateUrl = Uri.UnescapeDataString(capturedUpdateUrl);
+            Assert.IsFalse(decodedUpdateUrl.Contains(",person("),
+                $"PATCH request should not include reference join columns. URL: {decodedUpdateUrl}");
+
+            Assert.IsNotNull(capturedDeleteUrl);
+            var decodedDeleteUrl = Uri.UnescapeDataString(capturedDeleteUrl);
+            Assert.IsFalse(decodedDeleteUrl.Contains(",person("),
+                $"DELETE request should not include reference join columns. URL: {decodedDeleteUrl}");
+        }
+
+        [TestMethod(DisplayName = "Reference: Model inserts and updates (ignoring reference properties) when Reference is not null.")]
         public async Task TestModelInsertsAndUpdatesWhenReferenceIsSpecified()
         {
             var client = new Client(BaseUrl);
