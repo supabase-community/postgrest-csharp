@@ -119,7 +119,7 @@ namespace PostgrestTests
         public void GivenNonNullDelegate_ShouldThrowArgumentException()
         {
             var requestModel = new UserRequestModel { FilterPredicate = u => u.Username == "supabot" };
-            var exception = Assert.ThrowsException<ArgumentException>(() => client.Table<User>().Where(x => requestModel.FilterPredicate == null || requestModel.FilterPredicate(x)));
+            var exception = Assert.Throws<ArgumentException>(() => client.Table<User>().Where(x => requestModel.FilterPredicate == null || requestModel.FilterPredicate(x)));
             StringAssert.Contains(exception.Message, "Unable to translate expression");
         }
 
@@ -127,7 +127,7 @@ namespace PostgrestTests
         public void GivenAlwaysFalsePredicate_ShouldThrowArgumentException()
         {
             var requestModel = new UserRequestModel();
-            var exception = Assert.ThrowsException<ArgumentException>(() => client.Table<User>().Where(x => requestModel.FilterPredicate != null && requestModel.FilterPredicate(x)));
+            var exception = Assert.Throws<ArgumentException>(() => client.Table<User>().Where(x => requestModel.FilterPredicate != null && requestModel.FilterPredicate(x)));
             StringAssert.Contains(exception.Message, "always evaluates to false");
         }
 
@@ -222,7 +222,7 @@ namespace PostgrestTests
         [TestMethod("Linq: Where throws a descriptive exception when comparing two columns")]
         public void GivenColumnComparedToColumnPredicate_ShouldThrowDescriptiveArgumentException()
         {
-            var exception = Assert.ThrowsException<ArgumentException>(() => client.Table<KitchenSink>().Where(x => x.DateTimeValue < x.DateTimeValue1));
+            var exception = Assert.Throws<ArgumentException>(() => client.Table<KitchenSink>().Where(x => x.DateTimeValue < x.DateTimeValue1));
             StringAssert.Contains(exception.Message, "cannot compare two model columns");
         }
 
