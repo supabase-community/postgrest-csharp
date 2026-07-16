@@ -709,7 +709,8 @@ namespace Supabase.Postgrest
                 {
                     if ((_method == HttpMethod.Get && !reference.IncludeInQuery) ||
                         (_method == HttpMethod.Post && reference.IgnoreOnInsert) ||
-                        (_method == HttpMethod.Post && reference.IgnoreOnUpdate)) continue;
+                        (_method == new HttpMethod("PATCH") && reference.IgnoreOnUpdate) ||
+                        _method == HttpMethod.Delete) continue;
 
                     var columns = string.Join(",", reference.Columns.ToArray());
 
