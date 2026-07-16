@@ -381,7 +381,7 @@ namespace PostgrestTests
         {
             var client = new Client(BaseUrl);
 
-            await Assert.ThrowsExceptionAsync<PostgrestException>(async () =>
+            await Assert.ThrowsAsync<PostgrestException>(async () =>
             {
                 var newUser = new User
                 {

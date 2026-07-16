@@ -37,7 +37,7 @@ namespace PostgrestTests
             Assert.IsNotNull(first2.Id);
             Assert.IsNotNull(first2.Name);
 
-            Assert.ThrowsException<ArgumentException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 return client.Table<KitchenSink>().Select(x => new object[] { "stringValue" });
             });
@@ -79,13 +79,13 @@ namespace PostgrestTests
             Assert.AreEqual(model.AgeRange, updatedUser.AgeRange);
             Assert.AreEqual(model.Status, updatedUser.Status);
 
-            Assert.ThrowsException<ArgumentException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 return client.Table<User>().OnConflict(x => new object[] { x.Username!, x.FavoriteName! })
                     .Upsert(user1);
             });
 
-            Assert.ThrowsException<ArgumentException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 return client.Table<User>().OnConflict(x => "something").Upsert(user1);
             });
@@ -105,13 +105,13 @@ namespace PostgrestTests
 
             CollectionAssert.AreEqual(linqOrderedUsers, supaOrderedUsers);
 
-            Assert.ThrowsException<ArgumentException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 return client.Table<KitchenSink>()
                     .Order(x => new object[] { x.StringValue!, x.IntValue! }, Ordering.Descending).Get();
             });
 
-            Assert.ThrowsException<ArgumentException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 return client.Table<KitchenSink>().Order(x => "something", Ordering.Descending).Get();
             });
@@ -136,7 +136,7 @@ namespace PostgrestTests
             Assert.AreEqual(originalDate, result.Models.First().CreatedAt);
             Assert.AreNotEqual(originalName, result.Models.First().Name);
 
-            Assert.ThrowsException<ArgumentException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 return client.Table<Movie>().Columns(x => new object[] { "something", DateTime.Now }).Update(first);
             });
@@ -216,23 +216,23 @@ namespace PostgrestTests
             Assert.AreNotEqual(testRecord1.DateTimeValue, testRecord2.DateTimeValue);
             CollectionAssert.AreNotEqual(testRecord1.ListOfStrings, testRecord2.ListOfStrings);
 
-            Assert.ThrowsException<ArgumentException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 return client.Table<Movie>().Set(x => x.Name!, DateTime.Now).Update();
             });
 
-            Assert.ThrowsException<ArgumentException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 return client.Table<Movie>().Set(x => DateTime.Now, newName).Update();
             });
 
-            Assert.ThrowsException<ArgumentException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 return client.Table<Movie>().Set(x => new KeyValuePair<object, object?>(x.Name!, DateTime.Now))
                     .Update();
             });
 
-            Assert.ThrowsException<ArgumentException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 return client.Table<Movie>().Set(x => new KeyValuePair<object, object?>(DateTime.Now, newName))
                     .Update();

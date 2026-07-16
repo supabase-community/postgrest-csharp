@@ -36,11 +36,10 @@ namespace PostgrestTests
         }
 
         [TestMethod("`intrange` should only accept integers for parsing")]
-        [ExpectedException(typeof(PostgrestException))]
         public void TestIntRangeParseInvalidFormat()
         {
             var test = "[1.2,3]";
-            RangeConverter.ParseIntRange(test);
+            Assert.Throws<PostgrestException>(() =>  RangeConverter.ParseIntRange(test));
         }
 
         [TestMethod("`Range` should serialize into a string postgres understands")]
