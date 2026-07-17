@@ -24,12 +24,11 @@ namespace Supabase.Postgrest
         {
             options ??= new ClientOptions();
 
-            return new JsonSerializerSettings
+            var settings = new JsonSerializerSettings
             {
                 ContractResolver = new PostgrestContractResolver(),
                 Converters =
                 {
-                    // 2020-08-28T12:01:54.763231
                     new IsoDateTimeConverter
                     {
                         DateTimeStyles = options.DateTimeStyles,
@@ -37,6 +36,12 @@ namespace Supabase.Postgrest
                     }
                 }
             };
+
+           
+            if (options.SerializeEnumsAsStrings)
+                settings.Converters.Add(new StringEnumConverter());
+
+            return settings;
         }
 
         /// <inheritdoc />
