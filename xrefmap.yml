@@ -629,6 +629,19 @@ references:
   isSpec: "True"
   fullName: Supabase.Postgrest.ClientOptions.Schema
   nameWithType: ClientOptions.Schema
+- uid: Supabase.Postgrest.ClientOptions.SerializeEnumsAsStrings
+  name: SerializeEnumsAsStrings
+  href: api/Supabase.Postgrest.ClientOptions.html#Supabase_Postgrest_ClientOptions_SerializeEnumsAsStrings
+  commentId: P:Supabase.Postgrest.ClientOptions.SerializeEnumsAsStrings
+  fullName: Supabase.Postgrest.ClientOptions.SerializeEnumsAsStrings
+  nameWithType: ClientOptions.SerializeEnumsAsStrings
+- uid: Supabase.Postgrest.ClientOptions.SerializeEnumsAsStrings*
+  name: SerializeEnumsAsStrings
+  href: api/Supabase.Postgrest.ClientOptions.html#Supabase_Postgrest_ClientOptions_SerializeEnumsAsStrings_
+  commentId: Overload:Supabase.Postgrest.ClientOptions.SerializeEnumsAsStrings
+  isSpec: "True"
+  fullName: Supabase.Postgrest.ClientOptions.SerializeEnumsAsStrings
+  nameWithType: ClientOptions.SerializeEnumsAsStrings
 - uid: Supabase.Postgrest.Constants
   name: Constants
   href: api/Supabase.Postgrest.Constants.html

@@ -221,7 +221,7 @@ Class ClientOptions  <a class="header-action link-secondary" title="View source"
 
   <h3 id="Supabase_Postgrest_ClientOptions_Headers" data-uid="Supabase.Postgrest.ClientOptions.Headers">
   Headers
-  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/ClientOptions.cs/#L18"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/ClientOptions.cs/#L27"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -252,7 +252,7 @@ Class ClientOptions  <a class="header-action link-secondary" title="View source"
 
   <h3 id="Supabase_Postgrest_ClientOptions_QueryParams" data-uid="Supabase.Postgrest.ClientOptions.QueryParams">
   QueryParams
-  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/ClientOptions.cs/#L20"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/ClientOptions.cs/#L29"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -300,6 +300,42 @@ Class ClientOptions  <a class="header-action link-secondary" title="View source"
   <h4 class="section">Property Value</h4>
   <dl class="parameters">
     <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Supabase_Postgrest_ClientOptions_SerializeEnumsAsStrings_" data-uid="Supabase.Postgrest.ClientOptions.SerializeEnumsAsStrings*"></a>
+
+  <h3 id="Supabase_Postgrest_ClientOptions_SerializeEnumsAsStrings" data-uid="Supabase.Postgrest.ClientOptions.SerializeEnumsAsStrings">
+  SerializeEnumsAsStrings
+  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/ClientOptions.cs/#L25"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>When true, enum properties without their own <code>[JsonConverter]</code> attribute are serialized by
+name (e.g. &quot;OffDisplay&quot;) instead of their underlying integer value. Enable this if your enum
+properties map to native PostgreSQL <code>enum</code> columns. Leave disabled (default) if any of your
+enum properties map to <code>integer</code>/<code>smallint</code> columns, since enabling this would send a string
+to a numeric column and PostgREST would reject the request.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool SerializeEnumsAsStrings { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
     <dd></dd>
   </dl>
 
