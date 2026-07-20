@@ -1,5 +1,18 @@
 # Changelog
 
+## [4.3.0](https://github.com/supabase-community/postgrest-csharp/compare/v4.2.0...v4.3.0) (2026-07-20)
+
+
+### Features
+
+* add Client.Attach&lt;T&gt;() to populate a model's client context for Update/Delete ([#135](https://github.com/supabase-community/postgrest-csharp/issues/135)) ([8b0dfd5](https://github.com/supabase-community/postgrest-csharp/commit/8b0dfd59a3ab8784515187c9b263970af312db38))
+* add ClientOptions.SerializeEnumsAsStrings to opt into string enum serialization ([#134](https://github.com/supabase-community/postgrest-csharp/issues/134)) ([a784554](https://github.com/supabase-community/postgrest-csharp/commit/a784554b97ee505268165a592cf29378623fff70))
+
+
+### Bug Fixes
+
+* exclude reference columns from update and delete select queries ([#132](https://github.com/supabase-community/postgrest-csharp/issues/132)) ([07acabd](https://github.com/supabase-community/postgrest-csharp/commit/07acabd8c114bf0b7bf80607a41a0cbaf6411253))
+
 ## [4.2.0](https://github.com/supabase-community/postgrest-csharp/compare/v4.1.0...v4.2.0) (2026-07-15)
 
 
