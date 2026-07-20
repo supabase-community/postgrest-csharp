@@ -415,6 +415,22 @@ references:
   isSpec: "True"
   fullName: Supabase.Postgrest.Client.AddRequestPreparedHandler
   nameWithType: Client.AddRequestPreparedHandler
+- uid: Supabase.Postgrest.Client.Attach*
+  name: Attach
+  href: api/Supabase.Postgrest.Client.html#Supabase_Postgrest_Client_Attach_
+  commentId: Overload:Supabase.Postgrest.Client.Attach
+  isSpec: "True"
+  fullName: Supabase.Postgrest.Client.Attach
+  nameWithType: Client.Attach
+- uid: Supabase.Postgrest.Client.Attach``1(``0)
+  name: Attach<T>(T)
+  href: api/Supabase.Postgrest.Client.html#Supabase_Postgrest_Client_Attach__1___0_
+  commentId: M:Supabase.Postgrest.Client.Attach``1(``0)
+  name.vb: Attach(Of T)(T)
+  fullName: Supabase.Postgrest.Client.Attach<T>(T)
+  fullName.vb: Supabase.Postgrest.Client.Attach(Of T)(T)
+  nameWithType: Client.Attach<T>(T)
+  nameWithType.vb: Client.Attach(Of T)(T)
 - uid: Supabase.Postgrest.Client.BaseUrl
   name: BaseUrl
   href: api/Supabase.Postgrest.Client.html#Supabase_Postgrest_Client_BaseUrl
@@ -1715,6 +1731,22 @@ references:
   isSpec: "True"
   fullName: Supabase.Postgrest.Interfaces.IPostgrestClient.AddRequestPreparedHandler
   nameWithType: IPostgrestClient.AddRequestPreparedHandler
+- uid: Supabase.Postgrest.Interfaces.IPostgrestClient.Attach*
+  name: Attach
+  href: api/Supabase.Postgrest.Interfaces.IPostgrestClient.html#Supabase_Postgrest_Interfaces_IPostgrestClient_Attach_
+  commentId: Overload:Supabase.Postgrest.Interfaces.IPostgrestClient.Attach
+  isSpec: "True"
+  fullName: Supabase.Postgrest.Interfaces.IPostgrestClient.Attach
+  nameWithType: IPostgrestClient.Attach
+- uid: Supabase.Postgrest.Interfaces.IPostgrestClient.Attach``1(``0)
+  name: Attach<T>(T)
+  href: api/Supabase.Postgrest.Interfaces.IPostgrestClient.html#Supabase_Postgrest_Interfaces_IPostgrestClient_Attach__1___0_
+  commentId: M:Supabase.Postgrest.Interfaces.IPostgrestClient.Attach``1(``0)
+  name.vb: Attach(Of T)(T)
+  fullName: Supabase.Postgrest.Interfaces.IPostgrestClient.Attach<T>(T)
+  fullName.vb: Supabase.Postgrest.Interfaces.IPostgrestClient.Attach(Of T)(T)
+  nameWithType: IPostgrestClient.Attach<T>(T)
+  nameWithType.vb: IPostgrestClient.Attach(Of T)(T)
 - uid: Supabase.Postgrest.Interfaces.IPostgrestClient.BaseUrl
   name: BaseUrl
   href: api/Supabase.Postgrest.Interfaces.IPostgrestClient.html#Supabase_Postgrest_Interfaces_IPostgrestClient_BaseUrl

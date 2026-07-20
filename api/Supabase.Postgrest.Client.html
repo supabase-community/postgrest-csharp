@@ -364,6 +364,56 @@ Class Client  <a class="header-action link-secondary" title="View source" href="
 
 
 
+  <a id="Supabase_Postgrest_Client_Attach_" data-uid="Supabase.Postgrest.Client.Attach*"></a>
+
+  <h3 id="Supabase_Postgrest_Client_Attach__1___0_" data-uid="Supabase.Postgrest.Client.Attach``1(``0)">
+  Attach&lt;T&gt;(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Client.cs/#L112"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Attaches this client's context (<a class="xref" href="Supabase.Postgrest.Models.BaseModel.html#Supabase_Postgrest_Models_BaseModel_BaseUrl">BaseUrl</a>, <a class="xref" href="Supabase.Postgrest.Models.BaseModel.html#Supabase_Postgrest_Models_BaseModel_RequestClientOptions">RequestClientOptions</a>,
+and its headers callback) to a model, so that <code>Update</code>/<code>Delete</code> can be called directly on the
+model afterward.</p>
+<p>Intended for models that were deserialized by something other than this client's own <code>Table&lt;T&gt;</code>
+responses (which already attach this context automatically) - for example, a model deserialized from a
+Realtime event.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T Attach&lt;T&gt;(T model) where T : BaseModel</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>model</code> <span class="xref">T</span></dt>
+    <dd><p>The model to attach context to. Mutated in place and also returned for chaining.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The same model instance, for convenience.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Custom Model derived from <code>BaseModel</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
   <a id="Supabase_Postgrest_Client_ClearDebugHandlers_" data-uid="Supabase.Postgrest.Client.ClearDebugHandlers*"></a>
 
   <h3 id="Supabase_Postgrest_Client_ClearDebugHandlers" data-uid="Supabase.Postgrest.Client.ClearDebugHandlers">
@@ -486,7 +536,7 @@ Class Client  <a class="header-action link-secondary" title="View source" href="
 
   <h3 id="Supabase_Postgrest_Client_Rpc_System_String_System_Object_" data-uid="Supabase.Postgrest.Client.Rpc(System.String,System.Object)">
   Rpc(string, object?)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Client.cs/#L121"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Client.cs/#L130"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Perform a stored procedure call.</p>
@@ -527,7 +577,7 @@ Class Client  <a class="header-action link-secondary" title="View source" href="
 
   <h3 id="Supabase_Postgrest_Client_Rpc__1_System_String_System_Object_" data-uid="Supabase.Postgrest.Client.Rpc``1(System.String,System.Object)">
   Rpc&lt;TModeledResponse&gt;(string, object?)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Client.cs/#L113"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Client.cs/#L122"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Perform a stored procedure call.</p>

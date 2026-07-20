@@ -260,6 +260,56 @@ Interface IPostgrestClient  <a class="header-action link-secondary" title="View 
 
 
 
+  <a id="Supabase_Postgrest_Interfaces_IPostgrestClient_Attach_" data-uid="Supabase.Postgrest.Interfaces.IPostgrestClient.Attach*"></a>
+
+  <h3 id="Supabase_Postgrest_Interfaces_IPostgrestClient_Attach__1___0_" data-uid="Supabase.Postgrest.Interfaces.IPostgrestClient.Attach``1(``0)">
+  Attach&lt;T&gt;(T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Interfaces/IPostgrestClient.cs/#L101"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Attaches this client's context (<a class="xref" href="Supabase.Postgrest.Models.BaseModel.html#Supabase_Postgrest_Models_BaseModel_BaseUrl">BaseUrl</a>, <a class="xref" href="Supabase.Postgrest.Models.BaseModel.html#Supabase_Postgrest_Models_BaseModel_RequestClientOptions">RequestClientOptions</a>,
+and its headers callback) to a model, so that <code>Update</code>/<code>Delete</code> can be called directly on the
+model afterward.</p>
+<p>Intended for models that were deserialized by something other than this client's own <code>Table&lt;T&gt;</code>
+responses (which already attach this context automatically) - for example, a model deserialized from a
+Realtime event.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">T Attach&lt;T&gt;(T model) where T : BaseModel</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>model</code> <span class="xref">T</span></dt>
+    <dd><p>The model to attach context to. Mutated in place and also returned for chaining.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">T</span></dt>
+    <dd><p>The same model instance, for convenience.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>Custom Model derived from <code>BaseModel</code></p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
   <a id="Supabase_Postgrest_Interfaces_IPostgrestClient_ClearDebugHandlers_" data-uid="Supabase.Postgrest.Interfaces.IPostgrestClient.ClearDebugHandlers*"></a>
 
   <h3 id="Supabase_Postgrest_Interfaces_IPostgrestClient_ClearDebugHandlers" data-uid="Supabase.Postgrest.Interfaces.IPostgrestClient.ClearDebugHandlers">
