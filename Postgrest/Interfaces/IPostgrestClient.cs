@@ -85,5 +85,19 @@ namespace Supabase.Postgrest.Interfaces
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         IPostgrestTableWithCache<T> Table<T>(IPostgrestCacheProvider cacheProvider) where T : BaseModel, new();
+
+        /// <summary>
+        /// Attaches this client's context (<see cref="BaseModel.BaseUrl"/>, <see cref="BaseModel.RequestClientOptions"/>,
+        /// and its headers callback) to a model, so that <c>Update</c>/<c>Delete</c> can be called directly on the
+        /// model afterward.
+        ///
+        /// Intended for models that were deserialized by something other than this client's own <c>Table&lt;T&gt;</c>
+        /// responses (which already attach this context automatically) - for example, a model deserialized from a
+        /// Realtime event.
+        /// </summary>
+        /// <param name="model">The model to attach context to. Mutated in place and also returned for chaining.</param>
+        /// <typeparam name="T">Custom Model derived from `BaseModel`</typeparam>
+        /// <returns>The same model instance, for convenience.</returns>
+        T Attach<T>(T model) where T : BaseModel;
     }
 }

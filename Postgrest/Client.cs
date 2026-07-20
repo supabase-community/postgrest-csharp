@@ -108,6 +108,15 @@ namespace Supabase.Postgrest
                 GetHeaders = GetHeaders
             };
 
+        /// <inheritdoc />
+        public T Attach<T>(T model) where T : BaseModel
+        {
+            model.BaseUrl = BaseUrl;
+            model.RequestClientOptions = Options;
+            model.GetHeaders = GetHeaders;
+            return model;
+        }
+
 
         /// <inheritdoc />
         public async Task<TModeledResponse?> Rpc<TModeledResponse>(string procedureName, object? parameters = null)
