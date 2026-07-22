@@ -2814,6 +2814,18 @@ references:
   isSpec: "True"
   fullName: Supabase.Postgrest.PostgrestContractResolver.SetState
   nameWithType: PostgrestContractResolver.SetState
+- uid: Supabase.Postgrest.PostgrestDiagnostics
+  name: PostgrestDiagnostics
+  href: api/Supabase.Postgrest.PostgrestDiagnostics.html
+  commentId: T:Supabase.Postgrest.PostgrestDiagnostics
+  fullName: Supabase.Postgrest.PostgrestDiagnostics
+  nameWithType: PostgrestDiagnostics
+- uid: Supabase.Postgrest.PostgrestDiagnostics.SourceName
+  name: SourceName
+  href: api/Supabase.Postgrest.PostgrestDiagnostics.html#Supabase_Postgrest_PostgrestDiagnostics_SourceName
+  commentId: F:Supabase.Postgrest.PostgrestDiagnostics.SourceName
+  fullName: Supabase.Postgrest.PostgrestDiagnostics.SourceName
+  nameWithType: PostgrestDiagnostics.SourceName
 - uid: Supabase.Postgrest.QueryFilter
   name: QueryFilter
   href: api/Supabase.Postgrest.QueryFilter.html

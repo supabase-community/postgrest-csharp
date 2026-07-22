@@ -130,6 +130,14 @@ as handling the conversion of Postgrest Ranges to a C# <code>Range</code>.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="Supabase.Postgrest.PostgrestDiagnostics.html">PostgrestDiagnostics</a></dt>
+      <dd><p>Names of the diagnostic sources the Postgrest client emits to. Pass these when wiring up
+OpenTelemetry so you don't have to hardcode (case-sensitive) source names:
+<code>TracerProviderBuilder.AddSource(PostgrestDiagnostics.SourceName)</code> and
+<code>MeterProviderBuilder.AddMeter(PostgrestDiagnostics.SourceName)</code>.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="Supabase.Postgrest.QueryFilter.html">QueryFilter</a></dt>
       <dd></dd>
     </dl>

@@ -163,7 +163,7 @@ Class Client  <a class="header-action link-secondary" title="View source" href="
 
   <h3 id="Supabase_Postgrest_Client__ctor_System_String_Supabase_Postgrest_ClientOptions_" data-uid="Supabase.Postgrest.Client.#ctor(System.String,Supabase.Postgrest.ClientOptions)">
   Client(string, ClientOptions?)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Client.cs/#L89"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Client.cs/#L92"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Should be the first call to this class to initialize a connection with a Postgrest API Server</p>
@@ -235,7 +235,7 @@ Class Client  <a class="header-action link-secondary" title="View source" href="
 
   <h3 id="Supabase_Postgrest_Client_GetHeaders" data-uid="Supabase.Postgrest.Client.GetHeaders">
   GetHeaders
-  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Client.cs/#L81"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Client.cs/#L84"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Function that can be set to return dynamic headers.</p>
@@ -312,7 +312,8 @@ Class Client  <a class="header-action link-secondary" title="View source" href="
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void AddDebugHandler(IPostgrestDebugger.DebugEventHandler handler)</code></pre>
+    <pre><code class="lang-csharp hljs">[Obsolete(&quot;The debug handler is replaced by OpenTelemetry-compatible diagnostics: subscribe to the ActivitySource and Meter named \&quot;Supabase.Postgrest\&quot;. This member will be removed in a future major version.&quot;)]
+public void AddDebugHandler(IPostgrestDebugger.DebugEventHandler handler)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -368,7 +369,7 @@ Class Client  <a class="header-action link-secondary" title="View source" href="
 
   <h3 id="Supabase_Postgrest_Client_Attach__1___0_" data-uid="Supabase.Postgrest.Client.Attach``1(``0)">
   Attach&lt;T&gt;(T)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Client.cs/#L112"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Client.cs/#L115"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Attaches this client's context (<a class="xref" href="Supabase.Postgrest.Models.BaseModel.html#Supabase_Postgrest_Models_BaseModel_BaseUrl">BaseUrl</a>, <a class="xref" href="Supabase.Postgrest.Models.BaseModel.html#Supabase_Postgrest_Models_BaseModel_RequestClientOptions">RequestClientOptions</a>,
@@ -418,7 +419,7 @@ Realtime event.</p>
 
   <h3 id="Supabase_Postgrest_Client_ClearDebugHandlers" data-uid="Supabase.Postgrest.Client.ClearDebugHandlers">
   ClearDebugHandlers()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Client.cs/#L74"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Client.cs/#L76"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Clears debug handlers</p>
@@ -426,7 +427,8 @@ Realtime event.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void ClearDebugHandlers()</code></pre>
+    <pre><code class="lang-csharp hljs">[Obsolete(&quot;The debug handler is replaced by OpenTelemetry-compatible diagnostics: subscribe to the ActivitySource and Meter named \&quot;Supabase.Postgrest\&quot;. This member will be removed in a future major version.&quot;)]
+public void ClearDebugHandlers()</code></pre>
   </div>
 
 
@@ -472,7 +474,7 @@ Realtime event.</p>
 
   <h3 id="Supabase_Postgrest_Client_RemoveDebugHandler_Supabase_Postgrest_Interfaces_IPostgrestDebugger_DebugEventHandler_" data-uid="Supabase.Postgrest.Client.RemoveDebugHandler(Supabase.Postgrest.Interfaces.IPostgrestDebugger.DebugEventHandler)">
   RemoveDebugHandler(DebugEventHandler)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Client.cs/#L70"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Client.cs/#L71"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Removes a debug handler</p>
@@ -480,7 +482,8 @@ Realtime event.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void RemoveDebugHandler(IPostgrestDebugger.DebugEventHandler handler)</code></pre>
+    <pre><code class="lang-csharp hljs">[Obsolete(&quot;The debug handler is replaced by OpenTelemetry-compatible diagnostics: subscribe to the ActivitySource and Meter named \&quot;Supabase.Postgrest\&quot;. This member will be removed in a future major version.&quot;)]
+public void RemoveDebugHandler(IPostgrestDebugger.DebugEventHandler handler)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -536,7 +539,7 @@ Realtime event.</p>
 
   <h3 id="Supabase_Postgrest_Client_Rpc_System_String_System_Object_" data-uid="Supabase.Postgrest.Client.Rpc(System.String,System.Object)">
   Rpc(string, object?)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Client.cs/#L130"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Client.cs/#L133"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Perform a stored procedure call.</p>
@@ -577,7 +580,7 @@ Realtime event.</p>
 
   <h3 id="Supabase_Postgrest_Client_Rpc__1_System_String_System_Object_" data-uid="Supabase.Postgrest.Client.Rpc``1(System.String,System.Object)">
   Rpc&lt;TModeledResponse&gt;(string, object?)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Client.cs/#L122"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Client.cs/#L125"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Perform a stored procedure call.</p>
@@ -664,7 +667,7 @@ configuration handles that.</p>
 
   <h3 id="Supabase_Postgrest_Client_Table__1" data-uid="Supabase.Postgrest.Client.Table``1">
   Table&lt;T&gt;()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Client.cs/#L97"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Client.cs/#L100"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Returns a Table Query Builder instance for a defined model - representative of <code>USE $TABLE</code></p>
@@ -702,7 +705,7 @@ configuration handles that.</p>
 
   <h3 id="Supabase_Postgrest_Client_Table__1_Supabase_Postgrest_Interfaces_IPostgrestCacheProvider_" data-uid="Supabase.Postgrest.Client.Table``1(Supabase.Postgrest.Interfaces.IPostgrestCacheProvider)">
   Table&lt;T&gt;(IPostgrestCacheProvider)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Client.cs/#L104"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/supabase-community/postgrest-csharp/blob/master/Postgrest/Client.cs/#L107"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Returns a Table Query Builder instance with a Cache Provider for a defined model - representative of <code>USE #$TABLE</code></p>

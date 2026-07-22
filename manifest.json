@@ -572,6 +572,20 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Supabase.Postgrest.PostgrestDiagnostics.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Supabase.Postgrest.PostgrestDiagnostics.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "Supabase.Postgrest.PostgrestDiagnostics",
+      "Summary": "<p sourcefile=\"api/Supabase.Postgrest.PostgrestDiagnostics.yml\" sourcestartlinenumber=\"1\">Names of the diagnostic sources the Postgrest client emits to. Pass these when wiring up\nOpenTelemetry so you don't have to hardcode (case-sensitive) source names:\n<code>TracerProviderBuilder.AddSource(PostgrestDiagnostics.SourceName)</code> and\n<code>MeterProviderBuilder.AddMeter(PostgrestDiagnostics.SourceName)</code>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Supabase.Postgrest.QueryFilter-2.yml",
       "output": {
         ".html": {
