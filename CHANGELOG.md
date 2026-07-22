@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.4.0](https://github.com/supabase-community/postgrest-csharp/compare/v4.3.0...v4.4.0) (2026-07-22)
+
+
+### Features
+
+* emit observability via System.Diagnostics and deprecate debug callback ([#136](https://github.com/supabase-community/postgrest-csharp/issues/136)) ([8a0e8ec](https://github.com/supabase-community/postgrest-csharp/commit/8a0e8ec4f2a06afca7d9ac9eba37f294d35ee763))
+
 ## [4.3.0](https://github.com/supabase-community/postgrest-csharp/compare/v4.2.0...v4.3.0) (2026-07-20)
 
 
