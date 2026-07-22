@@ -171,6 +171,9 @@ public class Person : BaseModel
 [Table("profile")]
 public class Profile : BaseModel
 {
+    [PrimaryKey("person_id")]
+    public int PersonId { get; set; }
+
     [Column("email")]
     public string Email { get; set; }
 }
@@ -197,7 +200,7 @@ As such, a query on the `Movie` model (given the above) would return something l
                 first_name: "Tom",
                 last_name: "Cruise",
                 profile: {
-                    profile_id: 1,
+                    person_id: 1,
                     email: "tom.cruise@supabase.io",
                     created_at: "2022-08-20T00:30:33.72443"
                 }
@@ -208,7 +211,7 @@ As such, a query on the `Movie` model (given the above) would return something l
                 first_name: "Bob",
                 last_name: "Saggett",
                 profile: {
-                    profile_id: 3,
+                    person_id: 3,
                     email: "bob.saggett@supabase.io",
                     created_at: "2022-08-20T00:30:33.72443"
                 }
@@ -312,12 +315,100 @@ public class Movie : BaseModel
 }
 ```
 
+### Inserting Related Records
+
+PostgREST _does not support nested inserts or upserts_ — a request writes to exactly one table. Because of this,
+`Reference` properties on a model are **ignored** on insert, update, and upsert, regardless of the relationship type —
+one-to-one, one-to-many, and many-to-many alike. Inserting a `Movie` with its `Persons` list populated will persist the
+movie but write nothing else, without raising an error.
+
+To create a relationship, write the foreign key where it lives in the database:
+
+**One-to-one / many-to-one** — the foreign key is a column on the row being inserted. Expose it on the model (as
+the `Profile` model above does with `person_id`) and set it directly:
+
+```c#
+// `profile.person_id` references `person.id` — setting the column creates the relationship.
+await client.Table<Profile>().Insert(new Profile { PersonId = person.Id, Email = "tom.cruise@supabase.io" });
+```
+
+**One-to-many** — the foreign key is a column on each child row. Insert the parent first (by default, the response
+contains the inserted record including database-generated values such as its primary key), then bulk-insert the
+children with their foreign key column set to the parent's key. Given a `review` table referencing `movie`:
+
+```c#
+[Table("review")]
+public class Review : BaseModel
+{
+    [PrimaryKey("id")]
+    public int Id { get; set; }
+
+    [Column("movie_id")]
+    public int MovieId { get; set; }
+
+    [Column("content")]
+    public string Content { get; set; }
+}
+```
+
+```c#
+// 1. Insert the parent and retrieve its database-generated key.
+var response = await client.Table<Movie>().Insert(new Movie { Name = "Top Gun: Maverick" });
+var movie = response.Model!;
+
+// 2. Bulk-insert the children with their foreign key column set.
+var reviews = contents
+    .Select(content => new Review { MovieId = movie.Id, Content = content })
+    .ToList();
+await client.Table<Review>().Insert(reviews);
+```
+
+**Many-to-many** — the foreign keys live in a join table that has no counterpart in your domain model, so it must be
+modeled and written explicitly:
+
+```c#
+[Table("movie_person")]
+public class MoviePerson : BaseModel
+{
+    [Column("movie_id")]
+    public int MovieId { get; set; }
+
+    [Column("person_id")]
+    public int PersonId { get; set; }
+}
+```
+
+```c#
+// 1. Insert the root record and retrieve its database-generated key.
+var response = await client.Table<Movie>().Insert(new Movie { Name = "Top Gun: Maverick" });
+var movie = response.Model!;
+
+// 2. Insert all join rows in a single bulk request.
+var moviePersons = persons
+    .Select(person => new MoviePerson { MovieId = movie.Id, PersonId = person.Id })
+    .ToList();
+await client.Table<MoviePerson>().Insert(moviePersons);
+```
+
+Whenever related records are written in multiple requests, the requests are **not atomic** — if a later request fails,
+the earlier records exist without their relationships. When atomicity matters, wrap the writes in a
+[database function](https://supabase.com/docs/guides/database/functions) and call it through `Rpc`:
+
+```c#
+await client.Rpc("insert_movie_with_persons", new Dictionary<string, object>
+{
+    { "name", "Top Gun: Maverick" },
+    { "person_ids", persons.Select(p => p.Id).ToList() }
+});
+```
+
 **Further Notes**:
 
 - Postgrest _does not support nested inserts or upserts_. Relational keys on models will be ignored when attempting to
-  insert or upsert on a root model.
+  insert or upsert on a root model (see [Inserting Related Records](#inserting-related-records)).
 - The `Relation` attribute uses reflection to only select the attributes specified on the Class Model (i.e.
-  the `Profile` model has a property only for `email`, only the property will be requested in the query).
+  the `Profile` model only declares properties for `person_id` and `email`, so only those columns will be requested in
+  the query).
 
 ## Status
 
