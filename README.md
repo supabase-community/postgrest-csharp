@@ -410,6 +410,60 @@ await client.Rpc("insert_movie_with_persons", new Dictionary<string, object>
   the `Profile` model only declares properties for `person_id` and `email`, so only those columns will be requested in
   the query).
 
+## Observability (OpenTelemetry)
+
+The client emits traces and metrics through `System.Diagnostics`, so you can wire them into
+OpenTelemetry (or any `ActivityListener`/`MeterListener`) without the client taking a dependency
+on the OpenTelemetry packages. Emission is zero-cost while nothing is listening, so it is always
+on and stays silent until you subscribe.
+
+Register the client's `ActivitySource` and `Meter` by name. Use the `PostgrestDiagnostics.SourceName`
+constant rather than hardcoding the string, so a typo becomes a compile error instead of a silent
+no-op:
+
+```csharp
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Trace;
+using Supabase.Postgrest;
+
+// Requires the OpenTelemetry.Extensions.Hosting and an exporter package (e.g. OTLP) in your app.
+builder.Services.AddOpenTelemetry()
+    .WithTracing(tracing => tracing
+        .AddSource(PostgrestDiagnostics.SourceName)
+        .AddOtlpExporter())
+    .WithMetrics(metrics => metrics
+        .AddMeter(PostgrestDiagnostics.SourceName)
+        .AddOtlpExporter());
+```
+
+Once subscribed you get:
+
+- A client span per request, named `{METHOD} {path}` and following OpenTelemetry HTTP conventions
+  (method, status code, and a sanitized URL). The query string is **never** recorded — in Postgrest
+  it carries the column filters and their values, which are potential PII. A `db.operation` tag
+  (`select`, `insert`, `update`, `upsert`, `delete`, `count`, `rpc`) distinguishes the logical
+  operation, since several map to the same HTTP verb.
+- A `supabase.postgrest.http.request.duration` histogram (seconds), tagged with method, host, path,
+  operation, and status code.
+
+If you are not using the OpenTelemetry SDK, a raw listener works too:
+
+```csharp
+using System.Diagnostics;
+using Supabase.Postgrest;
+
+using var listener = new ActivityListener
+{
+    ShouldListenTo = source => source.Name == PostgrestDiagnostics.SourceName,
+    Sample = (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllData,
+    ActivityStopped = activity => Console.WriteLine($"{activity.OperationName} {activity.Duration.TotalMilliseconds}ms {activity.Status}")
+};
+ActivitySource.AddActivityListener(listener);
+```
+
+This replaces the debug handler surface (`AddDebugHandler` and friends), which is now deprecated and
+will be removed in a future major version.
+
 ## Status
 
 - [x] Connects to PostgREST Server
