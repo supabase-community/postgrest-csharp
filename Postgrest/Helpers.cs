@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -9,6 +10,7 @@ using System.Web;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Supabase.Core;
+using Supabase.Core.Diagnostics;
 using Supabase.Core.Extensions;
 using Supabase.Postgrest.Exceptions;
 using Supabase.Postgrest.Models;
@@ -37,11 +39,12 @@ namespace Supabase.Postgrest
 		/// <param name="serializerSettings"></param>
 		/// <param name="getHeaders"></param>
 		/// <param name="cancellationToken"></param>
+		/// <param name="operation">Logical operation name recorded on telemetry (select/insert/update/…).</param>
 		/// <returns></returns>
 		public static async Task<ModeledResponse<T>> MakeRequest<T>(ClientOptions clientOptions, HttpMethod method, string url, JsonSerializerSettings serializerSettings, object? data = null,
-			Dictionary<string, string>? headers = null, Func<Dictionary<string, string>>? getHeaders = null, CancellationToken cancellationToken = default) where T : BaseModel, new()
+			Dictionary<string, string>? headers = null, Func<Dictionary<string, string>>? getHeaders = null, CancellationToken cancellationToken = default, string? operation = null) where T : BaseModel, new()
 		{
-			var baseResponse = await MakeRequest(clientOptions, method, url, serializerSettings, data, headers, cancellationToken);
+			var baseResponse = await MakeRequest(clientOptions, method, url, serializerSettings, data, headers, cancellationToken, operation);
 			return new ModeledResponse<T>(baseResponse, serializerSettings, getHeaders);
 		}
 
@@ -55,9 +58,10 @@ namespace Supabase.Postgrest
 		/// <param name="headers"></param>
 		/// <param name="serializerSettings"></param>
 		/// <param name="cancellationToken"></param>
+		/// <param name="operation">Logical operation name recorded on telemetry (select/insert/update/…).</param>
 		/// <returns></returns>
 		public static async Task<BaseResponse> MakeRequest(ClientOptions clientOptions, HttpMethod method, string url, JsonSerializerSettings serializerSettings, object? data = null,
-			Dictionary<string, string>? headers = null, CancellationToken cancellationToken = default)
+			Dictionary<string, string>? headers = null, CancellationToken cancellationToken = default, string? operation = null)
 		{
 			var builder = new UriBuilder(url);
 			var query = HttpUtility.ParseQueryString(builder.Query);
@@ -94,20 +98,43 @@ namespace Supabase.Postgrest
 				}
 			}
 
-			using var response = await Client.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false);
-			var content = await response.Content.ReadAsStringAsync();
+			using var activity = PostgrestInstrumentation.StartHttpActivity(method, builder.Uri, operation);
+			var startTimestamp = Stopwatch.GetTimestamp();
+			int? statusCode = null;
+			string? errorType = null;
 
-			if (response.IsSuccessStatusCode)
-				return new BaseResponse(clientOptions, response, content);
-
-			var exception = new PostgrestException(content)
+			try
 			{
-				Content = content,
-				Response = response,
-				StatusCode = (int)response.StatusCode
-			};
-			exception.AddReason();
-			throw exception;
+				using var response = await Client.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false);
+				statusCode = (int)response.StatusCode;
+				activity.SetHttpResponseTags(statusCode.Value);
+
+				var content = await response.Content.ReadAsStringAsync();
+
+				if (response.IsSuccessStatusCode)
+					return new BaseResponse(clientOptions, response, content);
+
+				errorType = statusCode.Value.ToString();
+				var exception = new PostgrestException(content)
+				{
+					Content = content,
+					Response = response,
+					StatusCode = (int)response.StatusCode
+				};
+				exception.AddReason();
+				throw exception;
+			}
+			catch (Exception e) when (e is not PostgrestException)
+			{
+				// Transport-level failures (no response); Postgrest surfaces these raw, so tag and rethrow.
+				errorType = e.GetType().FullName;
+				activity.SetFailure(e);
+				throw;
+			}
+			finally
+			{
+				PostgrestInstrumentation.RecordRequest(method, builder.Uri, operation, statusCode, errorType, startTimestamp);
+			}
 		}
 
 		/// <summary>

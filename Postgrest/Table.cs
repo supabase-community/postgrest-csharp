@@ -991,8 +991,9 @@ namespace Supabase.Postgrest
                 $"Headers:\n\t{JsonConvert.SerializeObject(requestHeaders)}\n" +
                 $"Data:\n\t{JsonConvert.SerializeObject(preparedData)}");
 
+            var operation = PostgrestInstrumentation.ResolveOperation(method, isInsert, isUpdate, isUpsert);
             return Helpers.MakeRequest(_options, method, url, _serializerSettings, preparedData, requestHeaders,
-                cancellationToken);
+                cancellationToken, operation);
         }
 
         private Task<ModeledResponse<TU>> Send<TU>(HttpMethod method, object? data,
@@ -1016,8 +1017,9 @@ namespace Supabase.Postgrest
                 $"Headers:\n\t{JsonConvert.SerializeObject(requestHeaders)}\n" +
                 $"Data:\n\t{JsonConvert.SerializeObject(preparedData)}");
 
+            var operation = PostgrestInstrumentation.ResolveOperation(method, isInsert, isUpdate, isUpsert);
             return Helpers.MakeRequest<TU>(_options, method, url, _serializerSettings, preparedData, requestHeaders,
-                GetHeaders, cancellationToken);
+                GetHeaders, cancellationToken, operation);
         }
 
         private static string FindTableName(object? obj = null)

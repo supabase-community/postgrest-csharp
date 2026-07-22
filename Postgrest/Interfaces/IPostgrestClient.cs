@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Supabase.Core.Interfaces;
 using Supabase.Postgrest.Models;
 using Supabase.Postgrest.Responses;
@@ -41,17 +42,20 @@ namespace Supabase.Postgrest.Interfaces
         /// Adds a debug handler
         /// </summary>
         /// <param name="handler"></param>
+        [Obsolete("The debug handler is replaced by OpenTelemetry-compatible diagnostics: subscribe to the ActivitySource and Meter named \"Supabase.Postgrest\". This member will be removed in a future major version.")]
         void AddDebugHandler(IPostgrestDebugger.DebugEventHandler handler);
 
         /// <summary>
         /// Removes a debug handler
         /// </summary>
         /// /// <param name="handler"></param>
+        [Obsolete("The debug handler is replaced by OpenTelemetry-compatible diagnostics: subscribe to the ActivitySource and Meter named \"Supabase.Postgrest\". This member will be removed in a future major version.")]
         void RemoveDebugHandler(IPostgrestDebugger.DebugEventHandler handler);
 
         /// <summary>
         /// Clears debug handlers
         /// </summary>
+        [Obsolete("The debug handler is replaced by OpenTelemetry-compatible diagnostics: subscribe to the ActivitySource and Meter named \"Supabase.Postgrest\". This member will be removed in a future major version.")]
         void ClearDebugHandlers();
 
         /// <summary>

@@ -63,14 +63,17 @@ namespace Supabase.Postgrest
             Hooks.Instance.ClearRequestPreparedHandlers();
 
         /// <inheritdoc />
+        [Obsolete("The debug handler is replaced by OpenTelemetry-compatible diagnostics: subscribe to the ActivitySource and Meter named \"Supabase.Postgrest\". This member will be removed in a future major version.")]
         public void AddDebugHandler(IPostgrestDebugger.DebugEventHandler handler) =>
             Debugger.Instance.AddDebugHandler(handler);
 
         /// <inheritdoc />
+        [Obsolete("The debug handler is replaced by OpenTelemetry-compatible diagnostics: subscribe to the ActivitySource and Meter named \"Supabase.Postgrest\". This member will be removed in a future major version.")]
         public void RemoveDebugHandler(IPostgrestDebugger.DebugEventHandler handler) =>
             Debugger.Instance.RemoveDebugHandler(handler);
 
         /// <inheritdoc />
+        [Obsolete("The debug handler is replaced by OpenTelemetry-compatible diagnostics: subscribe to the ActivitySource and Meter named \"Supabase.Postgrest\". This member will be removed in a future major version.")]
         public void ClearDebugHandlers() => Debugger.Instance.ClearDebugHandlers();
 
         /// <summary>
@@ -151,7 +154,7 @@ namespace Supabase.Postgrest
 
             // Send request
             var request =
-                Helpers.MakeRequest(Options, HttpMethod.Post, canonicalUri, serializerSettings, data, headers);
+                Helpers.MakeRequest(Options, HttpMethod.Post, canonicalUri, serializerSettings, data, headers, operation: "rpc");
             return request;
         }
     }

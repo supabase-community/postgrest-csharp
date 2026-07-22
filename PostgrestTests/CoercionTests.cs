@@ -79,7 +79,9 @@ public class CoercionTests
     public async Task CanCoerceGuids()
     {
         var client = new Client(BaseUrl);
+#pragma warning disable CS0618 // exercising the obsolete debug surface until it is removed in a future major version
         client.AddDebugHandler((_, message, _) => Console.WriteLine(message));
+#pragma warning restore CS0618
         var model = new KitchenSink();
 
         var inserted = await client.Table<KitchenSink>().Insert(model);
