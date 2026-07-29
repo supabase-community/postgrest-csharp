@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Supabase.Postgrest;
 using Supabase.Postgrest.Attributes;
@@ -17,7 +17,7 @@ namespace PostgrestTests.Models
 
         [Column("favorite_numbers")]
         public List<int>? FavoriteNumbers { get; set; }
-        
+
         [Column("favorite_name")]
         public string? FavoriteName { get; set; }
 

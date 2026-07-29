@@ -1,4 +1,4 @@
-﻿using Supabase.Postgrest.Attributes;
+using Supabase.Postgrest.Attributes;
 using Supabase.Postgrest.Models;
 
 namespace PostgrestTests.Models;
